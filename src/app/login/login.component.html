@@ -1,21 +1,25 @@
-<div div class="mx-auto" style="width: 600px; margin-top: 50px;">
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="doLogin()" #formDir="ngForm">
+      <h2 >Notturna - Cronaca di Roma </h2>
+      <mat-form-field class="full-width-input">
+        <input matInput formControlName="nome" placeholder="Nome utente" required>
+       </mat-form-field>
 
+      <mat-form-field class="full-width-input">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Password" required >
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+      </mat-form-field>
 
-  <form name="loginForm" (ngSubmit)="doLogin()" #loginForm="ngForm" class="form-signin" >
-    <h2 class="form-signin-heading dred">Notturna - Cronaca di Roma </h2>
-    <div class="form-group">
-      <input id="nome" name="nome" class="form-control" [(ngModel)]="loginCredentials.email" placeholder="Nome utente" required autofocus>
-    </div>
-
-    <div class="form-group" >
-      <input id="password" name="password" type="password" class="form-control" [(ngModel)]="loginCredentials.password" placeholder="Password" required >
-    </div>
-
-    <button type="submit" class="btn btn-lg btn-danger btn-block" [disabled]="!loginForm.form.valid" >Login</button>
-    <div style="text-align:center">
-      <a [routerLink]="['/registra']" class="btn btn-link">Registrati</a>
-      <div class=" alert, alert-danger">{{errmsg}}</div>
-    </div>
-  </form>
-
-</div>
+      <button  mat-raised-button color="primary" [disabled]="!formDir.form.valid" >Login</button>
+      <div style="text-align:center">
+        <a [routerLink]="['/registra']" class="btn btn-link">Registrati</a>
+        <mat-error *ngIf="loginInvalid">
+          Errore di autenticazione
+        </mat-error>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

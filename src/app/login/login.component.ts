@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/index';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,24 +10,60 @@ import { AuthenticationService } from '../services/index';
 })
 export class LoginComponent implements OnInit {
 
-  loginCredentials = { nome: '' , password: '' };
-  errmsg = '';
+  loginForm = new FormGroup ({
+    nome: new FormControl('', [
+      Validators.required
+    ]),
+    password: new FormControl('', [
+      Validators.required
+    ]),
+  });
 
-  constructor(private authenticationService: AuthenticationService ) { }
+  loginInvalid: boolean = false ;
+  hide: boolean = true ;
+
+  constructor( private authenticationService: AuthenticationService , private router: Router) { }
 
   ngOnInit(): void {
     this.authenticationService.logout();
   }
 
+  get nome() {
+      return this.loginForm.get('nome');
+  }
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+
+
   doLogin() {
-    this.authenticationService.login(this.loginCredentials.nome, this.loginCredentials.password)
+
+    this.loginInvalid = false;
+
+    this.authenticationService.login(this.nome!.value, this.password!.value)
       .subscribe(
         data => {
           console.log(data);
-          //this.router.navigate(['']);
+
+          if (data.admin == "1"){
+            this.router.navigate(['/admin']);
+          } else {
+            if (data.vampiro == 0 && data.hunter == 0){
+              this.router.navigate(['/gate']);
+            }
+            if (data.vampiro == 1 ){
+              this.router.navigate(['/main']);
+            }
+            if (data.hunter == 1 ){
+              this.router.navigate(['/mainH']);
+            }  
+          }
+
+
         },
         error => {
-          this.errmsg = error.statusText;
+          this.loginInvalid = true;
         });
   }
 

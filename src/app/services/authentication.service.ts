@@ -14,17 +14,17 @@ export class AuthenticationService {
       nome: nome,
       password: password
     })
-    .map(user => {
+    .pipe(map(user => {
       // login successful if there's a jwt token in the response
-      if (user && user[0].idutente) {
+      if (user && user.idutente) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        sessionStorage.setItem('NotturnaUser', user[0].idutente );
-        sessionStorage.setItem('NotturnaUser0', user[0].admin );
-        sessionStorage.setItem('NotturnaUser1', user[0].vampiro );
-        sessionStorage.setItem('NotturnaUser2', user[0].hunter );
+        sessionStorage.setItem('NotturnaUser', user.idutente );
+        sessionStorage.setItem('NotturnaUser0', user.admin );
+        sessionStorage.setItem('NotturnaUser1', user.vampiro );
+        sessionStorage.setItem('NotturnaUser2', user.hunter );
       }
-      return user[0];
-    });
+      return user;
+    }));
   }
 
   logout() {
