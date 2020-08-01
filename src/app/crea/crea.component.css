@@ -1,0 +1,19 @@
+
+
+
+mat-card {
+  /* max-width: 600px; */
+  margin: 2em auto;
+  text-align: center;
+}
+
+.mycontainer .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

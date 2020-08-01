@@ -51,13 +51,9 @@ export class LoginComponent implements OnInit {
           } else {
             if (data.vampiro == 0 && data.hunter == 0){
               this.router.navigate(['/gate']);
-            }
-            if (data.vampiro == 1 ){
+            } else {
               this.router.navigate(['/main']);
             }
-            if (data.hunter == 1 ){
-              this.router.navigate(['/mainH']);
-            }  
           }
 
 

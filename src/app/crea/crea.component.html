@@ -1,0 +1,56 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <span style="font-family:delphian;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+
+
+
+
+<mat-card class="mycontainer">
+  <mat-card-content>
+<form id="crea-form" [formGroup]="creaForm" (ngSubmit)="doCrea()" #formDir="ngForm">
+
+  <mat-form-field appearance="fill" class="full-width-input" >
+    <mat-label>Nome Personaggio</mat-label>
+    <input matInput placeholder="Nome Personaggio" formControlName="nomepersonaggio">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Nome del Giocatore</mat-label>
+    <input matInput placeholder="Nome Giocatore" formControlName="nomeplayer">
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Clan</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let i of clan" [value]="i.idclan">{{i.nomeclan}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Status Iniziale</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let i of status" [value]="i.idstatus">{{i.status}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<br>
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Rifugio</mat-label>
+    <input matInput placeholder="Rifugio" formControlName="rifugio">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width-input">
+    <mat-label>Zona Indicativa</mat-label>
+    <input matInput placeholder="Indirizzo o Zona" formControlName="zona">
+  </mat-form-field>
+
+
+</form>
+  </mat-card-content>
+</mat-card>

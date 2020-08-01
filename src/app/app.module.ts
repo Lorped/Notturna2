@@ -16,14 +16,18 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSelectModule} from '@angular/material/select';
 //
 
-import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './services/index';
+import { SchedaService } from './services/index';
+
+import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { GateComponent } from './gate/gate.component';
 import { AdminComponent } from './admin/admin.component';
-import { MainhComponent } from './mainh/mainh.component';
+import { RegistraComponent } from './registra/registra.component';
+import { CreaComponent } from './crea/crea.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import { MainhComponent } from './mainh/mainh.component';
     MainComponent,
     GateComponent,
     AdminComponent,
-    MainhComponent
+    RegistraComponent,
+    CreaComponent
   ],
   imports: [
     BrowserModule,
@@ -48,12 +53,14 @@ import { MainhComponent } from './mainh/mainh.component';
     MatIconModule,
     MatButtonModule,
     MatGridListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule
 
 
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    SchedaService
   ],
   bootstrap: [AppComponent]
 })
