@@ -58,7 +58,7 @@ if (isset($postdata) && $nome != "" && $password != "" ) {
 		$Results2 = mysql_query ($MySql2);
     if (mysql_errno()) { die ( mysql_errno().": ".mysql_error(). "  >>".$MySql2 ); }
 
-		if ( $res2 = mysql_fetch_array($Result2)   ) {
+		if ( $res2 = mysql_fetch_array($Results2)   ) {
 			$hunter = 1 ;
 		}
 
