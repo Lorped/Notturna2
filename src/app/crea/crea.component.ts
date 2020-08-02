@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Clan, Status, Background } from '../global';
+import { Clan, Status, Background, Contatti} from '../global';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-crea',
   templateUrl: './crea.component.html',
-  styleUrls: ['./crea.component.css']
+  styleUrls: ['./crea.component.css'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+  }]
 })
 export class CreaComponent implements OnInit {
 
@@ -21,6 +25,10 @@ export class CreaComponent implements OnInit {
   sommaBG = 0;
   maxBG = 6;
 
+  cont: Array<Contatti> = [];
+
+  sommaCont = 0 ;
+  maxCont = 0 ;
 
   creaForm = new FormGroup ({
     nomepersonaggio: new FormControl('', [
@@ -43,9 +51,7 @@ export class CreaComponent implements OnInit {
     ]),
   });
 
-  backgroundForm = new FormGroup ({
 
-  });
 
 
   constructor(private schedaservice: SchedaService) { }
@@ -55,14 +61,24 @@ export class CreaComponent implements OnInit {
     this.schedaservice.getregistra()
       .subscribe(
         (data: any) => {
-          console.log(data);
           this.clan = data.clan;
           this.status = data.statuscama;
           this.creaForm.patchValue({
             statusPG: "1"});
           this.bg = data.background;
-          console.log(this.bg);
+
+          for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
+              this.bg[j].livello = this.bg[j].MinIniziale;
+              this.bg[j].MinIniziale = Number (data.background[j].MinIniziale);
+              this.bg[j].MaxIniziale = Number (data.background[j].MaxIniziale);
+          }
+
         });
+
+
+      for ( let j = 0 ; j <3 ; j++) {               // Inizializzo i contatti
+        this.cont[j] = new Contatti;
+      }
   }
 
   get nomepersonaggio() {
@@ -86,8 +102,6 @@ export class CreaComponent implements OnInit {
 
   changestatus () {
 
-    console.log("here");
-    console.log(this.statusPG!.value);
 
     switch (this.statusPG!.value) {
       case "0":
@@ -114,12 +128,10 @@ export class CreaComponent implements OnInit {
     }
 
     this.bgOK = false ;
-    if (this.sommaBG === this.maxBG ) {
+    if ( (this.sommaBG === this.maxBG) && (this.sommaCont === this.maxCont) ) {
       this.bgOK = true ;
     }
-    console.log("new MaxBG");
-    console.log(this.maxBG);
-    console.log(this.bgOK);
+
   }
 
   addbg(bg: number){
@@ -128,11 +140,15 @@ export class CreaComponent implements OnInit {
       if ( this.bg[j].idback === bg) {
         this.bg[j].livello++;
         this.sommaBG++;
+
       }
     }
-    if (this.sommaBG === this.maxBG ) {
-      this.bgOK = true ;
+
+    if ( bg == 77 ) {
+      this.maxCont++;
     }
+    this.checkbg () ;
+
   }
   minbg(bg: number){
     this.bgOK = false ;
@@ -142,11 +158,51 @@ export class CreaComponent implements OnInit {
         this.sommaBG--;
       }
     }
-    if (this.sommaBG === this.maxBG ) {
-      this.bgOK = true ;
+    if ( bg == 77 ) {
+      this.maxCont--;
     }
+    this.checkbg () ;
   }
 
+
+  addcont(cc: number){
+    this.cont[cc].livello++;
+    this.sommaCont++;
+    this.bgOK = false ;
+    this.checkbg () ;
+
+  }
+  mincont(cc: number){
+    this.cont[cc].livello--;
+    if (this.cont[cc].livello==0) {
+      this.cont[cc].nomecontatto='';
+    }
+    this.sommaCont--;
+    this.bgOK = false ;
+    this.checkbg () ;
+  }
+
+  checkbg () {
+    let ok = false;
+    if ( (this.sommaBG === this.maxBG) && (this.sommaCont === this.maxCont) ) {
+      ok = true;
+    }
+    if (this.maxCont > 0) {
+
+      if (this.cont[0].livello > 0 && this.cont[0].nomecontatto == '') {
+        ok = false;
+      }
+      if (this.cont[1].livello > 0 && this.cont[1].nomecontatto == '') {
+        ok = false;
+      }
+      if (this.cont[2].livello > 0 && this.cont[2].nomecontatto == '') {
+        ok = false;
+      }
+    }
+
+    this.bgOK = ok;
+    return ok ;
+  }
 
   doCrea() {}
 

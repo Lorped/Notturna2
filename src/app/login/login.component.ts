@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.nome!.value, this.password!.value)
       .subscribe(
         data => {
-          console.log(data);
 
           if (data.admin == "1"){
             this.router.navigate(['/admin']);
