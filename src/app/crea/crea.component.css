@@ -3,7 +3,7 @@
 
 mat-card {
   /* max-width: 600px; */
-  margin: 2em auto;
+  margin: 1em auto;
   text-align: center;
 }
 
@@ -11,9 +11,49 @@ mat-card {
   margin-left: 8px;
 }
 
+.bgcard {
+  max-width: 600px;
+}
+
+.bgcard-container {
+  max-width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
 mat-card-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+
+.red {
+  color: #ff0000 ;
+}
+.white {
+  color: #ffffff ;
+}
+.dred {
+  color: #b00000 ;
+}
+
+.alc {
+  text-align: center;
+}
+
+.btn-xs {
+    padding: 0px 2px;
+    /*font-size: 20px; */
+    border-radius: 3px;
+    font-size: 0.7em;
+}
+
+.btn:disabled{
+    background-color: #a0a0a0;
+}
+.btn:enabled:hover{
+    background-color: #f02618;
 }

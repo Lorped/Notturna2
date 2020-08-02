@@ -27,6 +27,13 @@ while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 	$clan[] = $res;
 }
 
+$background = [];
+$MySql = "SELECT *, 0 as livello FROM background_main ";
+$Result = mysql_query($MySql);
+while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	$background[] = $res;
+}
+
 $statuscama = [];
 $MySql = "SELECT idstatus, status FROM statuscama ";
 $Result = mysql_query($MySql);
@@ -68,7 +75,8 @@ $out = [
   "skill" => $skill ,
   "sentieri" => $sentieri,
   "taumaturgie" => $taumaturgie,
-  "necromanzie" => $necromanzie
+  "necromanzie" => $necromanzie,
+	"background" => $background
 ];
 
 header("HTTP/1.1 200 OK");

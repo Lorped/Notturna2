@@ -17,6 +17,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
+import {MatStepperModule} from '@angular/material/stepper';
 //
 
 import { AuthenticationService } from './services/index';
@@ -28,6 +29,7 @@ import { GateComponent } from './gate/gate.component';
 import { AdminComponent } from './admin/admin.component';
 import { RegistraComponent } from './registra/registra.component';
 import { CreaComponent } from './crea/crea.component';
+import { TimesPipe } from './times.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { CreaComponent } from './crea/crea.component';
     GateComponent,
     AdminComponent,
     RegistraComponent,
-    CreaComponent
+    CreaComponent,
+    TimesPipe
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { CreaComponent } from './crea/crea.component';
     MatButtonModule,
     MatGridListModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatStepperModule
 
 
   ],

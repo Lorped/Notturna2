@@ -51,6 +51,7 @@ export class Background {
   public idback = 0;
   public nomeback = '';
   public livello = 0;
+  public MaxIniziale = 0;
 }
 
 

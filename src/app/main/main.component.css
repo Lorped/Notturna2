@@ -5,6 +5,11 @@ a:hover {
   text-decoration: none;
 }
 
+.outer {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
 
 svg.material-icons {
   height: 24px;
@@ -19,6 +24,7 @@ svg.material-icons:not(:last-child) {
 }
 
 .card-container {
+  max-width: 80%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -19,8 +19,9 @@
           </button>
       </mat-form-field>
 
-      <button  mat-raised-button color="primary" [disabled]="!formDir.form.valid" >Login</button>
+      <button  mat-raised-button class="large" color="primary" [disabled]="!formDir.form.valid" >Login</button>
       <div style="text-align:center">
+        <p>
         <a [routerLink]="['/registra']" >Registrati</a>
         <mat-error *ngIf="loginInvalid">
           Errore di autenticazione

@@ -18,6 +18,9 @@ mat-card {
   text-align: center;
 }
 
+.large {
+  width:  100% !important;
+}
 
 mat-card-content {
   display: flex;
@@ -31,12 +34,12 @@ mat-form-field {
 }
 
 a,
-a:visited,
-a:hover {
-  color: #1976d2;
+a:visited
+{
+  color: #2d77ed;
   text-decoration: none;
 }
 
 a:hover {
-  color: #125699;
+  color: #5391f5;
 }

@@ -7,50 +7,87 @@
 </div>
 
 
+<mat-horizontal-stepper #stepper [linear]="true">
+  <mat-step [stepControl]="creaForm" errorMessage="Campi obbigatori">
+    <ng-template matStepLabel>Dati del personaggio e Status iniziale</ng-template>
+    <form id="crea-form" [formGroup]="creaForm"  #formDir="ngForm">
+
+     <mat-card class="mycontainer">
+<!--         <mat-card-content>
+-->
+
+        <mat-form-field appearance="fill" class="full-width-input" >
+          <mat-label>Nome Personaggio</mat-label>
+          <input matInput placeholder="Nome Personaggio" formControlName="nomepersonaggio">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Nome del Giocatore</mat-label>
+          <input matInput placeholder="Nome Giocatore" formControlName="nomeplayer">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Clan</mat-label>
+          <mat-select formControlName="clanPG" >
+            <mat-option *ngFor="let i of clan" [value]="i.idclan">{{i.nomeclan}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Status Iniziale</mat-label>
+          <mat-select formControlName="statusPG" (selectionChange)="changestatus()">
+            <mat-option *ngFor="let i of status" [value]="i.idstatus">{{i.status}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Rifugio</mat-label>
+          <input matInput placeholder="Rifugio" formControlName="rifugio">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Zona Indicativa</mat-label>
+          <input matInput placeholder="Indirizzo o Zona" formControlName="zona">
+        </mat-form-field>
+
+
+        <div>
+          <button mat-raised-button matStepperNext color="primary" [disabled]="!formDir.form.valid" >Prosegui</button>
+        </div>
+<!--      </mat-card-content>
+-->       </mat-card>
 
 
 
-<mat-card class="mycontainer">
-  <mat-card-content>
-<form id="crea-form" [formGroup]="creaForm" (ngSubmit)="doCrea()" #formDir="ngForm">
+    </form>
 
-  <mat-form-field appearance="fill" class="full-width-input" >
-    <mat-label>Nome Personaggio</mat-label>
-    <input matInput placeholder="Nome Personaggio" formControlName="nomepersonaggio">
-  </mat-form-field>
+  </mat-step>
+  <mat-step errorMessage="Distribuzione non corretta" completed=bgOK>
+    <ng-template matStepLabel>Background</ng-template>
 
-  <mat-form-field appearance="fill" class="full-width-input">
-    <mat-label>Nome del Giocatore</mat-label>
-    <input matInput placeholder="Nome Giocatore" formControlName="nomeplayer">
-  </mat-form-field>
+    <div >
+      <mat-card>
+        Punti background diponibili: {{maxBG - sommaBG}}
+      </mat-card>
+    </div>
 
-
-  <mat-form-field appearance="fill" class="full-width-input">
-    <mat-label>Clan</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let i of clan" [value]="i.idclan">{{i.nomeclan}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="full-width-input">
-    <mat-label>Status Iniziale</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let i of status" [value]="i.idstatus">{{i.status}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-<br>
-  <mat-form-field appearance="fill" class="full-width-input">
-    <mat-label>Rifugio</mat-label>
-    <input matInput placeholder="Rifugio" formControlName="rifugio">
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="full-width-input">
-    <mat-label>Zona Indicativa</mat-label>
-    <input matInput placeholder="Indirizzo o Zona" formControlName="zona">
-  </mat-form-field>
+    <div class="bgcard-container">
+    <mat-card class="bgcard" *ngFor="let b of bg">
+      <mat-card-content >
 
 
-</form>
-  </mat-card-content>
-</mat-card>
+      <div>
+        {{b.nomeback}}
+        <button  class="btn  btn-xs" (click)="minbg(b.idback)" [disabled]="b.livello<1"><i class="fa fa-minus"></i></button>
+        <i *ngFor="let i of b.MaxIniziale | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
+        <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>b.MaxIniziale-1||sommaBG>=maxBG"><i class="fa fa-plus"></i></button>
+      </div>
+
+    </mat-card-content>
+    </mat-card>
+    </div>
+
+  </mat-step>
+</mat-horizontal-stepper>
