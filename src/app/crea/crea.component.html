@@ -254,6 +254,66 @@
       )">Vie Duplicate</mat-error>
     </mat-card>
 
+    <mat-card *ngIf="clanPG!.value==11||clanPG!.value==14">          <!-- Giovanni / Cappadoci -->
+      <mat-grid-list cols="3" rowHeight="6:1">
+        <mat-grid-tile>     <!--- via primaria -->
+          <div class="half all ml">
+            <mat-form-field>
+            <mat-label>Via Primaria</mat-label>
+            <mat-select [(value)]="necromanzie[0].idnecro">
+              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro">{{tt.nomenecro}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="half mr">
+            <button  class="btn  btn-xs" (click)="minnecro(0)" [disabled]="necromanzie[0].livello<1||(necromanzie[0].livello-1==necromanzie[1].livello&&necromanzie[1].livello>0)"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[0].livello , 'dred': ix < necromanzie[0].livello }"></i>
+            <button class="btn  btn-xs" (click)="addnecro(0)" [disabled]="necromanzie[0].livello>4||necromanzie[0].idnecro == 0||sommaDisc==numDisc||necromanzie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>     <!--- via secondarie -->
+          <div class="half all ml">
+            <mat-form-field>
+            <mat-label>Via Secondaria</mat-label>
+            <mat-select  [(value)]="necromanzie[1].idnecro" [disabled]="necromanzie[0].idnecro == 0">
+              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro">{{tt.nomenecro}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="half mr">
+            <button  class="btn  btn-xs" (click)="minnecro(1)" [disabled]="necromanzie[1].livello<1||(necromanzie[1].livello-1==necromanzie[2].livello&&necromanzie[2].livello>0)"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[2].livello , 'dred': ix < necromanzie[1].livello }"></i>
+            <button class="btn  btn-xs" (click)="addnecro(1)" [disabled]="necromanzie[1].livello>4||(necromanzie[1].livello+1>=necromanzie[0].livello&&necromanzie[0].livello<5)||necromanzie[1].idnecro == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>     <!--- via terz -->
+          <div class="half all ml">
+            <mat-form-field>
+            <mat-label>Via Terziaria</mat-label>
+            <mat-select [(value)]="necromanzie[2].idnecro" [disabled]="necromanzie[1].idnecro == 0">
+              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro">{{tt.nomenecro}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="half mr">
+            <button  class="btn  btn-xs" (click)="minnecro(2)" [disabled]="necromanzie[2].livello<1"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[2].livello , 'dred': ix < necromanzie[2].livello }"></i>
+            <button class="btn  btn-xs" (click)="addnecro(2)" [disabled]="necromanzie[2].livello>4||(necromanzie[2].livello+1>=necromanzie[1].livello&&necromanzie[1].livello<5)||necromanzie[2].idnecro == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+      <mat-error *ngIf="(
+      (necromanzie[0].idnecro==necromanzie[1].idnecro)&&necromanzie[0].idnecro!=0 ||
+      (necromanzie[1].idnecro==necromanzie[2].idnecro)&&necromanzie[1].idnecro!=0 ||
+      (necromanzie[2].idnecro==necromanzie[0].idnecro)&&necromanzie[2].idnecro!=0
+      )">Vie Duplicate</mat-error>
+    </mat-card>
+
+
+
+
+
   </mat-step >
 
 </mat-horizontal-stepper>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia} from '../global';
+import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
@@ -68,8 +68,10 @@ export class CreaComponent implements OnInit {
 
   discipline: Array<Disciplina> = [];
   taumaturgie: Array<Taumaturgia> = [];
-
   listaTaum: Array<Taumaturgia> = [];
+
+  necromanzie: Array<Necromanzia> = [];
+  listaNecro: Array<Necromanzia> = [];
 
 
   sommaDisc = 0 ;
@@ -78,15 +80,6 @@ export class CreaComponent implements OnInit {
 
   discOK = false;
 
-  iddisc1 = -1;
-  iddisc2 = -1;
-  iddisc3 = -1;
-  disc1 = '';
-  disc2 = '';
-  disc3 = '';
-  livello1 = 0;
-  livello2 = 0;
-  livello3 = 0;
 
   matriceMaxDisc: number[][] = [
     [ 2, 3, 3, 4, 4, 5, 5 ],
@@ -112,6 +105,7 @@ export class CreaComponent implements OnInit {
             statusPG: "1"});
           this.bg = data.background;
           this.listaTaum = data.taumaturgie;
+          this.listaNecro = data.necromanzie;
 
           for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
               this.bg[j].livello = this.bg[j].MinIniziale;
@@ -141,6 +135,10 @@ export class CreaComponent implements OnInit {
       this.taumaturgie[0] = new Taumaturgia();
       this.taumaturgie[1] = new Taumaturgia();
       this.taumaturgie[2] = new Taumaturgia();
+
+      this.necromanzie[0] = new Necromanzia();
+      this.necromanzie[1] = new Necromanzia();
+      this.necromanzie[2] = new Necromanzia();
 
   }
 
@@ -343,9 +341,7 @@ export class CreaComponent implements OnInit {
 
     this.sommaAttr--;
 
-    //console.log ("sommaAttr "+this.sommaAttr+" maxAttr "+this.maxAttr);
     this.checkattr();
-
   }
   addattr(id:number) {
     this.attributi[id].Livello++;
@@ -357,7 +353,7 @@ export class CreaComponent implements OnInit {
     this.attrCorrenteSort = this.attrCorrente.sort((n1,n2) => n1 - n2);
 
     this.sommaAttr++;
-    //console.log ("sommaAttr "+this.sommaAttr+" maxAttr "+this.maxAttr);
+
     this.checkattr();
   }
 
@@ -368,9 +364,9 @@ export class CreaComponent implements OnInit {
          this.attr0 + 3 == this.attrCorrenteSort[2] ) {
       this.attrOK = true;
     }
-    console.log("attrOK "+this.attrOK );
-    console.log(this.attr2+ " "+this.attr1+" " +this.attr0);
-    console.log(this.attrCorrenteSort[0]+ " "+this.attrCorrenteSort[1]+" " +this.attrCorrenteSort[2]);
+    // console.log("attrOK "+this.attrOK );
+    // console.log(this.attr2+ " "+this.attr1+" " +this.attr0);
+    // console.log(this.attrCorrenteSort[0]+ " "+this.attrCorrenteSort[1]+" " +this.attrCorrenteSort[2]);
   }
 
   changeclan(){
@@ -457,10 +453,10 @@ export class CreaComponent implements OnInit {
       break;
       case "11":	// Giovanni
         this.discipline[0].iddisciplina=6;          // Dominazione
-        this.discipline[1].iddisciplina=99;         // Negromanzia
+        this.discipline[1].iddisciplina=99;         // Necromanzia
         this.discipline[2].iddisciplina=17;         // Potenza
         this.discipline[0].nomedisc='Dominazione';
-        this.discipline[1].nomedisc='Negromanzia';
+        this.discipline[1].nomedisc='Necromanzia';
         this.discipline[2].nomedisc='Potenza';
       break;
       case "12":	// Ravnos
@@ -481,24 +477,25 @@ export class CreaComponent implements OnInit {
       break;
       case "14":	// Cappadoci
         this.discipline[0].iddisciplina=3;          // Auspex
-        this.discipline[1].iddisciplina=99;         // Negromanzia
+        this.discipline[1].iddisciplina=99;         // Necromanzia
         this.discipline[2].iddisciplina=12;         // Robustezza
         this.discipline[0].nomedisc='Auspex';
-        this.discipline[1].nomedisc='Negromanzia';
+        this.discipline[1].nomedisc='Necromanzia';
         this.discipline[2].nomedisc='Robustezza';
       break;
     }
 
     // RESET Discipline pr evitare problemi
-    this.discipline[0].livello = 0;
-    this.discipline[1].livello = 0;
-    this.discipline[2].livello = 0;
-    this.taumaturgie[0].livello = 0;
-    this.taumaturgie[1].livello = 0;
-    this.taumaturgie[2].livello = 0;
-    this.taumaturgie[0].idtaum = 0;
-    this.taumaturgie[1].idtaum = 0;
-    this.taumaturgie[2].idtaum = 0;
+
+    for ( let j=0; j<3 ; j++) {
+      this.discipline[j].livello = 0;
+
+      this.taumaturgie[j].livello = 0;
+      this.taumaturgie[j].idtaum = 0;
+
+      this.necromanzie[j].livello = 0;
+      this.necromanzie[j].idnecro = 0;
+    }
     this.sommaDisc = 0 ;
 
   }
@@ -528,10 +525,6 @@ export class CreaComponent implements OnInit {
     let indexStat = this.statusPG!.value;
 
     this.maxDisc = this.matriceMaxDisc [indexStat][indexGen];
-
-    // console.log ( "indexGen= "+indexGen);
-    // console.log ( "indexStat= "+indexStat);
-    // console.log ( "maxDisc= "+this.maxDisc);
 
     this.checkDisc();
   }
@@ -567,6 +560,31 @@ export class CreaComponent implements OnInit {
     if (tt==0){
       for ( let j = 0; j <3 ; j++){
         if (this.discipline[j].iddisciplina == 98 ) {
+          this.discipline[j].livello++;
+        }
+      }
+    }
+    this.sommaDisc++;
+    this.checkDisc();
+  }
+
+  minnecro(tt:number){
+    this.necromanzie[tt].livello--;
+    if (tt==0){
+      for ( let j = 0; j <3 ; j++){
+        if (this.discipline[j].iddisciplina == 99 ) {
+          this.discipline[j].livello--;
+        }
+      }
+    }
+    this.sommaDisc--;
+    this.checkDisc();
+  }
+  addnecro(tt:number){
+    this.necromanzie[tt].livello++;
+    if (tt==0){
+      for ( let j = 0; j <3 ; j++){
+        if (this.discipline[j].iddisciplina == 99 ) {
           this.discipline[j].livello++;
         }
       }
