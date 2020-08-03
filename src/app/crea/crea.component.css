@@ -8,6 +8,12 @@
 .all {
     text-align: left;
 }
+.mr {
+  margin-right: 2em;
+}
+.ml {
+  margin-left: 2em;
+}
 
 mat-card {
   /* max-width: 600px; */

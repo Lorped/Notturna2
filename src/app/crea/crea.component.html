@@ -28,7 +28,7 @@
 
       <mat-form-field appearance="fill" class="full-width-input">
         <mat-label>Clan</mat-label>
-        <mat-select formControlName="clanPG" >
+        <mat-select formControlName="clanPG" (selectionChange)="changeclan()">
           <mat-option *ngFor="let i of clan" [value]="i.idclan">{{i.nomeclan}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -91,7 +91,6 @@
       </mat-card>
     </div>
 
-
     <div class="bgcard-container" *ngIf="maxCont>0">
       <table>
         <tr>
@@ -143,7 +142,7 @@
   </mat-step>
 
   <mat-step errorMessage="Distribuzione non corretta" [completed]=attrOK [hasError]="!attrOK&&sommaAttr!=0">
-    <ng-template matStepLabel>Attributi e Discipline</ng-template>
+    <ng-template matStepLabel>Attributi</ng-template>
 
     <mat-card>
       Distribuzione Richiesta: [ {{attr0+3}} , {{attr1+3}} , {{attr2+3}} ]
@@ -157,8 +156,8 @@
         <mat-grid-tile >Attributi Sociali</mat-grid-tile>
         <mat-grid-tile >Attributi Mentali</mat-grid-tile>
         <mat-grid-tile *ngFor="let attr of attributi">
-          <div class="half all">{{attr.NomeAttributo}}</div>
-          <div class="half">
+          <div class="half all ml">{{attr.NomeAttributo}}</div>
+          <div class="half mr">
           <button  class="btn  btn-xs" (click)="minattr(attr.IDattributo)" [disabled]="attr.Livello<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > attr.Livello , 'dred': ix < attr.Livello }"></i>
           <button class="btn  btn-xs" (click)="addattr(attr.IDattributo)" [disabled]="attr.Livello>4||sommaAttr>=maxAttr"><i class="fa fa-plus"></i></button>
@@ -166,10 +165,94 @@
         </mat-grid-tile>
 
       </mat-grid-list>
+    </mat-card>
+    <mat-card>
+      <div>
+        <button mat-raised-button matStepperNext color="primary" [disabled]="!attrOK" >Prosegui</button>
+      </div>
+    </mat-card>
+    <mat-card >
+      <mat-card-content class="justified">
+      Dopo aver deciso un ordine di importanza tra le tre categorie di Attributi (Fisici, Sociali e Mentali), distribuite i punti vostra disposizione facendo in modo che la distribuzione finale sia quella richiesta.
+      </mat-card-content>
+    </mat-card>
+  </mat-step >
 
+  <mat-step errorMessage="Distribuzione non corretta" [completed]=discOK [hasError]="!discOK&&sommaDisc!=0">
+    <ng-template matStepLabel>Discipline</ng-template>
 
+    <mat-card>
+      Punti da distribuire: {{ numDisc - sommaDisc }}   --   Massimo livello di disciplina: {{ maxDisc }}
     </mat-card>
 
+    <mat-card>
+      <mat-grid-list cols="3" rowHeight="6:1">
+        <mat-grid-tile *ngFor="let dd of discipline">
+          <div class="half all ml">{{dd.nomedisc}}</div>
+          <div class="half mr">
+          <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<1||dd.iddisciplina==99||dd.iddisciplina==98"><i class="fa fa-minus"></i></button>
+          <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello }"></i>
+          <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc||dd.iddisciplina==99||dd.iddisciplina==98"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>
+
+    <mat-card *ngIf="clanPG!.value==7">          <!-- TREMERE -->
+      <mat-grid-list cols="3" rowHeight="6:1">
+        <mat-grid-tile>     <!--- via primaria -->
+          <div class="half all ml">
+            <mat-form-field>
+            <mat-label>Via Primaria</mat-label>
+            <mat-select [(value)]="taumaturgie[0].idtaum">
+              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum">{{tt.nometaum}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="half mr">
+            <button  class="btn  btn-xs" (click)="mintaum(0)" [disabled]="taumaturgie[0].livello<1||(taumaturgie[0].livello-1==taumaturgie[1].livello&&taumaturgie[1].livello>0)"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[0].livello , 'dred': ix < taumaturgie[0].livello }"></i>
+            <button class="btn  btn-xs" (click)="addtaum(0)" [disabled]="taumaturgie[0].livello>4||taumaturgie[0].idtaum == 0||sommaDisc==numDisc||taumaturgie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>     <!--- via secondarie -->
+          <div class="half all ml">
+            <mat-form-field>
+            <mat-label>Via Secondaria</mat-label>
+            <mat-select  [(value)]="taumaturgie[1].idtaum" [disabled]="taumaturgie[0].idtaum == 0">
+              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum">{{tt.nometaum}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="half mr">
+            <button  class="btn  btn-xs" (click)="mintaum(1)" [disabled]="taumaturgie[1].livello<1||(taumaturgie[1].livello-1==taumaturgie[2].livello&&taumaturgie[2].livello>0)"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[2].livello , 'dred': ix < taumaturgie[1].livello }"></i>
+            <button class="btn  btn-xs" (click)="addtaum(1)" [disabled]="taumaturgie[1].livello>4||(taumaturgie[1].livello+1>=taumaturgie[0].livello&&taumaturgie[0].livello<5)||taumaturgie[1].idtaum == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>     <!--- via terz -->
+          <div class="half all ml">
+            <mat-form-field>
+            <mat-label>Via Terziaria</mat-label>
+            <mat-select [(value)]="taumaturgie[2].idtaum" [disabled]="taumaturgie[1].idtaum == 0">
+              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum">{{tt.nometaum}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="half mr">
+            <button  class="btn  btn-xs" (click)="mintaum(2)" [disabled]="taumaturgie[2].livello<1"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[2].livello , 'dred': ix < taumaturgie[2].livello }"></i>
+            <button class="btn  btn-xs" (click)="addtaum(2)" [disabled]="taumaturgie[2].livello>4||(taumaturgie[2].livello+1>=taumaturgie[1].livello&&taumaturgie[1].livello<5)||taumaturgie[2].idtaum == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+      <mat-error *ngIf="(
+      (taumaturgie[0].idtaum==taumaturgie[1].idtaum)&&taumaturgie[0].idtaum!=0 ||
+      (taumaturgie[1].idtaum==taumaturgie[2].idtaum)&&taumaturgie[1].idtaum!=0 ||
+      (taumaturgie[2].idtaum==taumaturgie[0].idtaum)&&taumaturgie[2].idtaum!=0
+      )">Vie Duplicate</mat-error>
+    </mat-card>
 
   </mat-step >
 

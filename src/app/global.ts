@@ -89,14 +89,14 @@ export class Abilita {
 
 
 @Injectable()
-export class Necromanzie {
+export class Necromanzia {
   public idnecro = 0;
   public nomenecro = '';
   public livello = 0 ;
 }
 
 @Injectable()
-export class Taumaturgie {
+export class Taumaturgia {
   public idtaum = 0;
   public nometaum = '';
   public livello = 0 ;

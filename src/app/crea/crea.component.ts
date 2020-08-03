@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Clan, Status, Background, Contatti, Attributo} from '../global';
+import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
@@ -14,7 +14,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 })
 export class CreaComponent implements OnInit {
 
-  isLinear = true;
+  isLinear = false;  // CHANGEMEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
@@ -66,6 +66,38 @@ export class CreaComponent implements OnInit {
   attrOK = false;
 
 
+  discipline: Array<Disciplina> = [];
+  taumaturgie: Array<Taumaturgia> = [];
+
+  listaTaum: Array<Taumaturgia> = [];
+
+
+  sommaDisc = 0 ;
+  numDisc = 5 ;
+  maxDisc = 3 ;
+
+  discOK = false;
+
+  iddisc1 = -1;
+  iddisc2 = -1;
+  iddisc3 = -1;
+  disc1 = '';
+  disc2 = '';
+  disc3 = '';
+  livello1 = 0;
+  livello2 = 0;
+  livello3 = 0;
+
+  matriceMaxDisc: number[][] = [
+    [ 2, 3, 3, 4, 4, 5, 5 ],
+    [ 3, 3, 4, 4, 5, 5, 5 ],
+    [ 3, 4, 5, 5, 5, 5, 5 ],
+    [ 4, 5, 5, 5, 5, 5, 5 ],
+    [ 4, 5, 5, 5, 5, 5, 5 ],
+    [ 5, 5, 5, 5, 5, 5, 5 ]
+  ];
+
+
   constructor(private schedaservice: SchedaService) { }
 
   ngOnInit(): void {
@@ -73,11 +105,13 @@ export class CreaComponent implements OnInit {
     this.schedaservice.getregistra()
       .subscribe(
         (data: any) => {
+          console.log(data)
           this.clan = data.clan;
           this.status = data.statuscama;
           this.creaForm.patchValue({
             statusPG: "1"});
           this.bg = data.background;
+          this.listaTaum = data.taumaturgie;
 
           for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
               this.bg[j].livello = this.bg[j].MinIniziale;
@@ -99,6 +133,14 @@ export class CreaComponent implements OnInit {
       this.attributi[6] = new Attributo ( 6, 'Attutimento'  , 'F' , 1 );
       this.attributi[7] = new Attributo ( 7, 'Saggezza'     , 'S' , 1 );
       this.attributi[8] = new Attributo ( 8, 'Prontezza'    , 'M' , 1 );
+
+      this.discipline[0] = new Disciplina();
+      this.discipline[1] = new Disciplina();
+      this.discipline[2] = new Disciplina();
+
+      this.taumaturgie[0] = new Taumaturgia();
+      this.taumaturgie[1] = new Taumaturgia();
+      this.taumaturgie[2] = new Taumaturgia();
 
   }
 
@@ -125,26 +167,34 @@ export class CreaComponent implements OnInit {
     switch (this.statusPG!.value) {
       case "0":
         this.maxBG = 5;
+        this.numDisc = 4;
         break;
       case "1":
         this.maxBG = 6;
+        this.numDisc = 5;
         break;
       case "2":
         this.maxBG = 8;
+        this.numDisc = 6;
         break;
       case "3":
         this.maxBG = 10;
+        this.numDisc = 7;
         break;
       case "4":
         this.maxBG = 15;
+        this.numDisc = 10;
         break;
       case "5":
         this.maxBG = 25;
+        this.numDisc = 15;
         break;
       default:
         this.maxBG = 6;
+        this.numDisc = 5;
         break;
     }
+    this.changeMaxDisc();
     this.checkbg () ;
   }
 
@@ -278,6 +328,7 @@ export class CreaComponent implements OnInit {
         this.maxAttr = 11;
         break;
     }
+    this.changeMaxDisc();
     this.checkattr();
   }
 
@@ -321,4 +372,207 @@ export class CreaComponent implements OnInit {
     console.log(this.attr2+ " "+this.attr1+" " +this.attr0);
     console.log(this.attrCorrenteSort[0]+ " "+this.attrCorrenteSort[1]+" " +this.attrCorrenteSort[2]);
   }
+
+  changeclan(){
+    switch (this.clanPG!.value) {
+      case "1":   //  Toreador
+        this.discipline[0].iddisciplina=2;          // Ascendente
+        this.discipline[1].iddisciplina=3;          // Auspex
+        this.discipline[2].iddisciplina=15;         // Velocità
+        this.discipline[0].nomedisc='Ascendente';
+        this.discipline[1].nomedisc='Auspex';
+        this.discipline[2].nomedisc='Velocità';
+      break;
+      case "2":   //  Ventrue
+        this.discipline[0].iddisciplina=2;          // Ascendente
+        this.discipline[1].iddisciplina=6;          // Dominazione
+        this.discipline[2].iddisciplina=12;         // Robustezza
+        this.discipline[0].nomedisc='Ascendente';
+        this.discipline[1].nomedisc='Dominazione';
+        this.discipline[2].nomedisc='Robustezza';
+      break;
+      case "3":		// Nosferatu
+        this.discipline[0].iddisciplina=1;          // Animalità
+        this.discipline[1].iddisciplina=8;          // Oscurazione
+        this.discipline[2].iddisciplina=17;         // Potenza
+        this.discipline[0].nomedisc='Animalità';
+        this.discipline[1].nomedisc='Oscurazione';
+        this.discipline[2].nomedisc='Potenza';
+      break;
+      case "4":		// Brujah
+        this.discipline[0].iddisciplina=2;          // Ascendente
+        this.discipline[1].iddisciplina=17;         // Potenza
+        this.discipline[2].iddisciplina=15;         // Velocità
+        this.discipline[0].nomedisc='Ascendente';
+        this.discipline[1].nomedisc='Potenza';
+        this.discipline[2].nomedisc='Velocità';
+      break;
+      case "5":		// Gangrel
+        this.discipline[0].iddisciplina=1;          // Animalità
+        this.discipline[1].iddisciplina=10;         // Proteide
+        this.discipline[2].iddisciplina=12;         // Robustezza
+        this.discipline[0].nomedisc='Animalità';
+        this.discipline[1].nomedisc='Proteide';
+        this.discipline[2].nomedisc='Robustezza';
+      break;
+      case "6":		// Malkavian
+        this.discipline[0].iddisciplina=3;          // Auspex
+        this.discipline[1].iddisciplina=5;          // Demenza
+        this.discipline[2].iddisciplina=8;          // Oscurazione
+        this.discipline[0].nomedisc='Auspex';
+        this.discipline[1].nomedisc='Demenza';
+        this.discipline[2].nomedisc='Oscurazione';
+      break;
+      case "7":		// Tremere
+        this.discipline[0].iddisciplina=3;          // Auspex
+        this.discipline[1].iddisciplina=6;          // Dominazione
+        this.discipline[2].iddisciplina=98;         // Taumaturgia
+        this.discipline[0].nomedisc='Auspex';
+        this.discipline[1].nomedisc='Dominazione';
+        this.discipline[2].nomedisc='Taumaturgia';
+      break;
+      case "8":		// Lasombra
+        this.discipline[0].iddisciplina=6;          // Dominazione
+        this.discipline[1].iddisciplina=17;         // Potenza
+        this.discipline[2].iddisciplina=9;          // Ottenebramento
+        this.discipline[0].nomedisc='Dominazione';
+        this.discipline[1].nomedisc='Potenza';
+        this.discipline[2].nomedisc='Ottenebramento';
+      break;
+      case "9":		// Tzimisce
+        this.discipline[0].iddisciplina=1;          // Animalità
+        this.discipline[1].iddisciplina=3;          // Auspex
+        this.discipline[2].iddisciplina=16;         // Vicissitudine
+        this.discipline[0].nomedisc='Animalità';
+        this.discipline[1].nomedisc='Auspex';
+        this.discipline[2].nomedisc='Vicissitudine';
+      break;
+      case "10":	// Assamiti
+        this.discipline[0].iddisciplina=8;          // Oscurazione
+        this.discipline[1].iddisciplina=11;         // Quietus
+        this.discipline[2].iddisciplina=15;         // Velocità
+        this.discipline[0].nomedisc='Oscurazione';
+        this.discipline[1].nomedisc='Quietus';
+        this.discipline[2].nomedisc='Velocità';
+      break;
+      case "11":	// Giovanni
+        this.discipline[0].iddisciplina=6;          // Dominazione
+        this.discipline[1].iddisciplina=99;         // Negromanzia
+        this.discipline[2].iddisciplina=17;         // Potenza
+        this.discipline[0].nomedisc='Dominazione';
+        this.discipline[1].nomedisc='Negromanzia';
+        this.discipline[2].nomedisc='Potenza';
+      break;
+      case "12":	// Ravnos
+        this.discipline[0].iddisciplina=1;          // Animalità
+        this.discipline[1].iddisciplina=4;          // Chimerismo
+        this.discipline[2].iddisciplina=12;         // Robustezza
+        this.discipline[0].nomedisc='Animalità';
+        this.discipline[1].nomedisc='Chimerismo';
+        this.discipline[2].nomedisc='Robustezza';
+      break;
+      case "13":	// Setiti
+        this.discipline[0].iddisciplina=2;          // Ascendente
+        this.discipline[1].iddisciplina=8;          // Oscurazione
+        this.discipline[2].iddisciplina=13;         // Serpentis
+        this.discipline[0].nomedisc='Ascendente';
+        this.discipline[1].nomedisc='Oscurazione';
+        this.discipline[2].nomedisc='Serpentis';
+      break;
+      case "14":	// Cappadoci
+        this.discipline[0].iddisciplina=3;          // Auspex
+        this.discipline[1].iddisciplina=99;         // Negromanzia
+        this.discipline[2].iddisciplina=12;         // Robustezza
+        this.discipline[0].nomedisc='Auspex';
+        this.discipline[1].nomedisc='Negromanzia';
+        this.discipline[2].nomedisc='Robustezza';
+      break;
+    }
+
+    // RESET Discipline pr evitare problemi
+    this.discipline[0].livello = 0;
+    this.discipline[1].livello = 0;
+    this.discipline[2].livello = 0;
+    this.taumaturgie[0].livello = 0;
+    this.taumaturgie[1].livello = 0;
+    this.taumaturgie[2].livello = 0;
+    this.taumaturgie[0].idtaum = 0;
+    this.taumaturgie[1].idtaum = 0;
+    this.taumaturgie[2].idtaum = 0;
+    this.sommaDisc = 0 ;
+
+  }
+
+  mindisc (dd: number) {
+    for (let j=0 ; j<3 ;j++ ) {
+      if ( this.discipline[j].iddisciplina === dd) {
+        this.discipline[j].livello--;
+      }
+    }
+    this.sommaDisc--;
+    this.checkDisc();
+  }
+
+  adddisc (dd: number) {
+    for (let j=0 ; j<3 ;j++ ) {
+      if ( this.discipline[j].iddisciplina === dd) {
+        this.discipline[j].livello++;
+      }
+    }
+    this.sommaDisc++;
+    this.checkDisc();
+  }
+
+  changeMaxDisc () {
+    let indexGen = 14 - this.generazionePG;
+    let indexStat = this.statusPG!.value;
+
+    this.maxDisc = this.matriceMaxDisc [indexStat][indexGen];
+
+    // console.log ( "indexGen= "+indexGen);
+    // console.log ( "indexStat= "+indexStat);
+    // console.log ( "maxDisc= "+this.maxDisc);
+
+    this.checkDisc();
+  }
+
+  checkDisc () {
+    this.discOK = false;
+    if ( this.sommaDisc === this.numDisc ) {
+      this.discOK = true;
+    }
+    for ( let j=0; j<3; j++) {
+      if (this.discipline[j].livello > this.maxDisc ) {
+        this.discOK = false;
+      }
+    }
+    console.log ( "sommaDisc= "+this.sommaDisc);
+    console.log ( "numDisc= "+this.numDisc);
+  }
+
+  mintaum(tt:number){
+    this.taumaturgie[tt].livello--;
+    if (tt==0){
+      for ( let j = 0; j <3 ; j++){
+        if (this.discipline[j].iddisciplina == 98 ) {
+          this.discipline[j].livello--;
+        }
+      }
+    }
+    this.sommaDisc--;
+    this.checkDisc();
+  }
+  addtaum(tt:number){
+    this.taumaturgie[tt].livello++;
+    if (tt==0){
+      for ( let j = 0; j <3 ; j++){
+        if (this.discipline[j].iddisciplina == 98 ) {
+          this.discipline[j].livello++;
+        }
+      }
+    }
+    this.sommaDisc++;
+    this.checkDisc();
+  }
+
 }
