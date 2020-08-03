@@ -1,5 +1,13 @@
 
-
+.small {
+  font-size: 0.75em;
+}
+.half {
+  width: 50%;
+}
+.all {
+    text-align: left;
+}
 
 mat-card {
   /* max-width: 600px; */
@@ -45,9 +53,7 @@ mat-card-content {
   color: #b00000 ;
 }
 
-.alc {
-  text-align: center;
-}
+
 
 .btn-xs {
     padding: 0px 2px;

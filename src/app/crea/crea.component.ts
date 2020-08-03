@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Clan, Status, Background, Contatti} from '../global';
+import { Clan, Status, Background, Contatti, Attributo} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
@@ -13,6 +13,8 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
   }]
 })
 export class CreaComponent implements OnInit {
+
+  isLinear = true;
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
@@ -52,6 +54,16 @@ export class CreaComponent implements OnInit {
   });
 
 
+  attributi: Array<Attributo> = [];
+
+  attr0 = 5;
+  attr1 = 4;
+  attr2 = 2;
+  maxAttr = 11;
+  sommaAttr = 0;
+  attrCorrente = [ 3 , 3 , 3 ];
+  attrCorrenteSort = [ 3 , 3 , 3 ];
+  attrOK = false;
 
 
   constructor(private schedaservice: SchedaService) { }
@@ -72,13 +84,22 @@ export class CreaComponent implements OnInit {
               this.bg[j].MinIniziale = Number (data.background[j].MinIniziale);
               this.bg[j].MaxIniziale = Number (data.background[j].MaxIniziale);
           }
-
         });
-
 
       for ( let j = 0 ; j <3 ; j++) {               // Inizializzo i contatti
         this.cont[j] = new Contatti;
       }
+
+      this.attributi[0] = new Attributo ( 0, 'Forza'        , 'F' , 1 );
+      this.attributi[1] = new Attributo ( 1, 'Carisma'      , 'S' , 1 );
+      this.attributi[2] = new Attributo ( 2, 'Percezione'   , 'M' , 1 );
+      this.attributi[3] = new Attributo ( 3, 'Destrezza'    , 'F' , 1 );
+      this.attributi[4] = new Attributo ( 4, 'Persuasione'  , 'S' , 1 );
+      this.attributi[5] = new Attributo ( 5, 'Intelligenza' , 'M' , 1 );
+      this.attributi[6] = new Attributo ( 6, 'Attutimento'  , 'F' , 1 );
+      this.attributi[7] = new Attributo ( 7, 'Saggezza'     , 'S' , 1 );
+      this.attributi[8] = new Attributo ( 8, 'Prontezza'    , 'M' , 1 );
+
   }
 
   get nomepersonaggio() {
@@ -101,8 +122,6 @@ export class CreaComponent implements OnInit {
   }
 
   changestatus () {
-
-
     switch (this.statusPG!.value) {
       case "0":
         this.maxBG = 5;
@@ -126,12 +145,7 @@ export class CreaComponent implements OnInit {
         this.maxBG = 6;
         break;
     }
-
-    this.bgOK = false ;
-    if ( (this.sommaBG === this.maxBG) && (this.sommaCont === this.maxCont) ) {
-      this.bgOK = true ;
-    }
-
+    this.checkbg () ;
   }
 
   addbg(bg: number){
@@ -139,28 +153,34 @@ export class CreaComponent implements OnInit {
     for (let j = 0; j < this.bg.length; j++ ) {
       if ( this.bg[j].idback === bg) {
         this.bg[j].livello++;
+        if ( bg == 5 ) {     /* generazione */
+          this.changeGen(this.bg[j].livello);
+        }
         this.sommaBG++;
-
       }
     }
-
-    if ( bg == 77 ) {
+    if ( bg == 77 ) {     /* contatti */
       this.maxCont++;
     }
-    this.checkbg () ;
 
+    this.checkbg () ;
   }
+
   minbg(bg: number){
     this.bgOK = false ;
     for (let j = 0; j < this.bg.length; j++ ) {
       if ( this.bg[j].idback === bg) {
         this.bg[j].livello--;
         this.sommaBG--;
+        if ( bg == 5 ) {     /* generazione */
+          this.changeGen(this.bg[j].livello);
+        }
       }
     }
-    if ( bg == 77 ) {
+    if ( bg == 77 ) {    /* contatti */
       this.maxCont--;
     }
+
     this.checkbg () ;
   }
 
@@ -170,8 +190,8 @@ export class CreaComponent implements OnInit {
     this.sommaCont++;
     this.bgOK = false ;
     this.checkbg () ;
-
   }
+
   mincont(cc: number){
     this.cont[cc].livello--;
     if (this.cont[cc].livello==0) {
@@ -184,7 +204,7 @@ export class CreaComponent implements OnInit {
 
   checkbg () {
     let ok = false;
-    if ( (this.sommaBG === this.maxBG) && (this.sommaCont === this.maxCont) ) {
+    if ( (this.sommaBG === this.maxBG) && ((this.sommaCont === this.maxCont)||this.maxCont===0 )) {
       ok = true;
     }
     if (this.maxCont > 0) {
@@ -199,11 +219,106 @@ export class CreaComponent implements OnInit {
         ok = false;
       }
     }
-
     this.bgOK = ok;
-    return ok ;
   }
 
-  doCrea() {}
+  changeGen(bggen:number) {
+    console.log("BG gen = "+bggen);
+    this.generazionePG = 13 - bggen;
 
+    console.log("generazionePG = "+this.generazionePG);
+
+    switch (this.generazionePG ) {
+      case 14:
+        this.attr0 = 4;
+        this.attr1 = 3;
+        this.attr2 = 2;
+        this.maxAttr = 9;
+        break;
+      case 13:
+        this.attr0 = 5;
+        this.attr1 = 4;
+        this.attr2 = 2;
+        this.maxAttr = 11;
+        break;
+      case 12:
+        this.attr0 = 6;
+        this.attr1 = 4;
+        this.attr2 = 2;
+        this.maxAttr = 12;
+        break;
+      case 11:
+        this.attr0 = 6;
+        this.attr1 = 5;
+        this.attr2 = 2;
+        this.maxAttr = 13;
+        break;
+      case 10:
+        this.attr0 = 7;
+        this.attr1 = 5;
+        this.attr2 = 3;
+        this.maxAttr = 15;
+        break;
+      case 9:
+        this.attr0 = 7;
+        this.attr1 = 6;
+        this.attr2 = 4;
+        this.maxAttr = 17;
+        break;
+      case 8:
+        this.attr0 = 8;
+        this.attr1 = 6;
+        this.attr2 = 4;
+        this.maxAttr = 18;
+        break;
+      default:
+        this.attr0 = 5;
+        this.attr1 = 4;
+        this.attr2 = 2;
+        this.maxAttr = 11;
+        break;
+    }
+    this.checkattr();
+  }
+
+  minattr(id:number) {
+    this.attributi[id].Livello--;
+
+    this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello + this.attributi[6].Livello;
+    this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello + this.attributi[7].Livello;
+    this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello + this.attributi[8].Livello;
+
+    this.attrCorrenteSort = this.attrCorrente.sort((n1,n2) => n1 - n2);
+
+    this.sommaAttr--;
+
+    //console.log ("sommaAttr "+this.sommaAttr+" maxAttr "+this.maxAttr);
+    this.checkattr();
+
+  }
+  addattr(id:number) {
+    this.attributi[id].Livello++;
+
+    this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello + this.attributi[6].Livello;
+    this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello + this.attributi[7].Livello;
+    this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello + this.attributi[8].Livello;
+
+    this.attrCorrenteSort = this.attrCorrente.sort((n1,n2) => n1 - n2);
+
+    this.sommaAttr++;
+    //console.log ("sommaAttr "+this.sommaAttr+" maxAttr "+this.maxAttr);
+    this.checkattr();
+  }
+
+  checkattr () {
+    this.attrOK = false;
+    if ( this.attr2 + 3 == this.attrCorrenteSort[0] &&
+         this.attr1 + 3 == this.attrCorrenteSort[1] &&
+         this.attr0 + 3 == this.attrCorrenteSort[2] ) {
+      this.attrOK = true;
+    }
+    console.log("attrOK "+this.attrOK );
+    console.log(this.attr2+ " "+this.attr1+" " +this.attr0);
+    console.log(this.attrCorrenteSort[0]+ " "+this.attrCorrenteSort[1]+" " +this.attrCorrenteSort[2]);
+  }
 }

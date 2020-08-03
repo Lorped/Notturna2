@@ -141,3 +141,18 @@ export class Status {
   idstatus = 0;
   status = '';
 }
+
+/* @Injectable() */
+export class Attributo {
+  public IDattributo: number;
+  public NomeAttributo: string;
+  public Tipologia: string;
+  public Livello: number;
+  constructor ( id: number, n: string, t: string, l: number) {
+    this.IDattributo = id ;
+    this.NomeAttributo = n;
+    this.Tipologia = t;
+    this.Livello = l;
+  }
+
+}

@@ -7,94 +7,92 @@
 </div>
 
 
-<mat-horizontal-stepper #stepper [linear]="true">
+<mat-horizontal-stepper #stepper [linear]="isLinear">
+
   <mat-step [stepControl]="creaForm" errorMessage="Campi obbigatori">
     <ng-template matStepLabel>Dati del personaggio e Status iniziale</ng-template>
     <form id="crea-form" [formGroup]="creaForm"  #formDir="ngForm">
 
-     <mat-card class="mycontainer">
+    <mat-card class="mycontainer">
 <!--         <mat-card-content>
 -->
+      <mat-form-field appearance="fill" class="full-width-input" >
+        <mat-label>Nome Personaggio</mat-label>
+        <input matInput placeholder="Nome Personaggio" formControlName="nomepersonaggio">
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input" >
-          <mat-label>Nome Personaggio</mat-label>
-          <input matInput placeholder="Nome Personaggio" formControlName="nomepersonaggio">
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Nome del Giocatore</mat-label>
+        <input matInput placeholder="Nome Giocatore" formControlName="nomeplayer">
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Nome del Giocatore</mat-label>
-          <input matInput placeholder="Nome Giocatore" formControlName="nomeplayer">
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Clan</mat-label>
+        <mat-select formControlName="clanPG" >
+          <mat-option *ngFor="let i of clan" [value]="i.idclan">{{i.nomeclan}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Clan</mat-label>
-          <mat-select formControlName="clanPG" >
-            <mat-option *ngFor="let i of clan" [value]="i.idclan">{{i.nomeclan}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Status Iniziale</mat-label>
+        <mat-select formControlName="statusPG" (selectionChange)="changestatus()">
+          <mat-option *ngFor="let i of status" [value]="i.idstatus">{{i.status}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Status Iniziale</mat-label>
-          <mat-select formControlName="statusPG" (selectionChange)="changestatus()">
-            <mat-option *ngFor="let i of status" [value]="i.idstatus">{{i.status}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <br>
 
-        <br>
+      <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Rifugio</mat-label>
+        <input matInput placeholder="Rifugio" formControlName="rifugio">
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Rifugio</mat-label>
-          <input matInput placeholder="Rifugio" formControlName="rifugio">
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Zona Indicativa</mat-label>
+        <input matInput placeholder="Indirizzo o Zona" formControlName="zona">
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Zona Indicativa</mat-label>
-          <input matInput placeholder="Indirizzo o Zona" formControlName="zona">
-        </mat-form-field>
-
-
-        <div>
-          <button mat-raised-button matStepperNext color="primary" [disabled]="!formDir.form.valid" >Prosegui</button>
-        </div>
+      <div>
+        <button mat-raised-button matStepperNext color="primary" [disabled]="!formDir.form.valid" >Prosegui</button>
+      </div>
 <!--      </mat-card-content>
--->   </mat-card>
+-->
+    </mat-card>
 
-<mat-card>
-  <mat-card-content class="justified">
+    <mat-card>
+      <mat-card-content class="justified">
   Scegliete il nome del vostro Personaggio, ma inserite anche il vostro Nome Reale. Lo status iniziale è quello di Neonato a meno che non abbiate preso accordi specifici con la Narrazione.
   <br>Per il Rifugio indicate o un valore specifico (es.: Palazzo Barberini) o la  tipologia (es.: Palazzo ottocentesco, Appartamento, Capannone abbandonato..) e possibilmente la zona (in alternativa va bene Centro, Periferia ecc...)
-  </mat-card-content>
-</mat-card>
+      </mat-card-content>
+    </mat-card>
     </form>
   </mat-step>
 
-  <mat-step errorMessage="Distribuzione non corretta" completed=bgOK [hasError]="!bgOK&&sommaBG!=0" >
+  <mat-step errorMessage="Distribuzione non corretta" [completed]=bgOK [hasError]="!bgOK&&sommaBG!=0" >
     <ng-template matStepLabel>Background</ng-template>
 
-    <div >
-      <mat-card>
-        Punti background diponibili: {{maxBG - sommaBG}}
-      </mat-card>
-    </div>
+    <mat-card>
+      Punti background da assegnare: {{maxBG - sommaBG}}
+    </mat-card>
+
 
     <div class="bgcard-container">
-    <mat-card class="bgcard" *ngFor="let b of bg">
-      <mat-card-content >
+      <mat-card class="bgcard" *ngFor="let b of bg">
+        <mat-card-content>
 
-      <div>
-        {{b.nomeback}}
-        <button  class="btn  btn-xs" (click)="minbg(b.idback)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
-        <i *ngFor="let i of b.MaxIniziale | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
-        <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG"><i class="fa fa-plus"></i></button>
-      </div>
+        <div>
+          {{b.nomeback}}
+          <button  class="btn  btn-xs" (click)="minbg(b.idback)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
+          <i *ngFor="let i of b.MaxIniziale | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
+          <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG"><i class="fa fa-plus"></i></button>
+        </div>
 
-    </mat-card-content>
-    </mat-card>
+      </mat-card-content>
+      </mat-card>
     </div>
 
 
     <div class="bgcard-container" *ngIf="maxCont>0">
-      <form  >
       <table>
         <tr>
           <td>
@@ -126,24 +124,53 @@
           </td>
         </tr>
       </table>
-      </form>
-      <div class="alc">
-        <span class="white">Inserire una descrizione succinta (p.es. "Min. Interno", "Questura di Roma", "Banca XYZ" ecc. ) dei contatti e il loro valore.</span>
+      <div >
+        <span class="white small">Inserire una descrizione succinta (p.es. "Min. Interno", "Questura di Roma", "Banca XYZ" ecc. ) dei contatti e il loro valore.</span>
       </div>
       <mat-error *ngIf="this.sommaCont != this.maxCont">La somma dei singoli contatti deve essere pari al valore del Background</mat-error>
+    </div>
 
-    </div>
-    <div>
-      <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK" >Prosegui</button>
-    </div>
     <mat-card>
+      <div>
+        <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK" >Prosegui</button>
+      </div>
+    </mat-card>
+    <mat-card >
       <mat-card-content class="justified">
       Distribuite i punti Background a vostra disposizione. Il Rifugio ha automaticamente un valore di uno (ma nel corso della cronaca potrete perderlo). In caso sceglieste il background Contatti vi sarà chiesto di dettagliarlo e (in caso voleste avere più di un contatto) di distribuire tra quelli indicati i punti di tale Background.
       </mat-card-content>
     </mat-card>
   </mat-step>
 
-  <mat-step errorMessage="Distribuzione non corretta" completed=attrOK>
+  <mat-step errorMessage="Distribuzione non corretta" [completed]=attrOK [hasError]="!attrOK&&sommaAttr!=0">
+    <ng-template matStepLabel>Attributi e Discipline</ng-template>
+
+    <mat-card>
+      Distribuzione Richiesta: [ {{attr0+3}} , {{attr1+3}} , {{attr2+3}} ]
+      <br>
+      Distribuzione Attuale: [ {{attrCorrenteSort[2]}} , {{attrCorrenteSort[1]}} , {{attrCorrenteSort[0]}} ]
+    </mat-card>
+
+    <mat-card>
+      <mat-grid-list cols="3" rowHeight="6:1">
+        <mat-grid-tile >Attributi Fisici</mat-grid-tile>
+        <mat-grid-tile >Attributi Sociali</mat-grid-tile>
+        <mat-grid-tile >Attributi Mentali</mat-grid-tile>
+        <mat-grid-tile *ngFor="let attr of attributi">
+          <div class="half all">{{attr.NomeAttributo}}</div>
+          <div class="half">
+          <button  class="btn  btn-xs" (click)="minattr(attr.IDattributo)" [disabled]="attr.Livello<2"><i class="fa fa-minus"></i></button>
+          <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > attr.Livello , 'dred': ix < attr.Livello }"></i>
+          <button class="btn  btn-xs" (click)="addattr(attr.IDattributo)" [disabled]="attr.Livello>4||sommaAttr>=maxAttr"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+
+
+    </mat-card>
+
+
   </mat-step >
 
 </mat-horizontal-stepper>
