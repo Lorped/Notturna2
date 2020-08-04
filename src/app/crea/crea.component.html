@@ -405,7 +405,51 @@
     </mat-card>
   </mat-step >
 
-
-
+  <mat-step  errorMessage="Distribuzione non corretta" [completed]=freeOK [hasError]="(!freeOK && freepoint!=2)">
+    <ng-template matStepLabel>FDV e Sentieri</ng-template>
+    <mat-card>
+      Punti liberi: {{freepoint }}
+    </mat-card>
+    <mat-card>
+      <mat-grid-list cols="2" rowHeight="3em">
+        <mat-grid-tile>
+          <div class="half all ml ">Forza di Volontà</div>
+          <div class="half mr ">
+            <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="FDVadd==0"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > baseFDVmax+FDVadd , 'dred': ix < baseFDVmax+FDVadd }"></i>
+            <button class="btn  btn-xs" (click)="addfdv()" [disabled]="baseFDVmax+FDVadd>9||freepoint==0"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="half all ml ">Umanità / Sentiero</div>
+          <div class="half mr ">
+            <button  class="btn  btn-xs" (click)="minuma()" [disabled]="umanitaadd==0"><i class="fa fa-minus"></i></button>
+            <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > baseumanita+umanitaadd , 'dred': ix < baseumanita+umanitaadd }"></i>
+            <button class="btn  btn-xs" (click)="adduma()" [disabled]="baseumanita+umanitaadd>9||freepoint==0"><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>
+    <mat-card>
+      <mat-label>Sentiero</mat-label>
+      <mat-select  [disabled]="(baseFDVmax+FDVadd)<4" [(value)]="sentieroPG">
+        <mat-option *ngFor="let i of sentieri" [value]="i.idsentiero">{{i.sentiero}}</mat-option>
+      </mat-select>
+    </mat-card>
+    <mat-card>
+      <div>
+        <button mat-raised-button matStepperNext color="primary" [disabled]="!freeOK" >Prosegui</button>
+      </div>
+    </mat-card>
+    <mat-card >
+      <mat-card-content class="justified">
+      Potete aumentare la vostra Forza di Volontà oppure rafforzare il convincimento nella via dell'Umanità (o nel vostro Sentiero di Illuminazione). Per scegliere un Sentiero in fase di creazione del personaggio, dovete avere FdV pari almeno a 4. Si ricorda che scivolare verso la Bestia può portare alla perdita definitiva del vostro Personaggio.
+      </mat-card-content>
+    </mat-card>
+  </mat-step >
+  <mat-step>
+    <ng-template matStepLabel>Salva</ng-template>
+    REGIStra!
+  </mat-step>
 
 </mat-horizontal-stepper>

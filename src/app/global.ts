@@ -157,3 +157,9 @@ export class Attributo {
   }
 
 }
+
+@Injectable()
+export class Sentiero {
+  idsentiero = 0;
+  sentiero = '';
+}

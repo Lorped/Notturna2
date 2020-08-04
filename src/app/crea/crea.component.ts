@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill} from '../global';
+import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
@@ -14,7 +14,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 })
 export class CreaComponent implements OnInit {
 
-  isLinear = false;  // CHANGEMEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!
+  isLinear = true;  // CHANGEMEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
@@ -115,8 +115,18 @@ export class CreaComponent implements OnInit {
   skill: Array<Skill> = [];
   attitudini: Array<Skill> = [];
 
-  FDVmax = 2;          /* Dipende da Status */
-  umanita = 5;         /* Punteggio base */
+
+  sentieri: Array<Sentiero> = [];
+  baseFDVmax = 2;           /* Dipende da Status */
+  FDVadd = 0;
+
+  baseumanita = 5;          /* Punteggio base */
+  umanitaadd = 0;
+
+  freepoint = 2;        /* da spendere su FdV o umanità */
+  freeOK = false;
+
+  sentieroPG = "1";       /* umanità */
 
 
   constructor(private schedaservice: SchedaService) { }
@@ -137,6 +147,7 @@ export class CreaComponent implements OnInit {
           this.disciplinevili = data.disciplinevili;
           this.skill = data.skill;
           this.attitudini = data.attitudini;
+          this.sentieri = data.sentieri;
 
           for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
               this.bg[j].livello = this.bg[j].MinIniziale;
@@ -197,37 +208,37 @@ export class CreaComponent implements OnInit {
       case "0":
         this.maxBG = 5;
         this.numDisc = 4;
-        this.FDVmax = 1;
+        this.baseFDVmax = 1;
         break;
       case "1":
         this.maxBG = 6;
         this.numDisc = 5;
-        this.FDVmax = 2;
+        this.baseFDVmax = 2;
         break;
       case "2":
         this.maxBG = 8;
         this.numDisc = 6;
-        this.FDVmax = 3;
+        this.baseFDVmax = 3;
         break;
       case "3":
         this.maxBG = 10;
         this.numDisc = 7;
-        this.FDVmax = 4;
+        this.baseFDVmax = 4;
         break;
       case "4":
         this.maxBG = 15;
         this.numDisc = 10;
-        this.FDVmax = 5;
+        this.baseFDVmax = 5;
         break;
       case "5":
         this.maxBG = 25;
         this.numDisc = 15;
-        this.FDVmax = 7;
+        this.baseFDVmax = 7;
         break;
       default:
         this.maxBG = 6;
         this.numDisc = 5;
-        this.FDVmax = 2;
+        this.baseFDVmax = 2;
         break;
     }
     this.changeMaxDisc();
@@ -732,5 +743,34 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
 
+  addfdv(){
+    this.FDVadd++;
+    this.freepoint--;
+    this.checkFree();
+  }
+  minfdv(){
+    this.FDVadd--;
+    this.freepoint++;
+    if (this.baseFDVmax + this.FDVadd < 4) {
+      this.sentieroPG = "1";
+    }
+    this.checkFree();
+  }
+  adduma(){
+    this.umanitaadd++;
+    this.freepoint--;
+    this.checkFree();
+  }
+  minuma(){
+    this.umanitaadd--;
+    this.freepoint++;
+    this.checkFree();
+  }
+  checkFree() {
+    this.freeOK = false;
+    if (this.freepoint==0) {
+      this.freeOK = true;
+    }
+  }
 
 }
