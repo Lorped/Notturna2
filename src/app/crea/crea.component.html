@@ -157,9 +157,9 @@
 
     <mat-card>
       <mat-grid-list cols="3" rowHeight="6:1">
-        <mat-grid-tile >Attributi Fisici</mat-grid-tile>
-        <mat-grid-tile >Attributi Sociali</mat-grid-tile>
-        <mat-grid-tile >Attributi Mentali</mat-grid-tile>
+        <mat-grid-tile >Attributi Fisici  ( {{attrCorrente[0]}} )</mat-grid-tile>
+        <mat-grid-tile >Attributi Sociali ( {{attrCorrente[1]}} )</mat-grid-tile>
+        <mat-grid-tile >Attributi Mentali ( {{attrCorrente[2]}} )</mat-grid-tile>
         <mat-grid-tile *ngFor="let attr of attributi">
           <div class="half all ml">{{attr.NomeAttributo}}</div>
           <div class="half mr">

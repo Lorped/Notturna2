@@ -341,7 +341,7 @@ export class CreaComponent implements OnInit {
     this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello + this.attributi[7].Livello;
     this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello + this.attributi[8].Livello;
 
-    this.attrCorrenteSort = this.attrCorrente.sort((n1,n2) => n1 - n2);
+    this.attrCorrenteSort = this.attrCorrente.slice().sort((n1,n2) => n1 - n2);
 
     this.sommaAttr--;
 
@@ -354,7 +354,7 @@ export class CreaComponent implements OnInit {
     this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello + this.attributi[7].Livello;
     this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello + this.attributi[8].Livello;
 
-    this.attrCorrenteSort = this.attrCorrente.sort((n1,n2) => n1 - n2);
+    this.attrCorrenteSort = this.attrCorrente.slice().sort((n1,n2) => n1 - n2);
 
     this.sommaAttr++;
 
