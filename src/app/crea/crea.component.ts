@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia} from '../global';
+import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
@@ -20,13 +20,13 @@ export class CreaComponent implements OnInit {
   status: Array<Status> = [];
   bg: Array<Background> = [];
 
-  generazionePG = 13;
+  generazionePG = 13;     /* Generazione PG */
   puntiFerita = 8;
   is14 = false;
 
   bgOK = false;
   sommaBG = 0;
-  maxBG = 6;
+  maxBG = 6;            /* Numer BG disponibili */
 
   cont: Array<Contatti> = [];
 
@@ -57,10 +57,10 @@ export class CreaComponent implements OnInit {
 
   attributi: Array<Attributo> = [];
 
-  attr0 = 5;
+  attr0 = 5;              /* 5-4-2   e' la distrubuzione base  */
   attr1 = 4;
   attr2 = 2;
-  maxAttr = 11;
+  maxAttr = 11;           /* 5+4+2 = 11  somam della distribuzione  */
   sommaAttr = 0;
   attrCorrente = [ 3 , 3 , 3 ];
   attrCorrenteSort = [ 3 , 3 , 3 ];
@@ -78,8 +78,8 @@ export class CreaComponent implements OnInit {
   disciplinevili: Array<Disciplina> = [];
 
   sommaDisc = 0 ;
-  numDisc = 5 ;
-  maxDisc = 3 ;
+  numDisc = 5 ;             /* punti disciplina  */
+  maxDisc = 3 ;             /* max livello disciplina  */
 
   discOK = false;
 
@@ -92,6 +92,18 @@ export class CreaComponent implements OnInit {
     [ 4, 5, 5, 5, 5, 5, 5 ],
     [ 5, 5, 5, 5, 5, 5, 5 ]
   ];
+
+  skillOK = false;
+  sommaSkill = 0;
+  numSkill = 30;
+
+  attitudiniOK = false;
+  sommaAttitudini = 0 ;
+  numAttitudini = 4 ;           /* punti Attitudini  */
+  maxAttitudini = 1;
+
+  skill: Array<Skill> = [];
+  attitudini: Array<Skill> = [];
 
 
   constructor(private schedaservice: SchedaService) { }
@@ -110,6 +122,8 @@ export class CreaComponent implements OnInit {
           this.listaTaum = data.taumaturgie;
           this.listaNecro = data.necromanzie;
           this.disciplinevili = data.disciplinevili;
+          this.skill = data.skill;
+          this.attitudini = data.attitudini;
 
           for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
               this.bg[j].livello = this.bg[j].MinIniziale;
@@ -286,48 +300,56 @@ export class CreaComponent implements OnInit {
         this.attr1 = 3;
         this.attr2 = 2;
         this.maxAttr = 9;
+        this.numAttitudini = 4;
         break;
       case 13:
         this.attr0 = 5;
         this.attr1 = 4;
         this.attr2 = 2;
         this.maxAttr = 11;
+        this.numAttitudini = 4;
         break;
       case 12:
         this.attr0 = 6;
         this.attr1 = 4;
         this.attr2 = 2;
         this.maxAttr = 12;
+        this.numAttitudini = 4;
         break;
       case 11:
         this.attr0 = 6;
         this.attr1 = 5;
         this.attr2 = 2;
         this.maxAttr = 13;
+        this.numAttitudini = 4;
         break;
       case 10:
         this.attr0 = 7;
         this.attr1 = 5;
         this.attr2 = 3;
         this.maxAttr = 15;
+        this.numAttitudini = 5;
         break;
       case 9:
         this.attr0 = 7;
         this.attr1 = 6;
         this.attr2 = 4;
         this.maxAttr = 17;
+        this.numAttitudini = 7;
         break;
       case 8:
         this.attr0 = 8;
         this.attr1 = 6;
         this.attr2 = 4;
         this.maxAttr = 18;
+        this.numAttitudini = 8;
         break;
       default:
         this.attr0 = 5;
         this.attr1 = 4;
         this.attr2 = 2;
         this.maxAttr = 11;
+        this.numAttitudini = 4;
         break;
     }
     this.changeMaxDisc();
@@ -368,9 +390,9 @@ export class CreaComponent implements OnInit {
          this.attr0 + 3 == this.attrCorrenteSort[2] ) {
       this.attrOK = true;
     }
-    // console.log("attrOK "+this.attrOK );
-    // console.log(this.attr2+ " "+this.attr1+" " +this.attr0);
-    // console.log(this.attrCorrenteSort[0]+ " "+this.attrCorrenteSort[1]+" " +this.attrCorrenteSort[2]);
+
+    this.maxAttitudini = this.attributi[3].Livello;  /* DESTREZZA */
+
   }
 
   changeclan(){
@@ -608,8 +630,6 @@ export class CreaComponent implements OnInit {
 
   gen14() {
     this.is14 = (this.is14 ? false : true );
-    console.log(this.is14);
-
 
     this.creaForm.patchValue({
       statusPG: "1" ,
@@ -623,7 +643,6 @@ export class CreaComponent implements OnInit {
           this.bg[j].livello = 0;
         }
       }
-
       this.changeclan() ;
       this.changestatus ();
       this.changeGen (-1);
@@ -631,8 +650,54 @@ export class CreaComponent implements OnInit {
       this.generazionePG = 13 ;
       this.changeGen (0);
     }
+  }
 
+  addsk(sk: number) {
+    for (let j=0 ; j<this.skill.length ;j++ ) {
+      if ( this.skill[j].idskill === sk) {
+        this.skill[j].livello++;
+      }
+    }
+    this.sommaSkill++;
+    this.checkSkill();
+  }
+  minsk(sk:number) {
+    for (let j=0 ; j<this.skill.length ;j++ ) {
+      if ( this.skill[j].idskill === sk) {
+        this.skill[j].livello--;
+      }
+    }
+    this.sommaSkill--;
+    this.checkSkill();
+  }
+  addsk2(sk: number) {
+    for (let j=0 ; j<this.attitudini.length ;j++ ) {
+      if ( this.attitudini[j].idskill === sk) {
+        this.attitudini[j].livello++;
+      }
+    }
+    this.sommaAttitudini++;
+    this.checkSkill();
+  }
+  minsk2(sk:number) {
+    for (let j=0 ; j<this.attitudini.length ;j++ ) {
+      if ( this.attitudini[j].idskill === sk) {
+        this.attitudini[j].livello--;
+      }
+    }
+    this.sommaAttitudini--;
+    this.checkSkill();
+  }
 
+  checkSkill (){
+    this.skillOK = false;
+    this.attitudiniOK = false;
+
+    if ( this.sommaSkill == this.numSkill) this.skillOK = true;
+    if ( this.sommaAttitudini == this.numAttitudini) this.attitudiniOK = true;
+    for ( let j = 0 ; j < this.attitudini.length ; j++ ) {
+      if (this.attitudini[j].livello > this.maxAttitudini) this.attitudiniOK = false;
+    }
   }
 
 

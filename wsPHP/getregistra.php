@@ -42,10 +42,17 @@ while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 }
 
 $skill = [];
-$MySql = "SELECT * FROM skill_main ";
+$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 0 ";
 $Result = mysql_query($MySql);
 while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 	$skill[] =$res;
+}
+
+$attitudini = [];
+$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 1";
+$Result = mysql_query($MySql);
+while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	$attitudini[] =$res;
 }
 
 $taumaturgie = [];
@@ -80,6 +87,7 @@ $out = [
   "clan" => $clan ,
   "statuscama" => $statuscama ,
   "skill" => $skill ,
+	"attitudini" => $attitudini ,
   "sentieri" => $sentieri,
   "taumaturgie" => $taumaturgie,
   "necromanzie" => $necromanzie,

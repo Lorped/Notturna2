@@ -78,6 +78,7 @@ export class Skill {
   public idskill = 0;
   public nomeskill = '';
   public livello = 0;
+  public tipologia = 0;
 }
 
 @Injectable()
