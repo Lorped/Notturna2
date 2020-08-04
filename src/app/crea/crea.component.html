@@ -190,9 +190,9 @@
         <mat-grid-tile *ngFor="let dd of discipline">
           <div class="half all ml">{{dd.nomedisc}}</div>
           <div class="half mr">
-          <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<1||dd.iddisciplina==99||dd.iddisciplina==98"><i class="fa fa-minus"></i></button>
+          <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<1" *ngIf="dd.iddisciplina!=99&&dd.iddisciplina!=98"><i class="fa fa-minus"></i></button>
           <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello }"></i>
-          <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc||dd.iddisciplina==99||dd.iddisciplina==98"><i class="fa fa-plus"></i></button>
+          <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc" *ngIf="dd.iddisciplina!=99&&dd.iddisciplina!=98"><i class="fa fa-plus"></i></button>
           </div>
         </mat-grid-tile>
       </mat-grid-list>
@@ -205,7 +205,7 @@
             <mat-form-field>
             <mat-label>Via Primaria</mat-label>
             <mat-select [(value)]="taumaturgie[0].idtaum">
-              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum">{{tt.nometaum}}</mat-option>
+              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7)&&(statusPG!.value<'2')">{{tt.nometaum}}</mat-option>
             </mat-select>
             </mat-form-field>
           </div>
@@ -220,7 +220,7 @@
             <mat-form-field>
             <mat-label>Via Secondaria</mat-label>
             <mat-select  [(value)]="taumaturgie[1].idtaum" [disabled]="taumaturgie[0].idtaum == 0">
-              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum">{{tt.nometaum}}</mat-option>
+              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum" [disabled]="( (tt.idtaum==6||tt.idtaum==7)&&(statusPG!.value<'2'))||(tt.idtaum==taumaturgie[0].idtaum)||(tt.idtaum==taumaturgie[2].idtaum)">{{tt.nometaum}}</mat-option>
             </mat-select>
             </mat-form-field>
           </div>
@@ -235,7 +235,7 @@
             <mat-form-field>
             <mat-label>Via Terziaria</mat-label>
             <mat-select [(value)]="taumaturgie[2].idtaum" [disabled]="taumaturgie[1].idtaum == 0">
-              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum">{{tt.nometaum}}</mat-option>
+              <mat-option *ngFor="let tt of listaTaum" [value]="tt.idtaum" [disabled]="( (tt.idtaum==6||tt.idtaum==7)&&(statusPG!.value<'2'))||(tt.idtaum==taumaturgie[0].idtaum)||(tt.idtaum==taumaturgie[1].idtaum)">{{tt.nometaum}}</mat-option>
             </mat-select>
             </mat-form-field>
           </div>
@@ -261,7 +261,7 @@
             <mat-form-field>
             <mat-label>Via Primaria</mat-label>
             <mat-select [(value)]="necromanzie[0].idnecro">
-              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro">{{tt.nomenecro}}</mat-option>
+              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro" [disabled]="(tt.idnecro==4)&&(statusPG!.value<'2')">{{tt.nomenecro}}</mat-option>
             </mat-select>
             </mat-form-field>
           </div>
@@ -276,7 +276,7 @@
             <mat-form-field>
             <mat-label>Via Secondaria</mat-label>
             <mat-select  [(value)]="necromanzie[1].idnecro" [disabled]="necromanzie[0].idnecro == 0">
-              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro">{{tt.nomenecro}}</mat-option>
+              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro" [disabled]="( (tt.idnecro==4)&&(statusPG!.value<'2'))||(tt.idnecro==necromanzie[0].idnecro)||(tt.idnecro==necromanzie[2].idnecro)">{{tt.nomenecro}}</mat-option>
             </mat-select>
             </mat-form-field>
           </div>
@@ -291,7 +291,7 @@
             <mat-form-field>
             <mat-label>Via Terziaria</mat-label>
             <mat-select [(value)]="necromanzie[2].idnecro" [disabled]="necromanzie[1].idnecro == 0">
-              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro">{{tt.nomenecro}}</mat-option>
+              <mat-option *ngFor="let tt of listaNecro" [value]="tt.idnecro" [disabled]="( (tt.idnecro==4)&&(statusPG!.value<'2'))||(tt.idnecro==necromanzie[0].idnecro)||(tt.idnecro==necromanzie[1].idnecro)">{{tt.nomenecro}}</mat-option>
             </mat-select>
             </mat-form-field>
           </div>
@@ -314,7 +314,7 @@
     <mat-card >
       <mat-card-content class="justified">
       Distribuite i livelli a vostra disposizione per le vostre discipline, tenendo presenti i limiti dovuti ad anzianità (Generazione) e Status. Una disciplina non sviluppata (ossia a zero) rimarrà come vostra Disciplina di Clan per gli sviluppi futuri.<br>
-      Tremere, Giovanni e Cappadoci non sviluppano direttamente Taumaturgia o Necromanzia, ma scelgono la loro Via Primaria (ed eventualmente qualla Secondaria e Terziaria) assegnando a questa i livelli. Ricordate che la via Primaria deve avere un livello maggiore della Secondaria ecc. Una Via lasciata zero non verrà segnata (in pratica, se lasciata la Via Secondaria a zero, dovrete rifare la scelta quando la svilupperete la prima volta).
+      Tremere, Giovanni e Cappadoci non sviluppano direttamente Taumaturgia o Necromanzia, ma scelgono la loro Via Primaria (ed eventualmente qualla Secondaria e Terziaria) assegnando a questa i livelli. Ricordate che la via Primaria deve avere un livello maggiore della Secondaria ecc. Una Via lasciata a zero non verrà segnata (in pratica, se lasciata la Via Secondaria a zero, dovrete rifare la scelta quando la svilupperete la prima volta).
       </mat-card-content>
     </mat-card>
 
