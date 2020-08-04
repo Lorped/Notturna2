@@ -93,6 +93,16 @@ export class CreaComponent implements OnInit {
     [ 5, 5, 5, 5, 5, 5, 5 ]
   ];
 
+  matriceNumSkill: number[][] = [
+    [ 20, 20, 17, 15, 13, 10, 5 ],
+    [ 33, 30, 27, 25, 20, 15, 10 ],
+    [ 35, 35, 33, 30, 25, 20, 15 ],
+    [ 45, 45, 43, 40, 35, 30, 20 ],
+    [ 55, 55, 53, 50, 45, 40, 30 ],
+    [ 95, 95, 93, 90, 80, 70, 50 ]
+  ];
+
+
   skillOK = false;
   sommaSkill = 0;
   numSkill = 30;
@@ -104,6 +114,9 @@ export class CreaComponent implements OnInit {
 
   skill: Array<Skill> = [];
   attitudini: Array<Skill> = [];
+
+  FDVmax = 2;          /* Dipende da Status */
+  umanita = 5;         /* Punteggio base */
 
 
   constructor(private schedaservice: SchedaService) { }
@@ -184,33 +197,41 @@ export class CreaComponent implements OnInit {
       case "0":
         this.maxBG = 5;
         this.numDisc = 4;
+        this.FDVmax = 1;
         break;
       case "1":
         this.maxBG = 6;
         this.numDisc = 5;
+        this.FDVmax = 2;
         break;
       case "2":
         this.maxBG = 8;
         this.numDisc = 6;
+        this.FDVmax = 3;
         break;
       case "3":
         this.maxBG = 10;
         this.numDisc = 7;
+        this.FDVmax = 4;
         break;
       case "4":
         this.maxBG = 15;
         this.numDisc = 10;
+        this.FDVmax = 5;
         break;
       case "5":
         this.maxBG = 25;
         this.numDisc = 15;
+        this.FDVmax = 7;
         break;
       default:
         this.maxBG = 6;
         this.numDisc = 5;
+        this.FDVmax = 2;
         break;
     }
     this.changeMaxDisc();
+    this.changeNumSkill();
     this.checkbg () ;
   }
 
@@ -353,6 +374,7 @@ export class CreaComponent implements OnInit {
         break;
     }
     this.changeMaxDisc();
+    this.changeNumSkill();
     this.checkattr();
   }
 
@@ -698,6 +720,16 @@ export class CreaComponent implements OnInit {
     for ( let j = 0 ; j < this.attitudini.length ; j++ ) {
       if (this.attitudini[j].livello > this.maxAttitudini) this.attitudiniOK = false;
     }
+  }
+
+
+  changeNumSkill () {
+    let indexGen = 14 - this.generazionePG;
+    let indexStat = this.statusPG!.value;
+
+    this.numSkill = this.matriceNumSkill [indexStat][indexGen];
+
+    this.checkSkill();
   }
 
 

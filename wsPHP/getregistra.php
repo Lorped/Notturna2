@@ -42,7 +42,7 @@ while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 }
 
 $skill = [];
-$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 0 ";
+$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 0 ORDER BY nomeskill";
 $Result = mysql_query($MySql);
 while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 	$skill[] =$res;

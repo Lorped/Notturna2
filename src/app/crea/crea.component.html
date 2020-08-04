@@ -65,8 +65,8 @@
 
     <mat-card>
       <mat-card-content class="justified">
-  Scegliete il nome del vostro Personaggio, ma inserite anche il vostro Nome Reale. Lo status iniziale è quello di Neonato a meno che non abbiate preso accordi specifici con la Narrazione.
-  <br>Per il Rifugio indicate o la descrizione puntuale (es.: Palazzo Barberini) o la  tipologia (es.: Villa ottocentesca, Appartamento, Capannone abbandonato...) e possibilmente la zona (in alternativa va bene Centro, Periferia ecc.).
+  Scegliete il nome del vostro Personaggio ed il Clan di appartenenza, ma inserite anche il vostro Nome Reale. Lo status iniziale è quello di Neonato a meno che non abbiate preso accordi specifici con la Narrazione.
+  <br>Per il Rifugio indicate o la descrizione puntuale (es.: Palazzo Barberini) o la tipologia (es.: Villa ottocentesca, Appartamento, Capannone abbandonato...) e possibilmente la zona (in alternativa va bene Centro, Periferia ecc.).
   Scegliendo di essere di 14a generazione sarete automaticamente dei Vili e ovviamente non potrete accedere al background Generazione.
       </mat-card-content>
     </mat-card>
@@ -156,7 +156,7 @@
     </mat-card>
 
     <mat-card>
-      <mat-grid-list cols="3" rowHeight="6:1">
+      <mat-grid-list cols="3" rowHeight="3em">
         <mat-grid-tile >Attributi Fisici  ( {{attrCorrente[0]}} )</mat-grid-tile>
         <mat-grid-tile >Attributi Sociali ( {{attrCorrente[1]}} )</mat-grid-tile>
         <mat-grid-tile >Attributi Mentali ( {{attrCorrente[2]}} )</mat-grid-tile>
@@ -355,18 +355,19 @@
       <mat-card-content class="justified">
       Distribuite i livelli a vostra disposizione per le vostre discipline, tenendo presenti i limiti dovuti ad anzianità (Generazione) e Status. Una disciplina non sviluppata (ossia a zero) rimarrà come vostra Disciplina di Clan per gli sviluppi futuri.<br>
       Tremere, Giovanni e Cappadoci non sviluppano direttamente Taumaturgia o Necromanzia, ma scelgono la loro Via Primaria (ed eventualmente qualla Secondaria e Terziaria) assegnando a questa i livelli. Ricordate che la via Primaria deve avere un livello maggiore della Secondaria ecc. Una Via lasciata a zero non verrà segnata (in pratica, se lasciata la Via Secondaria a zero, dovrete rifare la scelta quando la svilupperete la prima volta).
+      <br>I Vili possono scegliere fino a tre Discipline tra quelle indicate. Qualsiasi disciplina non presa, o con un livello zero, sarà considerata non conosciuta.
       </mat-card-content>
     </mat-card>
   </mat-step >
 
-  <mat-step errorMessage="Distribuzione non corretta" [completed]=skillOK [hasError]="!skillOK && sommaSkill!=0">
+  <mat-step errorMessage="Distribuzione non corretta" [completed]=skillOK&&attitudiniOK [hasError]="(!skillOK && sommaSkill!=0)||(!attitudiniOK && sommaAttitudini!=0)">
     <ng-template matStepLabel>Skill</ng-template>
 
     <mat-card>
       Attitudini -- Punti da distribuire: {{ numAttitudini - sommaAttitudini }} - Livello massimo: {{ maxAttitudini }}
     </mat-card>
     <mat-card>
-      <mat-grid-list cols="3" rowHeight="4em">
+      <mat-grid-list cols="3" rowHeight="3em">
         <mat-grid-tile *ngFor="let sk of attitudini">
             <div class="half all ml">{{sk.nomeskill}}</div>
             <div class="half mr">
@@ -378,10 +379,10 @@
       </mat-grid-list>
     </mat-card>
     <mat-card>
-      Skill -- Punti da distibuire: {{ numSkill - sommaSkill }}
+      Conoscenze -- Punti da distribuire: {{ numSkill - sommaSkill }}
     </mat-card>
     <mat-card>
-      <mat-grid-list cols="4" rowHeight="4em">
+      <mat-grid-list cols="4" rowHeight="3em">
         <mat-grid-tile *ngFor="let sk of skill">
             <div class="half all ml ">{{sk.nomeskill}}</div>
             <div class="half mr ">
@@ -394,12 +395,12 @@
     </mat-card>
     <mat-card>
       <div>
-        <button mat-raised-button matStepperNext color="primary" [disabled]="!skillOK" >Prosegui</button>
+        <button mat-raised-button matStepperNext color="primary" [disabled]="!skillOK||!attitudiniOK" >Prosegui</button>
       </div>
     </mat-card>
     <mat-card >
       <mat-card-content class="justified">
-      Descrizione.....
+      Non vi è una reale differenza tra le Attitudini e le Competenze, se non che le prime sono strettatmente legate agli skill di combattimento, mentre le seconde rappresentano le conoscenze generali del personaggio. Il limite di crescita delle prime è legato al vostro punteggio di Destrezza, mentre le seconde possono crescere fino al livello massimo.
       </mat-card-content>
     </mat-card>
   </mat-step >
