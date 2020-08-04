@@ -21,7 +21,7 @@ include ('db.inc.php');
 
 
 $clan = [];
-$MySql = "SELECT idclan, nomeclan FROM clan ";
+$MySql = "SELECT idclan, nomeclan FROM clan ORDER BY nomeclan";
 $Result = mysql_query($MySql);
 while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 	$clan[] = $res;
@@ -69,6 +69,13 @@ while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 	$sentieri[] =$res;
 }
 
+$disciplinevili = [];
+$MySql = "SELECT * FROM discipline_main WHERE vili = 1 ";
+$Result = mysql_query($MySql);
+while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	$disciplinevili[] =$res;
+}
+
 $out = [
   "clan" => $clan ,
   "statuscama" => $statuscama ,
@@ -76,7 +83,8 @@ $out = [
   "sentieri" => $sentieri,
   "taumaturgie" => $taumaturgie,
   "necromanzie" => $necromanzie,
-	"background" => $background
+	"background" => $background,
+	"disciplinevili" => $disciplinevili
 ];
 
 header("HTTP/1.1 200 OK");

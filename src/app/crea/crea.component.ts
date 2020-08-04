@@ -22,6 +22,7 @@ export class CreaComponent implements OnInit {
 
   generazionePG = 13;
   puntiFerita = 8;
+  is14 = false;
 
   bgOK = false;
   sommaBG = 0;
@@ -74,6 +75,8 @@ export class CreaComponent implements OnInit {
   listaNecro: Array<Necromanzia> = [];
 
 
+  disciplinevili: Array<Disciplina> = [];
+
   sommaDisc = 0 ;
   numDisc = 5 ;
   maxDisc = 3 ;
@@ -106,6 +109,7 @@ export class CreaComponent implements OnInit {
           this.bg = data.background;
           this.listaTaum = data.taumaturgie;
           this.listaNecro = data.necromanzie;
+          this.disciplinevili = data.disciplinevili;
 
           for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
               this.bg[j].livello = this.bg[j].MinIniziale;
@@ -483,6 +487,14 @@ export class CreaComponent implements OnInit {
         this.discipline[1].nomedisc='Necromanzia';
         this.discipline[2].nomedisc='Robustezza';
       break;
+      case "20":	// Vili
+        this.discipline[0].iddisciplina=0;
+        this.discipline[1].iddisciplina=0;
+        this.discipline[2].iddisciplina=0;
+        this.discipline[0].nomedisc='';
+        this.discipline[1].nomedisc='';
+        this.discipline[2].nomedisc='';
+      break;
     }
 
     // RESET Discipline pr evitare problemi
@@ -497,6 +509,7 @@ export class CreaComponent implements OnInit {
       this.necromanzie[j].idnecro = 0;
     }
     this.sommaDisc = 0 ;
+    this.discOK = false;
 
   }
 
@@ -592,5 +605,35 @@ export class CreaComponent implements OnInit {
     this.sommaDisc++;
     this.checkDisc();
   }
+
+  gen14() {
+    this.is14 = (this.is14 ? false : true );
+    console.log(this.is14);
+
+
+    this.creaForm.patchValue({
+      statusPG: "1" ,
+      clanPG: "20"});
+
+    if ( this.is14 )  {
+      this.generazionePG = 14 ;
+      for (let j = 0; j < this.bg.length; j++ ) {
+        if ( this.bg[j].idback == 5) { /* generazione */
+          this.sommaBG = this.sommaBG - this.bg[j].livello;
+          this.bg[j].livello = 0;
+        }
+      }
+
+      this.changeclan() ;
+      this.changestatus ();
+      this.changeGen (-1);
+    } else {
+      this.generazionePG = 13 ;
+      this.changeGen (0);
+    }
+
+
+  }
+
 
 }

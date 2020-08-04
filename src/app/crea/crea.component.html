@@ -28,7 +28,7 @@
 
       <mat-form-field appearance="fill" class="full-width-input">
         <mat-label>Clan</mat-label>
-        <mat-select formControlName="clanPG" (selectionChange)="changeclan()">
+        <mat-select formControlName="clanPG" (selectionChange)="changeclan()" [disabled]="is14">
           <mat-option *ngFor="let i of clan" [value]="i.idclan">{{i.nomeclan}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -52,6 +52,10 @@
         <input matInput placeholder="Indirizzo o Zona" formControlName="zona">
       </mat-form-field>
 
+      <mat-checkbox color="warn" (change)="gen14()" >
+        14a Gen.
+      </mat-checkbox>
+
       <div>
         <button mat-raised-button matStepperNext color="primary" [disabled]="!formDir.form.valid" >Prosegui</button>
       </div>
@@ -62,7 +66,8 @@
     <mat-card>
       <mat-card-content class="justified">
   Scegliete il nome del vostro Personaggio, ma inserite anche il vostro Nome Reale. Lo status iniziale è quello di Neonato a meno che non abbiate preso accordi specifici con la Narrazione.
-  <br>Per il Rifugio indicate o un valore specifico (es.: Palazzo Barberini) o la  tipologia (es.: Palazzo ottocentesco, Appartamento, Capannone abbandonato..) e possibilmente la zona (in alternativa va bene Centro, Periferia ecc...)
+  <br>Per il Rifugio indicate o la descrizione puntuale (es.: Palazzo Barberini) o la  tipologia (es.: Villa ottocentesca, Appartamento, Capannone abbandonato...) e possibilmente la zona (in alternativa va bene Centro, Periferia ecc.).
+  Scegliendo di essere di 14a generazione sarete automaticamente dei Vili e ovviamente non potrete accedere al background Generazione.
       </mat-card-content>
     </mat-card>
     </form>
@@ -84,7 +89,7 @@
           {{b.nomeback}}
           <button  class="btn  btn-xs" (click)="minbg(b.idback)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
           <i *ngFor="let i of b.MaxIniziale | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
-          <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG"><i class="fa fa-plus"></i></button>
+          <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG||(is14&&b.idback==5)"><i class="fa fa-plus"></i></button>
         </div>
 
       </mat-card-content>
@@ -185,7 +190,7 @@
       Punti da distribuire: {{ numDisc - sommaDisc }}   --   Massimo livello di disciplina: {{ maxDisc }}
     </mat-card>
 
-    <mat-card>
+    <mat-card *ngIf="clanPG!.value!=20">
       <mat-grid-list cols="3" rowHeight="6:1">
         <mat-grid-tile *ngFor="let dd of discipline">
           <div class="half all ml">{{dd.nomedisc}}</div>
@@ -308,6 +313,44 @@
       (necromanzie[1].idnecro==necromanzie[2].idnecro)&&necromanzie[1].idnecro!=0 ||
       (necromanzie[2].idnecro==necromanzie[0].idnecro)&&necromanzie[2].idnecro!=0
       )">Vie Duplicate</mat-error>
+    </mat-card>
+
+
+    <mat-card *ngIf="clanPG!.value==20">   <!---          VILI -->
+      <mat-grid-list cols="3" rowHeight="6:1">
+        <mat-grid-tile *ngFor="let dd of discipline; let ixx = index">
+          <div class="half all ml">
+            <mat-form-field>
+            <mat-label>Disciplina {{ixx+1}}</mat-label>
+            <mat-select [(value)]="discipline[ixx].iddisciplina">
+              <mat-option *ngFor="let tt of disciplinevili" [value]="tt.iddisciplina" [disabled]="(
+              ( ixx==0 && ( (tt.iddisciplina==discipline[1].iddisciplina) || (tt.iddisciplina==discipline[2].iddisciplina) ) ) ||
+              ( ixx==1 && ( (tt.iddisciplina==discipline[2].iddisciplina) || (tt.iddisciplina==discipline[0].iddisciplina) ) ) ||
+              ( ixx==2 && ( (tt.iddisciplina==discipline[0].iddisciplina) || (tt.iddisciplina==discipline[1].iddisciplina) ) ) ||
+              (tt.iddisciplina == 18 && !is14)
+              )">{{tt.nomedisc}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="half mr">
+          <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<1" ><i class="fa fa-minus"></i></button>
+          <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello }"></i>
+          <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc||discipline[ixx].iddisciplina==0" ><i class="fa fa-plus"></i></button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-error *ngIf="(
+      (discipline[0].iddisciplina==discipline[1].iddisciplina)&&discipline[0].iddisciplina!=0 ||
+      (discipline[1].iddisciplina==discipline[2].iddisciplina)&&discipline[1].iddisciplina!=0 ||
+      (discipline[2].iddisciplina==discipline[0].iddisciplina)&&discipline[2].iddisciplina!=0
+      )">Discipline Duplicate</mat-error>
+    </mat-card>
+
+
+    <mat-card>
+      <div>
+        <button mat-raised-button matStepperNext color="primary" [disabled]="!discOK" >Prosegui</button>
+      </div>
     </mat-card>
 
 

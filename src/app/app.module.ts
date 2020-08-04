@@ -18,6 +18,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 //
 
 import { AuthenticationService } from './services/index';
@@ -58,7 +59,8 @@ import { TimesPipe } from './times.pipe';
     MatGridListModule,
     MatToolbarModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatCheckboxModule
 
 
   ],
