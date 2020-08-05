@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../services/index';
+import { Basicpg } from '../global';
 
 @Component({
   selector: 'app-scheda',
@@ -9,6 +10,7 @@ import { SchedaService } from '../services/index';
 export class SchedaComponent implements OnInit {
 
   idutente: number = 0 ;
+  scheda: Basicpg = new Basicpg();
 
   constructor(private schedaservice: SchedaService) { }
 
@@ -17,8 +19,10 @@ export class SchedaComponent implements OnInit {
     console.log(this.idutente);
     this.schedaservice.getscheda(this.idutente).
     subscribe (
-      data => {
+      (data: any) => {
         console.log(data);
+        this.scheda = data.user ;
+        console.log(this.scheda);
       }
     );
   }
