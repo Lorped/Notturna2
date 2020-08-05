@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero} from '../global';
+import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crea',
@@ -14,7 +15,7 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 })
 export class CreaComponent implements OnInit {
 
-  isLinear = true;  // CHANGEMEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!
+  isLinear = true;  // FALSE SOLO PER TEST !!!!!
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
@@ -129,14 +130,17 @@ export class CreaComponent implements OnInit {
   sentieroPG = "1";       /* umanità */
 
 
-  constructor(private schedaservice: SchedaService) { }
+  constructor(private schedaservice: SchedaService , private router: Router) { }
+
 
   ngOnInit(): void {
+
+    if ( sessionStorage.getItem('NotturnaUser1') == "1" ) this.router.navigate(['/main']);
 
     this.schedaservice.getregistra()
       .subscribe(
         (data: any) => {
-          console.log(data)
+          // console.log(data)
           this.clan = data.clan;
           this.status = data.statuscama;
           this.creaForm.patchValue({
@@ -321,10 +325,10 @@ export class CreaComponent implements OnInit {
   }
 
   changeGen(bggen:number) {
-    console.log("BG gen = "+bggen);
+    // console.log("BG gen = "+bggen);
     this.generazionePG = 13 - bggen;
 
-    console.log("generazionePG = "+this.generazionePG);
+    // console.log("generazionePG = "+this.generazionePG);
 
     switch (this.generazionePG ) {
       case 14:
@@ -607,8 +611,8 @@ export class CreaComponent implements OnInit {
         this.discOK = false;
       }
     }
-    console.log ( "sommaDisc= "+this.sommaDisc);
-    console.log ( "numDisc= "+this.numDisc);
+    // console.log ( "sommaDisc= "+this.sommaDisc);
+    // console.log ( "numDisc= "+this.numDisc);
   }
 
   mintaum(tt:number){
@@ -771,6 +775,48 @@ export class CreaComponent implements OnInit {
     if (this.freepoint==0) {
       this.freeOK = true;
     }
+  }
+
+  salvascheda() {
+    let aPG = new Basicpg();
+
+    aPG.nomeplayer = this.nomeplayer!.value ;
+    aPG.nomepg = this.nomepersonaggio!.value ;
+    aPG.idclan = this.clanPG!.value ;
+    aPG.generazione = this.generazionePG ;
+
+    aPG.forza = this.attributi[0].Livello ;
+    aPG.carisma = this.attributi[1].Livello ;
+    aPG.percezione = this.attributi[2].Livello ;
+    aPG.destrezza = this.attributi[3].Livello ;
+    aPG.persuasione = this.attributi[4].Livello ;
+    aPG.intelligenza = this.attributi[5].Livello ;
+    aPG.attutimento = this.attributi[6].Livello ;
+    aPG.saggezza = this.attributi[7].Livello ;
+    aPG.prontezza = this.attributi[8].Livello ;
+
+    aPG.fdv = this.baseFDVmax + this.FDVadd ;
+    aPG.idstatus = this.statusPG!.value ;
+
+    aPG.idsentiero = Number(this.sentieroPG) ;
+    aPG.valsentiero = this.baseumanita + this.umanitaadd ;
+
+    aPG.rifugio = this.rifugio!.value;
+    aPG.zona = this.zona!.value;
+
+    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill )
+      .subscribe(
+        data => {
+          //  OK!
+          sessionStorage.setItem('NotturnaUser1', "1" );
+          this.router.navigate(['/main']);
+        },
+        error => {
+          // KO !
+          console.log("ko");
+        }
+      );
+
   }
 
 }

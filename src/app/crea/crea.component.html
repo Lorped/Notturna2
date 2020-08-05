@@ -449,7 +449,17 @@
   </mat-step >
   <mat-step>
     <ng-template matStepLabel>Salva</ng-template>
-    REGIStra!
+    <mat-card >
+      <mat-card-content class="justified">
+      La creazione del vostro Personaggio è completata. Potete rivedere i passi effettuati oppure finalizzare la vostra scheda.
+      <br>Ulteriori parametri, calcolati automaticamente sulla base delle scelte effettuate, saranno visibili nella Scheda completa del personaggio.
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <div>
+        <button mat-raised-button matStepperNext color="primary" (click)="salvascheda()" >Finalizza la scheda</button>
+      </div>
+    </mat-card>
   </mat-step>
 
 </mat-horizontal-stepper>
