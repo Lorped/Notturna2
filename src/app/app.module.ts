@@ -31,6 +31,7 @@ import { AdminComponent } from './admin/admin.component';
 import { RegistraComponent } from './registra/registra.component';
 import { CreaComponent } from './crea/crea.component';
 import { TimesPipe } from './times.pipe';
+import { SchedaComponent } from './scheda/scheda.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TimesPipe } from './times.pipe';
     AdminComponent,
     RegistraComponent,
     CreaComponent,
-    TimesPipe
+    TimesPipe,
+    SchedaComponent
   ],
   imports: [
     BrowserModule,

@@ -7,24 +7,50 @@
 </div>
 
 
-<div class="card-container">
-
-  <a class="card"  [routerLink]="['/crea']">
-    <span><i class="fa fa-user-circle"></i> Crea la scheda</span>
-    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-    </a>
-
-  <a class="card"  [routerLink]="['/xx']">
-    <span><i class="fa fa-book"></i> Consulta il regolamento</span>
-    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-  </a>
-
-  <a class="card"  [routerLink]="['']">
-    <span><i class="fa fa-sign-out "></i> Logout</span>
-    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-  </a>
 
 
+<mat-card class="limited">
 
+  <mat-grid-list cols="3" rowHeight="3:1">
+    <mat-grid-tile>
+      <a [routerLink]="['/crea']">
+        <mat-card class="movable">
+          <mat-card-content >
+            <i class="fa fa-user-circle"></i> Crea la scheda <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
 
-</div>
+    <mat-grid-tile>
+      <a [routerLink]="['/xx']">
+        <mat-card class="movable">
+          <mat-card-content>
+            <i class="fa fa-book"></i> Consulta il regolamento <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <a [routerLink]="['']">
+        <mat-card class="movable">
+          <mat-card-content>
+            <i class="fa fa-sign-out"></i> Logout <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+</mat-card>
