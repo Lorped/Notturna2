@@ -22,8 +22,10 @@ export class Basicpg {
   public fdvmax = 0;
   public idstatus = 0;
   public status = ''; // da LEFT JOIN
-  public attivazione = 0; ; // da LEFT JOIN
-  public sete = 0; ; // da LEFT JOIN
+  public attivazione = 0  ; // da LEFT JOIN
+  public sete = 0  ; // da LEFT JOIN
+  public addsete = 0  ; // da LEFT JOIN
+  public PScorrenti = 0 ;
 
   public idsentiero = 0;
   public sentiero = ''; //da LEFT JOIN
@@ -40,11 +42,18 @@ export class Basicpg {
   public rifugio = '';
   public zona = '';
 
-  public bloodp = '';
+  public bloodp = 0;
+  public bane = 0 ;
   public urldt = '';
 }
 
-
+@Injectable()
+export class Potere {
+  public idpotere = 0;
+  public nomepotere = '';
+  public livellopot = 0;
+  public iddisciplina = 0;
+}
 
 @Injectable()
 export class Background {
@@ -66,12 +75,23 @@ export class Contatti {
 
 @Injectable()
 export class Disciplina {
-  public iddisciplina = 0;
-  public nomedisc = '';
-  public livello = 0;
-  public DiClan = '';
+  public iddisciplina: number ;
+  public nomedisc: string ;
+  public livello: number ;
+  public DiClan: string ;
+  constructor ( ) {
+    this.iddisciplina = 0;
+    this.nomedisc = '';
+    this.livello = 0;
+    this.DiClan = '';
+  }
 }
 
+@Injectable()
+export class FullDisciplina {
+  public disciplina = new Disciplina ;
+  public poteri: Array<Potere> = [];
+}
 
 @Injectable()
 export class Skill {

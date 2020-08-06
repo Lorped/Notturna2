@@ -31,6 +31,9 @@ mat-checkbox {
 
 .bgcard {
   max-width: 600px;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  /*width: 25%;*/
 }
 
 .bgcard-container {
@@ -62,7 +65,6 @@ mat-card-content {
 .dred {
   color: #b00000 ;
 }
-
 
 
 .btn-xs {

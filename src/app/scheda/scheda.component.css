@@ -1,0 +1,52 @@
+.all {
+  text-align: left;
+}
+.alr {
+  text-align: right;
+}
+
+.alc {
+  text-align: center;
+}
+
+.dred {
+  color: #b00000 ;
+}
+.red {
+  /*color: #f22613 ;*/
+  color: #f00000 ;
+  font-weight: 500;
+}
+
+hr {
+  height: 1px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  background-color: #ff0000;
+  color: #ff0000;
+  display: block;
+  border: 0;
+  border-top: 1px solid #f00;
+  padding: 0;
+}
+
+mat-card {
+  margin-top: 0.25em;
+}
+mat-expansion-panel {
+  margin-top: 0.25em;
+}
+
+.mat-grid-tile .mat-figure {
+   justify-content: flex-start !important ;
+   align-items: flex-start !important;
+}
+
+.nopadding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.full {
+  width: 100%;
+}

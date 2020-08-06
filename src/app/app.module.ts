@@ -19,6 +19,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatListModule} from '@angular/material/list';
 //
 
 import { AuthenticationService } from './services/index';
@@ -62,7 +64,9 @@ import { SchedaComponent } from './scheda/scheda.component';
     MatToolbarModule,
     MatSelectModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatListModule
 
 
   ],

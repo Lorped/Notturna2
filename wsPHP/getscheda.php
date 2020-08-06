@@ -129,11 +129,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $skill = [];
   $MySql = "SELECT * FROM skill_main
     LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
-    WHERE tipologia = 0  ORDER BY nomeskill" ;
+    WHERE tipologia = 0 ORDER BY nomeskill" ;
   $Result = mysql_query($MySql);
   while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
     $skill[] =  $res;
   }
+
+	/*** skill **/
+
+	$attitudini = [];
+	$MySql = "SELECT * FROM skill_main
+		LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
+		WHERE tipologia = 1 ORDER BY nomeskill" ;
+	$Result = mysql_query($MySql);
+	while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+		$attitudini[] =  $res;
+	}
+
 
   /*** pregidifetti **/
 
@@ -175,12 +187,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     $attutimento=$res['attutimento'];
   }
 
+	$robustezza = 0;
   $Mysql="SELECT * FROM discipline WHERE iddisciplina = 12 and idutente=$idutente";
   $Result=mysql_query($Mysql);
   if ( $res=mysql_fetch_array($Result)) {
     $robustezza=$res['livello'];
   }
 
+	$schivare = 0 ;
   $Mysql="SELECT * FROM skill WHERE idskill = 28 and idutente=$idutente";
   $Result=mysql_query($Mysql);
   if ( $res=mysql_fetch_array($Result)) {
@@ -215,17 +229,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   }
 
   /***********************/
+	$rp = 0;
+	$rp = floor ( ( $attutimento + $robustezza ) / 2 ) ;
+
+	/***********************/
 
 
   $output = [
     "user" => $user,
     "pf" => $pf,
+		"rp" => $rp,
     "discipline" => $discipline,
     "taumaturgie" => $taumaturgie,
     "necromanzie" => $necromanzie,
     "background" => $background,
     "contatti" => $contatti,
     "skill" => $skill,
+		"attitudini" => $attitudini,
+		"rituali" => $rituali,
     "pregidifetti" => $pregidifetti
   ];
 

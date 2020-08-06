@@ -83,16 +83,16 @@
 
     <div class="bgcard-container">
       <mat-card class="bgcard" *ngFor="let b of bg">
-        <mat-card-content>
+        <!-- <mat-card-content> -->
 
-        <div>
+      <!--  <div> -->
           {{b.nomeback}}
           <button  class="btn  btn-xs" (click)="minbg(b.idback)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
           <i *ngFor="let i of b.MaxIniziale | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
           <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG||(is14 && b.idback==5)"><i class="fa fa-plus"></i></button>
-        </div>
+      <!--  </div> -->
 
-      </mat-card-content>
+      <!-- </mat-card-content> -->
       </mat-card>
     </div>
 

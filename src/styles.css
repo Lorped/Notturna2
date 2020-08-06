@@ -7,7 +7,12 @@
 
 
 
-html, body { height: 100%; }
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #121212;}
 
 @font-face {
