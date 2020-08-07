@@ -108,20 +108,55 @@ export class Abilita {
   public livello = 0;
 }
 
+@Injectable()
+export class Necros {
+  public nomenecro2 = '';
+  public livello = 0;
+}
+
+@Injectable()
+export class Taums {
+  public nometaum2 = '';
+  public livello = 0;
+}
 
 @Injectable()
 export class Necromanzia {
-  public idnecro = 0;
-  public nomenecro = '';
-  public livello = 0 ;
+  public idnecro: number;
+  public nomenecro: string;
+  public livello: number;
+  constructor ( ) {
+    this.idnecro = 0;
+    this.nomenecro = '';
+    this.livello = 0 ;
+  }
 }
+
 
 @Injectable()
 export class Taumaturgia {
-  public idtaum = 0;
-  public nometaum = '';
-  public livello = 0 ;
+  public idtaum: number;
+  public nometaum: string;
+  public livello: number;
+  constructor ( ) {
+    this.idtaum = 0;
+    this.nometaum = '';
+    this.livello = 0 ;
+  }
 }
+
+@Injectable()
+export class FullNecromanzia {
+  public necromanzia = new Necromanzia ;
+  public necros: Array<Necros> = [];
+}
+
+@Injectable()
+export class FullTaumaturgia {
+  public taumaturgia = new Taumaturgia ;
+  public taums: Array<Taums> = [];
+}
+
 
 
 

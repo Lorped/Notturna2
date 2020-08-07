@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../services/index';
-import { Basicpg, FullDisciplina, Taumaturgia, Necromanzia, Skill } from '../global';
+import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill } from '../global';
 
 @Component({
   selector: 'app-scheda',
@@ -17,9 +17,10 @@ export class SchedaComponent implements OnInit {
   psvuoti = 0 ;
 
   discipline: Array<FullDisciplina> = [] ;
+  necromanzie: Array<FullNecromanzia> = [] ;
+  taumaturgie: Array<FullTaumaturgia> = [] ;
 
-  taumaturgie: Array<Taumaturgia> = [] ;
-  necromanzie: Array<Necromanzia> = [] ;
+
   skills: Array<Skill> = [];
   attitudini: Array<Skill> = [];
 

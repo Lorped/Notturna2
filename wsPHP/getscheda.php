@@ -87,7 +87,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         WHERE idutente = '$idutente' ORDER BY livello DESC";
   $Result = mysql_query($MySql);
   while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
-    $taumaturgie[] =  $res;
+		$idd = $res ['idtaum'];
+		$lid = $res ['livello'];
+
+		$MySql2 = "SELECT * FROM taumaturgie2
+						WHERE idtaum = $idd AND livello <= $lid";
+		$Result2 = mysql_query($MySql2);
+		$taums = [];
+		while ( $res2 = mysql_fetch_array($Result2,MYSQL_ASSOC)   ) {
+			$taums[] = 	$res2;
+		}
+		$taumaturgie[] =  [
+			"taumaturgia" => $res,
+			"taums" => $taums
+		];
   }
 
   /*** necromanzie  **/
@@ -98,7 +111,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         WHERE idutente = '$idutente' ORDER BY livello DESC ";
   $Result = mysql_query($MySql);
   while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
-    $necromanzie[] =  $res;
+		$idd = $res ['idnecro'];
+		$lid = $res ['livello'];
+
+		$MySql2 = "SELECT * FROM necromanzie2
+						WHERE idnecro = $idd AND livello <= $lid";
+		$Result2 = mysql_query($MySql2);
+		$necros = [];
+		while ( $res2 = mysql_fetch_array($Result2,MYSQL_ASSOC)   ) {
+			$necros[] = 	$res2;
+		}
+		$necromanzie[] =  [
+			"necromanzia" => $res,
+			"necros" => $necros
+		];
   }
 
   /*** background **/

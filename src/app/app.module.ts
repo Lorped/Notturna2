@@ -34,6 +34,7 @@ import { RegistraComponent } from './registra/registra.component';
 import { CreaComponent } from './crea/crea.component';
 import { TimesPipe } from './times.pipe';
 import { SchedaComponent } from './scheda/scheda.component';
+import { NonecrotaumPipe } from './nonecrotaum.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { SchedaComponent } from './scheda/scheda.component';
     RegistraComponent,
     CreaComponent,
     TimesPipe,
-    SchedaComponent
+    SchedaComponent,
+    NonecrotaumPipe
   ],
   imports: [
     BrowserModule,

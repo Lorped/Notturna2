@@ -17,6 +17,9 @@
   color: #f00000 ;
   font-weight: 500;
 }
+.bigger {
+  font-size: 1.2em
+}
 
 hr {
   height: 1px;
