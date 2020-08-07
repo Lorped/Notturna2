@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill } from '../global';
+import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti } from '../global';
 
 @Component({
   selector: 'app-scheda',
@@ -20,6 +20,9 @@ export class SchedaComponent implements OnInit {
   necromanzie: Array<FullNecromanzia> = [] ;
   taumaturgie: Array<FullTaumaturgia> = [] ;
 
+  background: Array<Background> = [] ;
+  contatti: Array<Contatti> = [];
+  maxcontatti = 0;
 
   skills: Array<Skill> = [];
   attitudini: Array<Skill> = [];
@@ -65,6 +68,13 @@ export class SchedaComponent implements OnInit {
 
         this.skills = data.skill ;
         this.attitudini = data.attitudini ;
+        this.background = data.background ;
+        this.contatti = data.contatti;
+
+        this.maxcontatti=0;
+        for ( let j=0 ; j< this.contatti.length; j++) {
+          this.maxcontatti += Number(this.contatti[j].livello);
+        }
 
         console.log(data);
       }

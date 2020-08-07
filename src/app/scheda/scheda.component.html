@@ -386,5 +386,60 @@
 
   </mat-expansion-panel>
 
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Background
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+      <div class="columns is-multiline" style="margin-left: 0px;" >
+        <div class="column is-4 nopadding" *ngFor="let dd of background">
+
+          <div class="columns" *ngIf="dd.idback != 77">
+            <div class="column">
+              {{dd.nomeback}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+          <div class="columns" *ngIf="dd.idback == 77">
+            <div class="column">
+              {{dd.nomeback}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of maxcontatti|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns" style="align-items: center;" *ngIf="contatti.length >0">
+        <div class="column"><hr></div>
+        <div class="column is-2" style="text-align: center;">Contatti</div>
+        <div class="column"><hr></div>
+      </div>
+
+      <div class="columns is-multiline" style="margin-left: 0px;" *ngIf="contatti.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of contatti">
+          <div class="columns">
+            <div class="column">
+              {{dd.nomecontatto}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </mat-card>
+
+  </mat-expansion-panel>
+
+
+
   <p>&nbsp;<p>
 </div>
