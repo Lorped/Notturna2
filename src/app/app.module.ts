@@ -21,6 +21,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
+import {MatBadgeModule} from '@angular/material/badge';
 //
 
 import { AuthenticationService } from './services/index';
@@ -35,6 +36,7 @@ import { CreaComponent } from './crea/crea.component';
 import { TimesPipe } from './times.pipe';
 import { SchedaComponent } from './scheda/scheda.component';
 import { NonecrotaumPipe } from './nonecrotaum.pipe';
+import { AddpoteriComponent } from './addpoteri/addpoteri.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { NonecrotaumPipe } from './nonecrotaum.pipe';
     CreaComponent,
     TimesPipe,
     SchedaComponent,
-    NonecrotaumPipe
+    NonecrotaumPipe,
+    AddpoteriComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { NonecrotaumPipe } from './nonecrotaum.pipe';
     MatStepperModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatBadgeModule
 
 
   ],

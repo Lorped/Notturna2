@@ -49,10 +49,22 @@ export class Basicpg {
 
 @Injectable()
 export class Potere {
-  public idpotere = 0;
-  public nomepotere = '';
-  public livellopot = 0;
-  public iddisciplina = 0;
+  public idpotere: number;
+  public nomepotere: string;
+  public livellopot: number;
+  public iddisciplina: number;
+  constructor () {
+    this.idpotere = 0;
+    this.nomepotere = '';
+    this.livellopot = 0;
+    this.iddisciplina = 0;
+  }
+}
+
+@Injectable()
+export class Newpotere {
+  public potere = new  Potere ;
+  public disabled = 0 ;
 }
 
 @Injectable()
@@ -105,6 +117,7 @@ export class Disciplina {
 export class FullDisciplina {
   public disciplina = new Disciplina ;
   public poteri: Array<Potere> = [];
+  public newpoteri: Array<Newpotere> = [];
 }
 
 @Injectable()

@@ -1,6 +1,11 @@
-.all {
-  text-align: left;
+a,
+a:visited,
+a:hover {
+  color: #ffffff;
+  text-decoration: none;
 }
+
+
 .alr {
   text-align: right;
 }
@@ -35,6 +40,7 @@ hr {
 
 mat-card {
   /*margin-top: 0.25em;*/
+  font-size: 1em
 }
 mat-expansion-panel {
   margin-top: 0.25em;

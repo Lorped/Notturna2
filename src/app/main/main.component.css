@@ -7,7 +7,11 @@ a:hover {
 }
 
 i {
-    /*margin-left: 2em;*/
+    margin-right: 0.3em;
+}
+
+mat-card-content {
+  font-size: 1.1em;
 }
 
 .limited {

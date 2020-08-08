@@ -6,6 +6,7 @@ import { GateComponent } from './gate/gate.component';
 import { AdminComponent } from './admin/admin.component';
 import { CreaComponent } from './crea/crea.component';
 import { SchedaComponent } from './scheda/scheda.component';
+import { AddpoteriComponent } from './addpoteri/addpoteri.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'crea', component: CreaComponent },
   { path: 'scheda', component: SchedaComponent },
+  { path: 'poteri', component: AddpoteriComponent },
 ];
 
 @NgModule({
