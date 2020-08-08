@@ -7,3 +7,7 @@
 .alc {
   text-align: center;
 }
+
+mat-form-field {
+  display: block;
+}

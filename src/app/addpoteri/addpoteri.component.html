@@ -13,30 +13,36 @@
 
   <mat-card>
     <div class="columns is-multiline" style="margin-left: 0px;" >
-      <div class="column is-4 nopadding" *ngFor="let dd of discipline">
+      <div class="column is-4 nopadding" *ngFor="let dd of discipline; let ix = index">
         <div class="columns">
-          <div class="column red alc">{{dd.disciplina.nomedisc}}</div>
+          <div class="column red alc">
+            {{dd.disciplina.nomedisc}}
+          </div>
         </div>
         <div class="columns">
           <div class="column ">Livello: {{dd.disciplina.livello}} -
-            Poteri da attivare: {{dd.disciplina.livello - dd.poteri.length}}</div>
+            Poteri da attivare: {{dd.disciplina.livello - dd.poteri.length}}
+          </div>
         </div>
         <div class="columns" *ngFor="let pp of dd.poteri">
-          <div class="column">{{pp.livellopot}} {{pp.nomepotere}}</div>
+          <div class="column">{{pp.livellopot}}. {{pp.nomepotere}}
+          </div>
         </div>
         <div class="columns" *ngIf="dd.newpoteri.length > 0" >
           <div class="column">
-            <mat-form-field appearance="fill" class="full-width-input">
+            <mat-form-field appearance="fill" >
               <mat-label>Poteri</mat-label>
-              <mat-select [(value)]="newpotere">
+              <mat-select [(value)]="newpotere[ix]">
                 <mat-option *ngFor="let pp1 of dd.newpoteri" [value]="pp1.potere.idpotere"  [disabled]="pp1.disabled==1" >{{pp1.potere.livellopot}} - {{pp1.potere.nomepotere}} </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="fill" class="full-width-input">
-              <button mat-button [disabled]>
-                Scegli
-              </button>
-            </mat-form-field>
+          </div>
+        </div>
+        <div class="columns" *ngIf="dd.newpoteri.length > 0" >
+          <div class="column">
+            <button mat-raised-button class="large" color="primary" [disabled]="newpotere[ix] == '0'" (click)="addpotere(ix)" style="width : 100%;" >
+              Scegli
+            </button>
           </div>
         </div>
       </div>

@@ -86,8 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 				if ( $res2['attrprereq'] != "") {
 			 		$dp = $res2['attrprereq'];
 			 		$ldp = $res2['livattrprereq'];
-			 		if ( $$dp< $ldp) {
-						$disabled=1;
+					$MySql3 = "SELECT $dp FROM personaggio WHERE idutente=$idutente";
+					$Result3 = mysql_query($MySql3);
+					$res3 = mysql_fetch_array ($Result3);
+			 		if ( $res3[$dp] < $ldp) {
+						$disabled = 1;
 					}
 				}
 
@@ -97,8 +100,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			 		$Result3 = mysql_query($MySql3);
 			 		$res3 = mysql_fetch_array($Result3);
 			 		if ( $res3['c'] == 0 ) {
-						$disabled=1;
+						$disabled = 1;
 					}
+				}
+
+				if ( $numpoteri + 1 < $res2['livellopot'] ) {
+					$disabled = 1;
 				}
 
 				$newpot = [

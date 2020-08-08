@@ -47,4 +47,11 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/poteri.php'+"?idutente="+idutente );
   }
 
+  addpotere (idutente: number , idpotere: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpotere.php',{
+      idutente: idutente,
+      idpotere: idpotere
+    });
+  }
+
 }
