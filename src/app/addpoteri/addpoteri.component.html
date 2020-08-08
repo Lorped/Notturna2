@@ -28,9 +28,14 @@
           <div class="column">
             <mat-form-field appearance="fill" class="full-width-input">
               <mat-label>Poteri</mat-label>
-              <mat-select >
+              <mat-select [(value)]="newpotere">
                 <mat-option *ngFor="let pp1 of dd.newpoteri" [value]="pp1.potere.idpotere"  [disabled]="pp1.disabled==1" >{{pp1.potere.livellopot}} - {{pp1.potere.nomepotere}} </mat-option>
               </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width-input">
+              <button mat-button [disabled]>
+                Scegli
+              </button>
             </mat-form-field>
           </div>
         </div>

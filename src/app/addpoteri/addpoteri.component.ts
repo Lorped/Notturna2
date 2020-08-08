@@ -13,6 +13,7 @@ export class AddpoteriComponent implements OnInit {
 
   idutente = 0;
   discipline: Array <FullDisciplina> = [];
+  newpotere = 0;
 
   constructor( public schedaservice: SchedaService) { }
 
