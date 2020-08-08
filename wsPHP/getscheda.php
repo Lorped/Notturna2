@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     $rituali[] =  $res;
   }
 
-  $MySql = "SELECT  nomerituale as nomeskill  ,livello,tipologia  FROM rituali_n
+  $MySql = "SELECT * FROM rituali_n
     LEFT JOIN rituali_n_main ON rituali_n_main.idrituale=rituali_n.idrituale
     WHERE idutente = '$idutente' ";
   $Result = mysql_query($MySql);

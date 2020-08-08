@@ -72,6 +72,20 @@ export class Contatti {
   public livello = 0;
 }
 
+@Injectable()
+export class Pregio {
+  public idpregio = 0;
+  public nomepregio = '';
+  public valore = 0;
+  public classe = '';
+}
+
+@Injectable()
+export class Rituale {
+  public idrituale = 0;
+  public nomerituale = '';
+  public livello = 0;
+}
 
 @Injectable()
 export class Disciplina {

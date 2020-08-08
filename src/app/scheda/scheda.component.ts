@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti } from '../global';
+import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
 
 @Component({
   selector: 'app-scheda',
@@ -27,15 +27,17 @@ export class SchedaComponent implements OnInit {
   skills: Array<Skill> = [];
   attitudini: Array<Skill> = [];
 
+  pregi: Array<Pregio> = [];
+  rituali: Array<Rituale> = [];
+
   constructor(private schedaservice: SchedaService) { }
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
-    console.log(this.idutente);
+
     this.schedaservice.getscheda(this.idutente).
     subscribe (
       (data: any) => {
-        console.log(data);
         this.scheda = data.user ;
         this.pf = data.pf ;
         this.rp = data.rp ;
@@ -75,6 +77,9 @@ export class SchedaComponent implements OnInit {
         for ( let j=0 ; j< this.contatti.length; j++) {
           this.maxcontatti += Number(this.contatti[j].livello);
         }
+
+        this.pregi = data.pregidifetti;
+        this.rituali = data.rituali;
 
         console.log(data);
       }

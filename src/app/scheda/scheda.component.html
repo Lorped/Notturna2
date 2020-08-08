@@ -328,6 +328,14 @@
           <div class="column">({{pot.livello>0?pot.livello:dd.taumaturgia.livello}}) {{pot.nometaum2 }} </div>
         </div>
       </div>
+      <div class="column is-3 nopadding" *ngIf="rituali.length > 0">
+        <div class="columns" >
+          <div class="column red">Rituali</div>
+        </div>
+        <div class="columns" *ngFor="let dd of rituali">
+          <div class="column">({{dd.livello}}) {{dd.nomerituale }} </div>
+        </div>
+      </div>
     </div>
 
     </mat-card>
@@ -439,7 +447,22 @@
 
   </mat-expansion-panel>
 
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Pregi e Difetti
+      </mat-panel-title>
+    </mat-expansion-panel-header>
 
+    <mat-card>
+      <div class="columns is-multiline" style="margin-left: 0px;" >
+        <div class="column is-4 nopadding" *ngFor="let dd of pregi">
+          {{dd.nomepregio}} ({{dd.classe}})
+        </div>
+      </div>
+    </mat-card>
+
+  </mat-expansion-panel>
 
   <p>&nbsp;<p>
 </div>
