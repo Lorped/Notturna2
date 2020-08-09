@@ -19,3 +19,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
   font-family: delphian;
   src: url('assets/delphian.woff') ;
 }
+
+.alc {
+  text-align: center;
+}
+.alr {
+  text-align: right;
+}
+.dred {
+  color: #b00000 ;
+}
+.red {
+  /*color: #f22613 ;*/
+  color: #f00000 ;
+  font-weight: 500;
+}
+.white {
+  color: #ffffff ;
+}

@@ -37,6 +37,8 @@ import { TimesPipe } from './times.pipe';
 import { SchedaComponent } from './scheda/scheda.component';
 import { NonecrotaumPipe } from './nonecrotaum.pipe';
 import { AddpoteriComponent } from './addpoteri/addpoteri.component';
+import { LogpxComponent } from './logpx/logpx.component';
+import { SpendipxComponent } from './spendipx/spendipx.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { AddpoteriComponent } from './addpoteri/addpoteri.component';
     TimesPipe,
     SchedaComponent,
     NonecrotaumPipe,
-    AddpoteriComponent
+    AddpoteriComponent,
+    LogpxComponent,
+    SpendipxComponent
   ],
   imports: [
     BrowserModule,

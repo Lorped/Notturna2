@@ -12,15 +12,23 @@
 <div class="container" style="width: 80%; margin-top: 1em;">
 
   <mat-card>
+    <mat-card-title>
+      Poteri del Sangue
+    </mat-card-title>
+    <div class="columns">
+      <div class="column">
+        <hr>
+      </div>
+    </div>    
     <div class="columns is-multiline" style="margin-left: 0px;" >
       <div class="column is-4 nopadding" *ngFor="let dd of discipline; let ix = index">
         <div class="columns">
           <div class="column red alc">
-            {{dd.disciplina.nomedisc}}
+            {{dd.disciplina.nomedisc}} (Lvl. {{dd.disciplina.livello}})
           </div>
         </div>
         <div class="columns">
-          <div class="column ">Livello: {{dd.disciplina.livello}} -
+          <div class="column ">
             Poteri da attivare: {{dd.disciplina.livello - dd.poteri.length}}
           </div>
         </div>

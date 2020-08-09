@@ -6,22 +6,6 @@ a:hover {
 }
 
 
-.alr {
-  text-align: right;
-}
-
-.alc {
-  text-align: center;
-}
-
-.dred {
-  color: #b00000 ;
-}
-.red {
-  /*color: #f22613 ;*/
-  color: #f00000 ;
-  font-weight: 500;
-}
 .bigger {
   font-size: 1.2em
 }

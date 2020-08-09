@@ -1,7 +1,5 @@
-
-
-mat-form-field {
-  display: block;
+.bigger {
+  font-size: 1.2em
 }
 
 hr {
@@ -14,4 +12,11 @@ hr {
   border: 0;
   border-top: 1px solid #f00;
   padding: 0;
+}
+
+
+
+mat-card {
+  /*margin-top: 0.25em;*/
+  font-size: 1em
 }

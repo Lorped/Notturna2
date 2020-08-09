@@ -56,17 +56,6 @@ mat-card-content {
 }
 
 
-.red {
-  color: #ff0000 ;
-}
-.white {
-  color: #ffffff ;
-}
-.dred {
-  color: #b00000 ;
-}
-
-
 .btn-xs {
     padding: 0px 2px;
     /*font-size: 20px; */

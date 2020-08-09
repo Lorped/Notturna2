@@ -1,0 +1,51 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+
+<div class="container" style="width: 80%; margin-top: 1em;">
+  <p>
+  <mat-card>
+    <mat-card-title>
+      Log Spesa PX (e modifiche extra)
+    </mat-card-title>
+    <mat-card-content>
+      <div class="columns">
+        <div class="column bigger">
+          Data
+        </div>
+        <div class="column bigger">
+          Azione
+        </div>
+        <div class="column bigger is-2">
+          Px
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <hr>
+        </div>
+      </div>
+      <div class="columns" *ngFor="let px of logpx">
+        <div class="column">
+          {{px.data}}
+        </div>
+        <div class="column">
+          {{px.Azione}}
+        </div>
+        <div class="column alr is-2">
+          {{px.px}}
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<p>
