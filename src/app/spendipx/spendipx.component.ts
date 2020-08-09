@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
+import { Basicpg, FullDisciplina, Taumaturgia, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
 
 
 @Component({
@@ -26,8 +26,14 @@ export class SpendipxComponent implements OnInit {
 
   rituali: Array<Rituale> = [];
 
+  newtaumaturgie: Array<Taumaturgia> = [] ;
+
   xpdisponibili = 0;
-  truexpdisponibili = 0;
+
+
+  livellitaum: Array<number> = [ 0 , 0 , 0 ];
+  livellinecro: Array<number> = [ 0 , 0 , 0 ];
+
 
   constructor( private schedaservice: SchedaService ) { }
 
@@ -63,6 +69,7 @@ export class SpendipxComponent implements OnInit {
         this.discipline = data.discipline ;
         for (let j=0 ; j < this.discipline.length ; j++ ) {
           this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
+          this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
           if ( this.discipline[j].disciplina.DiClan == "S" ) {
             this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
           } else {
@@ -70,7 +77,16 @@ export class SpendipxComponent implements OnInit {
           }
         }
 
+
         this.taumaturgie = data.taumaturgie ;
+
+        for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
+          this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
+          this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
+        }
+
+
+
         this.necromanzie = data.necromanzie ;
 
         this.skills = data.skill ;
@@ -81,8 +97,14 @@ export class SpendipxComponent implements OnInit {
         console.log(data);
 
         this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
-        this.truexpdisponibili = this.xpdisponibili;
 
+        this.schedaservice.gettaum(this.idutente)
+        .subscribe(
+          (data: any) => {
+            this.newtaumaturgie = data;
+            console.log(this.newtaumaturgie);
+          }
+        );
 
       }
     );
@@ -101,8 +123,13 @@ export class SpendipxComponent implements OnInit {
     /* Do something */
   }
 
-  adddisc ( iddisciplina: string ) {
+  adddisc ( iddisciplina: number ) {
       /* Do something */
+      console.log("add disc "+iddisciplina);
   }
 
+  addtaum( iddtaum: number ) {
+    /* Do something */
+    console.log("add taum "+iddtaum);
+  }
 }

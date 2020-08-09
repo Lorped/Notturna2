@@ -135,11 +135,11 @@
 
           <div class="columns">
             <div class="column">
-              {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello<5 ? '(' + costonewdisc[ii] + 'px)' :'' ) }} 
+              {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello<5 && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ? '(' + costonewdisc[ii] + 'px)' :'' ) }}
             </div>
             <div class="column">
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
-              <button *ngIf="dd.disciplina.livello<5" class="btn  btn-xs" (click)="adddisc('dd.disciplina.iddisciplina')" [disabled]="xpdisponibili<costonewdisc[ii]"><i class="fa fa-plus"></i></button>
+              <button *ngIf="dd.disciplina.livello<5 && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 " class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="xpdisponibili<costonewdisc[ii]"><i class="fa fa-plus"></i></button>
             </div>
           </div>
         </div>
@@ -151,16 +151,23 @@
         <div class="column"><hr></div>
       </div>
 
-      <div class="columns is-multiline" style="margin-left: 0px;" *ngIf="taumaturgie.length >0">
-        <div class="column is-4 nopadding" *ngFor="let dd of taumaturgie">
+      <div class="columns is-multiline nopadding" style="margin-left: 0px;" *ngIf="taumaturgie.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of taumaturgie ; let ii = index ">
           <div class="columns">
             <div class="column">
-              {{dd.taumaturgia.nometaum}}
+              {{dd.taumaturgia.nometaum}} {{ (dd.taumaturgia.livello<5 && ( ii == 0 || livellitaum[ii-1]<livellitaum[ii]+1 || livellitaum[ii-1]==5 )  ? '(' + (dd.taumaturgia.livello+1)*2 + 'px)' :'' ) }}
             </div>
             <div class="column">
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
+              <button *ngIf="dd.taumaturgia.livello<5 && ( ii == 0 || livellitaum[ii-1]<livellitaum[ii]+1 || livellitaum[ii-1]==5)" class="btn  btn-xs" (click)="addtaum(dd.taumaturgia.idtaum)" [disabled]="xpdisponibili<(dd.taumaturgia.livello+1)*2"><i class="fa fa-plus"></i></button>
             </div>
           </div>
+        </div>
+        <div class="column" *ngIf="livellitaum[1]==0 && livellitaum[0]>1">
+          Scegli Via Secondaria (2px)
+        </div>
+        <div class="column" *ngIf="livellitaum[2]==0 && livellitaum[1]>1">
+          Scegli Via Terziaria (2px)
         </div>
       </div>
 
