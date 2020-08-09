@@ -1,0 +1,27 @@
+.btn-xs {
+    padding: 0px 2px;
+    /*font-size: 20px; */
+    border-radius: 3px;
+    font-size: 0.7em;
+}
+
+.btn:disabled{
+    background-color: #a0a0a0;
+}
+.btn:enabled:hover{
+    background-color: #f02618;
+}
+
+mat-card {
+  /* margin-top: 0.25em; */
+  font-size: 1em
+}
+
+mat-expansion-panel {
+  margin-top: 0.25em;
+}
+
+.nopadding {
+  padding-left: 0;
+  padding-right: 0;
+}

@@ -8,3 +8,184 @@
   </mat-toolbar>
 </p>
 </div>
+
+
+<div class="container" style="width: 80%; margin-top: 1em;">
+<mat-card>
+
+  <mat-card>
+    <mat-card-title>
+      Punti esperienza
+    </mat-card-title>
+    <mat-card-content>
+      <div class="columns">
+
+        <div class="column is-3">Punti totali</div>
+        <div class="column is-1">{{scheda.xp}}</div>
+        <div class="column is-3">Punti Disponibili</div>
+        <div class="column is-1">{{scheda.xp-scheda.xpspesi}}</div>
+        <div class="column is-3">
+          <form [formGroup]="addXPform" (ngSubmit)="addxp()" #formDir="ngForm">
+            <mat-form-field appearance="fill" style="size: 100%; display: block;">
+              <input matInput formControlName="xptoadd" placeholder="XP" type="text" pattern="\d*">
+            </mat-form-field>
+            <button  mat-raised-button class="large" color="primary" [disabled]="!formDir.form.valid" style="width: 100%;">Aggiungi</button>
+          </form>
+        </div>
+        <div class="column is-1">&nbsp;</div>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Incrementa Attributi
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+      <div class="columns">
+        <div class="column">
+          Forza {{ (scheda['forza']<5 ? '('+(1+scheda['forza'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
+          <button  *ngIf="scheda['forza']<5" class="btn  btn-xs" (click)="addattr('forza')" [disabled]="xpdisponibili<(1+scheda['forza'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Carisma {{ (scheda['carisma']<5 ? '('+(1+scheda['carisma'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
+          <button *ngIf="scheda['carisma']<5" class="btn  btn-xs" (click)="addattr('carisma')" [disabled]="xpdisponibili<(1+scheda['carisma'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Percezione {{ (scheda['percezione']<5 ? '('+(1+scheda['percezione'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
+          <button *ngIf="scheda['percezione']<5" class="btn  btn-xs" (click)="addattr('percezione')" [disabled]="xpdisponibili<(1+scheda['percezione'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          Destrezza {{ (scheda['destrezza']<5 ? '('+(1+scheda['destrezza'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
+          <button *ngIf="scheda['destrezza']<5" class="btn  btn-xs" (click)="addattr('destrezza')" [disabled]="xpdisponibili<(1+scheda['destrezza'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Persuasione {{ (scheda['persuasione']<5 ? '('+(1+scheda['persuasione'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
+          <button *ngIf="scheda['persuasione']<5" class="btn  btn-xs" (click)="addattr('persuasione')" [disabled]="xpdisponibili<(1+scheda['persuasione'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Intelligenza {{ (scheda['intelligenza']<5 ? '('+(1+scheda['intelligenza'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
+          <button *ngIf="scheda['intelligenza']<5" class="btn  btn-xs" (click)="addattr('intelligenza')" [disabled]="xpdisponibili<(1+scheda['intelligenza'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          Attutimento {{ (scheda['attutimento']<5 ? '('+(1+scheda['attutimento'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
+          <button *ngIf="scheda['attutimento']<5" class="btn  btn-xs" (click)="addattr('attutimento')" [disabled]="xpdisponibili<(1+scheda['attutimento'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Saggezza {{ (scheda['saggezza']<5 ? '('+(1+scheda['saggezza'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
+          <button *ngIf="scheda['saggezza']<5" class="btn  btn-xs" (click)="addattr('saggezza')" [disabled]="xpdisponibili<(1+scheda['saggezza'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Prontezza  {{ (scheda['prontezza']<5 ? '('+(1+scheda['prontezza'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
+          <button *ngIf="scheda['prontezza']<5" class="btn  btn-xs" (click)="addattr('prontezza')" [disabled]="xpdisponibili<(1+scheda['prontezza'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+    </mat-card>
+
+  </mat-expansion-panel>
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Incrementa / Acquisisci Discipline
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- <mat-card> -->
+      <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
+        <div class="column is-4 nopadding" *ngFor="let dd of discipline; let ii = index ">
+
+          <div class="columns">
+            <div class="column">
+              {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello<5 ? '(' + costonewdisc[ii] + 'px)' :'' ) }} 
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
+              <button *ngIf="dd.disciplina.livello<5" class="btn  btn-xs" (click)="adddisc('dd.disciplina.iddisciplina')" [disabled]="xpdisponibili<costonewdisc[ii]"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns" style="align-items: center;" *ngIf="taumaturgie.length >0">
+        <div class="column"><hr></div>
+        <div class="column is-2" style="text-align: center;">Vie Taumaturgiche</div>
+        <div class="column"><hr></div>
+      </div>
+
+      <div class="columns is-multiline" style="margin-left: 0px;" *ngIf="taumaturgie.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of taumaturgie">
+          <div class="columns">
+            <div class="column">
+              {{dd.taumaturgia.nometaum}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns" style="align-items: center;" *ngIf="necromanzie.length >0">
+        <div class="column"><hr></div>
+        <div class="column is-2" style="text-align: center;">Vie Necromantiche</div>
+        <div class="column"><hr></div>
+      </div>
+
+      <div class="columns" style="align-items: center;" style="margin-left: 0px;" *ngIf="necromanzie.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of necromanzie">
+          <div class="columns" >
+            <div class="column">
+              {{dd.necromanzia.nomenecro}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- </mat-card> -->
+
+  </mat-expansion-panel>
+
+</mat-card>
+</div>
