@@ -230,8 +230,6 @@ export class SpendipxComponent implements OnInit {
   }
 
   addtaum( idtaum: number ) {
-
-
     for (let j = 0 ; j < this.taumaturgie.length ; j++) {
       if ( this.taumaturgie[j].taumaturgia.idtaum == idtaum ) {
         this.taumaturgie[j].taumaturgia.livello ++ ;
@@ -247,13 +245,16 @@ export class SpendipxComponent implements OnInit {
         this.livellitaum [ this.taumaturgie[j].taumaturgia.principale -1 ] = this.taumaturgie[j].taumaturgia.livello;
       }
     }
-    console.log("add taum "+idtaum);
+    this.schedaservice.addtaum(this.idutente, idtaum)
+    .subscribe(
+      data => {
+        console.log("add taum "+idtaum);
+      }
+    );
+
   }
 
   newtaum ( lvl: number ) {
-
-
-
     console.log("new taum "+this.idnewtaum + ' ' + lvl);
   }
 }
