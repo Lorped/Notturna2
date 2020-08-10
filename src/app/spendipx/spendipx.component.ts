@@ -86,7 +86,6 @@ export class SpendipxComponent implements OnInit {
 
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
 
-
         this.discipline = data.discipline ;
         for (let j=0 ; j < this.discipline.length ; j++ ) {
           this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
@@ -97,7 +96,6 @@ export class SpendipxComponent implements OnInit {
             this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
           }
         }
-
 
         this.taumaturgie = data.taumaturgie ;
 
@@ -255,6 +253,45 @@ export class SpendipxComponent implements OnInit {
   }
 
   newtaum ( lvl: number ) {
-    console.log("new taum "+this.idnewtaum + ' ' + lvl);
+    this.xpdisponibili -= 2;
+    this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
+    .subscribe(
+      data => {
+        console.log("new taum "+this.idnewtaum + ' ' + lvl);
+
+        this.schedaservice.getscheda(this.idutente).
+        subscribe (
+          (data: any) => {
+            this.discipline = data.discipline ;
+            for (let j=0 ; j < this.discipline.length ; j++ ) {
+              this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
+              this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
+              if ( this.discipline[j].disciplina.DiClan == "S" ) {
+                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
+              } else {
+                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
+              }
+            }
+
+            this.taumaturgie = data.taumaturgie ;
+
+            for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
+              this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
+              this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
+            }
+
+            this.schedaservice.gettaum(this.idutente)
+            .subscribe(
+              (data: any) => {
+                this.newtaumaturgie = data;
+                console.log(this.newtaumaturgie);
+              }
+            );
+          }
+        );
+
+      }
+    );
+
   }
 }

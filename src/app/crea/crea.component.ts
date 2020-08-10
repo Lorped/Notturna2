@@ -140,7 +140,6 @@ export class CreaComponent implements OnInit {
     this.schedaservice.getregistra()
       .subscribe(
         (data: any) => {
-          // console.log(data)
           this.clan = data.clan;
           this.status = data.statuscama;
           this.creaForm.patchValue({
@@ -325,10 +324,7 @@ export class CreaComponent implements OnInit {
   }
 
   changeGen(bggen:number) {
-    // console.log("BG gen = "+bggen);
     this.generazionePG = 13 - bggen;
-
-    // console.log("generazionePG = "+this.generazionePG);
 
     switch (this.generazionePG ) {
       case 14:
@@ -611,8 +607,6 @@ export class CreaComponent implements OnInit {
         this.discOK = false;
       }
     }
-    // console.log ( "sommaDisc= "+this.sommaDisc);
-    // console.log ( "numDisc= "+this.numDisc);
   }
 
   mintaum(tt:number){

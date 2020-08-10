@@ -163,17 +163,17 @@
             </div>
           </div>
         </div>
-        <div class="column" *ngIf="livellitaum[1]==0 && livellitaum[0]>1">
+        <div class="column is-4 nopadding" *ngIf="livellitaum[1]==0 && livellitaum[0]>1">
           Scegli Via Secondaria (2px)
           <mat-form-field>
           <mat-label>Via Secondaria</mat-label>
-          <mat-select [(value)]="newtaum">
+          <mat-select [(value)]="idnewtaum">
             <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
           </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(3)">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(2)">Aggiungi</button>
         </div>
-        <div class="column" *ngIf="livellitaum[2]==0 && livellitaum[1]>1">
+        <div class="column is-4 nopadding" *ngIf="livellitaum[2]==0 && livellitaum[1]>1">
           Scegli Via Terziaria (2px)
           <mat-form-field>
           <mat-label>Via Terziaria</mat-label>
@@ -181,7 +181,7 @@
             <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
           </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(2)">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(3)">Aggiungi</button>
         </div>
       </div>
 

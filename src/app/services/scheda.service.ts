@@ -90,4 +90,12 @@ export class SchedaService {
     });
   }
 
+  newtaum (idutente: number , idtaum: string , principale: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newtaum.php',{
+      idutente: idutente,
+      idtaum: idtaum,
+      principale: principale
+    });
+  }
+
 }

@@ -26,7 +26,6 @@ export class LogpxComponent implements OnInit {
     .subscribe(
       (data: any) => {
         this.logpx = data;
-        console.log(data);
       }
     );
 

@@ -22,7 +22,6 @@ export class AddpoteriComponent implements OnInit {
     this.schedaservice.getpoteri( this.idutente )
     .subscribe (
       (data: any ) => {
-        console.log(data);
         this.discipline = data;
 
         for ( let j = 0 ; j < this.discipline.length ; j++ ){
@@ -34,17 +33,12 @@ export class AddpoteriComponent implements OnInit {
   }
 
   addpotere (ix: number) {
-    console.log(ix);
-    console.log (this.discipline[ix].disciplina.nomedisc );
-    console.log (this.newpotere[ix] );
-
     this.schedaservice.addpotere( this.idutente, this.newpotere[ix])
     .subscribe(
       data => {
         this.schedaservice.getpoteri( this.idutente )
         .subscribe (
           (data: any ) => {
-            console.log(data);
             this.discipline = data;
             this.newpotere[ix] = "0";
           }
