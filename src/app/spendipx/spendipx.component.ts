@@ -65,6 +65,7 @@ export class SpendipxComponent implements OnInit {
         this.scheda['intelligenza']=Number(this.scheda['intelligenza']);
         this.scheda['percezione']=Number(this.scheda['percezione']);
 
+        this.scheda.xp = Number (this.scheda.xp);
         this.scheda['fdv']=Number(this.scheda['fdv']);
         this.scheda['valsentiero']=Number(this.scheda['valsentiero']);
 
@@ -89,7 +90,6 @@ export class SpendipxComponent implements OnInit {
           this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
           this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
         }
-
 
 
         this.necromanzie = data.necromanzie ;
@@ -117,29 +117,103 @@ export class SpendipxComponent implements OnInit {
 
   addxp() {
 
-    /* Do something */
+    let newpx: number = Number (this.addXPform.get('xptoadd')!.value );
+
+    this.xpdisponibili += newpx ;
+    this.scheda.xp += newpx ;
+
+    this.schedaservice.addpx(this.idutente, newpx)
+    .subscribe(
+      data => {
+        console.log("add px "+newpx);
+      }
+    );
 
     this.addXPform.patchValue({
       xptoadd: ""});
 
   }
 
-  addattr(attr: string) {
+  addattr(attributo: string) {
     /* Do something */
-    this.scheda[attr] = Number(this.scheda[attr]) + 1  ;
-    this.xpdisponibili -= Number(this.scheda[attr] ) * 2 ;
+    switch (attributo) {
+      case 'forza':
+        this.scheda['forza'] ++;
+        this.xpdisponibili -= this.scheda['forza']*2;
+        break;
+      case 'destrezza':
+        this.scheda['destrezza'] ++;
+        this.xpdisponibili -= this.scheda['destrezza']*2;
+        break;
+      case 'attutimento':
+        this.scheda['attutimento'] ++;
+        this.xpdisponibili -= this.scheda['attutimento']*2;
+        break;
+      case 'carisma':
+        this.scheda['carisma'] ++;
+        this.xpdisponibili -= this.scheda['carisma']*2;
+        break;
+      case 'persuasione':
+        this.scheda['persuasione'] ++;
+        this.xpdisponibili -= this.scheda['persuasione']*2;
+        break;
+      case 'saggezza':
+        this.scheda['saggezza'] ++;
+        this.xpdisponibili -= this.scheda['saggezza']*2;
+        break;
+      case 'percezione':
+        this.scheda['percezione'] ++;
+        this.xpdisponibili -= this.scheda['percezione']*2;
+        break;
+      case 'intelligenza':
+        this.scheda['intelligenza'] ++;
+        this.xpdisponibili -= this.scheda['intelligenza']*2;
+        break;
+      case 'prontezza':
+        this.scheda['prontezza'] ++;
+        this.xpdisponibili -= this.scheda['prontezza']*2;
+        break;
+      default:
+        break;
+    }
 
-    this.schedaservice.addattr(this.idutente, attr)
+
+    this.schedaservice.addattr(this.idutente, attributo)
     .subscribe(
       data => {
-        console.log("add attr "+attr);
+        console.log("add attr "+attributo);
       }
     );
   }
 
   adddisc ( iddisciplina: number ) {
-      /* Do something */
-      console.log("add disc "+iddisciplina);
+    let spesapx = 0 ;
+    let diclan = '';
+
+    for ( let j = 0 ; j< this.discipline.length; j++) {
+      if ( this.discipline[j].disciplina.iddisciplina == iddisciplina) {
+        this.discipline[j].disciplina.livello ++  ;
+        diclan = this.discipline[j].disciplina.DiClan;
+        if ( diclan == 'S') {
+          spesapx = this.discipline[j].disciplina.livello *2 ;
+          this.costonewdisc[j]= (this.discipline[j].disciplina.livello +1)*2 ;
+        } else {
+          spesapx = this.discipline[j].disciplina.livello *3 ;
+          this.costonewdisc[j]= (this.discipline[j].disciplina.livello +1)*3 ;
+        }
+      }
+    }
+
+    this.xpdisponibili -= spesapx;
+
+    this.schedaservice.adddisciplina(this.idutente, iddisciplina)
+    .subscribe(
+      data => {
+        console.log("add disc "+iddisciplina);
+      }
+    );
+
+
   }
 
   addtaum( iddtaum: number ) {

@@ -69,4 +69,18 @@ export class SchedaService {
     });
   }
 
+  addpx (idutente: number , px: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpx.php',{
+      idutente: idutente,
+      px: px
+    });
+  }
+
+  adddisciplina (idutente: number , iddisciplina: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/adddisciplina.php',{
+      idutente: idutente,
+      iddisciplina: iddisciplina
+    });
+  }
+
 }
