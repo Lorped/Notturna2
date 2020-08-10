@@ -152,10 +152,12 @@ export class Necromanzia {
   public idnecro: number;
   public nomenecro: string;
   public livello: number;
+  public principale: number;
   constructor ( ) {
     this.idnecro = 0;
     this.nomenecro = '';
     this.livello = 0 ;
+    this.principale = 1;
   }
 }
 

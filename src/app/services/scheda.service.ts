@@ -98,4 +98,11 @@ export class SchedaService {
     });
   }
 
+  addnecro (idutente: number , idnecro: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addnecro.php',{
+      idutente: idutente,
+      idnecro: idnecro
+    });
+  }
+
 }

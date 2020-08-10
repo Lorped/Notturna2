@@ -191,16 +191,37 @@
         <div class="column"><hr></div>
       </div>
 
-      <div class="columns" style="align-items: center;" style="margin-left: 0px;" *ngIf="necromanzie.length >0">
-        <div class="column is-4 nopadding" *ngFor="let dd of necromanzie">
-          <div class="columns" >
+      <div class="columns is-multiline nopadding" style="margin-left: 0px;" *ngIf="necromanzie.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of necromanzie ; let ii = index ">
+          <div class="columns">
             <div class="column">
-              {{dd.necromanzia.nomenecro}}
+              {{dd.necromanzia.nomenecro}} {{ (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii == 0 || (ii!=0 &&livellinecro[ii-1]>livellinecro[ii]+1) || (ii!=0 && livellinecro[ii-1]==5) )  ? '(' + (dd.necromanzia.livello+1)*2 + 'px)' :'' ) }}
             </div>
             <div class="column">
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
+              <button *ngIf="dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii== 0 || (ii != 0 && livellinecro[ii-1]>livellinecro[ii]+1) || (ii!=0 && livellinecro[ii-1]==5))" class="btn  btn-xs" (click)="addnecro(dd.necromanzia.idnecro)" [disabled]="xpdisponibili<(dd.necromanzia.livello+1)*2"><i class="fa fa-plus"></i></button>
             </div>
           </div>
+        </div>
+        <div class="column is-4 nopadding" *ngIf="livellinecro[1]==0 && livellinecro[0]>1">
+          Scegli Via Secondaria (2px)
+          <mat-form-field>
+          <mat-label>Via Secondaria</mat-label>
+          <mat-select [(value)]="idnewnecro">
+            <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==6) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 100%;" (click)="newnecro(2)">Aggiungi</button>
+        </div>
+        <div class="column is-4 nopadding" *ngIf="livellinecro[2]==0 && livellinecro[1]>1">
+          Scegli Via Terziaria (2px)
+          <mat-form-field>
+          <mat-label>Via Terziaria</mat-label>
+          <mat-select [(value)]="idnewnecro">
+            <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==6) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 100%;" (click)="newnecro(3)">Aggiungi</button>
         </div>
       </div>
 

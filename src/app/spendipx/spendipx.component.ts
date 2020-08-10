@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Basicpg, FullDisciplina, Taumaturgia, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
+import { Basicpg, FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
 
 
 @Component({
@@ -38,7 +38,10 @@ export class SpendipxComponent implements OnInit {
   rituali: Array<Rituale> = [];
 
   newtaumaturgie: Array<Taumaturgia> = [] ;
+  newnecromanzie: Array<Necromanzia> = [] ;
   idnewtaum: string = '';
+  idnewnecro: string = '';
+
   statusPG: number = 1;
 
   xpdisponibili = 0;
@@ -98,14 +101,21 @@ export class SpendipxComponent implements OnInit {
         }
 
         this.taumaturgie = data.taumaturgie ;
+        this.necromanzie = data.necromanzie ;
 
         for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
           this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
           this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
         }
 
+        for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
+          this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
+          this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
+        }
 
-        this.necromanzie = data.necromanzie ;
+
+
+
 
         this.skills = data.skill ;
         this.attitudini = data.attitudini ;
@@ -289,9 +299,38 @@ export class SpendipxComponent implements OnInit {
             );
           }
         );
+      }
+    );
+  }
 
+  addnecro( idnecro: number ) {
+    for (let j = 0 ; j < this.necromanzie.length ; j++) {
+      if ( this.necromanzie[j].necromanzia.idnecro == idnecro ) {
+        this.necromanzie[j].necromanzia.livello ++ ;
+        this.xpdisponibili -= ( this.necromanzie[j].necromanzia.livello * 2  );
+
+        if (this.necromanzie[j].necromanzia.principale == 1 ) {
+          for (let j = 0 ; j < this.discipline.length ; j++) {
+            if ( this.discipline[j].disciplina.iddisciplina == 99 ) {
+              this.discipline[j].disciplina.livello ++ ;
+            }
+          }
+        }
+        this.livellinecro [ this.necromanzie[j].necromanzia.principale -1 ] = this.necromanzie[j].necromanzia.livello;
+      }
+    }
+    this.schedaservice.addnecro(this.idutente, idnecro)
+    .subscribe(
+      data => {
+        console.log("add necro "+idnecro);
       }
     );
 
   }
+
+  newnecro ( lvl: number ) {
+    
+  }
+
+
 }
