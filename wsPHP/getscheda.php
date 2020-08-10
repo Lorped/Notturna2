@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $taumaturgie = [];
   $MySql = "SELECT  *  FROM taumaturgie
         LEFT JOIN taumaturgie_main ON taumaturgie_main.idtaum=taumaturgie.idtaum
-        WHERE idutente = '$idutente' ORDER BY livello DESC";
+        WHERE idutente = '$idutente' ORDER BY principale ASC";
   $Result = mysql_query($MySql);
   while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 		$idd = $res ['idtaum'];
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $necromanzie = [];
   $MySql = "SELECT  *  FROM necromanzie
         LEFT JOIN necromanzie_main ON necromanzie_main.idnecro=necromanzie.idnecro
-        WHERE idutente = '$idutente' ORDER BY livello DESC ";
+        WHERE idutente = '$idutente' ORDER BY principale ASC ";
   $Result = mysql_query($MySql);
   while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
 		$idd = $res ['idnecro'];
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $rituali = [];
   $MySql = "SELECT  *  FROM rituali_t
     LEFT JOIN rituali_t_main ON rituali_t_main.idrituale=rituali_t.idrituale
-    WHERE idutente = '$idutente' ";
+    WHERE idutente = '$idutente' ORDER BY livello ASC";
   $Result = mysql_query($MySql);
   while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
     $rituali[] =  $res;
@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
   $MySql = "SELECT * FROM rituali_n
     LEFT JOIN rituali_n_main ON rituali_n_main.idrituale=rituali_n.idrituale
-    WHERE idutente = '$idutente' ";
+    WHERE idutente = '$idutente' ORDER BY livello ASC";
   $Result = mysql_query($MySql);
   while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
     $rituali[] =  $res;

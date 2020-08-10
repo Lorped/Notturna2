@@ -11,6 +11,17 @@ import { Basicpg, FullDisciplina, Taumaturgia, FullTaumaturgia, FullNecromanzia,
 })
 export class SpendipxComponent implements OnInit {
 
+  matriceMaxDisc: number[][] = [
+    [ 2, 3, 3, 4, 4, 5, 5 ],
+    [ 3, 3, 4, 4, 5, 5, 5 ],
+    [ 3, 4, 5, 5, 5, 5, 5 ],
+    [ 4, 5, 5, 5, 5, 5, 5 ],
+    [ 4, 5, 5, 5, 5, 5, 5 ],
+    [ 5, 5, 5, 5, 5, 5, 5 ]
+  ];
+
+  maxdisc = 0 ;
+
   idutente: number = 0 ;
   scheda: Basicpg = new Basicpg();
 
@@ -68,9 +79,13 @@ export class SpendipxComponent implements OnInit {
         this.scheda.xp = Number (this.scheda.xp);
         this.scheda['fdv']=Number(this.scheda['fdv']);
         this.scheda['valsentiero']=Number(this.scheda['valsentiero']);
+        this.scheda['generazione']=Number(this.scheda['generazione']);
 
         this.statusPG = Number(this.scheda.idstatus);
-        console.log ('status '+this.statusPG);
+
+
+        this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
+
 
         this.discipline = data.discipline ;
         for (let j=0 ; j < this.discipline.length ; j++ ) {
@@ -176,8 +191,6 @@ export class SpendipxComponent implements OnInit {
       default:
         break;
     }
-
-
     this.schedaservice.addattr(this.idutente, attributo)
     .subscribe(
       data => {
@@ -216,13 +229,31 @@ export class SpendipxComponent implements OnInit {
 
   }
 
-  addtaum( iddtaum: number ) {
-    /* Do something */
-    console.log("add taum "+iddtaum);
+  addtaum( idtaum: number ) {
+
+
+    for (let j = 0 ; j < this.taumaturgie.length ; j++) {
+      if ( this.taumaturgie[j].taumaturgia.idtaum == idtaum ) {
+        this.taumaturgie[j].taumaturgia.livello ++ ;
+        this.xpdisponibili -= ( this.taumaturgie[j].taumaturgia.livello * 2  );
+
+        if (this.taumaturgie[j].taumaturgia.principale == 1 ) {
+          for (let j = 0 ; j < this.discipline.length ; j++) {
+            if ( this.discipline[j].disciplina.iddisciplina == 98 ) {
+              this.discipline[j].disciplina.livello ++ ;
+            }
+          }
+        }
+        this.livellitaum [ this.taumaturgie[j].taumaturgia.principale -1 ] = this.taumaturgie[j].taumaturgia.livello;
+      }
+    }
+    console.log("add taum "+idtaum);
   }
 
   newtaum ( lvl: number ) {
-    /* Do something */
+
+
+
     console.log("new taum "+this.idnewtaum + ' ' + lvl);
   }
 }

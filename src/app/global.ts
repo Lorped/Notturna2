@@ -165,10 +165,12 @@ export class Taumaturgia {
   public idtaum: number;
   public nometaum: string;
   public livello: number;
+  public principale: number;
   constructor ( ) {
     this.idtaum = 0;
     this.nometaum = '';
     this.livello = 0 ;
+    this.principale = 1;
   }
 }
 
