@@ -27,6 +27,8 @@ export class SpendipxComponent implements OnInit {
   rituali: Array<Rituale> = [];
 
   newtaumaturgie: Array<Taumaturgia> = [] ;
+  idnewtaum: string = '';
+  statusPG: number = 1;
 
   xpdisponibili = 0;
 
@@ -65,6 +67,9 @@ export class SpendipxComponent implements OnInit {
 
         this.scheda['fdv']=Number(this.scheda['fdv']);
         this.scheda['valsentiero']=Number(this.scheda['valsentiero']);
+
+        this.statusPG = Number(this.scheda.idstatus);
+        console.log ('status '+this.statusPG);
 
         this.discipline = data.discipline ;
         for (let j=0 ; j < this.discipline.length ; j++ ) {
@@ -121,6 +126,15 @@ export class SpendipxComponent implements OnInit {
 
   addattr(attr: string) {
     /* Do something */
+    this.scheda[attr] = Number(this.scheda[attr]) + 1  ;
+    this.xpdisponibili -= Number(this.scheda[attr] ) * 2 ;
+
+    this.schedaservice.addattr(this.idutente, attr)
+    .subscribe(
+      data => {
+        console.log("add attr "+attr);
+      }
+    );
   }
 
   adddisc ( iddisciplina: number ) {
@@ -131,5 +145,10 @@ export class SpendipxComponent implements OnInit {
   addtaum( iddtaum: number ) {
     /* Do something */
     console.log("add taum "+iddtaum);
+  }
+
+  newtaum ( lvl: number ) {
+    /* Do something */
+    console.log("new taum "+this.idnewtaum + ' ' + lvl);
   }
 }

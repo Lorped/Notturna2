@@ -62,4 +62,11 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/gettaum.php'+"?idutente="+idutente );
   }
 
+  addattr (idutente: number , attributo: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addattr.php',{
+      idutente: idutente,
+      attributo: attributo
+    });
+  }
+
 }

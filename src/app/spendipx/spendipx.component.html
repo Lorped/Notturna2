@@ -23,7 +23,7 @@
         <div class="column is-3">Punti totali</div>
         <div class="column is-1">{{scheda.xp}}</div>
         <div class="column is-3">Punti Disponibili</div>
-        <div class="column is-1">{{scheda.xp-scheda.xpspesi}}</div>
+        <div class="column is-1">{{xpdisponibili}}</div>
         <div class="column is-3">
           <form [formGroup]="addXPform" (ngSubmit)="addxp()" #formDir="ngForm">
             <mat-form-field appearance="fill" style="size: 100%; display: block;">
@@ -165,9 +165,23 @@
         </div>
         <div class="column" *ngIf="livellitaum[1]==0 && livellitaum[0]>1">
           Scegli Via Secondaria (2px)
+          <mat-form-field>
+          <mat-label>Via Secondaria</mat-label>
+          <mat-select [(value)]="newtaum">
+            <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(3)">Aggiungi</button>
         </div>
         <div class="column" *ngIf="livellitaum[2]==0 && livellitaum[1]>1">
           Scegli Via Terziaria (2px)
+          <mat-form-field>
+          <mat-label>Via Terziaria</mat-label>
+          <mat-select [(value)]="idnewtaum">
+            <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(2)">Aggiungi</button>
         </div>
       </div>
 
