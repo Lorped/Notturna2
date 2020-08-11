@@ -26,6 +26,7 @@ $request = json_decode($postdata);
 
 $idutente = $request -> idutente;
 $idnecro = $request -> idnecro;
+$pricipale = $request -> principale;
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
@@ -34,38 +35,28 @@ $idnecro = $request -> idnecro;
 
 if ( isset($postdata) && $idutente != "" && $idnecro != "" ) {
 
-  $MySql = "SELECT * FROM necromanzie
-    LEFT JOIN necromanzie_main on necromanzie.idnecro = necromanzie_main.idnecro
-  WHERE necromanzie.idnecro = $idnecro AND idutente = $idutente";
+  $MySql = "SELECT * FROM necromanzie_main
+    WHERE idnecro = $idnecro ";
   $Result = mysql_query($MySql);
   $res = mysql_fetch_array($Result);
 
-  $livello = $res['livello'];
-  $newlivello = $res['livello'] + 1;
-  $nomenecro = $res['nomenecro'];
-  $principale = $res['principale'];
+  $nometaum = $res['nomenecro'];
 
-  $spesapx = $newlivello * 2;
+  $spesapx =  2;
 
-  $MySql = "UPDATE necromanzie SET livello = livello + 1
-    WHERE idnecro = $idnecro AND idutente = $idutente";
+  $MySql = "INSERT INTO necromanzie ( idnecro, livello, idutente, principale)
+    VALUES ( $idnecro, 1 , $idutente , $pricipale ) ";
   $Result = mysql_query($MySql);
 
   $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
     WHERE idutente = $idutente";
   $Result = mysql_query($MySql);
 
-  $Azione = $nomenecro . ' a ' . $newlivello ;
+  $Azione = 'Acquisita '. $nometaum . ' a 1'  ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, -2 , '$Azione' ) ";
   $Result = mysql_query($MySql);
-
-  if ( $principale == 1 ) {
-    $MySql = "UPDATE discipline SET livello = livello +1
-      WHERE iddisciplina = 99 and idutente = $idutente";
-      $Result = mysql_query($MySql);
-  }
 
 
   header("HTTP/1.1 200 OK");

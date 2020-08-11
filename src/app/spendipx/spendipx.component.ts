@@ -114,9 +114,6 @@ export class SpendipxComponent implements OnInit {
         }
 
 
-
-
-
         this.skills = data.skill ;
         this.attitudini = data.attitudini ;
 
@@ -126,14 +123,13 @@ export class SpendipxComponent implements OnInit {
 
         this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
 
-        this.schedaservice.gettaum(this.idutente)
+        this.schedaservice.getnecrotaum(this.idutente)
         .subscribe(
           (data: any) => {
-            this.newtaumaturgie = data;
-            console.log(this.newtaumaturgie);
+            this.newtaumaturgie = data.taumaturgie;
+            this.newnecromanzie = data.necromanzie;
           }
         );
-
       }
     );
   }
@@ -284,17 +280,25 @@ export class SpendipxComponent implements OnInit {
             }
 
             this.taumaturgie = data.taumaturgie ;
+            this.necromanzie = data.necromanzie ;
 
             for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
               this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
               this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
             }
 
-            this.schedaservice.gettaum(this.idutente)
+            for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
+              this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
+              this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
+            }
+
+            this.schedaservice.getnecrotaum(this.idutente)
             .subscribe(
               (data: any) => {
-                this.newtaumaturgie = data;
+                this.newtaumaturgie = data.taumaturgie;
+                this.newnecromanzie = data.necromanzie;
                 console.log(this.newtaumaturgie);
+                console.log(this.newnecromanzie);
               }
             );
           }
@@ -329,7 +333,52 @@ export class SpendipxComponent implements OnInit {
   }
 
   newnecro ( lvl: number ) {
-    
+    this.xpdisponibili -= 2;
+    this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
+    .subscribe(
+      data => {
+        console.log("new necro "+this.idnewnecro + ' ' + lvl);
+
+        this.schedaservice.getscheda(this.idutente).
+        subscribe (
+          (data: any) => {
+            this.discipline = data.discipline ;
+            for (let j=0 ; j < this.discipline.length ; j++ ) {
+              this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
+              this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
+              if ( this.discipline[j].disciplina.DiClan == "S" ) {
+                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
+              } else {
+                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
+              }
+            }
+
+            this.taumaturgie = data.taumaturgie ;
+            this.necromanzie = data.necromanzie ;
+
+            for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
+              this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
+              this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
+            }
+
+            for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
+              this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
+              this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
+            }
+
+            this.schedaservice.getnecrotaum(this.idutente)
+            .subscribe(
+              (data: any) => {
+                this.newtaumaturgie = data.taumaturgie;
+                this.newnecromanzie = data.necromanzie;
+                console.log(this.newtaumaturgie);
+                console.log(this.newnecromanzie);
+              }
+            );
+          }
+        );
+      }
+    );
   }
 
 

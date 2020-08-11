@@ -208,7 +208,7 @@
           <mat-form-field>
           <mat-label>Via Secondaria</mat-label>
           <mat-select [(value)]="idnewnecro">
-            <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==6) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
+            <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
           </mat-select>
           </mat-form-field>
           <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 100%;" (click)="newnecro(2)">Aggiungi</button>
@@ -218,7 +218,7 @@
           <mat-form-field>
           <mat-label>Via Terziaria</mat-label>
           <mat-select [(value)]="idnewnecro">
-            <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==6) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
+            <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
           </mat-select>
           </mat-form-field>
           <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 100%;" (click)="newnecro(3)">Aggiungi</button>

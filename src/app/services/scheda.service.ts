@@ -58,8 +58,8 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getlogpx.php'+"?idutente="+idutente );
   }
 
-  gettaum (idutente: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/gettaum.php'+"?idutente="+idutente );
+  getnecrotaum (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getnecrotaum.php'+"?idutente="+idutente );
   }
 
   addattr (idutente: number , attributo: string ) {
@@ -102,6 +102,14 @@ export class SchedaService {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addnecro.php',{
       idutente: idutente,
       idnecro: idnecro
+    });
+  }
+
+  newnecro (idutente: number , idnecro: string , principale: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newnecro.php',{
+      idutente: idutente,
+      idnecro: idnecro,
+      principale: principale
     });
   }
 

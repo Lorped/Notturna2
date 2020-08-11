@@ -32,7 +32,24 @@ $idutente = $_GET['idutente'];
 	}
 
 
+	$MySql="SELECT * FROM necromanzie_main
+		WHERE idnecro NOT IN ( select idnecro from necromanzie where idutente=$idutente )";
+	$Result=mysql_query($MySql);
+
+	$necromanzie = [];
+
+	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+
+		$necromanzie [] = $res ;
+	}
+
+	$out = [
+		'taumaturgie' => $taumaturgie,
+		'necromanzie' => $necromanzie
+	];
+
+
 header("HTTP/1.1 200 OK");
-echo json_encode ($taumaturgie, JSON_UNESCAPED_UNICODE);
+echo json_encode ($out, JSON_UNESCAPED_UNICODE);
 
 ?>
