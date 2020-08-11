@@ -113,4 +113,15 @@ export class SchedaService {
     });
   }
 
+  getotherdisc (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getotherdisc.php'+"?idutente="+idutente );
+  }
+
+  newdisc (idutente: number , iddisciplina: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newdisc.php',{
+      idutente: idutente,
+      iddisciplina: iddisciplina
+    });
+  }
+
 }

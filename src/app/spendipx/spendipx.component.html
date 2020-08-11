@@ -135,13 +135,23 @@
 
           <div class="columns">
             <div class="column">
-              {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello<5 && dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ? '(' + costonewdisc[ii] + 'px)' :'' ) }}
+              {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello < 5 && dd.disciplina.livello < maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ? '(' + costonewdisc[ii] + 'px)' :'' ) }}
             </div>
             <div class="column">
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
               <button *ngIf="dd.disciplina.livello<5 && dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 " class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="xpdisponibili<costonewdisc[ii]"><i class="fa fa-plus"></i></button>
             </div>
           </div>
+        </div>
+        <div class="column is-4 nopadding" >
+          Acquisisci altre Discipline (10px)
+          <mat-form-field>
+          <mat-label>Nuova Disciplina</mat-label>
+          <mat-select [(value)]="idnewdisc">
+            <mat-option *ngFor="let tt of otherdisc" [value]="tt.iddisciplina" >{{tt.nomedisc}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc==''||xpdisponibili<10" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
         </div>
       </div>
 
@@ -224,6 +234,8 @@
           <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 100%;" (click)="newnecro(3)">Aggiungi</button>
         </div>
       </div>
+
+
 
     <!-- </mat-card> -->
 

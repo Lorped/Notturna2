@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Basicpg, FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
+import { Basicpg, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
 
 
 @Component({
@@ -49,6 +49,9 @@ export class SpendipxComponent implements OnInit {
 
   livellitaum: Array<number> = [ 0 , 0 , 0 ];
   livellinecro: Array<number> = [ 0 , 0 , 0 ];
+
+  otherdisc: Array<Disciplina> = [];
+  idnewdisc: string = '';
 
 
   constructor( private schedaservice: SchedaService ) { }
@@ -128,6 +131,13 @@ export class SpendipxComponent implements OnInit {
           (data: any) => {
             this.newtaumaturgie = data.taumaturgie;
             this.newnecromanzie = data.necromanzie;
+          }
+        );
+        this.schedaservice.getotherdisc(this.idutente)
+        .subscribe(
+          (data: any) => {
+            this.otherdisc = data.otherdisc;
+            console.log (data);
           }
         );
       }
@@ -373,6 +383,62 @@ export class SpendipxComponent implements OnInit {
                 this.newnecromanzie = data.necromanzie;
                 console.log(this.newtaumaturgie);
                 console.log(this.newnecromanzie);
+              }
+            );
+          }
+        );
+      }
+    );
+  }
+
+  newdisc( ) {
+    this.xpdisponibili -= 10;
+    this.schedaservice.newdisc(this.idutente, this.idnewdisc )
+    .subscribe(
+      data => {
+        console.log("new disc "+this.idnewdisc );
+
+        this.schedaservice.getscheda(this.idutente).
+        subscribe (
+          (data: any) => {
+            this.discipline = data.discipline ;
+            for (let j=0 ; j < this.discipline.length ; j++ ) {
+              this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
+              this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
+              if ( this.discipline[j].disciplina.DiClan == "S" ) {
+                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
+              } else {
+                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
+              }
+            }
+
+            this.taumaturgie = data.taumaturgie ;
+            this.necromanzie = data.necromanzie ;
+
+            for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
+              this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
+              this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
+            }
+
+            for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
+              this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
+              this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
+            }
+
+            this.schedaservice.getnecrotaum(this.idutente)
+            .subscribe(
+              (data: any) => {
+                this.newtaumaturgie = data.taumaturgie;
+                this.newnecromanzie = data.necromanzie;
+                console.log(this.newtaumaturgie);
+                console.log(this.newnecromanzie);
+              }
+            );
+            this.schedaservice.getotherdisc(this.idutente)
+            .subscribe(
+              (data: any) => {
+                this.otherdisc = data.otherdisc;
+                console.log (data);
               }
             );
           }
