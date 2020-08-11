@@ -20,21 +20,46 @@ include ('db.inc.php');
 
 $idutente = $_GET['idutente'];
 
-	$MySql="SELECT * FROM discipline_main
-		WHERE iddisciplina NOT IN ( select iddisciplina from discipline where idutente=$idutente )
-		AND iddisciplina != 98 and iddisciplina != 99 ";
-	$Result=mysql_query($MySql);
+	$rituali_t = [];
 
-	$otherdisc = [];
+	for ( $lvl = 1 ; $lvl < 6 ; $lvl ++ ) {
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+		$MySql="SELECT * FROM rituali_t_main
+			WHERE idrituale NOT IN ( select idrituale from rituali_t where idutente=$idutente )
+			AND livello = $lvl ";
+		$Result=mysql_query($MySql);
 
-		$otherdisc [] = $res ;
+		$rituali_t_x = [];
+		while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+			$rituali_t_x [] = $res ;
+		}
+
+		$rituali_t [] = $rituali_t_x;
+
+	}
+
+	$rituali_n = [];
+
+	for ( $lvl = 1 ; $lvl < 6 ; $lvl ++ ) {
+
+		$MySql="SELECT * FROM rituali_n_main
+			WHERE idrituale NOT IN ( select idrituale from rituali_n where idutente=$idutente )
+			AND livello = $lvl ";
+		$Result=mysql_query($MySql);
+
+		$rituali_n_x = [];
+		while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+			$rituali_n_x [] = $res ;
+		}
+
+		$rituali_n [] = $rituali_n_x;
+
 	}
 
 
 	$out = [
-		'otherdisc' => $otherdisc
+		'rituali_t' => $rituali_t,
+		'rituali_n' => $rituali_n
 	];
 
 

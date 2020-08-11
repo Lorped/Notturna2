@@ -124,4 +124,16 @@ export class SchedaService {
     });
   }
 
+  getrituali (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getrituali.php'+"?idutente="+idutente );
+  }
+
+  newrituale (idutente: number , idrituale: string, necrotaum: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newrituale.php',{
+      idutente: idutente,
+      idrituale: idrituale,
+      necrotaum: necrotaum
+    });
+  }
+
 }

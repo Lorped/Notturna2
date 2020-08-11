@@ -4,6 +4,7 @@ import { SchedaService } from '../services/index';
 import { Basicpg, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
 
 
+
 @Component({
   selector: 'app-spendipx',
   templateUrl: './spendipx.component.html',
@@ -36,6 +37,14 @@ export class SpendipxComponent implements OnInit {
   attitudini: Array<Skill> = [];
 
   rituali: Array<Rituale> = [];
+  /*rituali_n_x: Array<Rituale> = [];
+  rituali_t_t: Array<Rituale> = []; */
+  rituali_n: Array<any> = [];
+  rituali_t: Array<any> = [];
+
+  maxrituali = 0 ;
+
+  idnewrituale: Array<string> = ['','','','',''];
 
   newtaumaturgie: Array<Taumaturgia> = [] ;
   newnecromanzie: Array<Necromanzia> = [] ;
@@ -122,7 +131,12 @@ export class SpendipxComponent implements OnInit {
 
         this.rituali = data.rituali;
 
-        console.log(data);
+        this.maxrituali = 0;
+        for ( let j = 0 ; j< this.rituali.length; j ++) {
+          if (this.rituali[j].livello> this.maxrituali) {
+            this.maxrituali = this.rituali[j].livello;
+          }
+        }
 
         this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
 
@@ -138,6 +152,14 @@ export class SpendipxComponent implements OnInit {
           (data: any) => {
             this.otherdisc = data.otherdisc;
             console.log (data);
+          }
+        );
+        this.schedaservice.getrituali(this.idutente)
+        .subscribe(
+          (data: any) => {
+            this.rituali_t = data.rituali_t;
+            this.rituali_n = data.rituali_n;
+            console.log (this.rituali_t);
           }
         );
       }
@@ -445,6 +467,44 @@ export class SpendipxComponent implements OnInit {
         );
       }
     );
+  }
+
+  addrituale(lvl: number, necrotaum: string) {
+    this.xpdisponibili -= 3*(lvl+1);
+
+    this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
+    .subscribe(
+      (data: any) => {
+        this.schedaservice.getscheda(this.idutente).
+        subscribe (
+          (data: any) => {
+
+            this.rituali = data.rituali;
+
+            for (let j = 0 ; j< 5 ; j++ ) {
+              this.idnewrituale[j] = '' ;
+            }
+
+            this.maxrituali = 0;
+            for ( let j = 0 ; j< this.rituali.length; j ++) {
+              if (this.rituali[j].livello> this.maxrituali) {
+                this.maxrituali = this.rituali[j].livello;
+              }
+            }
+            this.schedaservice.getrituali(this.idutente)
+            .subscribe(
+              (data: any) => {
+                this.rituali_t = data.rituali_t;
+                this.rituali_n = data.rituali_n;
+                console.log (this.rituali_t);
+              }
+            );
+          }
+        );
+      }
+    );
+
+
   }
 
 

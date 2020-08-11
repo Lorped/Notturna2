@@ -125,7 +125,7 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Incrementa / Acquisisci Discipline
+        Incrementa / Acquisisci Discipline e Rituali
       </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -181,7 +181,7 @@
             <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
           </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(2)">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 66%;" (click)="newtaum(2)">Aggiungi</button>
         </div>
         <div class="column is-4 nopadding" *ngIf="livellitaum[2]==0 && livellitaum[1]>1">
           Scegli Via Terziaria (2px)
@@ -191,7 +191,7 @@
             <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
           </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 100%;" (click)="newtaum(3)">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 66%;" (click)="newtaum(3)">Aggiungi</button>
         </div>
       </div>
 
@@ -221,7 +221,7 @@
             <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
           </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 100%;" (click)="newnecro(2)">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 66%;" (click)="newnecro(2)">Aggiungi</button>
         </div>
         <div class="column is-4 nopadding" *ngIf="livellinecro[2]==0 && livellinecro[1]>1">
           Scegli Via Terziaria (2px)
@@ -231,15 +231,58 @@
             <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
           </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 100%;" (click)="newnecro(3)">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 66%;" (click)="newnecro(3)">Aggiungi</button>
         </div>
       </div>
 
-
-
     <!-- </mat-card> -->
 
+    <div class="columns" style="align-items: center;" *ngIf="taumaturgie.length >0||necromanzie.length>0">
+      <div class="column"><hr></div>
+      <div class="column is-2" style="text-align: center;">Rituali</div>
+      <div class="column"><hr></div>
+    </div>
+
+    <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
+      <div class="column is-4 nopadding" *ngFor="let r of rituali">
+        {{r.livello}}. {{r.nomerituale}}
+      </div>
+    </div>
+
+    <div class="columns is-multiline nopadding" style="margin-left: 0px;" *ngIf="taumaturgie.length >0">
+      <div class="column is-4 nopadding" *ngFor="let lvl of taumaturgie[0].taumaturgia.livello | times; let ix = index">
+        <div class="column nopadding" *ngIf="maxrituali >= ix">
+          Scegli Rituale di {{ix+1}}. Livello ({{(ix+1)*3}}px)
+          <mat-form-field>
+            <mat-label>Rituale</mat-label>
+            <mat-select [(value)]="idnewrituale[ix]">
+              <mat-option *ngFor="let rx of rituali_t[ix]" [value]="rx.idrituale" >{{rx.nomerituale}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<3*ix" style="width: 66%;" (click)="addrituale(ix,'t')">Aggiungi</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-multiline nopadding" style="margin-left: 0px;" *ngIf="necromanzie.length>0">
+      <div class="column is-4 nopadding" *ngFor="let lvl of necromanzie[0].necromanzia.livello | times; let ix = index">
+        <div class="column nopadding" *ngIf="maxrituali >= ix">
+          Scegli Rituale di {{ix+1}}. Livello ({{ (rituali.length==0?0:(ix+1)*3)   }}px)
+          <mat-form-field>
+            <mat-label>Rituale</mat-label>
+            <mat-select [(value)]="idnewrituale[ix]">
+              <mat-option *ngFor="let rx of rituali_n[ix]" [value]="rx.idrituale" >{{rx.nomerituale}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<(rituali.length==0?0:(ix+1)*3)" style="width: 66%;" (click)="addrituale(ix,'n')">Aggiungi</button>
+        </div>
+      </div>
+    </div>
+
+
   </mat-expansion-panel>
+
+
 
 </mat-card>
 </div>
