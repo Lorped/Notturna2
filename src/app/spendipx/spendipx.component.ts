@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../services/index';
-import { Basicpg, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
+import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Pregio, Rituale } from '../global';
 
 
 
@@ -63,6 +63,7 @@ export class SpendipxComponent implements OnInit {
   idnewdisc: string = '';
 
 
+
   constructor( private schedaservice: SchedaService ) { }
 
   addXPform = new FormGroup ({
@@ -97,6 +98,8 @@ export class SpendipxComponent implements OnInit {
         this.scheda['generazione']=Number(this.scheda['generazione']);
 
         this.statusPG = Number(this.scheda.idstatus);
+
+        console.log(data);
 
 
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];

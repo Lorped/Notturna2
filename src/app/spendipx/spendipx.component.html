@@ -282,6 +282,32 @@
 
   </mat-expansion-panel>
 
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Incrementa Affinità/Conoscenze
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+
+    <mat-card>
+
+      <div class="columns is-multiline" style="margin-left: 0px;" >
+        <div class="column is-4 nopadding" *ngFor="let dd of skills">
+          <div class="columns">
+            <div class="column">
+              {{dd.nomeskill}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </mat-card>
+
+  </mat-expansion-panel>
 
 
 </mat-card>
