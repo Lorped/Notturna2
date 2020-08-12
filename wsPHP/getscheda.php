@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   /*** skill **/
 
   $skill = [];
-  $MySql = "SELECT * FROM skill_main
+  $MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia  FROM skill_main
     LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
     WHERE tipologia = 0 ORDER BY nomeskill" ;
   $Result = mysql_query($MySql);
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	/*** skill **/
 
 	$attitudini = [];
-	$MySql = "SELECT * FROM skill_main
+	$MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia FROM skill_main
 		LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
 		WHERE tipologia = 1 ORDER BY nomeskill" ;
 	$Result = mysql_query($MySql);

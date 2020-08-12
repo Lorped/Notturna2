@@ -289,6 +289,23 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
+    <mat-card>
+
+    <div class="columns is-multiline" style="margin-left: 0px;" >
+      <div class="column is-4 nopadding" *ngFor="let dd of attitudini">
+        <div class="columns">
+          <div class="column ">
+            {{dd.nomeskill}}  {{ (dd.livello<5 && dd.livello < scheda.destrezza ) ? '(' +  3 * (dd.livello+1) + 'px)' : '' }}
+          </div>
+          <div class="column">
+            <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            <button *ngIf="dd.livello<5 && dd.livello < scheda.destrezza" class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="xpdisponibili<3*(dd.livello+1)"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </mat-card>
 
     <mat-card>
 
@@ -296,10 +313,11 @@
         <div class="column is-4 nopadding" *ngFor="let dd of skills">
           <div class="columns">
             <div class="column">
-              {{dd.nomeskill}}
+              {{dd.nomeskill}}  {{  (dd.livello<5)  ? '('+2*(dd.livello+1)+'px)' : '' }}
             </div>
             <div class="column">
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+              <button *ngIf="dd.livello<5 " class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="xpdisponibili<2*(dd.livello+1)"><i class="fa fa-plus"></i></button>
             </div>
           </div>
         </div>
@@ -309,6 +327,38 @@
 
   </mat-expansion-panel>
 
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Incrementa Forza di Volonta e Blood Potency
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="columns is-multiline" style="margin-left: 0px;" >
+      <div class="column nopadding">
+        <div class="columns">
+          <div class="column">
+            Forza di Volontà {{  (scheda.fdvmax<10)  ? '('+4*(scheda.fdvmax+1)+'px)' : '' }}
+          </div>
+          <div class="column">
+            <i *ngFor="let item of 10|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda.fdvmax, 'dred': ix < scheda.fdvmax}"></i>
+            <button *ngIf="scheda.fdvmax<10 " class="btn btn-xs" (click)="addfdv()" [disabled]="xpdisponibili<4*(scheda.fdvmax+1)"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+             Blood Potency {{  (scheda.bloodp < scheda.bloodpmax)  ? '('+4*(scheda.bloodp+1)+'px)' : '' }}
+          </div>
+          <div class="column">
+            <i *ngFor="let item of 10|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda.bloodp, 'dred': ix < scheda.bloodp}"></i>
+            <button *ngIf="scheda.bloodp<scheda.bloodpmax " class="btn btn-xs" (click)="addbp()" [disabled]="xpdisponibili<4*(scheda.bloodp+1)"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-expansion-panel>
 
 </mat-card>
 </div>

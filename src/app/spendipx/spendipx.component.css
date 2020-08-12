@@ -14,7 +14,8 @@
 
 mat-card {
   /* margin-top: 0.25em; */
-  font-size: 1em
+  font-size: 1em;
+  margin-bottom: 0.25em;
 }
 
 mat-expansion-panel {
@@ -24,4 +25,16 @@ mat-expansion-panel {
 .nopadding {
   padding-left: 0;
   padding-right: 0;
+}
+
+hr {
+  height: 1px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  background-color: #ff0000;
+  color: #ff0000;
+  display: block;
+  border: 0;
+  border-top: 1px solid #f00;
+  padding: 0;
 }

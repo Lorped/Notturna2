@@ -136,4 +136,24 @@ export class SchedaService {
     });
   }
 
+  addskill (idutente: number , idskill: number, tipologia: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addskill.php',{
+      idutente: idutente,
+      idskill: idskill,
+      tipologia: tipologia
+    });
+  }
+
+  addbp (idutente: number  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addbp.php',{
+      idutente: idutente
+    });
+  }
+
+  addfdv (idutente: number  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addfdv.php',{
+      idutente: idutente
+    });
+  }
+
 }

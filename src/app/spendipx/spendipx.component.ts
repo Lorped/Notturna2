@@ -94,8 +94,10 @@ export class SpendipxComponent implements OnInit {
 
         this.scheda.xp = Number (this.scheda.xp);
         this.scheda['fdv']=Number(this.scheda['fdv']);
-        this.scheda['valsentiero']=Number(this.scheda['valsentiero']);
-        this.scheda['generazione']=Number(this.scheda['generazione']);
+        this.scheda['fdvmax']=Number(this.scheda['fdvmax']);
+        this.scheda['bloodp']=Number(this.scheda['bloodp']);
+        this.scheda['bloodpmax']=Number(this.scheda['bloodpmax']);
+
 
         this.statusPG = Number(this.scheda.idstatus);
 
@@ -131,6 +133,13 @@ export class SpendipxComponent implements OnInit {
 
         this.skills = data.skill ;
         this.attitudini = data.attitudini ;
+        for (let j=0 ; j < this.skills.length ; j++ ) {
+          this.skills[j].livello = Number(this.skills[j].livello);
+        }
+        for (let j=0 ; j < this.attitudini.length ; j++ ) {
+          this.attitudini[j].livello = Number(this.attitudini[j].livello);
+        }
+
 
         this.rituali = data.rituali;
 
@@ -506,9 +515,63 @@ export class SpendipxComponent implements OnInit {
         );
       }
     );
+  }
 
+  addskill (idskill: number, tipologia: number) {
+    console.log("add skill "+idskill);
+    if (tipologia == 0 ) {
+      for (let j = 0 ; j < this.skills.length ; j++) {
+        if (this.skills[j].idskill == idskill ) {
+          this.skills[j].livello ++ ;
+
+          this.xpdisponibili -= 2 * this.skills[j].livello ;
+
+          this.schedaservice.addskill(this.idutente, idskill, tipologia)
+          .subscribe( (data:any) => {
+            console.log ("add skill "+idskill);
+          });
+        }
+      }
+    } else {
+      for (let j = 0 ; j < this.attitudini.length ; j++) {
+        if (this.attitudini[j].idskill == idskill ) {
+          this.attitudini[j].livello ++ ;
+
+          this.xpdisponibili -= 3 * this.attitudini[j].livello ;
+
+          this.schedaservice.addskill(this.idutente, idskill, tipologia)
+          .subscribe( (data:any) => {
+            console.log ("add skill "+idskill);
+          });
+        }
+      }
+    }
+  }
+
+
+  addfdv(){
+
+    this.scheda.fdvmax ++;
+    this.xpdisponibili -= 4 * this.scheda.fdvmax ;
+
+    this.schedaservice.addfdv(this.idutente)
+    .subscribe( (data:any) => {
+      console.log ("add fdv ");
+    });
 
   }
 
+  addbp (){
+
+
+        this.scheda.bloodp ++;
+        this.xpdisponibili -= 4 * this.scheda.bloodp ;
+
+        this.schedaservice.addbp(this.idutente)
+        .subscribe( (data:any) => {
+          console.log ("add bp ");
+        });
+
+  }
 
 }

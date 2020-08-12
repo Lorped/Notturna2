@@ -43,6 +43,8 @@ export class Basicpg {
   public zona = '';
 
   public bloodp = 0;
+  public bloodpmax = 0;  // from LEFT JOIN
+  public bloodpmin = 0;  // FROM LEFT JOIN
   public bane = 0 ;
   public urldt = '';
 }
