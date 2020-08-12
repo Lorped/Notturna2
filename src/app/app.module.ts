@@ -22,6 +22,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatSidenavModule} from '@angular/material/sidenav';
 //
 
 import { AuthenticationService } from './services/index';
@@ -39,6 +40,7 @@ import { NonecrotaumPipe } from './nonecrotaum.pipe';
 import { AddpoteriComponent } from './addpoteri/addpoteri.component';
 import { LogpxComponent } from './logpx/logpx.component';
 import { SpendipxComponent } from './spendipx/spendipx.component';
+import { SidexComponent } from './sidex/sidex.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { SpendipxComponent } from './spendipx/spendipx.component';
     NonecrotaumPipe,
     AddpoteriComponent,
     LogpxComponent,
-    SpendipxComponent
+    SpendipxComponent,
+    SidexComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,8 @@ import { SpendipxComponent } from './spendipx/spendipx.component';
     MatCheckboxModule,
     MatExpansionModule,
     MatListModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSidenavModule
 
 
   ],

@@ -81,7 +81,6 @@ export class SchedaComponent implements OnInit {
         this.pregi = data.pregidifetti;
         this.rituali = data.rituali;
 
-        console.log(data);
       }
     );
   }

@@ -21,7 +21,6 @@ export class MainComponent implements OnInit {
     subscribe (
       data => {
         this.mybadge = String(data);
-        console.log(data);
       }
     );
   }

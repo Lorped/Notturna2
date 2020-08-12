@@ -43,3 +43,7 @@ mat-expansion-panel {
 .full {
   width: 100%;
 }
+
+.sidenav {
+  padding: 20px;
+}

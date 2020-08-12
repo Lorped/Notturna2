@@ -101,8 +101,6 @@ export class SpendipxComponent implements OnInit {
 
         this.statusPG = Number(this.scheda.idstatus);
 
-        console.log(data);
-
 
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
 
@@ -163,7 +161,6 @@ export class SpendipxComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.otherdisc = data.otherdisc;
-            console.log (data);
           }
         );
         this.schedaservice.getrituali(this.idutente)
@@ -171,7 +168,6 @@ export class SpendipxComponent implements OnInit {
           (data: any) => {
             this.rituali_t = data.rituali_t;
             this.rituali_n = data.rituali_n;
-            console.log (this.rituali_t);
           }
         );
       }
@@ -341,8 +337,6 @@ export class SpendipxComponent implements OnInit {
               (data: any) => {
                 this.newtaumaturgie = data.taumaturgie;
                 this.newnecromanzie = data.necromanzie;
-                console.log(this.newtaumaturgie);
-                console.log(this.newnecromanzie);
               }
             );
           }
@@ -415,8 +409,6 @@ export class SpendipxComponent implements OnInit {
               (data: any) => {
                 this.newtaumaturgie = data.taumaturgie;
                 this.newnecromanzie = data.necromanzie;
-                console.log(this.newtaumaturgie);
-                console.log(this.newnecromanzie);
               }
             );
           }
@@ -464,15 +456,12 @@ export class SpendipxComponent implements OnInit {
               (data: any) => {
                 this.newtaumaturgie = data.taumaturgie;
                 this.newnecromanzie = data.necromanzie;
-                console.log(this.newtaumaturgie);
-                console.log(this.newnecromanzie);
               }
             );
             this.schedaservice.getotherdisc(this.idutente)
             .subscribe(
               (data: any) => {
                 this.otherdisc = data.otherdisc;
-                console.log (data);
               }
             );
           }
@@ -508,7 +497,6 @@ export class SpendipxComponent implements OnInit {
               (data: any) => {
                 this.rituali_t = data.rituali_t;
                 this.rituali_n = data.rituali_n;
-                console.log (this.rituali_t);
               }
             );
           }
