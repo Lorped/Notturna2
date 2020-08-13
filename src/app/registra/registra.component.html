@@ -1,1 +1,58 @@
-<p>registra works!</p>
+<div>
+  &nbsp;
+</div>
+<mat-card>
+  <mat-card-title>
+    NOTTURNA
+  </mat-card-title>
+  <mat-card-subtitle>
+    Cronaca di Roma
+  </mat-card-subtitle>
+  <mat-card-content>
+    <form  [formGroup]="registrationForm" #formDir="ngForm">
+
+      <mat-form-field class="full-width-input">
+        <input matInput formControlName="regname" placeholder="Nome utente" required>
+      </mat-form-field>
+      <mat-error *ngIf="regname?.hasError('nomeTaken')">Nome già presente</mat-error>
+
+      <mat-form-field class="full-width-input">
+        <input matInput formControlName="regemail" placeholder="email" required>
+      </mat-form-field>
+      <mat-error *ngIf="regemail?.hasError('email') && !regemail?.hasError('required')">Inserire una email valida</mat-error>
+      <mat-error *ngIf="regemail?.hasError('emailTaken')">Email già presente</mat-error>
+
+      <mat-form-field class="full-width-input">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Password" required >
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-error *ngIf="password?.hasError('minlength')">La lunghezza minima è 8 caratteri</mat-error>
+
+      <mat-form-field class="full-width-input">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password2" placeholder="Password" required >
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-error *ngIf=" password2?.value != password?.value && (password2?.dirty || password2?.touched)">Le due password non coincidono</mat-error>
+
+      <div style="text-align: justify;">
+        In ottemperanza al Regolamento UE 2016/679 (GDPR) e alla normativa sulla protezione dei dati personali si informa che:<br>
+l’indirizzo email verrà registrato come dato di login per l’accesso al sito e per l’eventuale recupero della password; titolare del trattamento dati è il gestore del sito www.roma-by-night.it; l’email sarà registrato nel database del sito, locato nella UE; le informazioni non verranno comunicate a entità terze ma solo trattate in modo automatico durante il login e durante i backup periodici; la conservazione del dato (indirizzo email) è relativa solo al tempo di mantenimento di una utenza sul sito "Notturna - Cronaca di Roma", al termine del quale tale record verrà cancellato; gli utenti possono in ogni istante autonomamente modificare l’email o richiederne la cancellazione, in quest’ultimo caso verrà contestualmente cancellata l’utenza.
+      </div>
+      <div class="form-check">
+          <input id="Check1" class="form-check-input"  type="checkbox" formControlName="check" required>
+          <label class="form-check-label" for="Check1">Accetto</label>
+      </div>
+
+      <button  mat-raised-button class="large" color="primary" [disabled]="!formDir.form.valid" >Registra</button>
+      <div style="text-align:center">
+        <p>
+        <a [routerLink]="['']" >Torna al Login</a>
+
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

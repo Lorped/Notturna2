@@ -35,4 +35,22 @@ export class AuthenticationService {
     sessionStorage.removeItem('NotturnaUser2');
   }
 
+
+  checkEmail (email: string) {
+    return this.http.get<any>('https://www.roma-by-night.it/Notturna2/wsPHP/checkemail.php?email=' + email);
+  }
+
+  checkNome (nome: string) {
+    return this.http.get<any>('https://www.roma-by-night.it/Notturna2/wsPHP/checknome.php?nome=' + nome);
+  }
+
+
+  sendregistra (username: string , password: string, email: string) {
+      return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/sendregistra.php', {
+        username: username,
+        password: password,
+        email: email
+      });
+  }
+
 }
