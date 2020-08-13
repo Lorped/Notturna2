@@ -92,6 +92,7 @@ export class Pregio {
   public nomepregio = '';
   public valore = 0;
   public classe = '';
+  public pxspesi = 0 ;
 }
 
 @Injectable()

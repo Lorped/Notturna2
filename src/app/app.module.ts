@@ -41,6 +41,7 @@ import { AddpoteriComponent } from './addpoteri/addpoteri.component';
 import { LogpxComponent } from './logpx/logpx.component';
 import { SpendipxComponent } from './spendipx/spendipx.component';
 import { SidexComponent } from './sidex/sidex.component';
+import { PregidifettiComponent } from './pregidifetti/pregidifetti.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { SidexComponent } from './sidex/sidex.component';
     AddpoteriComponent,
     LogpxComponent,
     SpendipxComponent,
-    SidexComponent
+    SidexComponent,
+    PregidifettiComponent
   ],
   imports: [
     BrowserModule,

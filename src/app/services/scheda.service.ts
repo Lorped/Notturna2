@@ -156,4 +156,23 @@ export class SchedaService {
     });
   }
 
+  getpregidifetti (idutente: number ) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpregidifetti.php'+"?idutente="+idutente );
+  }
+
+  getpregi (idutente: number ) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpregi.php'+"?idutente="+idutente );
+  }
+
+  addpregio (idutente: number , idpregio: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpregio.php',{
+      idutente: idutente,
+      idpregio: idpregio
+    });
+  }
+
+  getpx (idutente: number ) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpx.php'+"?idutente="+idutente );
+  }
+
 }
