@@ -36,20 +36,39 @@ $fama3 = $request -> fama3;
 
 if ( isset($postdata) && $idutente != "" ) {
 
+  $MySql = "SELECT fama1, fama2, fama3 FROM personaggio
+    WHERE idutente = $idutente ";
+  $Result = mysql_query($MySql);
+
+  $res = mysql_fetch_array ($Result);
+
+  $oldfama1 = $res['fama1'];
+  $oldfama2 = $res['fama2'];
+  $oldfama3 = $res['fama3'];
+
+
+  if ( $oldfama1 != $fama1 ) {
+    $Azione = "Fama in Città a ".$fama1;
+  }
+  if ( $oldfama2 != $fama2 ) {
+    $Azione = "Fama tra i Vampiri a ".$fama2;
+  }
+  if ( $oldfama3 != $fama3 ) {
+    $Azione = "Fama nel Mondo Oscuro a ".$fama3;
+  }
+
 
   $MySql = "UPDATE  personaggio SET fama1 = '$fama1' ,  fama2 = '$fama2' , fama3 = '$fama3'
     WHERE idutente = $idutente ";
   $Result = mysql_query($MySql);
 
-  /*
 
-  $Azione = 'Acquisto rituale ' . $livello . "." . $nomerituale ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, 0 , '$Azione' ) ";
   $Result = mysql_query($MySql);
 
-  */
+
 
   if (mysql_errno()) {
     header("HTTP/1.1 403 Forbidden");
