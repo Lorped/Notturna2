@@ -14,6 +14,7 @@ export class RegistraComponent implements OnInit {
 
   accetta = '';
   hide = true;
+  errmsg = '';
 
   registrationForm = new FormGroup ({
     regname: new FormControl('', [
@@ -88,11 +89,15 @@ export class RegistraComponent implements OnInit {
   }
 
   doRegister() {
-
-  this.authenticationservice.sendregistra(this.regname!.value , this.password!.value, this.regemail!.value)
-  .subscribe( res => {
-    this.router.navigate(['']);
-  });
+    this.errmsg = '';
+    this.authenticationservice.sendregistra(this.regname!.value , this.password!.value, this.regemail!.value)
+    .subscribe( res => {
+      this.router.navigate(['']);
+      },
+        error => {
+        this.errmsg = "Errore di registrazione";
+      }
+    );
   }
 
 }

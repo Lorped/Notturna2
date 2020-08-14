@@ -11,6 +11,7 @@ import { LogpxComponent } from './logpx/logpx.component';
 import { SpendipxComponent } from './spendipx/spendipx.component';
 import { PregidifettiComponent } from './pregidifetti/pregidifetti.component';
 import { RegistraComponent } from './registra/registra.component';
+import { BioComponent } from './bio/bio.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'spendipx', component: SpendipxComponent },
   { path: 'pregidifetti', component: PregidifettiComponent },
   { path: 'registra', component: RegistraComponent },
+  { path: 'bio', component: BioComponent },
 ];
 
 @NgModule({

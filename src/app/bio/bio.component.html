@@ -1,0 +1,81 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sidex></app-sidex>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+<div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
+  <p>
+  <mat-card>
+    <mat-card-title>
+      Biografia e Annotazioni
+    </mat-card-title>
+
+<hr>
+
+    <div class="columns bio">
+      <div class="column bio">
+        <mat-form-field appearance="fill" class="full">
+          <mat-label>Biografia</mat-label>
+          <textarea matInput [formControl]="bio"  ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <button  mat-raised-button class="full" color="primary" [disabled]="!(bio.dirty || bio.touched)" (click)="aggiornaBio()">Aggiorna</button>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">&nbsp;</div>
+      <div class="column"><hr></div>
+      <div class="column">&nbsp;</div>
+    </div>
+
+    <div class="columns bio">
+      <div class="column bio">
+        <mat-form-field appearance="fill" class="full">
+          <mat-label>Annotazioni</mat-label>
+          <textarea matInput [formControl]="annotazioni"  ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+          <button  mat-raised-button class="full" color="primary" [disabled]="!(annotazioni.dirty || annotazioni.touched)" (click)="aggiornaBio()">Aggiorna</button>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">&nbsp;</div>
+      <div class="column"><hr></div>
+      <div class="column">&nbsp;</div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-10">
+        <mat-form-field appearance="fill" class="full">
+          <mat-label>URL DT</mat-label>
+          <input matInput [formControl]="urlDT"  >
+        </mat-form-field>
+      </div>
+      <div class="column is-2">
+        <button  mat-raised-button class="large" color="primary" [disabled]="!(urlDT.dirty || urlDT.touched)" (click)="aggiornaBio()">Aggiorna</button>
+      </div>
+    </div>
+
+  </mat-card>
+
+</div>

@@ -175,4 +175,17 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpx.php'+"?idutente="+idutente );
   }
 
+  getbio (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getbio.php'+"?idutente="+idutente );
+  }
+
+  putbio (idutente: number , bio: string, note: string , urldt: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putbio.php',{
+      idutente: idutente,
+      bio: bio,
+      note: note,
+      urldt: urldt
+    });
+  }
+
 }

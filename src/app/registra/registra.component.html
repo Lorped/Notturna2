@@ -47,7 +47,8 @@ l’indirizzo email verrà registrato come dato di login per l’accesso al sito
           <label class="form-check-label" for="Check1">Accetto</label>
       </div>
 
-      <button  mat-raised-button class="large" color="primary" [disabled]="!formDir.form.valid" >Registra</button>
+      <button  mat-raised-button class="large" color="primary" [disabled]="!formDir.form.valid" (click)="doRegister()">Registra</button>
+      <mat-error *ngIf="errmsg != ''"> {{errmsg}}</mat-error>
       <div style="text-align:center">
         <p>
         <a [routerLink]="['']" >Torna al Login</a>
