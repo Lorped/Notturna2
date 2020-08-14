@@ -188,4 +188,41 @@ export class SchedaService {
     });
   }
 
+  getfama (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getfama.php'+"?idutente="+idutente );
+  }
+
+  putfama (idutente: number , fama1: number, fama2: number , fama3: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putfama.php',{
+      idutente: idutente,
+      fama1: fama1,
+      fama2: fama2,
+      fama3: fama3
+    });
+  }
+
+  getbg (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getbg.php'+"?idutente="+idutente );
+  }
+
+  putbg (idutente: number , idback: number, livello: number  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putbg.php',{
+      idutente: idutente,
+      idback: idback,
+      livello: livello
+    });
+  }
+
+  getcontatti (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcontatti.php'+"?idutente="+idutente );
+  }
+
+  putcontatti (idutente: number , idcontatto: number, livello: number  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putcontatti.php',{
+      idutente: idutente,
+      idcontatto: idcontatto,
+      livello: livello
+    });
+  }
+
 }

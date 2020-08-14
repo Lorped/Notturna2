@@ -53,13 +53,22 @@
       <a [routerLink]="['/poteri']">
         <mat-card class="movable" [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after" matBadgeSize="large" matBadgeColor="warn">
           <mat-card-content class="all">
-
             <i class="fa fa-bolt"></i> Scegli Poteri
-
           </mat-card-content>
         </mat-card>
       </a>
     </mat-grid-tile>
+
+    <mat-grid-tile>
+      <a [routerLink]="['/background']">
+        <mat-card class="movable" [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after" matBadgeSize="large" matBadgeColor="warn">
+          <mat-card-content class="all">
+            <i class="fa fa-address-card"></i> Modifica Fama, Background ecc..
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
+
 
     <mat-grid-tile>
       <a [routerLink]="['/logpx']">

@@ -43,6 +43,7 @@ import { SpendipxComponent } from './spendipx/spendipx.component';
 import { SidexComponent } from './sidex/sidex.component';
 import { PregidifettiComponent } from './pregidifetti/pregidifetti.component';
 import { BioComponent } from './bio/bio.component';
+import { BackgroundComponent } from './background/background.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { BioComponent } from './bio/bio.component';
     SpendipxComponent,
     SidexComponent,
     PregidifettiComponent,
-    BioComponent
+    BioComponent,
+    BackgroundComponent
   ],
   imports: [
     BrowserModule,
