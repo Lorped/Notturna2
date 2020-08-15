@@ -225,4 +225,11 @@ export class SchedaService {
     });
   }
 
+  newcontatto (idutente: number , nomecontatto: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newcontatto.php',{
+      idutente: idutente,
+      nomecontatto: nomecontatto
+    });
+  }
+
 }

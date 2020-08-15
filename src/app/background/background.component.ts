@@ -126,22 +126,32 @@ export class BackgroundComponent implements OnInit {
     for ( let j=0 ; j< this.listaContatti.length ; j++) {
       if ( this.listaContatti[j].idcontatto == id ) {
         this.listaContatti[j].livello -- ;
-        if (this.listaContatti[j].livello==0){
-          this.listaContatti.splice(j, 1);
-          console.log (this.listaContatti);
-        }
-        this.sommacontatti -- ;
+        this.schedaservice.putcontatti(this.idutente, id , this.listaContatti[j].livello)
+        .subscribe(
+          (data) => {
+            if (this.listaContatti[j].livello==0){
+              this.listaContatti.splice(j, 1);
+            }
+            this.sommacontatti -- ;
+          }
+        );
       }
     }
-
   }
   addcon(id:number){
     for ( let j=0 ; j< this.listaContatti.length ; j++) {
       if ( this.listaContatti[j].idcontatto == id ) {
         this.listaContatti[j].livello ++ ;
-        this.sommacontatti ++ ;
+        this.schedaservice.putcontatti(this.idutente, id , this.listaContatti[j].livello)
+        .subscribe(
+          (data) => {
+            this.sommacontatti ++ ;
+          }
+        );
       }
     }
+
+
   }
 
   newcontatto(){
@@ -149,10 +159,19 @@ export class BackgroundComponent implements OnInit {
     myNew.nomecontatto = this.myContatto.value;
     myNew.livello = 1 ;
 
-    /* devo prendere l'ID contatto dopo il write */
+    this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto)
+    .subscribe(
+      (data: any) => {
 
-    this.listaContatti.push( myNew);
-    this.myContatto.reset();
+        console.log(data);
+        myNew.idcontatto = data ;
+        this.listaContatti.push( myNew);
+        this.myContatto.reset();
+        this.sommacontatti ++ ;
+      }
+    );
+
+
   }
 
 

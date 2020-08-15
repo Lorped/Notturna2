@@ -70,6 +70,36 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
   $Result = mysql_query($MySql);
 
 
+  $MySql = "SELECT sum(livello) as s FROM contatti
+  WHERE idutente = $idutente";
+  $Result = mysql_query($MySql);
+  $res = mysql_fetch_array($Result);
+  $somma = $res['s'];
+
+  if ( $somma == 0 ) {
+    $MySql = "DELETE FROM background
+    WHERE idutente = $idutente AND idback = 77 ";
+    $Result = mysql_query($MySql);
+  }
+  if ( $somma != 0 AND $somma != 1 ) {
+    $MySql = "UPDATE background
+    SET livello = $somma
+    WHERE idutente = $idutente AND idback = 77 ";
+    $Result = mysql_query($MySql);
+  }
+  if (  $somma == 1 ) {
+    $MySql = "DELETE FROM background
+    WHERE idutente = $idutente AND idback = 77 ";
+    $Result = mysql_query($MySql);
+    $MySql = " INSERT INTO background (idback, idutente, livello)
+      VALUES (77, $idutente, 1 )";
+    $Result = mysql_query($MySql);
+  }
+
+
+
+
+
 
   if (mysql_errno()) {
     header("HTTP/1.1 403 Forbidden");
