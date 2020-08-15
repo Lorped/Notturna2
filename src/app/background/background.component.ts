@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../services/index';
-import { Background } from '../global';
+import { Background, Contatti } from '../global';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-background',
@@ -16,6 +17,13 @@ export class BackgroundComponent implements OnInit {
   fama3 = 0 ;
 
   listabg: Array<Background> = [];
+  listaContatti: Array<Contatti> = [];
+  sommacontatti = 0;
+
+  myContatto = new FormControl ( '', [
+    Validators.required,
+    Validators.pattern(/.*[^ ].*/),
+  ]);
 
   constructor( private schedaservice: SchedaService) { }
 
@@ -36,6 +44,19 @@ export class BackgroundComponent implements OnInit {
 
         for ( let j=0 ; j< this.listabg.length ; j++) {
           this.listabg[j].livello = Number (this.listabg[j].livello);
+        }
+
+      }
+    );
+
+    this.schedaservice.getcontatti(this.idutente).subscribe(
+      (data: any) => {
+        this.listaContatti = data.contatti;
+
+        this.sommacontatti = 0;
+        for ( let j=0 ; j< this.listaContatti.length ; j++) {
+          this.listaContatti[j].livello = Number (this.listaContatti[j].livello);
+          this.sommacontatti += this.listaContatti[j].livello;
         }
 
       }
@@ -99,6 +120,39 @@ export class BackgroundComponent implements OnInit {
     }
     this.schedaservice.putbg(this.idutente, id , newlivello )
     .subscribe();
+  }
+
+  mincon(id:number){
+    for ( let j=0 ; j< this.listaContatti.length ; j++) {
+      if ( this.listaContatti[j].idcontatto == id ) {
+        this.listaContatti[j].livello -- ;
+        if (this.listaContatti[j].livello==0){
+          this.listaContatti.splice(j, 1);
+          console.log (this.listaContatti);
+        }
+        this.sommacontatti -- ;
+      }
+    }
+
+  }
+  addcon(id:number){
+    for ( let j=0 ; j< this.listaContatti.length ; j++) {
+      if ( this.listaContatti[j].idcontatto == id ) {
+        this.listaContatti[j].livello ++ ;
+        this.sommacontatti ++ ;
+      }
+    }
+  }
+
+  newcontatto(){
+    let myNew = new Contatti;
+    myNew.nomecontatto = this.myContatto.value;
+    myNew.livello = 1 ;
+
+    /* devo prendere l'ID contatto dopo il write */
+
+    this.listaContatti.push( myNew);
+    this.myContatto.reset();
   }
 
 

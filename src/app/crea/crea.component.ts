@@ -36,10 +36,12 @@ export class CreaComponent implements OnInit {
 
   creaForm = new FormGroup ({
     nomepersonaggio: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern(/.*[^ ].*/),
     ]),
     nomeplayer: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern(/.*[^ ].*/),
     ]),
     clanPG: new FormControl('', [
       Validators.required,
@@ -49,9 +51,11 @@ export class CreaComponent implements OnInit {
     ]),
     rifugio: new FormControl('', [
       Validators.required,
+      Validators.pattern(/.*[^ ].*/),
     ]),
     zona: new FormControl('', [
       Validators.required,
+      Validators.pattern(/.*[^ ].*/),
     ]),
   });
 

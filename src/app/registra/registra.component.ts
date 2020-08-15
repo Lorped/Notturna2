@@ -18,7 +18,8 @@ export class RegistraComponent implements OnInit {
 
   registrationForm = new FormGroup ({
     regname: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern(/.*[^ ].*/),
       //,
       //Validators.pattern('^[A-Za-zàèìòù \']+$')
     ] , [
