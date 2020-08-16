@@ -25,42 +25,40 @@
           NOTA: Ogni modifica in questa pagina deve essere concordata con la Narrazione.
         </mat-card-subtitle>
 
-    <hr>
+        <hr>
 
-    <mat-card>
-      <div class="columns">
-        <div class="column is-6">
-          Fama in Città
-        </div>
-        <div class="column ">
-          <button  class="btn  btn-xs" (click)="minfama(1)" [disabled]="fama1<1"><i class="fa fa-minus"></i></button>
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama1, 'dred': ix < fama1}"></i>
-          <button class="btn  btn-xs" (click)="addfama(1)" [disabled]="fama1>4"><i class="fa fa-plus"></i></button>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column is-6">
-          Fama tra i Vampiri
-        </div>
-        <div class="column ">
-          <button  class="btn  btn-xs" (click)="minfama(2)" [disabled]="fama2<1"><i class="fa fa-minus"></i></button>
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama2, 'dred': ix < fama2}"></i>
-          <button class="btn  btn-xs" (click)="addfama(2)" [disabled]="fama2>4"><i class="fa fa-plus"></i></button>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column is-6">
-          Fama nel Mondo Oscuro
-        </div>
-        <div class="column ">
-          <button  class="btn  btn-xs" (click)="minfama(3)" [disabled]="fama3<1"><i class="fa fa-minus"></i></button>
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama3, 'dred': ix < fama3}"></i>
-          <button class="btn  btn-xs" (click)="addfama(3)" [disabled]="fama3>4"><i class="fa fa-plus"></i></button>
-        </div>
-      </div>
-
-
-      </mat-card>
+        <mat-card>
+          <div class="columns">
+            <div class="column is-6">
+              Fama in Città
+            </div>
+            <div class="column ">
+              <button  class="btn  btn-xs" (click)="minfama(1)" [disabled]="fama1<1"><i class="fa fa-minus"></i></button>
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama1, 'dred': ix < fama1}"></i>
+              <button class="btn  btn-xs" (click)="addfama(1)" [disabled]="fama1>4"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-6">
+              Fama tra i Vampiri
+            </div>
+            <div class="column ">
+              <button  class="btn  btn-xs" (click)="minfama(2)" [disabled]="fama2<1"><i class="fa fa-minus"></i></button>
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama2, 'dred': ix < fama2}"></i>
+              <button class="btn  btn-xs" (click)="addfama(2)" [disabled]="fama2>4"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-6">
+              Fama nel Mondo Oscuro
+            </div>
+            <div class="column ">
+              <button  class="btn  btn-xs" (click)="minfama(3)" [disabled]="fama3<1"><i class="fa fa-minus"></i></button>
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama3, 'dred': ix < fama3}"></i>
+              <button class="btn  btn-xs" (click)="addfama(3)" [disabled]="fama3>4"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+        </mat-card>
 
 
         <mat-expansion-panel>
@@ -148,10 +146,37 @@
             <div class="column is-4">Punti competenza addizionali: {{conoscenze_new-conoscenze_old}}</div>
           </div>
 
+          <hr>
+
+          <div class="columns is-multiline " style="margin-left: 0px;" >
+            <div class="column is-4 nopadding" *ngFor="let dd of listaskill; let ski = index">
+              <div class="columns ">
+                <div class="column ">
+                  {{dd.nomeskill}}
+                </div>
+                <div class="column alc">
+                  <button *ngIf="dd.livello<5" class="btn btn-xs" (click)="minsk(ski)" [disabled]="listanew[ski].livello == 0"><i class="fa fa-plus"></i></button>
+                  <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello+listanew[ski].livello, 'dred': ix < dd.livello+listanew[ski].livello}"></i>
+                  <button *ngIf="dd.livello+listanew[ski].livello<5" class="btn btn-xs" (click)="addsk(ski)" [disabled]="puntidisponibili==0"><i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column">Distribuire i punti competenze disponibili e poi finalizzare il Passaggio di Status. Ricordarsi di aggiungere anche i punti BG addizionali.</div>
+          </div>
+          <div class="columns">
+            <div class="column is-4 ">&nbsp;</div>
+            <div class="column is-4 ">
+                <button  mat-raised-button class="large" (click)="cambiastatus()" color="primary" [disabled]="puntidisponibili != 0" style="width: 100%;">Cambia Status</button>
+            </div>
+            <div class="column is-4 ">&nbsp;</div>
+          </div>
+
         </mat-expansion-panel>
 
       </mat-card>
-
     </div>
   <mat-sidenav-content>
 <mat-sidenav-container>

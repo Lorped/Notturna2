@@ -236,4 +236,15 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpassaggiostatus.php'+"?idutente="+idutente );
   }
 
+  getskill (idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getskill.php'+"?idutente="+idutente );
+  }
+
+  cambiastatus (idutente: number , lista: Array<Skill> ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cambiastatus.php',{
+      idutente: idutente,
+      lista: lista
+    });
+  }
+
 }

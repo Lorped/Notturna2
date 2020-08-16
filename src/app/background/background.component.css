@@ -34,3 +34,8 @@ mat-card {
 mat-expansion-panel {
   margin-top: 0.25em;
 }
+
+.nopadding {
+  padding-left: 0;
+  padding-right: 0;
+}
