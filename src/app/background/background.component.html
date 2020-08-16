@@ -27,6 +27,7 @@
 
     <hr>
 
+    <mat-card>
       <div class="columns">
         <div class="column is-6">
           Fama in Città
@@ -59,7 +60,7 @@
       </div>
 
 
-
+      </mat-card>
 
 
         <mat-expansion-panel>
@@ -123,6 +124,28 @@
                 <button  mat-raised-button class="large" (click)="newcontatto()" color="primary" [disabled]="myContatto.hasError('pattern')||myContatto.hasError('required') " style="width: 100%;">Aggiungi</button>
             </div>
 
+          </div>
+
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Passaggio di Status
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="columns">
+            <div class="column is-2">Da: {{status_old}} [+{{this.attivazione_old}}]</div>
+            <div class="column ">A: {{status_new}} [+{{this.attivazione_new}}]</div>
+          </div>
+          <div class="columns">
+            <div class="column is-2">Blood Potency: {{ bloodp_new  }} (+{{bloodp_new-bloodp_old}})</div>
+            <div class="column is-1">FdV: {{ fdv_new }} (+{{fdv_new-fdv_old}})</div>
+            <div class="column is-2">Punti BG addizionali: {{bgbase_new-bgbase_old}}</div>
+            <div class="column is-3">Livelli sete addizionali: {{sete_new-sete_old}}</div>
+            <div class="column is-4">Punti competenza addizionali: {{conoscenze_new-conoscenze_old}}</div>
           </div>
 
         </mat-expansion-panel>

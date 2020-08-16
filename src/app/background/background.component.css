@@ -30,3 +30,7 @@ mat-card {
 .btn:enabled:hover{
     background-color: #f02618;
 }
+
+mat-expansion-panel {
+  margin-top: 0.25em;
+}

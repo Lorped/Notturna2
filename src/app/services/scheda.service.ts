@@ -232,4 +232,8 @@ export class SchedaService {
     });
   }
 
+  getpassaggiostatus (idutente: number  ) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpassaggiostatus.php'+"?idutente="+idutente );
+  }
+
 }

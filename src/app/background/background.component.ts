@@ -25,6 +25,45 @@ export class BackgroundComponent implements OnInit {
     Validators.pattern(/.*[^ ].*/),
   ]);
 
+  idstatus_old = 0 ;
+  status_old = '';
+  fdv_old = 0 ;    //aumenterà conme fdvbase
+  bloodp_old = 0 ; //aumenterà come addbp
+  sete_old = 0 ;
+  attivazione_old = 0 ;
+  addbp_old = 0 ;
+  fdvbase_old = 0 ;
+  bgbase_old = 0 ;
+
+  conoscenze_old = 0 ;
+
+
+  idstatus_new = 0 ;
+  status_new = '';
+  attivazione_new = 0 ;
+  sete_new = 0 ;
+  addbp_new = 0 ;
+  fdvbase_new = 0 ;
+  bgbase_new = 0 ;
+
+  bloodp_new = 0 ; //calcolato in funzione dei limiti generazionali
+  fdv_new = 0 ;    //calcolato in funzione dei limiti
+
+  conoscenze_new = 0 ;
+
+  bloodpmax = 0 ;
+  generazione = 0 ;
+
+  matriceNumSkill: number[][] = [
+    [ 20, 20, 17, 15, 13, 10, 5 ],
+    [ 33, 30, 27, 25, 20, 15, 10 ],
+    [ 35, 35, 33, 30, 25, 20, 15 ],
+    [ 45, 45, 43, 40, 35, 30, 20 ],
+    [ 55, 55, 53, 50, 45, 40, 30 ],
+    [ 95, 95, 93, 90, 80, 70, 50 ]
+  ];
+
+
   constructor( private schedaservice: SchedaService) { }
 
   ngOnInit(): void {
@@ -62,6 +101,47 @@ export class BackgroundComponent implements OnInit {
       }
     );
 
+  this.schedaservice.getpassaggiostatus(this.idutente).subscribe(
+    (data: any) => {
+
+      this.idstatus_old = Number(data.val_old.idstatus);
+      this.status_old = data.val_old.status;
+      this.fdv_old = Number(data.val_old.fdvmax);
+      this.bloodp_old = Number(data.val_old.bloodp);
+      this.sete_old = Number(data.val_old.sete);
+      this.attivazione_old = Number(data.val_old.attivazione);
+      this.addbp_old = Number(data.val_old.addbp);
+      this.fdvbase_old = Number(data.val_old.fdvbase);
+      this.bgbase_old = Number(data.val_old.bgbase);
+
+      this.bloodpmax = Number(data.val_old.bloodpmax);
+      this.generazione = Number(data.val_old.generazione);
+
+      this.idstatus_new = Number(data.val_new.idstatus);
+      this.status_new = data.val_new.status;
+      this.attivazione_new = Number(data.val_new.attivazione);
+      this.sete_new = Number(data.val_new.sete);
+      this.addbp_new = Number(data.val_new.addbp);
+      this.fdvbase_new = Number(data.val_new.fdvbase);
+      this.bgbase_new = Number(data.val_new.bgbase);
+
+
+      this.conoscenze_old = this.matriceNumSkill [ this.idstatus_old] [14 - this.generazione ];
+      this.conoscenze_new = this.matriceNumSkill [ this.idstatus_new] [14 - this.generazione ];
+
+
+      this.bloodp_new = this.bloodp_old - this.addbp_old + this.addbp_new ;
+      if ( this.bloodp_new  > this.bloodpmax ) {
+        this.bloodp_new  = this.bloodpmax ;
+      }
+
+      this.fdv_new = this.fdv_old - this.fdvbase_old + this.fdvbase_new ;
+      if ( this.fdv_new  > 10 ) {
+        this.fdv_new  = 10 ;
+      }
+
+    }
+  );
 
   }
 
