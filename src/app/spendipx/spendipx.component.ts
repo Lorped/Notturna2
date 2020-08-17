@@ -184,7 +184,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.addpx(this.idutente, newpx)
     .subscribe(
       data => {
-        console.log("add px "+newpx);
+        /* */
       }
     );
 
@@ -238,7 +238,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.addattr(this.idutente, attributo)
     .subscribe(
       data => {
-        console.log("add attr "+attributo);
+        /* */
       }
     );
   }
@@ -266,7 +266,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
     .subscribe(
       data => {
-        console.log("add disc "+iddisciplina);
+        /* */
       }
     );
 
@@ -292,7 +292,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.addtaum(this.idutente, idtaum)
     .subscribe(
       data => {
-        console.log("add taum "+idtaum);
+        /* */
       }
     );
 
@@ -303,8 +303,6 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
       data => {
-        console.log("new taum "+this.idnewtaum + ' ' + lvl);
-
         this.schedaservice.getscheda(this.idutente).
         subscribe (
           (data: any) => {
@@ -364,7 +362,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.addnecro(this.idutente, idnecro)
     .subscribe(
       data => {
-        console.log("add necro "+idnecro);
+        /* */
       }
     );
 
@@ -375,7 +373,6 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
       data => {
-        console.log("new necro "+this.idnewnecro + ' ' + lvl);
 
         this.schedaservice.getscheda(this.idutente).
         subscribe (
@@ -422,7 +419,6 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.newdisc(this.idutente, this.idnewdisc )
     .subscribe(
       data => {
-        console.log("new disc "+this.idnewdisc );
 
         this.schedaservice.getscheda(this.idutente).
         subscribe (
@@ -506,7 +502,6 @@ export class SpendipxComponent implements OnInit {
   }
 
   addskill (idskill: number, tipologia: number) {
-    console.log("add skill "+idskill);
     if (tipologia == 0 ) {
       for (let j = 0 ; j < this.skills.length ; j++) {
         if (this.skills[j].idskill == idskill ) {
@@ -516,7 +511,7 @@ export class SpendipxComponent implements OnInit {
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
-            console.log ("add skill "+idskill);
+            /* */
           });
         }
       }
@@ -529,7 +524,7 @@ export class SpendipxComponent implements OnInit {
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
-            console.log ("add skill "+idskill);
+            /* */
           });
         }
       }
@@ -544,7 +539,7 @@ export class SpendipxComponent implements OnInit {
 
     this.schedaservice.addfdv(this.idutente)
     .subscribe( (data:any) => {
-      console.log ("add fdv ");
+      /* */
     });
 
   }
@@ -557,7 +552,7 @@ export class SpendipxComponent implements OnInit {
 
         this.schedaservice.addbp(this.idutente)
         .subscribe( (data:any) => {
-          console.log ("add bp ");
+          /* */
         });
 
   }

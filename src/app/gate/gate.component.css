@@ -26,6 +26,7 @@ i {
   padding-bottom: 2em;
   width: 100%;
   /*min-width: 75%; */
+  height: 100%;
 }
 
 .movable:hover {

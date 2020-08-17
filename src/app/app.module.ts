@@ -44,6 +44,8 @@ import { SidexComponent } from './sidex/sidex.component';
 import { PregidifettiComponent } from './pregidifetti/pregidifetti.component';
 import { BioComponent } from './bio/bio.component';
 import { BackgroundComponent } from './background/background.component';
+import { CancellaComponent } from './cancella/cancella.component';
+import { DocsComponent } from './docs/docs.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { BackgroundComponent } from './background/background.component';
     SidexComponent,
     PregidifettiComponent,
     BioComponent,
-    BackgroundComponent
+    BackgroundComponent,
+    CancellaComponent,
+    DocsComponent
   ],
   imports: [
     BrowserModule,

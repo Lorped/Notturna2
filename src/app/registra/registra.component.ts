@@ -74,7 +74,7 @@ export class RegistraComponent implements OnInit {
   validateEmailNotTaken(control: AbstractControl) {
   return this.authenticationservice.checkEmail(control.value)
   .pipe (  map ( (res: any) => {
-    console.log(res);
+    // console.log(res);
      return  res == 'OK' ?  { emailTaken: true } : null ;
     // return null ;
   }));
@@ -83,7 +83,7 @@ export class RegistraComponent implements OnInit {
   validateNomeNotTaken(control: AbstractControl) {
   return this.authenticationservice.checkNome(control.value)
   .pipe (  map ( (res: any) => {
-    console.log(res);
+    // console.log(res);
      return  res == 'OK' ?  { nomeTaken: true } : null ;
     // return null ;
   }));

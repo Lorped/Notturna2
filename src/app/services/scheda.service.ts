@@ -251,4 +251,25 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getsentiero.php'+"?idutente="+idutente );
   }
 
+  putfdvsentiero (idutente: number , fdv: number, sentiero: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putfdvsentiero.php',{
+      idutente: idutente,
+      fdv: fdv,
+      sentiero: sentiero
+    });
+  }
+
+  newsentiero (idutente: number ,  idsentiero: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newsentiero.php',{
+      idutente: idutente,
+      idsentiero: idsentiero
+    });
+  }
+
+  cancellascheda (idutente: number  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancella.php',{
+      idutente: idutente
+    });
+  }
+
 }

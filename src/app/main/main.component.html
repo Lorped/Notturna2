@@ -8,6 +8,120 @@
 
 <mat-card class="limited">
 
+  <div class="columns is-multiline">
+    <div class="column is-3">
+      <a [routerLink]="['/scheda']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-user-circle"></i> Vedi la scheda
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/spendipx']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-plus-square"></i> Aggiungi / Spendi PX
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/pregidifetti']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-pencil-square"></i> Aggiungi Pregi e Difetti
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/bio']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-file-text"></i> Inserisci Biografia e Annotazioni
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/poteri']">
+        <mat-card class="movable" [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after"  matBadgeColor="warn">
+          <mat-card-content class="all">
+            <i class="fa fa-bolt"></i> Scegli Poteri
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/background']">
+        <mat-card class="movable"  >
+          <mat-card-content class="all">
+            <i class="fa fa-address-card"></i> Modifica Fama, Background ecc..
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/logpx']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-list"></i> Visualizza log PX
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/docs']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-book"></i> Consulta il regolamento
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/cancella']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-trash"></i> Cancella la scheda
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-sign-out"></i>  Logout
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+    </div>
+
+    <div class="column is-3">
+    </div>
+
+    <div class="column is-3">
+    </div>
+
+  </div>
+
+    <!---
+
   <mat-grid-list cols="3" rowHeight="2.5:1">
     <mat-grid-tile>
       <a [routerLink]="['/scheda']">
@@ -51,7 +165,7 @@
 
     <mat-grid-tile>
       <a [routerLink]="['/poteri']">
-        <mat-card class="movable" [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after" matBadgeSize="large" matBadgeColor="warn">
+        <mat-card class="movable" [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after"  matBadgeColor="warn">
           <mat-card-content class="all">
             <i class="fa fa-bolt"></i> Scegli Poteri
           </mat-card-content>
@@ -61,7 +175,7 @@
 
     <mat-grid-tile>
       <a [routerLink]="['/background']">
-        <mat-card class="movable" [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after" matBadgeSize="large" matBadgeColor="warn">
+        <mat-card class="movable"  >
           <mat-card-content class="all">
             <i class="fa fa-address-card"></i> Modifica Fama, Background ecc..
           </mat-card-content>
@@ -91,7 +205,7 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <a [routerLink]="['/xx']">
+      <a [routerLink]="['/cancella']">
         <mat-card class="movable">
           <mat-card-content class="all">
             <i class="fa fa-trash"></i> Cancella la scheda
@@ -120,5 +234,7 @@
     </mat-grid-tile>
 
   </mat-grid-list>
+
+  -->
 
 </mat-card>

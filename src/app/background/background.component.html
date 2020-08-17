@@ -134,6 +134,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
+  <div *ngIf="status_new != '' " >
           <div class="columns">
             <div class="column is-2">Da: {{status_old}} [+{{this.attivazione_old}}]</div>
             <div class="column ">A: {{status_new}} [+{{this.attivazione_new}}]</div>
@@ -173,7 +174,7 @@
             </div>
             <div class="column is-4 ">&nbsp;</div>
           </div>
-
+    </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
@@ -192,7 +193,7 @@
               </mat-form-field>
             </div>
             <div class = "column">
-              INSERIRE UN BOTTONE
+              <button  mat-raised-button class="large" (click)="changesentiero()" color="primary" [disabled]="sentieroPG==oldsentieroPG" style="width: 100%;">Modifica Sentiero</button>
             </div>
           </div>
           <div class="columns">

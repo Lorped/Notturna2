@@ -68,6 +68,7 @@ export class BackgroundComponent implements OnInit {
 
   listasentieri: Array<Sentiero> = [];
   sentieroPG = '';
+  oldsentieroPG = '';
   valsentiero = 0 ;
   fdv = 0;
 
@@ -116,6 +117,7 @@ export class BackgroundComponent implements OnInit {
         this.fdv = Number (data.fdvmax);
         this.valsentiero = Number (data.valsentiero);
         this.sentieroPG = data.idsentiero;
+        this.oldsentieroPG = data.idsentiero;
       }
     );
 
@@ -221,7 +223,6 @@ export class BackgroundComponent implements OnInit {
     .subscribe(
       (data: any) => {
 
-        console.log(data);
         myNew.idcontatto = data ;
         this.listaContatti.push( myNew);
         this.myContatto.reset();
@@ -233,13 +234,11 @@ export class BackgroundComponent implements OnInit {
   minsk(ix: number){
     this.listanew[ix].livello -- ;
     this.puntidisponibili ++;
-
-    console.log(this.listanew[ix]);
   }
+
   addsk(ix: number){
     this.listanew[ix].livello ++ ;
     this.puntidisponibili --;
-    console.log(this.listanew[ix]);
   }
 
   cambiastatus(){
@@ -255,6 +254,8 @@ export class BackgroundComponent implements OnInit {
     this.schedaservice.getpassaggiostatus(this.idutente).subscribe(
       (data: any) => {
 
+
+
         this.idstatus_old = Number(data.val_old.idstatus);
         this.status_old = data.val_old.status;
         this.fdv_old = Number(data.val_old.fdvmax);
@@ -268,29 +269,31 @@ export class BackgroundComponent implements OnInit {
         this.bloodpmax = Number(data.val_old.bloodpmax);
         this.generazione = Number(data.val_old.generazione);
 
-        this.idstatus_new = Number(data.val_new.idstatus);
-        this.status_new = data.val_new.status;
-        this.attivazione_new = Number(data.val_new.attivazione);
-        this.sete_new = Number(data.val_new.sete);
-        this.addbp_new = Number(data.val_new.addbp);
-        this.fdvbase_new = Number(data.val_new.fdvbase);
-        this.bgbase_new = Number(data.val_new.bgbase);
+        if ( data.val_new ) {
+          this.idstatus_new = Number(data.val_new.idstatus);
+          this.status_new = data.val_new.status;
+          this.attivazione_new = Number(data.val_new.attivazione);
+          this.sete_new = Number(data.val_new.sete);
+          this.addbp_new = Number(data.val_new.addbp);
+          this.fdvbase_new = Number(data.val_new.fdvbase);
+          this.bgbase_new = Number(data.val_new.bgbase);
 
+          this.conoscenze_old = this.matriceNumSkill [ this.idstatus_old] [14 - this.generazione ];
+          this.conoscenze_new = this.matriceNumSkill [ this.idstatus_new] [14 - this.generazione ];
 
-        this.conoscenze_old = this.matriceNumSkill [ this.idstatus_old] [14 - this.generazione ];
-        this.conoscenze_new = this.matriceNumSkill [ this.idstatus_new] [14 - this.generazione ];
+          this.puntidisponibili = this.conoscenze_new - this.conoscenze_old;
 
-        this.puntidisponibili = this.conoscenze_new - this.conoscenze_old;
+          this.bloodp_new = this.bloodp_old - this.addbp_old + this.addbp_new ;
+          if ( this.bloodp_new  > this.bloodpmax ) {
+            this.bloodp_new  = this.bloodpmax ;
+          }
 
-        this.bloodp_new = this.bloodp_old - this.addbp_old + this.addbp_new ;
-        if ( this.bloodp_new  > this.bloodpmax ) {
-          this.bloodp_new  = this.bloodpmax ;
+          this.fdv_new = this.fdv_old - this.fdvbase_old + this.fdvbase_new ;
+          if ( this.fdv_new  > 10 ) {
+            this.fdv_new  = 10 ;
+          }
         }
 
-        this.fdv_new = this.fdv_old - this.fdvbase_old + this.fdvbase_new ;
-        if ( this.fdv_new  > 10 ) {
-          this.fdv_new  = 10 ;
-        }
       }
     );
 
@@ -305,22 +308,49 @@ export class BackgroundComponent implements OnInit {
         for (let j=0 ; j< this.listanew.length ; j++) {
           this.listanew[j].livello = 0;
         }
-        console.log(this.listanew);
       }
     );
   }
 
   minfdv(){
     this.fdv--;
+    this.schedaservice.putfdvsentiero(this.idutente,this.fdv, -1).subscribe(
+      (data: any) => {
+        /* do stuff */
+      }
+    );
   }
   addfdv(){
     this.fdv++;
+    this.schedaservice.putfdvsentiero(this.idutente,this.fdv, -1).subscribe(
+      (data: any) => {
+        /* do stuff */
+      }
+    );
   }
   minsentiero(){
     this.valsentiero--;
+    this.schedaservice.putfdvsentiero(this.idutente,-1, this.valsentiero).subscribe(
+      (data: any) => {
+        /* do stuff */
+      }
+    );
   }
   addsentiero(){
     this.valsentiero++;
+    this.schedaservice.putfdvsentiero(this.idutente,-1, this.valsentiero).subscribe(
+      (data: any) => {
+        /* do stuff */
+      }
+    );
+  }
+  changesentiero(){
+    this.oldsentieroPG = this.sentieroPG;
+    this.schedaservice.newsentiero(this.idutente, this.sentieroPG).subscribe(
+      (data: any) => {
+        /* do stuff */
+      }
+    );
   }
 
 

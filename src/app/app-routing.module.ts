@@ -13,6 +13,8 @@ import { PregidifettiComponent } from './pregidifetti/pregidifetti.component';
 import { RegistraComponent } from './registra/registra.component';
 import { BioComponent } from './bio/bio.component';
 import { BackgroundComponent } from './background/background.component';
+import { CancellaComponent } from './cancella/cancella.component';
+import { DocsComponent } from './docs/docs.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -28,6 +30,8 @@ const routes: Routes = [
   { path: 'registra', component: RegistraComponent },
   { path: 'bio', component: BioComponent },
   { path: 'background', component: BackgroundComponent },
+  { path: 'cancella', component: CancellaComponent },
+  { path: 'docs', component: DocsComponent },
 ];
 
 @NgModule({
