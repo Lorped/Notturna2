@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../services/index';
-import { Background, Contatti, Skill } from '../global';
+import { Background, Contatti, Skill, Sentiero } from '../global';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -66,6 +66,11 @@ export class BackgroundComponent implements OnInit {
   listaskill: Array<Skill> = [];
   listanew: Array<Skill> = [];
 
+  listasentieri: Array<Sentiero> = [];
+  sentieroPG = '';
+  valsentiero = 0 ;
+  fdv = 0;
+
   puntidisponibili = 0;
 
   constructor( private schedaservice: SchedaService) { }
@@ -102,6 +107,15 @@ export class BackgroundComponent implements OnInit {
           this.sommacontatti += this.listaContatti[j].livello;
         }
 
+      }
+    );
+
+    this.schedaservice.getsentiero(this.idutente).subscribe(
+      (data: any) => {
+        this.listasentieri = data.sentieri;
+        this.fdv = Number (data.fdvmax);
+        this.valsentiero = Number (data.valsentiero);
+        this.sentieroPG = data.idsentiero;
       }
     );
 
@@ -291,9 +305,22 @@ export class BackgroundComponent implements OnInit {
         for (let j=0 ; j< this.listanew.length ; j++) {
           this.listanew[j].livello = 0;
         }
-        console.log(this.listanew);        
+        console.log(this.listanew);
       }
     );
+  }
+
+  minfdv(){
+    this.fdv--;
+  }
+  addfdv(){
+    this.fdv++;
+  }
+  minsentiero(){
+    this.valsentiero--;
+  }
+  addsentiero(){
+    this.valsentiero++;
   }
 
 

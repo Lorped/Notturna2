@@ -176,6 +176,46 @@
 
         </mat-expansion-panel>
 
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Forza di Volontà e Umanità/Sentieri
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="columns">
+            <div class = "column">
+              <mat-form-field appearance="fill" style="size: 75%; display: block;">
+              <mat-select   [(value)]="sentieroPG">
+                <mat-option *ngFor="let i of listasentieri" [value]="i.idsentiero">{{i.sentiero}}</mat-option>
+              </mat-select>
+              </mat-form-field>
+            </div>
+            <div class = "column">
+              INSERIRE UN BOTTONE
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-2">
+              Valore Sentiero
+            </div>
+            <div class="column is-4 ">
+              <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero==0"><i class="fa fa-minus"></i></button>
+              <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > valsentiero , 'dred': ix < valsentiero}"></i>
+              <button class="btn  btn-xs" (click)="addsentiero()" [disabled]="valsentiero>9"><i class="fa fa-plus"></i></button>
+            </div>
+            <div class="column is-2">
+              Forza di Volontà
+            </div>
+            <div class="column is-4 ">
+              <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="fdv==0"><i class="fa fa-minus"></i></button>
+              <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > fdv , 'dred': ix < fdv }"></i>
+              <button class="btn  btn-xs" (click)="addfdv()" [disabled]="fdv>9"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+
       </mat-card>
     </div>
   <mat-sidenav-content>
