@@ -1,0 +1,51 @@
+a,
+a:visited,
+a:hover {
+  /* color: #1976d2; */
+  text-decoration: none;
+  width: 75%;
+}
+
+i {
+    margin-right: 0.3em;
+}
+
+mat-card-content {
+  font-size: 1.1em;
+}
+
+.limited {
+  max-width: 75%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.movable {
+  display: block;
+  transition: all 0.2s ease-in-out;
+  justify-content: left;
+  align-items: left;
+  /*text-align: left;*/
+  padding-top: 2em;
+  padding-bottom: 2em;
+  width: 100%;
+  /*min-width: 75%; */
+  height: 100%;
+}
+
+.movable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 17px rgba(255, 0, 0, 0.45);
+  /*color: #f50057 !important ;*/
+  /*color: #fa5788; */
+}
+
+.movable:hover i {
+    color: #ef5350;
+}
+
+.all {
+  align-items: left;
+  text-align: left;
+  width: 100%;
+}

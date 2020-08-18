@@ -105,7 +105,7 @@ export class SpendipxComponent implements OnInit {
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
 
         this.discipline = data.discipline ;
-        for (let j=0 ; j < this.discipline.length ; j++ ) {
+        for (let j = 0 ; j < this.discipline.length ; j++ ) {
           this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
           this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
           if ( this.discipline[j].disciplina.DiClan == 'S' ) {

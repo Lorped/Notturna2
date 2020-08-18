@@ -1,1 +1,80 @@
-<p>admin works!</p>
+<div>
+  <p>
+  <mat-toolbar>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+<mat-card class="limited">
+
+  <div class="columns is-multiline">
+
+
+    <div class="column is-3">
+
+    <mat-form-field appearance="fill" style="size: 75%; display: block;">
+    <mat-select   [(value)]="selectedPG">
+      <mat-option *ngFor="let i of listapg" [value]="i.idutente">{{i.nomepg}}</mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/xxx']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-user-circle"></i> Vedi la scheda
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/xxx']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-plus-square"></i> Modifica Background
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/xxx']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-pencil-square"></i> Gestisci oggetti
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+
+
+
+    <div class="column is-3">
+      <a [routerLink]="['']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-sign-out"></i> Logout
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+    </div>
+
+    <div class="column is-3">
+    </div>
+
+    <div class="column is-3">
+    </div>
+
+  </div>
+
+
+
+</mat-card>
