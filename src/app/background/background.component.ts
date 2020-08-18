@@ -27,8 +27,8 @@ export class BackgroundComponent implements OnInit {
 
   idstatus_old = 0 ;
   status_old = '';
-  fdv_old = 0 ;    //aumenterà conme fdvbase
-  bloodp_old = 0 ; //aumenterà come addbp
+  fdv_old = 0 ;    // aumenterà conme fdvbase
+  bloodp_old = 0 ; // aumenterà come addbp
   sete_old = 0 ;
   attivazione_old = 0 ;
   addbp_old = 0 ;
@@ -46,8 +46,8 @@ export class BackgroundComponent implements OnInit {
   fdvbase_new = 0 ;
   bgbase_new = 0 ;
 
-  bloodp_new = 0 ; //calcolato in funzione dei limiti generazionali
-  fdv_new = 0 ;    //calcolato in funzione dei limiti
+  bloodp_new = 0 ; // calcolato in funzione dei limiti generazionali
+  fdv_new = 0 ;    // calcolato in funzione dei limiti
 
   conoscenze_new = 0 ;
 
@@ -91,8 +91,11 @@ export class BackgroundComponent implements OnInit {
       (data: any) => {
         this.listabg = data.background;
 
-        for ( let j=0 ; j< this.listabg.length ; j++) {
+        /* for ( let j=0 ; j< this.listabg.length ; j++) {
           this.listabg[j].livello = Number (this.listabg[j].livello);
+        } */
+        for ( const item of this.listabg) {
+          item.livello = Number (item.livello);
         }
 
       }
@@ -103,9 +106,13 @@ export class BackgroundComponent implements OnInit {
         this.listaContatti = data.contatti;
 
         this.sommacontatti = 0;
-        for ( let j=0 ; j< this.listaContatti.length ; j++) {
+        /* for ( let j=0 ; j< this.listaContatti.length ; j++) {
           this.listaContatti[j].livello = Number (this.listaContatti[j].livello);
           this.sommacontatti += this.listaContatti[j].livello;
+        } */
+        for ( const item of this.listaContatti ) {
+          item.livello = Number (item.livello);
+          this.sommacontatti += item.livello;
         }
 
       }
@@ -125,7 +132,7 @@ export class BackgroundComponent implements OnInit {
 
   }
 
-  addfama (ix:number) {
+  addfama(ix: number) {
     switch (ix) {
       case 1:
         this.fama1++;
@@ -141,7 +148,7 @@ export class BackgroundComponent implements OnInit {
     this.schedaservice.putfama ( this.idutente, this.fama1, this.fama2, this.fama3)
     .subscribe();
   }
-  minfama (ix:number) {
+  minfama(ix: number) {
     switch (ix) {
       case 1:
         this.fama1--;
@@ -160,22 +167,34 @@ export class BackgroundComponent implements OnInit {
 
   minbg(id: number){
     let newlivello = 0 ;
-    for ( let j = 0 ; j < this.listabg.length ; j++ ){
+    /* for ( let j = 0 ; j < this.listabg.length ; j++ ){
       if ( this.listabg[j].idback == id){
         this.listabg[j].livello -- ;
         newlivello = this.listabg[j].livello;
       }
+    } */
+    for ( let item of this.listabg ){
+      if ( item.idback == id){
+        item.livello -- ;
+        newlivello = item.livello;
+      }
     }
-    this.schedaservice.putbg(this.idutente, id , newlivello )
+    this.schedaservice.putbg(this.idutente, id, newlivello )
     .subscribe();
   }
 
   addbg(id: number){
     let newlivello = 0 ;
-    for ( let j = 0 ; j < this.listabg.length ; j++ ){
+    /* for ( let j = 0 ; j < this.listabg.length ; j++ ){
       if ( this.listabg[j].idback == id){
         this.listabg[j].livello ++ ;
         newlivello = this.listabg[j].livello;
+      }
+    } */
+    for ( const item of  this.listabg ){
+      if ( item.idback == id) {
+        item.livello ++ ;
+        newlivello = item.livello;
       }
     }
     this.schedaservice.putbg(this.idutente, id , newlivello )
@@ -183,7 +202,7 @@ export class BackgroundComponent implements OnInit {
   }
 
   mincon(id:number){
-    for ( let j=0 ; j< this.listaContatti.length ; j++) {
+    /* for ( let j=0 ; j< this.listaContatti.length ; j++) {
       if ( this.listaContatti[j].idcontatto == id ) {
         this.listaContatti[j].livello -- ;
         this.schedaservice.putcontatti(this.idutente, id , this.listaContatti[j].livello)
@@ -196,13 +215,40 @@ export class BackgroundComponent implements OnInit {
           }
         );
       }
+    } */
+    let j = 0 ;
+    for ( let item of this.listaContatti  ) {
+      if ( item.idcontatto == id ) {
+        item.livello -- ;
+        this.schedaservice.putcontatti(this.idutente, id , item.livello)
+        .subscribe(
+          (data) => {
+            if (item.livello == 0){
+              this.listaContatti.splice(j, 1);
+            }
+            this.sommacontatti -- ;
+          }
+        );
+      }
+      j++;
     }
   }
   addcon(id:number){
-    for ( let j=0 ; j< this.listaContatti.length ; j++) {
+    /* for ( let j=0 ; j< this.listaContatti.length ; j++) {
       if ( this.listaContatti[j].idcontatto == id ) {
         this.listaContatti[j].livello ++ ;
-        this.schedaservice.putcontatti(this.idutente, id , this.listaContatti[j].livello)
+        this.schedaservice.putcontatti(this.idutente, id, this.listaContatti[j].livello)
+        .subscribe(
+          (data) => {
+            this.sommacontatti ++ ;
+          }
+        );
+      }
+    } */
+    for ( const item of this.listaContatti ) {
+      if ( item.idcontatto == id ) {
+        item.livello ++ ;
+        this.schedaservice.putcontatti(this.idutente, id, item.livello)
         .subscribe(
           (data) => {
             this.sommacontatti ++ ;
@@ -210,8 +256,6 @@ export class BackgroundComponent implements OnInit {
         );
       }
     }
-
-
   }
 
   newcontatto(){
@@ -224,7 +268,7 @@ export class BackgroundComponent implements OnInit {
       (data: any) => {
 
         myNew.idcontatto = data ;
-        this.listaContatti.push( myNew);
+        this.listaContatti.push(myNew) ;
         this.myContatto.reset();
         this.sommacontatti ++ ;
       }
@@ -253,8 +297,6 @@ export class BackgroundComponent implements OnInit {
   caricavalori () {
     this.schedaservice.getpassaggiostatus(this.idutente).subscribe(
       (data: any) => {
-
-
 
         this.idstatus_old = Number(data.val_old.idstatus);
         this.status_old = data.val_old.status;
@@ -300,13 +342,19 @@ export class BackgroundComponent implements OnInit {
     this.schedaservice.getskill(this.idutente).subscribe(
       (data: any) => {
         this.listaskill = data.skill;
-        for (let j=0 ; j< this.listaskill.length ; j++) {
+        /*for (let j=0 ; j< this.listaskill.length ; j++) {
           this.listaskill[j].livello = Number (this.listaskill[j].livello);
+        } */
+        for (let item of  this.listaskill) {
+          item.livello = Number (item.livello);
         }
         this.listanew.length = 0
         this.listaskill.forEach(val => this.listanew.push(Object.assign({}, val)));
-        for (let j=0 ; j< this.listanew.length ; j++) {
+        /* for (let j=0 ; j< this.listanew.length ; j++) {
           this.listanew[j].livello = 0;
+        } */
+        for (let item of  this.listanew) {
+          item.livello = 0;
         }
       }
     );
@@ -314,7 +362,7 @@ export class BackgroundComponent implements OnInit {
 
   minfdv(){
     this.fdv--;
-    this.schedaservice.putfdvsentiero(this.idutente,this.fdv, -1).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1).subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -322,7 +370,7 @@ export class BackgroundComponent implements OnInit {
   }
   addfdv(){
     this.fdv++;
-    this.schedaservice.putfdvsentiero(this.idutente,this.fdv, -1).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1).subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -330,7 +378,7 @@ export class BackgroundComponent implements OnInit {
   }
   minsentiero(){
     this.valsentiero--;
-    this.schedaservice.putfdvsentiero(this.idutente,-1, this.valsentiero).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero).subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -338,7 +386,7 @@ export class BackgroundComponent implements OnInit {
   }
   addsentiero(){
     this.valsentiero++;
-    this.schedaservice.putfdvsentiero(this.idutente,-1, this.valsentiero).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero).subscribe(
       (data: any) => {
         /* do stuff */
       }

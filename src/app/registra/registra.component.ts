@@ -20,8 +20,8 @@ export class RegistraComponent implements OnInit {
     regname: new FormControl('', [
       Validators.required,
       Validators.pattern(/.*[^ ].*/),
-      //,
-      //Validators.pattern('^[A-Za-zàèìòù \']+$')
+      // ,
+      // Validators.pattern('^[A-Za-zàèìòù \']+$')
     ] , [
       this.validateNomeNotTaken.bind(this)
     ]),
@@ -96,7 +96,7 @@ export class RegistraComponent implements OnInit {
       this.router.navigate(['']);
       },
         error => {
-        this.errmsg = "Errore di registrazione";
+        this.errmsg = 'Errore di registrazione';
       }
     );
   }

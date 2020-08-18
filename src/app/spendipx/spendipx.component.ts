@@ -23,7 +23,7 @@ export class SpendipxComponent implements OnInit {
 
   maxdisc = 0 ;
 
-  idutente: number = 0 ;
+  idutente = 0 ;
   scheda: Basicpg = new Basicpg();
 
 
@@ -44,14 +44,14 @@ export class SpendipxComponent implements OnInit {
 
   maxrituali = 0 ;
 
-  idnewrituale: Array<string> = ['','','','',''];
+  idnewrituale: Array<string> = ['', '', '', '', ''];
 
   newtaumaturgie: Array<Taumaturgia> = [] ;
   newnecromanzie: Array<Necromanzia> = [] ;
-  idnewtaum: string = '';
-  idnewnecro: string = '';
+  idnewtaum = '';
+  idnewnecro = '';
 
-  statusPG: number = 1;
+  statusPG = 1;
 
   xpdisponibili = 0;
 
@@ -60,7 +60,7 @@ export class SpendipxComponent implements OnInit {
   livellinecro: Array<number> = [ 0 , 0 , 0 ];
 
   otherdisc: Array<Disciplina> = [];
-  idnewdisc: string = '';
+  idnewdisc = '';
 
 
 
@@ -82,21 +82,21 @@ export class SpendipxComponent implements OnInit {
       (data: any) => {
         this.scheda = data.user ;
 
-        this.scheda['forza']=Number(this.scheda['forza']);
-        this.scheda['destrezza']=Number(this.scheda['destrezza']);
-        this.scheda['attutimento']=Number(this.scheda['attutimento']);
-        this.scheda['carisma']=Number(this.scheda['carisma']);
-        this.scheda['persuasione']=Number(this.scheda['persuasione']);
-        this.scheda['saggezza']=Number(this.scheda['saggezza']);
-        this.scheda['prontezza']=Number(this.scheda['prontezza']);
-        this.scheda['intelligenza']=Number(this.scheda['intelligenza']);
-        this.scheda['percezione']=Number(this.scheda['percezione']);
+        this.scheda['forza'] = Number(this.scheda['forza']);
+        this.scheda['destrezza'] = Number(this.scheda['destrezza']);
+        this.scheda['attutimento'] = Number(this.scheda['attutimento']);
+        this.scheda['carisma'] = Number(this.scheda['carisma']);
+        this.scheda['persuasione'] = Number(this.scheda['persuasione']);
+        this.scheda['saggezza'] = Number(this.scheda['saggezza']);
+        this.scheda['prontezza'] = Number(this.scheda['prontezza']);
+        this.scheda['intelligenza'] = Number(this.scheda['intelligenza']);
+        this.scheda['percezione'] = Number(this.scheda['percezione']);
 
         this.scheda.xp = Number (this.scheda.xp);
-        this.scheda['fdv']=Number(this.scheda['fdv']);
-        this.scheda['fdvmax']=Number(this.scheda['fdvmax']);
-        this.scheda['bloodp']=Number(this.scheda['bloodp']);
-        this.scheda['bloodpmax']=Number(this.scheda['bloodpmax']);
+        this.scheda['fdv'] = Number(this.scheda['fdv']);
+        this.scheda['fdvmax'] = Number(this.scheda['fdvmax']);
+        this.scheda['bloodp'] = Number(this.scheda['bloodp']);
+        this.scheda['bloodpmax'] = Number(this.scheda['bloodpmax']);
 
 
         this.statusPG = Number(this.scheda.idstatus);
@@ -108,7 +108,7 @@ export class SpendipxComponent implements OnInit {
         for (let j=0 ; j < this.discipline.length ; j++ ) {
           this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
           this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-          if ( this.discipline[j].disciplina.DiClan == "S" ) {
+          if ( this.discipline[j].disciplina.DiClan == 'S' ) {
             this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
           } else {
             this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
@@ -118,33 +118,37 @@ export class SpendipxComponent implements OnInit {
         this.taumaturgie = data.taumaturgie ;
         this.necromanzie = data.necromanzie ;
 
-        for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
-          this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
-          this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
+        let j = 0;
+        for ( let item of  this.taumaturgie ){
+          item.taumaturgia.livello = Number (item.taumaturgia.livello);
+          this.livellitaum [j] = Number ( item.taumaturgia.livello );
+          j ++;
         }
 
-        for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
-          this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
-          this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
+        let i = 0;
+        for ( let item of  this.necromanzie ){
+          item.necromanzia.livello = Number (item.necromanzia.livello);
+          this.livellinecro[i] = Number ( item.necromanzia.livello );
+          i ++;
         }
 
 
         this.skills = data.skill ;
         this.attitudini = data.attitudini ;
-        for (let j=0 ; j < this.skills.length ; j++ ) {
-          this.skills[j].livello = Number(this.skills[j].livello);
+        for (let item of  this.skills ) {
+          item.livello = Number(item.livello);
         }
-        for (let j=0 ; j < this.attitudini.length ; j++ ) {
-          this.attitudini[j].livello = Number(this.attitudini[j].livello);
+        for (let item of  this.attitudini ) {
+          item.livello = Number(item.livello);
         }
 
 
         this.rituali = data.rituali;
 
         this.maxrituali = 0;
-        for ( let j = 0 ; j< this.rituali.length; j ++) {
-          if (this.rituali[j].livello> this.maxrituali) {
-            this.maxrituali = this.rituali[j].livello;
+        for ( let item of  this.rituali) {
+          if (item.livello> this.maxrituali) {
+            this.maxrituali = item.livello;
           }
         }
 
@@ -189,7 +193,7 @@ export class SpendipxComponent implements OnInit {
     );
 
     this.addXPform.patchValue({
-      xptoadd: ""});
+      xptoadd: ''});
 
   }
 
@@ -198,39 +202,39 @@ export class SpendipxComponent implements OnInit {
     switch (attributo) {
       case 'forza':
         this.scheda['forza'] ++;
-        this.xpdisponibili -= this.scheda['forza']*2;
+        this.xpdisponibili -= this.scheda['forza'] * 2;
         break;
       case 'destrezza':
         this.scheda['destrezza'] ++;
-        this.xpdisponibili -= this.scheda['destrezza']*2;
+        this.xpdisponibili -= this.scheda['destrezza'] * 2;
         break;
       case 'attutimento':
         this.scheda['attutimento'] ++;
-        this.xpdisponibili -= this.scheda['attutimento']*2;
+        this.xpdisponibili -= this.scheda['attutimento'] * 2;
         break;
       case 'carisma':
         this.scheda['carisma'] ++;
-        this.xpdisponibili -= this.scheda['carisma']*2;
+        this.xpdisponibili -= this.scheda['carisma'] * 2;
         break;
       case 'persuasione':
         this.scheda['persuasione'] ++;
-        this.xpdisponibili -= this.scheda['persuasione']*2;
+        this.xpdisponibili -= this.scheda['persuasione'] * 2;
         break;
       case 'saggezza':
         this.scheda['saggezza'] ++;
-        this.xpdisponibili -= this.scheda['saggezza']*2;
+        this.xpdisponibili -= this.scheda['saggezza'] * 2;
         break;
       case 'percezione':
         this.scheda['percezione'] ++;
-        this.xpdisponibili -= this.scheda['percezione']*2;
+        this.xpdisponibili -= this.scheda['percezione'] * 2;
         break;
       case 'intelligenza':
         this.scheda['intelligenza'] ++;
-        this.xpdisponibili -= this.scheda['intelligenza']*2;
+        this.xpdisponibili -= this.scheda['intelligenza'] * 2;
         break;
       case 'prontezza':
         this.scheda['prontezza'] ++;
-        this.xpdisponibili -= this.scheda['prontezza']*2;
+        this.xpdisponibili -= this.scheda['prontezza'] * 2;
         break;
       default:
         break;
@@ -243,7 +247,7 @@ export class SpendipxComponent implements OnInit {
     );
   }
 
-  adddisc ( iddisciplina: number ) {
+  adddisc( iddisciplina: number ) {
     let spesapx = 0 ;
     let diclan = '';
 
@@ -253,10 +257,10 @@ export class SpendipxComponent implements OnInit {
         diclan = this.discipline[j].disciplina.DiClan;
         if ( diclan == 'S') {
           spesapx = this.discipline[j].disciplina.livello *2 ;
-          this.costonewdisc[j]= (this.discipline[j].disciplina.livello +1)*2 ;
+          this.costonewdisc[j] = (this.discipline[j].disciplina.livello +1)*2 ;
         } else {
           spesapx = this.discipline[j].disciplina.livello *3 ;
-          this.costonewdisc[j]= (this.discipline[j].disciplina.livello +1)*3 ;
+          this.costonewdisc[j] = (this.discipline[j].disciplina.livello +1)*3 ;
         }
       }
     }
@@ -298,7 +302,7 @@ export class SpendipxComponent implements OnInit {
 
   }
 
-  newtaum ( lvl: number ) {
+  newtaum( lvl: number ) {
     this.xpdisponibili -= 2;
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
@@ -368,14 +372,14 @@ export class SpendipxComponent implements OnInit {
 
   }
 
-  newnecro ( lvl: number ) {
+  newnecro( lvl: number ) {
     this.xpdisponibili -= 2;
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
       data => {
 
-        this.schedaservice.getscheda(this.idutente).
-        subscribe (
+        this.schedaservice.getscheda(this.idutente)
+        .subscribe (
           (data: any) => {
             this.discipline = data.discipline ;
             for (let j=0 ; j < this.discipline.length ; j++ ) {
@@ -427,7 +431,7 @@ export class SpendipxComponent implements OnInit {
             for (let j=0 ; j < this.discipline.length ; j++ ) {
               this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
               this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-              if ( this.discipline[j].disciplina.DiClan == "S" ) {
+              if ( this.discipline[j].disciplina.DiClan == 'S' ) {
                 this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
               } else {
                 this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
@@ -467,7 +471,7 @@ export class SpendipxComponent implements OnInit {
   }
 
   addrituale(lvl: number, necrotaum: string) {
-    this.xpdisponibili -= 3*(lvl+1);
+    this.xpdisponibili -= 3 * (lvl + 1);
 
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
     .subscribe(

@@ -33,7 +33,7 @@ export class BioComponent implements OnInit {
 
   }
 
-  aggiornaBio () {
+  aggiornaBio() {
 
     this.schedaservice.putbio ( this.idutente , this.bio.value , this.annotazioni.value , this.urlDT.value)
     .subscribe(

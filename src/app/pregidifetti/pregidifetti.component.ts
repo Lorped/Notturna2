@@ -24,7 +24,7 @@ export class PregidifettiComponent implements OnInit {
   difetti_s: Array<Pregio> = [];
   difetti_x: Array<Pregio> = [];
 
-  idutente: number = 0 ;
+  idutente = 0 ;
 
   pregi: Array<Pregio> = [];
   difetti: Array<Pregio> = [];
@@ -62,7 +62,7 @@ export class PregidifettiComponent implements OnInit {
   }
 
 
-  getliste () {
+  getliste() {
     this.schedaservice.getpregidifetti(this.idutente)
     .subscribe(
       (data: any) => {
@@ -80,7 +80,7 @@ export class PregidifettiComponent implements OnInit {
     );
   }
 
-  getpregi () {
+  getpregi() {
     this.schedaservice.getpregi(this.idutente)
     .subscribe(
       (data: any) => {
@@ -100,55 +100,42 @@ export class PregidifettiComponent implements OnInit {
 
         this.saldo = 0 ;
 
-        for ( let j = 0 ; j < this.difetti.length; j++ ) {
-
-          switch (this.difetti[j].classe) {
+        for ( let item of this.difetti) {
+          this.saldo += Number(item.valore);
+          switch (item.classe) {
             case 'F':
               this.ok_d_f ++ ;
-              this.saldo += Number(this.difetti[j].valore);
               break;
             case 'M':
               this.ok_d_m ++ ;
-              this.saldo += Number(this.difetti[j].valore);
               break;
             case 'S':
               this.ok_d_s ++ ;
-              this.saldo += Number(this.difetti[j].valore);
               break;
             case 'X':
               this.ok_d_x ++ ;
-              this.saldo += Number(this.difetti[j].valore);
               break;
           }
         }
 
-        for ( let j = 0 ; j < this.pregi.length; j++ ) {
-
-          switch (this.pregi[j].classe) {
+        for ( let item of this.pregi ) {
+          item.valore = Number(item.valore);
+          this.saldo =  this.saldo + item.valore - item.pxspesi / 2 ;
+          switch (item.classe) {
             case 'F':
               this.ok_p_f ++ ;
-              this.pregi[j].valore = Number(this.pregi[j].valore);
-              this.saldo =  this.saldo + this.pregi[j].valore - this.pregi[j].pxspesi / 2 ;
               break;
             case 'M':
               this.ok_p_m ++ ;
-              this.pregi[j].valore = Number(this.pregi[j].valore);
-              this.saldo =  this.saldo + this.pregi[j].valore - this.pregi[j].pxspesi / 2 ;
               break;
             case 'S':
               this.ok_p_s ++ ;
-              this.pregi[j].valore = Number(this.pregi[j].valore);
-              this.saldo =  this.saldo + this.pregi[j].valore - this.pregi[j].pxspesi / 2 ;
               break;
             case 'X':
               this.ok_p_x ++ ;
-              this.pregi[j].valore = Number(this.pregi[j].valore);
-              this.saldo =  this.saldo + this.pregi[j].valore - this.pregi[j].pxspesi / 2 ;
               break;
           }
         }
-
-
 
 
       }
@@ -190,25 +177,25 @@ export class PregidifettiComponent implements OnInit {
     .subscribe(
       (data:any) => {
 
-          this.new_d_f = '';
-          this.new_d_m = '';
-          this.new_d_s = '';
-          this.new_d_x = '';
+        this.new_d_f = '';
+        this.new_d_m = '';
+        this.new_d_s = '';
+        this.new_d_x = '';
 
-          this.new_p_f = '';
-          this.new_p_m = '';
-          this.new_p_s = '';
-          this.new_p_x = '';
-          this.getpregi();
-          this.getliste ();
-          this.getpx ();
+        this.new_p_f = '';
+        this.new_p_m = '';
+        this.new_p_s = '';
+        this.new_p_x = '';
+        this.getpregi();
+        this.getliste();
+        this.getpx();
 
       }
     );
 
   }
 
-  abilitaPX () {
+  abilitaPX() {
     this.okPX = !(this.okPX) ;
   }
 

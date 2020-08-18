@@ -25,22 +25,22 @@ export class AddpoteriComponent implements OnInit {
         this.discipline = data;
 
         for ( let j = 0 ; j < this.discipline.length ; j++ ){
-          this.newpotere[j] = "0" ;
+          this.newpotere[j] = '0' ;
         }
 
       }
     );
   }
 
-  addpotere (ix: number) {
+  addpotere(ix: number) {
     this.schedaservice.addpotere( this.idutente, this.newpotere[ix])
     .subscribe(
       data => {
         this.schedaservice.getpoteri( this.idutente )
         .subscribe (
-          (data: any ) => {
-            this.discipline = data;
-            this.newpotere[ix] = "0";
+          (data2: any ) => {
+            this.discipline = data2;
+            this.newpotere[ix] = '0';
           }
         );
       }

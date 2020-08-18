@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
     ]),
   });
 
-  loginInvalid: boolean = false ;
-  hide: boolean = true ;
+  loginInvalid = false ;
+  hide = true ;
 
   constructor( private authenticationService: AuthenticationService , private router: Router) { }
 
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
 
-          if (data.admin == "1"){
+          if (data.admin == '1'){
             this.router.navigate(['/admin']);
           } else {
             if (data.vampiro == 0 && data.hunter == 0){

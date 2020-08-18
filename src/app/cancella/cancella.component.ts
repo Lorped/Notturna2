@@ -20,10 +20,10 @@ export class CancellaComponent implements OnInit {
   }
 
   cancella() {
-    let idutente = Number( sessionStorage.getItem('NotturnaUser') );
+    const idutente = Number( sessionStorage.getItem('NotturnaUser') );
     this.schedaservice.cancellascheda(idutente).subscribe(
       (data: any) => {
-        sessionStorage.setItem('NotturnaUser1', "0" );
+        sessionStorage.setItem('NotturnaUser1', '0' );
         this.router.navigate(['/gate']);
       }
     );

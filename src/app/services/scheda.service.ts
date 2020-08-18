@@ -11,15 +11,15 @@ export class SchedaService {
 
   constructor(private http: HttpClient) { }
 
-  getregistra () {
+  getregistra() {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getregistra.php' );
   }
 
-  putregistra ( aPG: Basicpg , bg: Array<Background> , cont: Array<Contatti> ,
+  putregistra( aPG: Basicpg , bg: Array<Background> , cont: Array<Contatti> ,
     discipline: Array<Disciplina> , taumaturgie: Array<Taumaturgia> , necromanzie: Array<Necromanzia> ,
     attitudini: Array<Skill> , skill: Array<Skill> ) {
 
-    let idutente = sessionStorage.getItem('NotturnaUser');
+    const idutente = sessionStorage.getItem('NotturnaUser');
 
 
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putregistra.php', {
@@ -35,62 +35,62 @@ export class SchedaService {
     });
   }
 
-  getscheda (idutente: number) {
+  getscheda(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getscheda.php'+"?idutente="+idutente );
   }
 
-  checkpoteri (idutente: number) {
+  checkpoteri(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/checkpoteri.php'+"?idutente="+idutente );
   }
 
-  getpoteri (idutente: number) {
+  getpoteri(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/poteri.php'+"?idutente="+idutente );
   }
 
-  addpotere (idutente: number , idpotere: string ) {
+  addpotere(idutente: number , idpotere: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpotere.php',{
       idutente: idutente,
       idpotere: idpotere
     });
   }
 
-  getlogpx (idutente: number) {
+  getlogpx(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getlogpx.php'+"?idutente="+idutente );
   }
 
-  getnecrotaum (idutente: number) {
+  getnecrotaum(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getnecrotaum.php'+"?idutente="+idutente );
   }
 
-  addattr (idutente: number , attributo: string ) {
+  addattr(idutente: number , attributo: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addattr.php',{
       idutente: idutente,
       attributo: attributo
     });
   }
 
-  addpx (idutente: number , px: number ) {
+  addpx(idutente: number , px: number ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpx.php',{
       idutente: idutente,
       px: px
     });
   }
 
-  adddisciplina (idutente: number , iddisciplina: number ) {
+  adddisciplina(idutente: number , iddisciplina: number ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/adddisciplina.php',{
       idutente: idutente,
       iddisciplina: iddisciplina
     });
   }
 
-  addtaum (idutente: number , idtaum: number ) {
+  addtaum(idutente: number , idtaum: number ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addtaum.php',{
       idutente: idutente,
       idtaum: idtaum
     });
   }
 
-  newtaum (idutente: number , idtaum: string , principale: number) {
+  newtaum(idutente: number , idtaum: string , principale: number) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newtaum.php',{
       idutente: idutente,
       idtaum: idtaum,
@@ -98,14 +98,14 @@ export class SchedaService {
     });
   }
 
-  addnecro (idutente: number , idnecro: number ) {
+  addnecro(idutente: number , idnecro: number ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addnecro.php',{
       idutente: idutente,
       idnecro: idnecro
     });
   }
 
-  newnecro (idutente: number , idnecro: string , principale: number) {
+  newnecro(idutente: number , idnecro: string , principale: number) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newnecro.php',{
       idutente: idutente,
       idnecro: idnecro,
@@ -113,22 +113,22 @@ export class SchedaService {
     });
   }
 
-  getotherdisc (idutente: number) {
+  getotherdisc(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getotherdisc.php'+"?idutente="+idutente );
   }
 
-  newdisc (idutente: number , iddisciplina: string ) {
+  newdisc(idutente: number , iddisciplina: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newdisc.php',{
       idutente: idutente,
       iddisciplina: iddisciplina
     });
   }
 
-  getrituali (idutente: number) {
+  getrituali(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getrituali.php'+"?idutente="+idutente );
   }
 
-  newrituale (idutente: number , idrituale: string, necrotaum: string ) {
+  newrituale(idutente: number , idrituale: string, necrotaum: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newrituale.php',{
       idutente: idutente,
       idrituale: idrituale,
@@ -136,7 +136,7 @@ export class SchedaService {
     });
   }
 
-  addskill (idutente: number , idskill: number, tipologia: number ) {
+  addskill(idutente: number , idskill: number, tipologia: number ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addskill.php',{
       idutente: idutente,
       idskill: idskill,
@@ -144,42 +144,42 @@ export class SchedaService {
     });
   }
 
-  addbp (idutente: number  ) {
+  addbp(idutente: number  ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addbp.php',{
       idutente: idutente
     });
   }
 
-  addfdv (idutente: number  ) {
+  addfdv(idutente: number  ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addfdv.php',{
       idutente: idutente
     });
   }
 
-  getpregidifetti (idutente: number ) {
+  getpregidifetti(idutente: number ) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpregidifetti.php'+"?idutente="+idutente );
   }
 
-  getpregi (idutente: number ) {
+  getpregi(idutente: number ) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpregi.php'+"?idutente="+idutente );
   }
 
-  addpregio (idutente: number , idpregio: string ) {
+  addpregio(idutente: number , idpregio: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpregio.php',{
       idutente: idutente,
       idpregio: idpregio
     });
   }
 
-  getpx (idutente: number ) {
+  getpx(idutente: number ) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpx.php'+"?idutente="+idutente );
   }
 
-  getbio (idutente: number) {
+  getbio(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getbio.php'+"?idutente="+idutente );
   }
 
-  putbio (idutente: number , bio: string, note: string , urldt: string ) {
+  putbio(idutente: number , bio: string, note: string , urldt: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putbio.php',{
       idutente: idutente,
       bio: bio,
@@ -188,7 +188,7 @@ export class SchedaService {
     });
   }
 
-  getfama (idutente: number) {
+  getfama(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getfama.php'+"?idutente="+idutente );
   }
 
@@ -201,11 +201,11 @@ export class SchedaService {
     });
   }
 
-  getbg (idutente: number) {
+  getbg(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getbg.php'+"?idutente="+idutente );
   }
 
-  putbg (idutente: number , idback: number, livello: number  ) {
+  putbg(idutente: number , idback: number, livello: number  ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putbg.php',{
       idutente: idutente,
       idback: idback,
@@ -213,11 +213,11 @@ export class SchedaService {
     });
   }
 
-  getcontatti (idutente: number) {
+  getcontatti(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcontatti.php'+"?idutente="+idutente );
   }
 
-  putcontatti (idutente: number , idcontatto: number, livello: number  ) {
+  putcontatti(idutente: number , idcontatto: number, livello: number  ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putcontatti.php',{
       idutente: idutente,
       idcontatto: idcontatto,
@@ -225,33 +225,33 @@ export class SchedaService {
     });
   }
 
-  newcontatto (idutente: number , nomecontatto: string ) {
+  newcontatto(idutente: number , nomecontatto: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newcontatto.php',{
       idutente: idutente,
       nomecontatto: nomecontatto
     });
   }
 
-  getpassaggiostatus (idutente: number  ) {
+  getpassaggiostatus(idutente: number  ) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpassaggiostatus.php'+"?idutente="+idutente );
   }
 
-  getskill (idutente: number) {
+  getskill(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getskill.php'+"?idutente="+idutente );
   }
 
-  cambiastatus (idutente: number , lista: Array<Skill> ) {
+  cambiastatus(idutente: number , lista: Array<Skill> ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cambiastatus.php',{
       idutente: idutente,
       lista: lista
     });
   }
 
-  getsentiero (idutente: number) {
+  getsentiero(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getsentiero.php'+"?idutente="+idutente );
   }
 
-  putfdvsentiero (idutente: number , fdv: number, sentiero: number ) {
+  putfdvsentiero(idutente: number , fdv: number, sentiero: number ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putfdvsentiero.php',{
       idutente: idutente,
       fdv: fdv,
@@ -259,14 +259,14 @@ export class SchedaService {
     });
   }
 
-  newsentiero (idutente: number ,  idsentiero: string ) {
+  newsentiero(idutente: number ,  idsentiero: string ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newsentiero.php',{
       idutente: idutente,
       idsentiero: idsentiero
     });
   }
 
-  cancellascheda (idutente: number  ) {
+  cancellascheda(idutente: number  ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancella.php',{
       idutente: idutente
     });
