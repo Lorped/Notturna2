@@ -1,5 +1,41 @@
 
+  <span *ngIf="ingate">
 
+        <a [routerLink]="['/crea']">
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-user-circle"></i> Crea la scheda
+            </mat-card-content>
+          </mat-card>
+        </a>
+
+        <a [routerLink]="['/docs']">
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-book"></i> Consulta il Regolamento
+            </mat-card-content>
+          </mat-card>
+        </a>
+
+        <a [routerLink]="['/utente']">
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-user"></i> Modifica Email e Password
+            </mat-card-content>
+          </mat-card>
+        </a>
+
+        <a [routerLink]="['']">
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-sign-out"></i>  Logout
+            </mat-card-content>
+          </mat-card>
+        </a>
+
+  </span>
+
+  <span *ngIf="! ingate">
 
         <a [routerLink]="['/scheda']">
           <mat-card class="movable">
@@ -61,7 +97,15 @@
         <a [routerLink]="['/docs']">
           <mat-card class="movable">
             <mat-card-content class="all">
-              <i class="fa fa-book"></i> Consulta il regolamento
+              <i class="fa fa-book"></i> Consulta il Regolamento
+            </mat-card-content>
+          </mat-card>
+        </a>
+
+        <a [routerLink]="['/utente']">
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-user"></i> Modifica Email e Password
             </mat-card-content>
           </mat-card>
         </a>
@@ -81,3 +125,5 @@
             </mat-card-content>
           </mat-card>
         </a>
+
+</span>

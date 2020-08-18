@@ -1,10 +1,19 @@
 <div>
   <p>
   <mat-toolbar>
-    <span style="font-family:delphian;">NOTTURNA</span>
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
   </mat-toolbar>
 </p>
 </div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sidex></app-sidex>
+  </mat-sidenav>
+  <mat-sidenav-content>
 
 
 <mat-horizontal-stepper #stepper [linear]="isLinear">
@@ -463,3 +472,8 @@
   </mat-step>
 
 </mat-horizontal-stepper>
+
+
+
+</mat-sidenav-content>
+</mat-sidenav-container>

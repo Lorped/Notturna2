@@ -46,6 +46,7 @@ import { BioComponent } from './bio/bio.component';
 import { BackgroundComponent } from './background/background.component';
 import { CancellaComponent } from './cancella/cancella.component';
 import { DocsComponent } from './docs/docs.component';
+import { UtenteComponent } from './utente/utente.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { DocsComponent } from './docs/docs.component';
     BioComponent,
     BackgroundComponent,
     CancellaComponent,
-    DocsComponent
+    DocsComponent,
+    UtenteComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import { BioComponent } from './bio/bio.component';
 import { BackgroundComponent } from './background/background.component';
 import { CancellaComponent } from './cancella/cancella.component';
 import { DocsComponent } from './docs/docs.component';
+import { UtenteComponent } from './utente/utente.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'background', component: BackgroundComponent },
   { path: 'cancella', component: CancellaComponent },
   { path: 'docs', component: DocsComponent },
+  { path: 'utente', component: UtenteComponent },
 ];
 
 @NgModule({

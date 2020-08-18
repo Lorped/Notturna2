@@ -25,11 +25,16 @@
           </mat-card-title>
           <hr>
           <p>
-          Sei assolitamente sicuro di cancellare la scheda? La scelta è irreversibile e la scheda non potrà essere recuperata.
+          <div class="column">
+            Sei assolutamente sicuro di cancellare la scheda? La scelta è irreversibile e la scheda non potrà essere recuperata.
+          </div>
           <p>
+          <p>
+          <div class="column">
           <mat-checkbox color="warn" (change)="ok()" >
             So cosa sto facendo
           </mat-checkbox>
+          </div>
           <p>
           <button  mat-raised-button class="large" color="primary" [disabled]="!imfine" (click)="cancella()">Cancella</button>
 

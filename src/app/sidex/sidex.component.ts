@@ -10,11 +10,16 @@ export class SidexComponent implements OnInit {
 
   idutente = 0 ;
   mybadge = '' ;
+  ingate = true ;
 
   constructor(private schedaservice: SchedaService) { }
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
+
+    if ( sessionStorage.getItem('NotturnaUser1') != '0' || sessionStorage.getItem('NotturnaUser1') != '0' ) {
+      this.ingate = false ;
+    }
 
     this.schedaservice.checkpoteri(this.idutente).
     subscribe (
