@@ -9,7 +9,7 @@ import { Pregio } from '../global';
 })
 export class PregidifettiComponent implements OnInit {
 
-  okPX: boolean =  false;
+  okPX = false;
 
   pxdisponibili = 0 ;
 
@@ -147,35 +147,35 @@ export class PregidifettiComponent implements OnInit {
 
     switch (tipo) {
       case 'df':
-          idpregio = this.new_d_f;
+        idpregio = this.new_d_f;
         break;
       case 'ds':
-          idpregio = this.new_d_s;
+        idpregio = this.new_d_s;
         break;
       case 'dm':
-          idpregio = this.new_d_m;
+        idpregio = this.new_d_m;
         break;
       case 'dx':
-          idpregio = this.new_d_x;
+        idpregio = this.new_d_x;
         break;
 
       case 'pf':
-          idpregio = this.new_p_f;
+        idpregio = this.new_p_f;
         break;
       case 'pm':
-          idpregio = this.new_p_m;
+        idpregio = this.new_p_m;
         break;
       case 'ps':
-          idpregio = this.new_p_s;
+        idpregio = this.new_p_s;
         break;
       case 'px':
-          idpregio = this.new_p_x;
+        idpregio = this.new_p_x;
         break;
     }
 
     this.schedaservice.addpregio(this.idutente, idpregio)
     .subscribe(
-      (data:any) => {
+      (data: any) => {
 
         this.new_d_f = '';
         this.new_d_m = '';

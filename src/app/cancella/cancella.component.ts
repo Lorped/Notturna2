@@ -15,8 +15,8 @@ export class CancellaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ok(){
-    this.imfine? this.imfine=false : this.imfine=true ;
+  ok() {
+    this.imfine ? this.imfine = false : this.imfine = true ;
   }
 
   cancella() {

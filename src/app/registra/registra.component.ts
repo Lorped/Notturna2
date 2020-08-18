@@ -36,7 +36,7 @@ export class RegistraComponent implements OnInit {
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8)
-      //,
+      // ,
       // Validators.pattern('^.*((\\d.*[a-zA-Z])|([a-zA-Z].*\\d)).*$')
     ]),
 
@@ -73,7 +73,7 @@ export class RegistraComponent implements OnInit {
 
   validateEmailNotTaken(control: AbstractControl) {
   return this.authenticationservice.checkEmail(control.value)
-  .pipe (  map ( (res: any) => {
+  .pipe ( map ( (res: any) => {
     // console.log(res);
      return  res == 'OK' ?  { emailTaken: true } : null ;
     // return null ;
@@ -82,7 +82,7 @@ export class RegistraComponent implements OnInit {
 
   validateNomeNotTaken(control: AbstractControl) {
   return this.authenticationservice.checkNome(control.value)
-  .pipe (  map ( (res: any) => {
+  .pipe ( map ( (res: any) => {
     // console.log(res);
      return  res == 'OK' ?  { nomeTaken: true } : null ;
     // return null ;

@@ -201,7 +201,7 @@ export class BackgroundComponent implements OnInit {
     .subscribe();
   }
 
-  mincon(id:number){
+  mincon(id: number){
     /* for ( let j=0 ; j< this.listaContatti.length ; j++) {
       if ( this.listaContatti[j].idcontatto == id ) {
         this.listaContatti[j].livello -- ;
@@ -233,7 +233,7 @@ export class BackgroundComponent implements OnInit {
       j++;
     }
   }
-  addcon(id:number){
+  addcon(id: number){
     /* for ( let j=0 ; j< this.listaContatti.length ; j++) {
       if ( this.listaContatti[j].idcontatto == id ) {
         this.listaContatti[j].livello ++ ;
@@ -259,7 +259,7 @@ export class BackgroundComponent implements OnInit {
   }
 
   newcontatto(){
-    let myNew = new Contatti;
+    let myNew = new Contatti();
     myNew.nomecontatto = this.myContatto.value;
     myNew.livello = 1 ;
 
@@ -280,12 +280,12 @@ export class BackgroundComponent implements OnInit {
     this.puntidisponibili ++;
   }
 
-  addsk(ix: number){
+  addsk(ix: number) {
     this.listanew[ix].livello ++ ;
     this.puntidisponibili --;
   }
 
-  cambiastatus(){
+  cambiastatus() {
     this.schedaservice.cambiastatus(this.idutente, this.listanew).subscribe(
       (data: any) => {
          this.caricavalori ();
@@ -294,7 +294,7 @@ export class BackgroundComponent implements OnInit {
   }
 
 
-  caricavalori () {
+  caricavalori() {
     this.schedaservice.getpassaggiostatus(this.idutente).subscribe(
       (data: any) => {
 
@@ -348,7 +348,7 @@ export class BackgroundComponent implements OnInit {
         for (let item of  this.listaskill) {
           item.livello = Number (item.livello);
         }
-        this.listanew.length = 0
+        this.listanew.length = 0 ;
         this.listaskill.forEach(val => this.listanew.push(Object.assign({}, val)));
         /* for (let j=0 ; j< this.listanew.length ; j++) {
           this.listanew[j].livello = 0;

@@ -28,7 +28,7 @@ export class Basicpg {
   public PScorrenti = 0 ;
 
   public idsentiero = 0;
-  public sentiero = ''; //da LEFT JOIN
+  public sentiero = ''; // da LEFT JOIN
   public valsentiero = 0 ;
   public fama1 = 0 ;
   public fama2 = 0 ;
@@ -55,7 +55,7 @@ export class Potere {
   public nomepotere: string;
   public livellopot: number;
   public iddisciplina: number;
-  constructor () {
+  constructor() {
     this.idpotere = 0;
     this.nomepotere = '';
     this.livellopot = 0;
@@ -65,7 +65,7 @@ export class Potere {
 
 @Injectable()
 export class Newpotere {
-  public potere = new  Potere ;
+  public potere = new Potere() ;
   public disabled = 0 ;
 }
 
@@ -108,7 +108,7 @@ export class Disciplina {
   public nomedisc: string ;
   public livello: number ;
   public DiClan: string ;
-  constructor ( ) {
+  constructor() {
     this.iddisciplina = 0;
     this.nomedisc = '';
     this.livello = 0;
@@ -118,7 +118,7 @@ export class Disciplina {
 
 @Injectable()
 export class FullDisciplina {
-  public disciplina = new Disciplina ;
+  public disciplina = new Disciplina() ;
   public poteri: Array<Potere> = [];
   public newpoteri: Array<Newpotere> = [];
 }
@@ -156,7 +156,7 @@ export class Necromanzia {
   public nomenecro: string;
   public livello: number;
   public principale: number;
-  constructor ( ) {
+  constructor( ) {
     this.idnecro = 0;
     this.nomenecro = '';
     this.livello = 0 ;
@@ -171,7 +171,7 @@ export class Taumaturgia {
   public nometaum: string;
   public livello: number;
   public principale: number;
-  constructor ( ) {
+  constructor( ) {
     this.idtaum = 0;
     this.nometaum = '';
     this.livello = 0 ;
@@ -181,13 +181,13 @@ export class Taumaturgia {
 
 @Injectable()
 export class FullNecromanzia {
-  public necromanzia = new Necromanzia ;
+  public necromanzia = new Necromanzia() ;
   public necros: Array<Necros> = [];
 }
 
 @Injectable()
 export class FullTaumaturgia {
-  public taumaturgia = new Taumaturgia ;
+  public taumaturgia = new Taumaturgia() ;
   public taums: Array<Taums> = [];
 }
 
@@ -208,7 +208,7 @@ export class Personaggio {
 
 
   constructor ( ) {
-    this.aPG = new Basicpg ;
+    this.aPG = new Basicpg() ;
     this.listaBackground = [];
     this.listaContatti = [];
     this.listaDiscipline = [];

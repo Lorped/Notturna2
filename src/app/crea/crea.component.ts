@@ -131,7 +131,7 @@ export class CreaComponent implements OnInit {
   freepoint = 2;        /* da spendere su FdV o umanità */
   freeOK = false;
 
-  sentieroPG = "1";       /* umanità */
+  sentieroPG = '1';       /* umanità */
 
 
   constructor(private schedaservice: SchedaService , private router: Router) { }
@@ -167,7 +167,7 @@ export class CreaComponent implements OnInit {
     );
 
     for ( let j = 0 ; j <3 ; j++) {               // Inizializzo i contatti
-      this.cont[j] = new Contatti;
+      this.cont[j] = new Contatti();
     }
 
     this.attributi[0] = new Attributo ( 0, 'Forza'        , 'F' , 1 );
@@ -294,14 +294,14 @@ export class CreaComponent implements OnInit {
 
 
   addcont(cc: number){
-    this.cont[cc].livello ++;
+    this.cont[cc].livello++;
     this.sommaCont++;
     this.bgOK = false ;
     this.checkbg () ;
   }
 
   mincont(cc: number){
-    this.cont[cc].livello --;
+    this.cont[cc].livello--;
     if (this.cont[cc].livello == 0) {
       this.cont[cc].nomecontatto = '';
     }
@@ -312,7 +312,7 @@ export class CreaComponent implements OnInit {
 
   checkbg () {
     let ok = false;
-    if ( (this.sommaBG === this.maxBG) && ((this.sommaCont === this.maxCont)||this.maxCont===0 )) {
+    if ( (this.sommaBG === this.maxBG) && ((this.sommaCont === this.maxCont) || this.maxCont === 0 )) {
       ok = true;
     }
     if (this.maxCont > 0) {
@@ -330,7 +330,7 @@ export class CreaComponent implements OnInit {
     this.bgOK = ok;
   }
 
-  changeGen(bggen:number) {
+  changeGen(bggen: number) {
     this.generazionePG = 13 - bggen;
 
     switch (this.generazionePG ) {
@@ -396,7 +396,7 @@ export class CreaComponent implements OnInit {
     this.checkattr();
   }
 
-  minattr(id:number) {
+  minattr(id: number) {
     this.attributi[id].Livello--;
 
     this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello + this.attributi[6].Livello;
@@ -409,8 +409,8 @@ export class CreaComponent implements OnInit {
 
     this.checkattr();
   }
-  addattr(id:number) {
-    this.attributi[id].Livello ++;
+  addattr(id: number) {
+    this.attributi[id].Livello++;
 
     this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello + this.attributi[6].Livello;
     this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello + this.attributi[7].Livello;
@@ -418,12 +418,12 @@ export class CreaComponent implements OnInit {
 
     this.attrCorrenteSort = this.attrCorrente.slice().sort((n1,n2) => n1 - n2);
 
-    this.sommaAttr ++;
+    this.sommaAttr++;
 
     this.checkattr();
   }
 
-  checkattr () {
+  checkattr() {
     this.attrOK = false;
     if ( this.attr2 + 3 == this.attrCorrenteSort[0] &&
          this.attr1 + 3 == this.attrCorrenteSort[1] &&
@@ -561,7 +561,7 @@ export class CreaComponent implements OnInit {
 
     // RESET Discipline pr evitare problemi
 
-    for ( let j=0; j<3 ; j++) {
+    for ( let j = 0; j < 3 ; j++) {
       this.discipline[j].livello = 0;
 
       this.taumaturgie[j].livello = 0;
@@ -575,20 +575,20 @@ export class CreaComponent implements OnInit {
 
   }
 
-  mindisc (dd: number) {
-    for (let j=0 ; j<3 ;j++ ) {
+  mindisc(dd: number) {
+    for (let j = 0 ; j < 3 ; j++ ) {
       if ( this.discipline[j].iddisciplina === dd) {
-        this.discipline[j].livello --;
+        this.discipline[j].livello--;
       }
     }
     this.sommaDisc--;
     this.checkDisc();
   }
 
-  adddisc (dd: number) {
-    for (let j=0 ; j<3 ;j++ ) {
+  adddisc(dd: number) {
+    for (let j = 0 ; j < 3 ; j++ ) {
       if ( this.discipline[j].iddisciplina === dd) {
-        this.discipline[j].livello ++;
+        this.discipline[j].livello++;
       }
     }
     this.sommaDisc++;
@@ -604,22 +604,22 @@ export class CreaComponent implements OnInit {
     this.checkDisc();
   }
 
-  checkDisc () {
+  checkDisc() {
     this.discOK = false;
     if ( this.sommaDisc === this.numDisc ) {
       this.discOK = true;
     }
-    for ( let j=0; j<3; j++) {
+    for ( let j = 0 ; j < 3 ; j++) {
       if (this.discipline[j].livello > this.maxDisc ) {
         this.discOK = false;
       }
     }
   }
 
-  mintaum(tt:number){
+  mintaum(tt: number){
     this.taumaturgie[tt].livello--;
-    if (tt==0){
-      for ( let j = 0; j <3 ; j++){
+    if (tt == 0){
+      for ( let j = 0; j < 3 ; j++){
         if (this.discipline[j].iddisciplina == 98 ) {
           this.discipline[j].livello--;
         }
@@ -628,10 +628,10 @@ export class CreaComponent implements OnInit {
     this.sommaDisc--;
     this.checkDisc();
   }
-  addtaum(tt:number){
-    this.taumaturgie[tt].livello ++;
-    if (tt==0){
-      for ( let j = 0; j <3 ; j++){
+  addtaum(tt: number){
+    this.taumaturgie[tt].livello++;
+    if (tt == 0){
+      for ( let j = 0; j < 3 ; j++){
         if (this.discipline[j].iddisciplina == 98 ) {
           this.discipline[j].livello++;
         }
@@ -641,10 +641,10 @@ export class CreaComponent implements OnInit {
     this.checkDisc();
   }
 
-  minnecro(tt:number){
-    this.necromanzie[tt].livello --;
-    if (tt==0){
-      for ( let j = 0; j <3 ; j++){
+  minnecro(tt: number){
+    this.necromanzie[tt].livello--;
+    if (tt == 0){
+      for ( let j = 0; j < 3 ; j++){
         if (this.discipline[j].iddisciplina == 99 ) {
           this.discipline[j].livello--;
         }
@@ -653,10 +653,10 @@ export class CreaComponent implements OnInit {
     this.sommaDisc--;
     this.checkDisc();
   }
-  addnecro(tt:number){
+  addnecro(tt: number){
     this.necromanzie[tt].livello++;
-    if (tt==0){
-      for ( let j = 0; j <3 ; j++){
+    if (tt == 0){
+      for ( let j = 0; j < 3 ; j++){
         if (this.discipline[j].iddisciplina == 99 ) {
           this.discipline[j].livello++;
         }
@@ -670,8 +670,8 @@ export class CreaComponent implements OnInit {
     this.is14 = (this.is14 ? false : true );
 
     this.creaForm.patchValue({
-      statusPG: "1" ,
-      clanPG: "20"});
+      statusPG: '1' ,
+      clanPG: '20'});
 
     if ( this.is14 )  {
       this.generazionePG = 14 ;
@@ -682,16 +682,16 @@ export class CreaComponent implements OnInit {
         }
       }
       this.changeclan() ;
-      this.changestatus ();
-      this.changeGen (-1);
+      this.changestatus();
+      this.changeGen(-1);
     } else {
       this.generazionePG = 13 ;
-      this.changeGen (0);
+      this.changeGen(0);
     }
   }
 
   addsk(sk: number) {
-    for (let j=0 ; j<this.skill.length ;j++ ) {
+    for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         this.skill[j].livello++;
       }
@@ -700,7 +700,7 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
   minsk(sk:number) {
-    for (let j=0 ; j<this.skill.length ;j++ ) {
+    for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         this.skill[j].livello--;
       }
@@ -709,25 +709,25 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
   addsk2(sk: number) {
-    for (let j=0 ; j<this.attitudini.length ;j++ ) {
+    for (let j = 0 ; j < this.attitudini.length ; j++ ) {
       if ( this.attitudini[j].idskill === sk) {
         this.attitudini[j].livello++;
       }
     }
-    this.sommaAttitudini ++;
+    this.sommaAttitudini++;
     this.checkSkill();
   }
-  minsk2(sk:number) {
-    for (let j=0 ; j<this.attitudini.length ;j++ ) {
+  minsk2(sk: number) {
+    for (let j = 0 ; j < this.attitudini.length ; j++ ) {
       if ( this.attitudini[j].idskill === sk) {
         this.attitudini[j].livello--;
       }
     }
-    this.sommaAttitudini --;
+    this.sommaAttitudini--;
     this.checkSkill();
   }
 
-  checkSkill (){
+  checkSkill() {
     this.skillOK = false;
     this.attitudiniOK = false;
 
@@ -739,7 +739,7 @@ export class CreaComponent implements OnInit {
   }
 
 
-  changeNumSkill () {
+  changeNumSkill() {
     let indexGen = 14 - this.generazionePG;
     let indexStat = this.statusPG!.value;
 
@@ -748,12 +748,12 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
 
-  addfdv(){
+  addfdv() {
     this.FDVadd++;
     this.freepoint--;
     this.checkFree();
   }
-  minfdv(){
+  minfdv() {
     this.FDVadd--;
     this.freepoint++;
     if (this.baseFDVmax + this.FDVadd < 4) {
@@ -761,19 +761,19 @@ export class CreaComponent implements OnInit {
     }
     this.checkFree();
   }
-  adduma(){
-    this.umanitaadd ++;
-    this.freepoint --;
+  adduma() {
+    this.umanitaadd++;
+    this.freepoint--;
     this.checkFree();
   }
-  minuma(){
-    this.umanitaadd --;
-    this.freepoint ++;
+  minuma() {
+    this.umanitaadd--;
+    this.freepoint++;
     this.checkFree();
   }
   checkFree() {
     this.freeOK = false;
-    if (this.freepoint==0) {
+    if (this.freepoint == 0) {
       this.freeOK = true;
     }
   }
@@ -814,7 +814,7 @@ export class CreaComponent implements OnInit {
         },
         error => {
           // KO !
-          console.log("ko");
+          console.log('ko');
         }
       );
 

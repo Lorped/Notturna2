@@ -105,15 +105,13 @@ export class DocsComponent implements OnInit {
             this.disC = false;
           break;
 
-
-
         }
 
         if ( this.idclan == '7') {
           this.linkT = 'https://drive.google.com/file/d/0BwbyMyT-GT-URWlmTUtjNUhfc0E/view';
           this.disT = false;
         }
-        if ( this.idclan == '14' ||this.idclan == '11') {
+        if ( this.idclan == '14' || this.idclan == '11') {
           this.linkN = 'https://drive.google.com/file/d/0BwbyMyT-GT-UX3VNX1U4T21pejA/view';
           this.disN = false;
         }
