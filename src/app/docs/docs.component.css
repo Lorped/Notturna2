@@ -15,3 +15,25 @@ hr {
   border-top: 1px solid #f00;
   padding: 0;
 }
+
+a,
+a:visited
+{
+  /* color: #2d77ed; */
+  color: #ffffff;
+  text-decoration: none;
+}
+a:hover {
+  /* color: #5391f5; */
+  color: #2d77ed;
+}
+
+.side {
+  padding-left: 2em;
+}
+
+.isdisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}

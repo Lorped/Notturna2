@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SchedaService } from '../services/index';
 
 @Component({
   selector: 'app-sidex',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidexComponent implements OnInit {
 
-  constructor() { }
+  idutente = 0 ;
+  mybadge = '' ;
+
+  constructor(private schedaservice: SchedaService) { }
 
   ngOnInit(): void {
+    this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
+
+    this.schedaservice.checkpoteri(this.idutente).
+    subscribe (
+      data => {
+        this.mybadge = String(data);
+      }
+    );
   }
 
 }

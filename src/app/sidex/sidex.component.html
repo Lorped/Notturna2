@@ -37,7 +37,7 @@
         <a [routerLink]="['/poteri']">
           <mat-card class="movable">
             <mat-card-content class="all">
-              <i class="fa fa-bolt"></i> Scegli Poteri
+              <i class="fa fa-bolt" ></i> <span [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after"  matBadgeColor="warn" > Scegli Poteri &nbsp; &nbsp;</span>
             </mat-card-content>
           </mat-card>
         </a>

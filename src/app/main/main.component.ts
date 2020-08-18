@@ -8,7 +8,6 @@ import { SchedaService } from '../services/index';
 })
 export class MainComponent implements OnInit {
 
-  checkpoteri = 0 ;
   idutente = 0 ;
   mybadge = '' ;
 
