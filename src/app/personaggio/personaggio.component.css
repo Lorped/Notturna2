@@ -1,9 +1,4 @@
-a,
-a:visited,
-a:hover {
-  color: #ffffff;
-  text-decoration: none;
-}
+
 
 .bigger {
   font-size: 1.2em
@@ -28,6 +23,7 @@ mat-card {
 mat-expansion-panel {
   margin-top: 0.25em;
 }
+
 
 .nopadding {
   padding-left: 0;

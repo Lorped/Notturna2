@@ -49,3 +49,9 @@ mat-card-content {
   text-align: left;
   width: 100%;
 }
+
+.isdisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}

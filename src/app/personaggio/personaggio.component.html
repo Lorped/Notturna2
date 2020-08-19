@@ -1,0 +1,482 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sideadm></app-sideadm>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+
+<div class="container" style="width: 80%; margin-top: 1em;">
+
+  <mat-card>
+
+      <div class="column" style="font-size: 1.5em; font-weight: 500;">
+        {{scheda.nomepg}} <span style="font-size: 0.8em;">({{scheda.nomeplayer}})</span>
+      </div>
+
+    <div><hr></div>
+
+    <div class="columns">
+      <div class="column is-1 red">
+      Clan:
+      </div>
+      <div class="column is-1">
+      {{scheda.nomeclan}}
+      </div>
+      <div class="column is-1 red">
+        Generazione:
+      </div>
+      <div class="column is-1 alc">
+      {{scheda.generazione}}
+      </div>
+      <div class="column is-1 red">
+      Status:
+      </div>
+      <div class="column is-2">
+      {{scheda.status}} [+{{scheda.attivazione}}]
+      </div>
+      <div class="column is-2 red">
+      Blood Potency:
+      </div>
+      <div class="column is-1">
+      {{scheda.bloodp}}
+      </div>
+      <div class="column is-1 red">
+      Bane:
+      </div>
+      <div class="column alr">
+      +{{scheda.bane}}
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-1 red">
+      Sentiero:
+      </div>
+      <div class="column is-3">
+      {{scheda.sentiero}} <span class="red"> - </span> {{scheda.valsentiero}}/10
+      </div>
+
+      <div class="column is-2 red">
+      Punti ferita:
+      </div>
+      <div class="column is-1">
+      {{pf}}
+      </div>
+
+      <div class="column is-2 red">
+      Forza di volontà
+      </div>
+      <div class="column is-1 ">
+      {{scheda.fdv}}/{{scheda.fdvmax}}
+      </div>
+
+      <div class="column is-1 red">
+      &nbsp;
+      </div>
+      <div class="column alr is-1">
+      &nbsp;
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-3">
+        Fama in città:
+      </div>
+      <div class="column is-2">
+        <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama1'], 'dred': ix < scheda['fama1']}"></i>
+      </div>
+      <div class="column is-2 red">
+        Res. Dominazione:
+      </div>
+      <div class="column is-1">
+      {{rd}}
+      </div>
+      <div class="column is-1 red">
+      XP:
+      </div>
+      <div class="column is-1">
+      {{scheda.xp}}
+      </div>
+      <div class="column is-1 red">
+      Spesi:
+      </div>
+      <div class="column is-1 alr">
+      {{scheda.xpspesi}}
+      </div>
+    </div >
+    <div class="columns">
+      <div class="column is-3">
+        Fama tra i Vampiri:
+      </div>
+      <div class="column is-2">
+        <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama2'], 'dred': ix < scheda['fama2']}"></i>
+      </div>
+      <div class="column is-2 red">
+        Res. Paletto:
+      </div>
+      <div class="column is-2">
+      {{rp}}
+      </div>
+
+      <div class="column is-2 red">
+      Livelli di sete:
+      </div>
+      <div class="column is-1 alr">
+      {{scheda.PScorrenti}}/{{scheda.sete+scheda.addsete}}
+      </div>
+
+    </div >
+    <div class="columns">
+      <div class="column is-3">
+        Fama nel Mondo Oscuro:
+      </div>
+      <div class="column is-2">
+        <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama3'], 'dred': ix < scheda['fama3']}"></i>
+      </div>
+      <div class="column is-2 red">
+      Rifugio:
+      </div>
+      <div class="column is-2">
+      {{scheda.rifugio}}
+      </div>
+      <div class="column">
+      &nbsp;
+      </div>
+    </div >
+
+  </mat-card>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Attributi
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+      <div class="columns">
+        <div class="column alc bigger">
+          Fisici
+        </div>
+        <div class="column alc bigger">
+          Sociali
+        </div>
+        <div class="column alc bigger">
+          Mentali
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          Forza
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
+        </div>
+        <div class="column">
+          Carisma
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
+        </div>
+        <div class="column">
+          Percezione
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          Destrezza
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
+        </div>
+        <div class="column">
+          Persuasione
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
+        </div>
+        <div class="column">
+          Intelligenza
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          Attutimento
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
+        </div>
+        <div class="column">
+          Saggezza
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
+        </div>
+        <div class="column">
+          Prontezza
+        </div>
+        <div class="column">
+          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
+        </div>
+      </div>
+    </mat-card>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Discipline
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+      <div class="columns is-multiline" style="margin-left: 0px;" >
+        <div class="column is-4 nopadding" *ngFor="let dd of discipline">
+
+          <div class="columns">
+            <div class="column">
+              {{dd.disciplina.nomedisc}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns" style="align-items: center;" *ngIf="taumaturgie.length >0">
+        <div class="column"><hr></div>
+        <div class="column is-2" style="text-align: center;">Vie Taumaturgiche</div>
+        <div class="column"><hr></div>
+      </div>
+
+      <div class="columns is-multiline" style="margin-left: 0px;" *ngIf="taumaturgie.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of taumaturgie">
+          <div class="columns">
+            <div class="column">
+              {{dd.taumaturgia.nometaum}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns" style="align-items: center;" *ngIf="necromanzie.length >0">
+        <div class="column"><hr></div>
+        <div class="column is-2" style="text-align: center;">Vie Necromantiche</div>
+        <div class="column"><hr></div>
+      </div>
+
+      <div class="columns" style="align-items: center;" style="margin-left: 0px;" *ngIf="necromanzie.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of necromanzie">
+          <div class="columns" >
+            <div class="column">
+              {{dd.necromanzia.nomenecro}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </mat-card>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Poteri e Rituali
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+
+    <div class="columns is-multiline" style="margin-left: 0px;" >
+      <div class="column is-3 nopadding" *ngFor="let dd of discipline| nonecrotaum ">
+        <div class="columns" >
+          <div class="column red">{{dd.disciplina.nomedisc}}</div>
+        </div>
+        <div class="columns" *ngFor="let pot of dd.poteri">
+          <div class="column">({{pot.livellopot}}) {{pot.nomepotere }} </div>
+        </div>
+      </div>
+      <div class="column is-3 nopadding" *ngFor="let dd of necromanzie">
+        <div class="columns" >
+          <div class="column red">{{dd.necromanzia.nomenecro}}</div>
+        </div>
+        <div class="columns" *ngFor="let pot of dd.necros">
+          <div class="column">({{pot.livello}}) {{pot.nomenecro2 }} </div>
+        </div>
+      </div>
+      <div class="column is-3 nopadding" *ngFor="let dd of taumaturgie">
+        <div class="columns" >
+          <div class="column red">{{dd.taumaturgia.nometaum}}</div>
+        </div>
+        <div class="columns" *ngFor="let pot of dd.taums">
+          <div class="column">({{pot.livello>0?pot.livello:dd.taumaturgia.livello}}) {{pot.nometaum2 }} </div>
+        </div>
+      </div>
+      <div class="column is-3 nopadding" *ngIf="rituali.length > 0">
+        <div class="columns" >
+          <div class="column red">Rituali</div>
+        </div>
+        <div class="columns" *ngFor="let dd of rituali">
+          <div class="column">({{dd.livello}}) {{dd.nomerituale }} </div>
+        </div>
+      </div>
+    </div>
+
+    </mat-card>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Attitudini
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+
+    <div class="columns is-multiline" style="margin-left: 0px;" >
+      <div class="column is-4 nopadding" *ngFor="let dd of attitudini">
+        <div class="columns">
+          <div class="column ">
+            {{dd.nomeskill}}
+          </div>
+          <div class="column">
+            <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </mat-card>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Conoscenze
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+
+    <div class="columns is-multiline" style="margin-left: 0px;" >
+      <div class="column is-4 nopadding" *ngFor="let dd of skills">
+        <div class="columns">
+          <div class="column">
+            {{dd.nomeskill}}
+          </div>
+          <div class="column">
+            <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </mat-card>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Background
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+      <div class="columns is-multiline" style="margin-left: 0px;" >
+        <div class="column is-4 nopadding" *ngFor="let dd of background">
+
+          <div class="columns" *ngIf="dd.idback != 77">
+            <div class="column">
+              {{dd.nomeback}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+          <div class="columns" *ngIf="dd.idback == 77">
+            <div class="column">
+              {{dd.nomeback}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of maxcontatti|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns" style="align-items: center;" *ngIf="contatti.length >0">
+        <div class="column"><hr></div>
+        <div class="column is-2" style="text-align: center;">Contatti</div>
+        <div class="column"><hr></div>
+      </div>
+
+      <div class="columns is-multiline" style="margin-left: 0px;" *ngIf="contatti.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of contatti">
+          <div class="columns">
+            <div class="column">
+              {{dd.nomecontatto}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </mat-card>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Pregi e Difetti
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-card>
+      <div class="columns is-multiline" style="margin-left: 0px;" >
+        <div class="column is-4 nopadding" *ngFor="let dd of pregi">
+          {{dd.nomepregio}} ({{dd.classe}})
+        </div>
+      </div>
+    </mat-card>
+
+  </mat-expansion-panel>
+
+
+</div>
+
+
+</mat-sidenav-content>
+</mat-sidenav-container>

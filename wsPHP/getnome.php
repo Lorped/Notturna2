@@ -18,19 +18,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 include ('db.inc.php');
 
+$idutente = $_GET['idutente'];
 
 
-	$MySql = "SELECT idutente, nomepg, 'V' as tipo from personaggio ORDER BY nomepg";
+
+	$MySql = "SELECT nomepg FROM personaggio
+			WHERE  idutente = $idutente ";
 	$Result = mysql_query($MySql);
 
-	$pg = [];
-	while ( $res = mysql_fetch_array ($Result) ) {
-		$pg[] = $res;
-	}
+	if ( $res = mysql_fetch_array ($Result) ) {
 
-	$out = [
-		'pg' => $pg
-	];
+		$out = $res['nomepg'];
+
+	} else {
+		$out = 0 ;
+	}
 
 
 header("HTTP/1.1 200 OK");

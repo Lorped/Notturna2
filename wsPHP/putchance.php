@@ -19,18 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 include ('db.inc.php');
 
 
+	$postdata = file_get_contents("php://input");
+	$request = json_decode($postdata);
 
-	$MySql = "SELECT idutente, nomepg, 'V' as tipo from personaggio ORDER BY nomepg";
+	$chance = $request -> chance;
+
+
+	$MySql = "UPDATE chanceviolazione SET chance = $chance  ";
 	$Result = mysql_query($MySql);
 
-	$pg = [];
-	while ( $res = mysql_fetch_array ($Result) ) {
-		$pg[] = $res;
-	}
-
-	$out = [
-		'pg' => $pg
-	];
+	$out="OK";
 
 
 header("HTTP/1.1 200 OK");

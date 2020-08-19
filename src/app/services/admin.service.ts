@@ -12,4 +12,18 @@ export class AdminService {
   getpersonaggio() {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpersonaggio.php' );
   }
+
+  getnome(idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getnome.php'+'?idutente='+idutente  );
+  }
+
+  getchance() {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getchance.php' );
+  }
+
+  putchance(chance: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putchance.php',{
+      chance: chance
+    });
+  }
 }

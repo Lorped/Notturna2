@@ -13,16 +13,17 @@
 
     <div class="column is-3">
 
-    <mat-form-field appearance="fill" style="size: 75%; display: block;">
-    <mat-select   [(value)]="selectedPG">
-      <mat-option *ngFor="let i of listapg" [value]="i.idutente">{{i.nomepg}}</mat-option>
-    </mat-select>
+    <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+      <mat-label>Scegli Personaggio</mat-label>
+      <mat-select   [(value)]="selectedPG" >
+        <mat-option *ngFor="let i of listapg" [value]="i.idutente">{{i.nomepg}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     </div>
 
     <div class="column is-3">
-      <a [routerLink]="['/xxx']">
+      <a routerLink="/personaggio/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
         <mat-card class="movable">
           <mat-card-content class="all">
             <i class="fa fa-user-circle"></i> Vedi la scheda
@@ -32,7 +33,7 @@
     </div>
 
     <div class="column is-3">
-      <a [routerLink]="['/xxx']">
+      <a routerLink="/adminbg/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
         <mat-card class="movable">
           <mat-card-content class="all">
             <i class="fa fa-plus-square"></i> Modifica Background
@@ -42,10 +43,33 @@
     </div>
 
     <div class="column is-3">
-      <a [routerLink]="['/xxx']">
+      &nbsp;
+    </div>
+
+
+
+
+    <div class="column is-3" [formGroup]="chanceMform">
+        <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;" >
+          <mat-label>Violazione Masquerade {{actual}}%</mat-label>
+          <input matInput formControlName="chance" [placeholder]="actual" type="text" pattern="\d*">
+        </mat-form-field>
+    </div>
+
+
+    <div class="column is-3" >
+      <div style="margin-top: 1em;">
+        <button mat-raised-button class="large" color="primary" [disabled]="chance!.hasError('required') " (click)="cambiachance()" style="width: 100%;">Aggiorna</button>
+      </div>
+    </div>
+
+
+
+    <div class="column is-3">
+      <a [routerLink]="['/oggetti']">
         <mat-card class="movable">
           <mat-card-content class="all">
-            <i class="fa fa-pencil-square"></i> Gestisci oggetti
+            <i class="fa fa-bolt"></i> Gestisci oggetti
           </mat-card-content>
         </mat-card>
       </a>

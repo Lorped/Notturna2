@@ -47,6 +47,10 @@ import { BackgroundComponent } from './background/background.component';
 import { CancellaComponent } from './cancella/cancella.component';
 import { DocsComponent } from './docs/docs.component';
 import { UtenteComponent } from './utente/utente.component';
+import { PersonaggioComponent } from './personaggio/personaggio.component';
+import { SideadmComponent } from './sideadm/sideadm.component';
+import { AdminbgComponent } from './adminbg/adminbg.component';
+import { OggettiComponent } from './oggetti/oggetti.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,11 @@ import { UtenteComponent } from './utente/utente.component';
     BackgroundComponent,
     CancellaComponent,
     DocsComponent,
-    UtenteComponent
+    UtenteComponent,
+    PersonaggioComponent,
+    SideadmComponent,
+    AdminbgComponent,
+    OggettiComponent
   ],
   imports: [
     BrowserModule,

@@ -20,17 +20,18 @@ include ('db.inc.php');
 
 
 
-	$MySql = "SELECT idutente, nomepg, 'V' as tipo from personaggio ORDER BY nomepg";
+
+
+	$MySql = "SELECT chance FROM chanceviolazione ";
 	$Result = mysql_query($MySql);
 
-	$pg = [];
-	while ( $res = mysql_fetch_array ($Result) ) {
-		$pg[] = $res;
-	}
+	if ( $res = mysql_fetch_array ($Result) ) {
 
-	$out = [
-		'pg' => $pg
-	];
+		$out = $res['chance'];
+
+	} else {
+		$out = 0 ;
+	}
 
 
 header("HTTP/1.1 200 OK");

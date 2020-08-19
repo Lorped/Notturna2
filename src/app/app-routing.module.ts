@@ -16,6 +16,9 @@ import { BackgroundComponent } from './background/background.component';
 import { CancellaComponent } from './cancella/cancella.component';
 import { DocsComponent } from './docs/docs.component';
 import { UtenteComponent } from './utente/utente.component';
+import { PersonaggioComponent } from './personaggio/personaggio.component';
+import { AdminbgComponent } from "./adminbg/adminbg.component";
+import { OggettiComponent } from "./oggetti/oggetti.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -34,6 +37,12 @@ const routes: Routes = [
   { path: 'cancella', component: CancellaComponent },
   { path: 'docs', component: DocsComponent },
   { path: 'utente', component: UtenteComponent },
+  { path: 'personaggio/:id', component: PersonaggioComponent },
+  { path: 'adminbg/:id', component: AdminbgComponent },
+  { path: 'oggetti', component: OggettiComponent },
+
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
