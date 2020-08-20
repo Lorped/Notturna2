@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../services/index';
+import { Oggetto, Condizione, FullOggetto} from '../global';
+
+
 
 @Component({
   selector: 'app-oggetti',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OggettiComponent implements OnInit {
 
-  constructor() { }
+  listaoggetti: Array<FullOggetto> = [];
+
+  constructor( private adminservice: AdminService) { }
 
   ngOnInit(): void {
+
+    this.adminservice.listoggetti().subscribe(
+      (data: any) => {
+        this.listaoggetti = data.oggetti;
+        console.log(this.listaoggetti);
+      }
+    );
   }
 
 }

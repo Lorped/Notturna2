@@ -252,3 +252,44 @@ export class Sentiero {
   idsentiero = 0;
   sentiero = '';
 }
+
+@Injectable()
+export class Oggetto {
+  idoggetto: number;
+  barcode: number;
+  nomeoggetto: string;
+  descrizione: string;
+  fissomobile: string;
+  ifdomanda: number;
+  domanda: string;
+  r1: string;
+  r2: string;
+  constructor( ba: number, no:string , de:string , fi:string , ifd:number , dom:string , r1:string , r2:string ) {
+    this.idoggetto = 0 ;
+    this.barcode = ba;
+    this.nomeoggetto = no;
+    this.descrizione = de;
+    this.fissomobile = fi
+    this.ifdomanda = ifd;
+    this.domanda = dom;
+    this.r1 = r1;
+    this.r2 = r2;
+  }
+}
+
+@Injectable()
+export class Condizione {
+  idoggetto = 0;
+  idcondizione = 0;
+  tipocond = '';
+  tabcond = 0;
+  valcond = 0;
+  descrX = '';
+  risp = '';
+}
+
+@Injectable()
+export class FullOggetto {
+  public oggetto = new Oggetto() ;
+  public condizioni: Array<Condizione> = [];
+}

@@ -26,13 +26,73 @@
 
     <div><hr></div>
 
-    Work In progress
+    <div class="columns">
+      <div class="column is-1">
+        ID.
+      </div>
+      <div class="column is-2">
+        Barcode
+      </div>
+      <div class="column is-2">
+        Nome Oggetto
+      </div>
+      <div class="column is-3">
+        Descrizione
+      </div>
+      <div class="column is-1">
+        Tipo
+      </div>
+      <div class="column is-1">
+        &nbsp;
+      </div>
+      <div class="column is-1">
+        &nbsp;
+      </div>
+    </div>
+    <div class="columns" *ngFor="let item of listaoggetti">
+      <div class="column">
+        <div class="columns">
+          <div class="column is-1">
+            {{item.oggetto.idoggetto}}
+          </div>
+          <div class="column is-2">
+            {{item.oggetto.barcode}}
+          </div>
+          <div class="column is-2">
+            {{item.oggetto.nomeoggetto}}
+          </div>
+          <div class="column is-3">
+            {{item.oggetto.descrizione}}
+          </div>
+          <div class="column is-1">
+            {{item.oggetto.fissomobile}}
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button class="full" color="secondary" >Modifica</button>
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button class="full" color="warn" >Cancella</button>
+          </div>
+        </div>
+        <div class="columns" *ngFor="let cond of item.condizioni">
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            {{cond.tipocond}}
+          </div>
+          <div class="column is-2">
+            Min. {{cond.valcond}}
+          </div>
+          <div class="column is-6">
+            {{cond.descrX}}
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
 
     <p>
-    Work In progress
-
-    <p>
-    Work In progress
 
 
   </mat-card>
