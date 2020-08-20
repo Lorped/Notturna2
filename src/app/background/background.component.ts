@@ -16,6 +16,7 @@ export class BackgroundComponent implements OnInit {
   fama2 = 0 ;
   fama3 = 0 ;
 
+
   listabg: Array<Background> = [];
   listaContatti: Array<Contatti> = [];
   sommacontatti = 0;
@@ -320,8 +321,12 @@ export class BackgroundComponent implements OnInit {
           this.fdvbase_new = Number(data.val_new.fdvbase);
           this.bgbase_new = Number(data.val_new.bgbase);
 
-          this.conoscenze_old = this.matriceNumSkill [ this.idstatus_old] [14 - this.generazione ];
-          this.conoscenze_new = this.matriceNumSkill [ this.idstatus_new] [14 - this.generazione ];
+          let mygen = this.generazione;
+          if (this.generazione <8) {
+            mygen = 8;
+          }
+          this.conoscenze_old = this.matriceNumSkill [ this.idstatus_old] [14 - mygen ];
+          this.conoscenze_new = this.matriceNumSkill [ this.idstatus_new] [14 - mygen ];
 
           this.puntidisponibili = this.conoscenze_new - this.conoscenze_old;
 
@@ -401,5 +406,14 @@ export class BackgroundComponent implements OnInit {
     );
   }
 
+  riducigen() {
+    this.generazione--;
+    this.schedaservice.putgen(this.idutente, this.generazione).subscribe(
+      (data: any) => {
+        this.caricavalori();  // cambiano gli skill per il passaggio status
+      }
+    );
+
+  }
 
 }

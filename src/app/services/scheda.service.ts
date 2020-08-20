@@ -276,4 +276,11 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getclan.php'+'?idutente='+idutente );
   }
 
+  putgen(idutente: number, generazione: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putgen.php',{
+      idutente: idutente,
+      generazione: generazione
+    });
+  }
+
 }
