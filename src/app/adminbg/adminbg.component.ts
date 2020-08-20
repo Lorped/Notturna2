@@ -144,7 +144,7 @@ export class AdminbgComponent implements OnInit {
         break;
     }
 
-    this.schedaservice.putfama ( this.idutente, this.fama1, this.fama2, this.fama3)
+    this.schedaservice.putfama ( this.idutente, this.fama1, this.fama2, this.fama3 , 'A')
     .subscribe();
   }
   minfama(ix: number) {
@@ -160,7 +160,7 @@ export class AdminbgComponent implements OnInit {
         break;
     }
 
-    this.schedaservice.putfama ( this.idutente, this.fama1, this.fama2, this.fama3)
+    this.schedaservice.putfama ( this.idutente, this.fama1, this.fama2, this.fama3 , 'A')
     .subscribe();
   }
 
@@ -173,8 +173,7 @@ export class AdminbgComponent implements OnInit {
         newlivello = item.livello;
       }
     }
-    this.schedaservice.putbg(this.idutente, id, newlivello )
-    .subscribe();
+    this.schedaservice.putbg(this.idutente, id, newlivello, 'A' ).subscribe();
   }
 
   addbg(id: number){
@@ -186,27 +185,28 @@ export class AdminbgComponent implements OnInit {
         newlivello = item.livello;
       }
     }
-    this.schedaservice.putbg(this.idutente, id , newlivello )
-    .subscribe();
+    this.schedaservice.putbg(this.idutente, id , newlivello, 'A' ).subscribe();
   }
 
   mincon(id: number){
-
-    let j = 0 ;
+    // console.log (this.listaContatti);
     for ( let item of this.listaContatti  ) {
       if ( item.idcontatto == id ) {
         item.livello -- ;
-        this.schedaservice.putcontatti(this.idutente, id , item.livello)
+        this.schedaservice.putcontatti(this.idutente, id , item.livello, 'A')
         .subscribe(
           (data) => {
-            if (item.livello == 0){
-              this.listaContatti.splice(j, 1);
+            for ( let j = 0 ; j < this.listaContatti.length; j++){
+              if (this.listaContatti[j].livello == 0) {
+                this.listaContatti.splice(j, 1);
+                // console.log (j);
+                // console.log (this.listaContatti);
+              }
             }
             this.sommacontatti -- ;
           }
         );
       }
-      j++;
     }
   }
   addcon(id: number){
@@ -214,7 +214,7 @@ export class AdminbgComponent implements OnInit {
     for ( const item of this.listaContatti ) {
       if ( item.idcontatto == id ) {
         item.livello ++ ;
-        this.schedaservice.putcontatti(this.idutente, id, item.livello)
+        this.schedaservice.putcontatti(this.idutente, id, item.livello , 'A')
         .subscribe(
           (data) => {
             this.sommacontatti ++ ;
@@ -229,7 +229,7 @@ export class AdminbgComponent implements OnInit {
     myNew.nomecontatto = this.myContatto.value;
     myNew.livello = 1 ;
 
-    this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto)
+    this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto, 'A')
     .subscribe(
       (data: any) => {
 
@@ -332,7 +332,7 @@ export class AdminbgComponent implements OnInit {
 
   minfdv(){
     this.fdv--;
-    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1 , 'A').subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -340,7 +340,7 @@ export class AdminbgComponent implements OnInit {
   }
   addfdv(){
     this.fdv++;
-    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1, 'A').subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -348,7 +348,7 @@ export class AdminbgComponent implements OnInit {
   }
   minsentiero(){
     this.valsentiero--;
-    this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero , 'A').subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -356,7 +356,7 @@ export class AdminbgComponent implements OnInit {
   }
   addsentiero(){
     this.valsentiero++;
-    this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero).subscribe(
+    this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero , 'A').subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -364,7 +364,7 @@ export class AdminbgComponent implements OnInit {
   }
   changesentiero(){
     this.oldsentieroPG = this.sentieroPG;
-    this.schedaservice.newsentiero(this.idutente, this.sentieroPG).subscribe(
+    this.schedaservice.newsentiero(this.idutente, this.sentieroPG , 'A').subscribe(
       (data: any) => {
         /* do stuff */
       }
@@ -373,7 +373,7 @@ export class AdminbgComponent implements OnInit {
 
   riducigen() {
     this.generazione--;
-    this.schedaservice.putgen(this.idutente, this.generazione).subscribe(
+    this.schedaservice.putgen(this.idutente, this.generazione, 'A').subscribe(
       (data: any) => {
         this.caricavalori();  // cambiano gli skill per il passaggio status
       }

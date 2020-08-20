@@ -27,6 +27,7 @@ $request = json_decode($postdata);
 $idutente = $request -> idutente;
 $fdv = $request -> fdv;
 $sentiero = $request -> sentiero;
+$au = $request -> au;
 
 
 //$nome = "lorenzo";
@@ -44,6 +45,9 @@ if ( isset($postdata) && $idutente != "" ) {
     $Result = mysql_query($MySql);
 
     $Azione = "FDV a  ".$fdv;
+    if ( $au == 'A') {
+      $Azione = 'ADMIN '.$Azione;
+    }
     $MySql = "INSERT INTO logpx (idutente, px, Azione )
       VALUES ( $idutente, 0 , '$Azione' ) ";
     $Result = mysql_query($MySql);
@@ -58,6 +62,9 @@ if ( isset($postdata) && $idutente != "" ) {
     $Result = mysql_query($MySql);
 
     $Azione = "Valore sentiero a  ".$sentiero;
+    if ( $au == 'A') {
+      $Azione = 'ADMIN '.$Azione;
+    }
     $MySql = "INSERT INTO logpx (idutente, px, Azione )
       VALUES ( $idutente, 0 , '$Azione' ) ";
     $Result = mysql_query($MySql);

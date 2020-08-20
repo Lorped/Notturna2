@@ -25,41 +25,39 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
 $idutente = $request -> idutente;
-$idsentiero = $request -> idsentiero;
-$au = $request -> au;
+$password= $request -> password;
+$email = $request -> email;
+
 
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
 //$postdata = 1;
+$password = mysql_real_escape_string($password);
+$email = mysql_real_escape_string($email);
 
+if ( isset($postdata) && $idutente != ""  ) {
 
-if ( isset($postdata) && $idutente != "" ) {
-
-
-
-    $MySql = "UPDATE personaggio
-      SET idsentiero = $idsentiero
-      WHERE idutente = $idutente ";
+  if ( $email != "" ) {
+    $MySql = "UPDATE utente SET email = '$email' WHERE idutente = $idutente" ;
     $Result = mysql_query($MySql);
+  }
 
-
-    $MySql = "SELECT * from sentieri
-      WHERE idsentiero = $idsentiero";
+  if ( $password != "" ) {
+    $MySql = "UPDATE utente SET password = '$password' WHERE idutente = $idutente" ;
     $Result = mysql_query($MySql);
-    $res = mysql_fetch_array($Result);
-    $sentiero = $res['sentiero'];
-
-    $Azione = "Nuovo sentiero: ".$sentiero;
-    if ( $au == 'A') {
-      $Azione = 'ADMIN '.$Azione;
-    }
-    $MySql = "INSERT INTO logpx (idutente, px, Azione )
-      VALUES ( $idutente, 0 , '$Azione' ) ";
-    $Result = mysql_query($MySql);
+  }
 
 
 
+
+
+
+  if (mysql_errno()) {
+    header("HTTP/1.1 403 Forbidden");
+    die($MySql);
+
+  } else {
 
       header("HTTP/1.1 200 OK");
 
@@ -67,7 +65,7 @@ if ( isset($postdata) && $idutente != "" ) {
       $out = json_encode ($out, JSON_UNESCAPED_UNICODE);
       echo $out;
 
-
+  }
 
 
 

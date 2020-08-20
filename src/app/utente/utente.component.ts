@@ -28,9 +28,11 @@ export class UtenteComponent implements OnInit {
       //,
       // Validators.pattern('^.*((\\d.*[a-zA-Z])|([a-zA-Z].*\\d)).*$')
     ]),
-    password2: new FormControl('', [
+    /*
+     password2: new FormControl('', [
       Validators.required
     ]),
+    */
   });
 
 
@@ -38,13 +40,25 @@ export class UtenteComponent implements OnInit {
   constructor(private authenticationservice: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.emailForm.patchValue({ newemail: '' });
+    this.pwdForm.patchValue({ password: '' });
   }
 
   changepwd(){
-    console.log('changepwd');
+    const idutente = Number( sessionStorage.getItem('NotturnaUser') );
+    this.authenticationservice.changepwd(idutente , this.password!.value , '').subscribe(
+      (data) => {
+        this.pwdForm.reset();
+      }
+    );
   }
   changeemail(){
-    console.log('changeemail');
+    const idutente = Number( sessionStorage.getItem('NotturnaUser') );
+    this.authenticationservice.changepwd(idutente , '', this.newemail!.value ).subscribe(
+      (data) => {
+        this.emailForm.reset();
+      }
+    );
   }
 
   get newemail() {

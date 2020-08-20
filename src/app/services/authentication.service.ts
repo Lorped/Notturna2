@@ -46,11 +46,19 @@ export class AuthenticationService {
 
 
   sendregistra (username: string , password: string, email: string) {
-      return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/sendregistra.php', {
-        username: username,
-        password: password,
-        email: email
-      });
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/sendregistra.php', {
+      username: username,
+      password: password,
+      email: email
+    });
+  }
+
+  changepwd (idutente: number , password: string, email: string) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changepwd.php', {
+      idutente: idutente,
+      password: password,
+      email: email
+    });
   }
 
 }

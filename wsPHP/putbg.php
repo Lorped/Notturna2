@@ -25,43 +25,65 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
 $idutente = $request -> idutente;
-$fama1 = $request -> fama1;
-$fama2 = $request -> fama2;
-$fama3 = $request -> fama3;
+$idback = $request -> idback;
+$livello = $request -> livello;
 $au = $request -> au;
+
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
 //$postdata = 1;
 
 
-if ( isset($postdata) && $idutente != "" ) {
+if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
 
-  $MySql = "SELECT fama1, fama2, fama3 FROM personaggio
-    WHERE idutente = $idutente ";
+  $MySql = "SELECT nomeback FROM background_main WHERE idback = $idback";
   $Result = mysql_query($MySql);
+  $res = mysql_fetch_array ( $Result);
 
-  $res = mysql_fetch_array ($Result);
-
-  $oldfama1 = $res['fama1'];
-  $oldfama2 = $res['fama2'];
-  $oldfama3 = $res['fama3'];
+  $nomeback = $res ['nomeback'];
 
 
-  if ( $oldfama1 != $fama1 ) {
-    $Azione = "Fama in Città a ".$fama1;
-  }
-  if ( $oldfama2 != $fama2 ) {
-    $Azione = "Fama tra i Vampiri a ".$fama2;
-  }
-  if ( $oldfama3 != $fama3 ) {
-    $Azione = "Fama nel Mondo Oscuro a ".$fama3;
+  if ( $livello == 0) {
+    $MySql = "DELETE FROM background
+      WHERE idback = $idback AND idutente = $idutente";
+    $Result = mysql_query($MySql);
+
+
+    $Azione = "Rimosso BG ".$nomeback;
   }
 
+  if ( $livello == 1 ) {
+    $MySql = "SELECT * FROM background
+      WHERE idback = $idback AND idutente = $idutente";
+    $Result = mysql_query($MySql);
+    if ( $res = mysql_fetch_array($Result) ) {
 
-  $MySql = "UPDATE  personaggio SET fama1 = '$fama1' ,  fama2 = '$fama2' , fama3 = '$fama3'
-    WHERE idutente = $idutente ";
-  $Result = mysql_query($MySql);
+      $MySql2 = "UPDATE background SET livello = 1
+        WHERE idback = $idback and idutente = $idutente";
+      $Result2 = mysql_query($MySql2);
+
+    } else {
+
+      $MySql2 = "INSERT INTO background (idback, idutente, livello)
+        VALUES ( $idback, $idutente, 1)";
+      $Result2 = mysql_query($MySql2);
+
+    }
+
+    $Azione = "BG ".$nomeback.' a 1';
+
+  }
+
+  if ($livello != 0 && $livello != 1 ) {
+    $MySql = "UPDATE background SET livello = $livello
+      WHERE idback = $idback and idutente = $idutente";
+    $Result = mysql_query($MySql);
+
+    $Azione = "BG ".$nomeback.' a '.$livello;
+  }
+
+
 
 
   if ( $au == 'A') {

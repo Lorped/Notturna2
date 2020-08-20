@@ -26,6 +26,7 @@ $request = json_decode($postdata);
 
 $idutente = $request -> idutente;
 $nomecontatto = $request -> nomecontatto;
+$au = $request -> au;
 
 
 //$nome = "lorenzo";
@@ -78,7 +79,9 @@ if ( isset($postdata) && $idutente != "" && $nomecontatto != ""  ) {
     }
   }
 
-
+  if ( $au == 'A') {
+    $Azione = 'ADMIN '.$Azione;
+  }
   $Azione = "Aggiunto contatto ".$nomecontatto;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )

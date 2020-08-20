@@ -55,7 +55,6 @@ export class AdminComponent implements OnInit {
   }
 
   cambiachance(){
-    console.log ("here");
     let newc = Number ( this.chanceMform.get('chance')!.value );
     this.adminservice.putchance( newc ).subscribe(
       (data: any) => {

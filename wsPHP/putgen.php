@@ -26,6 +26,7 @@ $request = json_decode($postdata);
 
 $idutente = $request -> idutente;
 $generazione = $request -> generazione;
+$au = $request -> au;
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
@@ -58,6 +59,9 @@ if ( isset($postdata) && $idutente != "" ) {
 
   $Azione = "Generazione a ".$generazione;
 
+  if ( $au == 'A') {
+    $Azione = 'ADMIN '.$Azione;
+  }
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
   $Result = mysql_query($MySql);
