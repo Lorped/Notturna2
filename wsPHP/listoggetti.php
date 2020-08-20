@@ -40,10 +40,11 @@ include ('db.inc.php');
 
 		$idoggetto = $res['idoggetto'];
 
-		$MySql2 = "SELECT * from cond_oggetti WHERE cond_oggetti.idoggetto = $idoggetto";
+		$MySql2 = "SELECT * from cond_oggetti WHERE cond_oggetti.idoggetto = $idoggetto ";
 		$Result2 = mysql_query($MySql2);
 
 		$condizioni = [];
+		$condizioni2 = [];
 		while ( $res2 = mysql_fetch_array ($Result2,MYSQL_ASSOC) ) {
 			$tipocond = $res2['tipocond'];
 
@@ -76,12 +77,18 @@ include ('db.inc.php');
 
 			$res2['tipocond'] = $cond;
 
-			$condizioni[] = $res2;
+			if ( $res2['risp'] != '') {
+				$condizioni2[] = $res2;
+			} else {
+				$condizioni[] = $res2;
+			}
+
 		}
 
 		$fulloggetto = [
 			'oggetto' => $res,
-			'condizioni' => $condizioni
+			'condizioni' => $condizioni,
+			'condizioni2' => $condizioni2
 		];
 
 		$oggetti[] = $fulloggetto;

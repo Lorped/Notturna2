@@ -264,16 +264,16 @@ export class Oggetto {
   domanda: string;
   r1: string;
   r2: string;
-  constructor( ba: number, no:string , de:string , fi:string , ifd:number , dom:string , r1:string , r2:string ) {
+  constructor(  ) {
     this.idoggetto = 0 ;
-    this.barcode = ba;
-    this.nomeoggetto = no;
-    this.descrizione = de;
-    this.fissomobile = fi
-    this.ifdomanda = ifd;
-    this.domanda = dom;
-    this.r1 = r1;
-    this.r2 = r2;
+    this.barcode = 0;
+    this.nomeoggetto = '';
+    this.descrizione = '';
+    this.fissomobile = ''
+    this.ifdomanda = 0;
+    this.domanda = '';
+    this.r1 = '';
+    this.r2 = '';
   }
 }
 
@@ -292,4 +292,5 @@ export class Condizione {
 export class FullOggetto {
   public oggetto = new Oggetto() ;
   public condizioni: Array<Condizione> = [];
+  public condizioni2: Array<Condizione> = [];
 }

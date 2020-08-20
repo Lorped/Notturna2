@@ -23,6 +23,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatRadioModule} from '@angular/material/radio';
 //
 
 import { AuthenticationService } from './services/index';
@@ -100,7 +101,8 @@ import { OggettiComponent } from './oggetti/oggetti.component';
     MatExpansionModule,
     MatListModule,
     MatBadgeModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatRadioModule
 
 
   ],

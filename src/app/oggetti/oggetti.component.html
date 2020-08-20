@@ -26,26 +26,60 @@
 
     <div><hr></div>
 
+
     <div class="columns">
-      <div class="column is-1">
-        ID.
+      <div class="column is-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Nome</mat-label>
+          <input matInput [(ngModel)]="nomeoggetto">
+        </mat-form-field>
       </div>
-      <div class="column is-2">
-        Barcode
-      </div>
-      <div class="column is-2">
-        Nome Oggetto
+      <div class="column is-4">
+        <mat-form-field appearance="fill" class="full">
+          <mat-label>Descrizione</mat-label>
+          <textarea matInput [(ngModel)]="descrizione"></textarea>
+        </mat-form-field>
       </div>
       <div class="column is-3">
+        <mat-radio-group [(ngModel)]="fissomobile"  class="example-radio-group">
+          <mat-radio-button  class="example-radio-button"  *ngFor="let tipo of listafissomobile" [value]="tipo.id">
+            {{tipo.nome}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="column is-2">
+        <button  mat-raised-button [disabled]="nomeoggetto==''" class="large" color="primary" (click)="aggiungioggetto()" style="width: 100%;">Aggiungi</button>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class=column>
+        <button  mat-raised-button class="large" color="primary" (click)="stampa()" style="width: 100%;">Stampa Oggetti</button>
+      </div>
+    </div>
+
+    <div><hr></div>
+
+    <div class="columns">
+      <div class="column is-1 bold">
+        ID.
+      </div>
+      <div class="column is-2 bold">
+        Barcode
+      </div>
+      <div class="column is-2 bold">
+        Nome Oggetto
+      </div>
+      <div class="column is-3 bold">
         Descrizione
       </div>
-      <div class="column is-1">
+      <div class="column is-1 bold">
         Tipo
       </div>
-      <div class="column is-1">
+      <div class="column is-1 bold">
         &nbsp;
       </div>
-      <div class="column is-1">
+      <div class="column is-1 bold">
         &nbsp;
       </div>
     </div>
@@ -68,10 +102,10 @@
             {{item.oggetto.fissomobile}}
           </div>
           <div class="column is-1">
-            <button  mat-raised-button class="full" color="secondary" >Modifica</button>
+            <button  mat-raised-button color="accent" >Modifica</button>
           </div>
           <div class="column is-1">
-            <button  mat-raised-button class="full" color="warn" >Cancella</button>
+            <button  mat-raised-button color="warn" (click)="cancellaoggetto(item.oggetto.idoggetto)">Cancella</button>
           </div>
         </div>
         <div class="columns" *ngFor="let cond of item.condizioni">
@@ -88,6 +122,35 @@
             {{cond.descrX}}
           </div>
         </div>
+        <div class="columns" *ngIf="item.oggetto.ifdomanda==1">
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            {{item.oggetto.domanda}}
+          </div>
+          <div class="column is-8">
+            <span class="green">SI:</span> {{item.oggetto.r1}}<br>
+            <span class="red">NO:</span> {{item.oggetto.r2}}<br>
+          </div>
+        </div>
+
+        <div class="columns" *ngFor="let cond of item.condizioni2">
+          <div class="column is-1">
+            <span [ngClass]="{'red': cond.risp=='N' , 'green': cond.risp=='S'}"> {{cond.risp}} </span>
+          </div>
+          <div class="column is-2">
+            {{cond.tipocond}}
+          </div>
+          <div class="column is-2">
+            Min. {{cond.valcond}}
+          </div>
+          <div class="column is-6">
+            {{cond.descrX}}
+          </div>
+        </div>
+
+
       </div>
       <mat-divider></mat-divider>
     </div>

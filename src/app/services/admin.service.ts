@@ -30,4 +30,18 @@ export class AdminService {
   listoggetti() {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/listoggetti.php' );
   }
+
+  cancellaoggetto(idoggetto: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancellaoggetto.php',{
+      idoggetto: idoggetto
+    });
+  }
+
+  addoggetto(nomeoggetto: string, descrizione: string, fissomobile: string) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addoggetto.php',{
+      nomeoggetto: nomeoggetto,
+      descrizione: descrizione,
+      fissomobile: fissomobile
+    });
+  }
 }
