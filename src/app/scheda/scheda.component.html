@@ -20,9 +20,14 @@
 
   <mat-card>
 
-      <div class="column" style="font-size: 1.5em; font-weight: 500;">
+    <div class="columns">
+      <div class="column" style="font-size: 1.5em; font-weight: 500;" >
         {{scheda.nomepg}}
       </div>
+      <div class="column is-1" >
+        <button  mat-raised-button class="large" color="primary" (click)="stampascheda()" style="width: 75;">Stampa</button>
+      </div>
+    </div>
 
     <div><hr></div>
 

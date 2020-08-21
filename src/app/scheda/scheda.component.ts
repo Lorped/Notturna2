@@ -91,4 +91,8 @@ export class SchedaComponent implements OnInit {
     );
   }
 
+  stampascheda(){
+      window.open( 'https://www.roma-by-night.it/notturna/scheda3.php?idutente='+this.idutente, '_blank');
+  }
+
 }
