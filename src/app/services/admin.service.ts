@@ -48,4 +48,38 @@ export class AdminService {
   getcondizioni() {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcondizioni.php' );
   }
+
+  addcondizione(idoggetto: number, tipocond: string, tabcond: number, valcond: number, descrX: string, risp: string) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addcondizione.php',{
+      idoggetto: idoggetto,
+      tipocond: tipocond,
+      tabcond: tabcond,
+      valcond: valcond,
+      descrX: descrX,
+      risp: risp
+    });
+  }
+
+  cancellacondizione(idcondizione: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancellacondizione.php',{
+      idcondizione: idcondizione
+    });
+  }
+
+  adddomanda(idoggetto: number, domanda: string, r1: string, r2: string) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/adddomanda.php',{
+      idoggetto: idoggetto,
+      domanda: domanda,
+      r1: r1,
+      r2: r2
+    });
+  }
+
+  cancdomanda(idoggetto: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancdomanda.php',{
+      idoggetto: idoggetto
+    });
+  }
+
+
 }

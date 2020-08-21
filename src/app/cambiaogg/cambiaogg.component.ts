@@ -26,11 +26,7 @@ export class CambiaoggComponent implements OnInit {
     Validators.max(10),
     Validators.min(1)
   ]);
-  valcondP = new FormControl('', [
-    Validators.required,
-    Validators.max(10),
-    Validators.min(1)
-  ]);
+
 
   item = new FullOggetto();
 
@@ -49,14 +45,27 @@ export class CambiaoggComponent implements OnInit {
   descrizioneP = '';
   descrizioneD = '';
 
-  constructor(private adminservice: AdminService) { }
+  idoggetto = 0;
+
+  domanda = '';
+  rispSi = '';
+  rispNo = '';
+
+  quandoA = 'x';
+  quandoS = 'x';
+  quandoD = 'x';
+  quandoP = 'x';
+  quando: { id: string, nome: string }[] = [
+    {id: 'x', nome: 'Sempre'} ,
+    {id: 'S', nome: 'Se SI'} ,
+    {id: 'N', nome: 'Se NO'}
+  ];
+
+  constructor(private route: ActivatedRoute , private adminservice: AdminService) { }
 
   ngOnInit(): void {
-    /*
-    const state = navigation.extras.state as {
-      obj: FullOggetto
-    };
-    */
+
+    this.idoggetto = Number ( this.route.snapshot.paramMap.get('id') );
     this.item =  window.history.state.obj ;
 
     this.adminservice.getcondizioni().subscribe(
@@ -66,7 +75,6 @@ export class CambiaoggComponent implements OnInit {
         this.attributi = data.attributi;
         this.discipline = data.discipline;
 
-        console.log(this.skill);
       }
     );
 
@@ -75,37 +83,102 @@ export class CambiaoggComponent implements OnInit {
   }
 
   cancellacond(idcond: number){
-    console.log(idcond);
-
-    console.log (this.valcondA);
-    console.log (this.tabcondA);
-    console.log (this.descrizioneA);
+    this.adminservice.cancellacondizione(idcond).subscribe(
+      (data) => {
+        for ( let j = 0 ; j < this.item.condizioni.length ; j++ ){
+          if ( this.item.condizioni[j].idcondizione == idcond ) {
+            this.item.condizioni.splice(j,1);
+          }
+        }
+        for ( let j = 0 ; j < this.item.condizioni2.length ; j++ ){
+          if ( this.item.condizioni2[j].idcondizione == idcond ) {
+            this.item.condizioni2.splice(j,1);
+          }
+        }
+      }
+    );
   }
 
   addcond(tipo: string){
-    console.log(tipo);
+    let tipocond = '';
+    let vc = '' ;
+    let tc = '' ;
+    let desc = '';
+    let mytipocond = '';
+    let risp = '';
+
     switch (tipo) {
       case 'A':
-        console.log(this.valcondA.value);
-        console.log(this.tabcondA);
-        console.log(this.descrizioneA);
+        tipocond = 'A';
+        vc = this.valcondA.value;
+        tc = this.tabcondA;
+        desc = this.descrizioneA;
+        for ( let aa of this.attributi) {
+          if ( aa.idattr == Number(tc) ){
+            mytipocond = aa.nomeattr;
+          }
+        }
+        risp = this.quandoA;
         break;
       case 'S':
-        console.log(this.valcondS.value);
-        console.log(this.tabcondS);
-        console.log(this.descrizioneS);
+        tipocond = 'S';
+        vc = this.valcondS.value;
+        tc = this.tabcondS;
+        desc = this.descrizioneS;
+        for ( let aa of this.skill) {
+          if ( aa.idskill == Number(tc) ){
+            mytipocond = aa.nomeskill;
+          }
+        }
+        risp = this.quandoS;
         break;
       case 'P':
-        console.log(this.valcondP.value);
-        console.log(this.tabcondP);
-        console.log(this.descrizioneP);
+        tipocond = 'P';
+        vc = '1';
+        tc = this.tabcondP;
+        desc = this.descrizioneP;
+        for ( let aa of this.poteri) {
+          if ( aa.idpotere == Number(tc) ){
+            mytipocond = aa.nomepotere;
+          }
+        }
+        risp = this.quandoP;
         break;
       case 'D':
-        console.log(this.valcondD.value);
-        console.log(this.tabcondD);
-        console.log(this.descrizioneD);
+        tipocond = 'D';
+        vc = this.valcondD.value;
+        tc = this.tabcondD;
+        desc = this.descrizioneD;
+        for ( let aa of this.discipline) {
+          if ( aa.iddisc == tc){
+            mytipocond = aa.nomedisc;
+          }
+        }
+        risp = this.quandoD;
         break;
     }
+
+    this.adminservice.addcondizione(this.idoggetto, tipocond, Number(tc) , Number(vc) , desc , risp).subscribe(
+      (data: any) => {
+        let mycond = new Condizione();
+        mycond.idcondizione = data;
+        mycond.idoggetto = this.idoggetto;
+        mycond.tipocond = mytipocond;
+        mycond.tabcond = Number(tc);
+        mycond.valcond = Number(vc);
+        mycond.descrX = desc;
+        mycond.risp = risp;
+        if ( risp == 'x') {
+          mycond.risp = '';
+          this.item.condizioni.push( mycond );
+        } else {
+          this.item.condizioni2.push( mycond );
+        }
+
+      }
+    );
+
+
     this.tabcondA = '';
     this.tabcondS = '';
     this.tabcondP = '';
@@ -118,7 +191,32 @@ export class CambiaoggComponent implements OnInit {
     this.valcondA.setValue('');
     this.valcondS.setValue('');
     this.valcondD.setValue('');
-    this.valcondP.setValue('');
+  }
+
+  adddomanda(){
+    this.adminservice.adddomanda(this.idoggetto, this.domanda, this.rispSi, this.rispNo).subscribe(
+      (data) => {
+        this.item.oggetto.domanda = this.domanda;
+        this.item.oggetto.r1 = this.rispSi;
+        this.item.oggetto.r2 = this.rispNo;
+        this.item.oggetto.ifdomanda = 1;
+        this.domanda = '';
+        this.r1 = '';
+        this.r2 = '';
+      }
+    );
+  }
+
+  cancelladomanda(){
+    this.adminservice.cancdomanda(this.idoggetto).subscribe(
+      (data) => {
+        this.item.oggetto.domanda = '';
+        this.item.oggetto.r1 = '';
+        this.item.oggetto.r2 = '';
+        this.item.oggetto.ifdomanda = 0;
+        this.item.condizioni2.length = 0;
+      }
+    );
   }
 
 }

@@ -71,7 +71,7 @@ export class OggettiComponent implements OnInit {
   }
 
   modifica(id: number, item: FullOggetto){
-    console.log (id);
+    // console.log (id);
     const navigationExtras: NavigationExtras = { state: { obj: item } };
     this.router.navigate(['/cambiaogg/'+id], navigationExtras );
   }

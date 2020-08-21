@@ -28,3 +28,12 @@ mat-card {
 .bold {
   font-weight: bold;
 }
+
+.nopadding {
+  padding: 0;
+}
+
+
+.alignt {
+  top: -4px !important;
+}

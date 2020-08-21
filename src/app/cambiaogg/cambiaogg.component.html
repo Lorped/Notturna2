@@ -97,9 +97,12 @@
           <div class="column is-2">
             {{item.oggetto.domanda}}
           </div>
-          <div class="column is-8">
+          <div class="column is-7">
             <span class="green">SI:</span> {{item.oggetto.r1}}<br>
             <span class="red">NO:</span> {{item.oggetto.r2}}<br>
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button color="warn" (click)="cancelladomanda()">Cancella</button>
           </div>
         </div>
 
@@ -113,19 +116,23 @@
           <div class="column is-2">
             Min. {{cond.valcond}}
           </div>
-          <div class="column is-6">
+          <div class="column is-5">
             {{cond.descrX}}
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button color="warn" (click)="cancellacond(cond.idcondizione)">Cancella</button>
           </div>
         </div>
 
         <mat-divider></mat-divider>
+        <div class="columns"><div class="column">&nbsp;</div></div>
 
         <div class="columns" >
           <div class="column is-1">
             &nbsp;
           </div>
           <div class="column is-2">
-            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+            <mat-form-field appearance="fill" style="size: 75%; display: block; ">
               <mat-label>Scegli Attributo</mat-label>
               <mat-select   [(value)]="tabcondA" >
                 <mat-option *ngFor="let i of attributi" [value]="i.idattr">{{i.nomeattr}}</mat-option>
@@ -138,7 +145,11 @@
             </mat-form-field>
           </div>
           <div class="column is-1">
-            &nbsp;
+            <mat-radio-group [(ngModel)]="quandoA"  *ngIf="item.oggetto.ifdomanda==1">
+              <mat-radio-button  class="example-radio-button"  *ngFor="let tipo of quando" [value]="tipo.id">
+                {{tipo.nome}}
+              </mat-radio-button>
+            </mat-radio-group>
           </div>
           <div class="column is-5">
             <mat-form-field appearance="fill" class="full">
@@ -156,7 +167,7 @@
             &nbsp;
           </div>
           <div class="column is-2">
-            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+            <mat-form-field appearance="fill" style="size: 75%; display: block; ">
               <mat-label>Scegli Skill</mat-label>
               <mat-select   [(value)]="tabcondS" >
                 <mat-option *ngFor="let i of skill" [value]="i.idskill">{{i.nomeskill}}</mat-option>
@@ -169,7 +180,11 @@
             </mat-form-field>
           </div>
           <div class="column is-1">
-            &nbsp;
+            <mat-radio-group [(ngModel)]="quandoS"  *ngIf="item.oggetto.ifdomanda==1">
+              <mat-radio-button  class="example-radio-button"  *ngFor="let tipo of quando" [value]="tipo.id">
+                {{tipo.nome}}
+              </mat-radio-button>
+            </mat-radio-group>
           </div>
           <div class="column is-5">
             <mat-form-field appearance="fill" class="full">
@@ -189,7 +204,7 @@
             &nbsp;
           </div>
           <div class="column is-2">
-            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+            <mat-form-field appearance="fill" style="size: 75%; display: block;">
               <mat-label>Scegli Disciplina</mat-label>
               <mat-select   [(value)]="tabcondD" >
                 <mat-option *ngFor="let i of discipline" [value]="i.iddisciplina">{{i.nomedisc}}</mat-option>
@@ -202,7 +217,11 @@
             </mat-form-field>
           </div>
           <div class="column is-1">
-            &nbsp;
+            <mat-radio-group [(ngModel)]="quandoD"  *ngIf="item.oggetto.ifdomanda==1">
+              <mat-radio-button  class="example-radio-button"  *ngFor="let tipo of quando" [value]="tipo.id">
+                {{tipo.nome}}
+              </mat-radio-button>
+            </mat-radio-group>
           </div>
           <div class="column is-5">
             <mat-form-field appearance="fill" class="full">
@@ -219,8 +238,8 @@
           <div class="column is-1">
             &nbsp;
           </div>
-          <div class="column is-2">
-            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+          <div class="column is-2 ">
+            <mat-form-field appearance="fill" style="size: 75%; display: block;" >
               <mat-label>Scegli Potere</mat-label>
               <mat-select   [(value)]="tabcondP" >
                 <mat-option *ngFor="let i of poteri" [value]="i.idpotere">{{i.nomepotere}}</mat-option>
@@ -228,12 +247,14 @@
             </mat-form-field>
           </div>
           <div class="column is-1">
-            <mat-form-field appearance="fill" style="size: 100%; display: block;">
-              <input matInput [formControl]="valcondP" placeholder="Min." type="text" pattern="\d*">
-            </mat-form-field>
+            &nbsp;
           </div>
           <div class="column is-1">
-            &nbsp;
+            <mat-radio-group [(ngModel)]="quandoP"  *ngIf="item.oggetto.ifdomanda==1">
+              <mat-radio-button  class="example-radio-button"  *ngFor="let tipo of quando" [value]="tipo.id">
+                {{tipo.nome}}
+              </mat-radio-button>
+            </mat-radio-group>
           </div>
           <div class="column is-5">
             <mat-form-field appearance="fill" class="full">
@@ -242,7 +263,31 @@
             </mat-form-field>
           </div>
           <div class="column is-2">
-            <button  mat-raised-button color="primary" (click)="addcond('P')" [disabled]=" !(valcondP.errors===null) || descrizioneP=='' || tabcondP=='' ">Aggiungi</button>
+            <button  mat-raised-button color="primary" (click)="addcond('P')" [disabled]="  descrizioneP=='' || tabcondP=='' ">Aggiungi</button>
+          </div>
+        </div>
+
+        <div class="columns" *ngIf="item.oggetto.ifdomanda==0">
+          <div class="column">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Domanda</mat-label>
+              <textarea matInput [(ngModel)]="domanda"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>SE SI:</mat-label>
+              <textarea matInput [(ngModel)]="rispSi"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>SE NO:</mat-label>
+              <textarea matInput [(ngModel)]="rispNo"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column is-2">
+            <button  mat-raised-button color="primary" (click)="adddomanda()" [disabled]=" domanda=='' || rispNo=='' || rispSi=='' ">Aggiungi</button>
           </div>
         </div>
 
