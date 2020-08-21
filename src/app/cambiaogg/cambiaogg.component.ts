@@ -201,8 +201,8 @@ export class CambiaoggComponent implements OnInit {
         this.item.oggetto.r2 = this.rispNo;
         this.item.oggetto.ifdomanda = 1;
         this.domanda = '';
-        this.r1 = '';
-        this.r2 = '';
+        this.rispSi = '';
+        this.rispNo = '';
       }
     );
   }
