@@ -44,4 +44,8 @@ export class AdminService {
       fissomobile: fissomobile
     });
   }
+
+  getcondizioni() {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcondizioni.php' );
+  }
 }

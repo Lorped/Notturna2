@@ -1,0 +1,30 @@
+hr {
+  height: 1px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  background-color: #ff0000;
+  color: #ff0000;
+  display: block;
+  border: 0;
+  border-top: 1px solid #f00;
+  padding: 0;
+}
+
+
+
+mat-card {
+  /*margin-top: 0.25em;*/
+  font-size: 1em
+}
+
+.full {
+  width: 100%;
+}
+
+.green {
+  color: #00ff00;
+}
+
+.bold {
+  font-weight: bold;
+}

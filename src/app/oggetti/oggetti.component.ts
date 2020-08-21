@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../services/index';
 import { Oggetto, Condizione, FullOggetto} from '../global';
+import { Router, NavigationExtras } from '@angular/router';
 /* import { FormControl, FormGroup, Validators } from '@angular/forms'; */
 
 
@@ -26,14 +27,14 @@ export class OggettiComponent implements OnInit {
   ];
   fissomobile = 'F';
 
-  constructor( private adminservice: AdminService) { }
+  constructor( private adminservice: AdminService, private router: Router) { }
 
   ngOnInit(): void {
 
     this.adminservice.listoggetti().subscribe(
       (data: any) => {
         this.listaoggetti = data.oggetti;
-        console.log(this.listaoggetti);
+        // console.log(this.listaoggetti);
       }
     );
   }
@@ -67,6 +68,12 @@ export class OggettiComponent implements OnInit {
 
   stampa(){
     window.open( 'https://www.roma-by-night.it/notturna/stampaoggetti.php', '_blank');
+  }
+
+  modifica(id: number, item: FullOggetto){
+    console.log (id);
+    const navigationExtras: NavigationExtras = { state: { obj: item } };
+    this.router.navigate(['/cambiaogg/'+id], navigationExtras );
   }
 
 }

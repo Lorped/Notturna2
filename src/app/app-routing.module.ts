@@ -19,6 +19,7 @@ import { UtenteComponent } from './utente/utente.component';
 import { PersonaggioComponent } from './personaggio/personaggio.component';
 import { AdminbgComponent } from "./adminbg/adminbg.component";
 import { OggettiComponent } from "./oggetti/oggetti.component";
+import { CambiaoggComponent } from "./cambiaogg/cambiaogg.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'personaggio/:id', component: PersonaggioComponent },
   { path: 'adminbg/:id', component: AdminbgComponent },
   { path: 'oggetti', component: OggettiComponent },
+  { path: 'cambiaogg/:id', component: CambiaoggComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

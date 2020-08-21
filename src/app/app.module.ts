@@ -52,6 +52,7 @@ import { PersonaggioComponent } from './personaggio/personaggio.component';
 import { SideadmComponent } from './sideadm/sideadm.component';
 import { AdminbgComponent } from './adminbg/adminbg.component';
 import { OggettiComponent } from './oggetti/oggetti.component';
+import { CambiaoggComponent } from './cambiaogg/cambiaogg.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { OggettiComponent } from './oggetti/oggetti.component';
     PersonaggioComponent,
     SideadmComponent,
     AdminbgComponent,
-    OggettiComponent
+    OggettiComponent,
+    CambiaoggComponent
   ],
   imports: [
     BrowserModule,

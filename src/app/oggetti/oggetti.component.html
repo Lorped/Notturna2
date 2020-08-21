@@ -102,7 +102,7 @@
             {{item.oggetto.fissomobile}}
           </div>
           <div class="column is-1">
-            <button  mat-raised-button color="accent" >Modifica</button>
+            <button  mat-raised-button color="accent" (click)="modifica(item.oggetto.idoggetto, item)">Modifica</button>
           </div>
           <div class="column is-1">
             <button  mat-raised-button color="warn" (click)="cancellaoggetto(item.oggetto.idoggetto)">Cancella</button>

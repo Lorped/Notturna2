@@ -1,0 +1,253 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sideadm></app-sideadm>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+
+    <div class="container" style="width: 80%; margin-top: 1em;">
+
+      <mat-card>
+
+        <div class="column" style="font-size: 1.5em; font-weight: 500;">
+          Modifica Oggetto
+        </div>
+
+        <div><hr></div>
+
+        <div class="columns">
+          <div class="column is-1 bold">
+            ID.
+          </div>
+          <div class="column is-2 bold">
+            Barcode
+          </div>
+          <div class="column is-2 bold">
+            Nome Oggetto
+          </div>
+          <div class="column is-3 bold">
+            Descrizione
+          </div>
+          <div class="column is-1 bold">
+            Tipo
+          </div>
+          <div class="column is-1 bold">
+            &nbsp;
+          </div>
+          <div class="column is-1 bold">
+            &nbsp;
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-1">
+            {{item.oggetto.idoggetto}}
+          </div>
+          <div class="column is-2">
+            {{item.oggetto.barcode}}
+          </div>
+          <div class="column is-2">
+            {{item.oggetto.nomeoggetto}}
+          </div>
+          <div class="column is-3">
+            {{item.oggetto.descrizione}}
+          </div>
+          <div class="column is-1">
+            {{item.oggetto.fissomobile}}
+          </div>
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-1">
+            &nbsp;
+          </div>
+        </div>
+        <div class="columns" *ngFor="let cond of item.condizioni">
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            {{cond.tipocond}}
+          </div>
+          <div class="column is-2">
+            Min. {{cond.valcond}}
+          </div>
+          <div class="column is-5">
+            {{cond.descrX}}
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button color="warn" (click)="cancellacond(cond.idcondizione)">Cancella</button>
+          </div>
+        </div>
+        <div class="columns" *ngIf="item.oggetto.ifdomanda==1">
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            {{item.oggetto.domanda}}
+          </div>
+          <div class="column is-8">
+            <span class="green">SI:</span> {{item.oggetto.r1}}<br>
+            <span class="red">NO:</span> {{item.oggetto.r2}}<br>
+          </div>
+        </div>
+
+        <div class="columns" *ngFor="let cond of item.condizioni2">
+          <div class="column is-1">
+            <span [ngClass]="{'red': cond.risp=='N' , 'green': cond.risp=='S'}"> {{cond.risp}} </span>
+          </div>
+          <div class="column is-2">
+            {{cond.tipocond}}
+          </div>
+          <div class="column is-2">
+            Min. {{cond.valcond}}
+          </div>
+          <div class="column is-6">
+            {{cond.descrX}}
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="columns" >
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+              <mat-label>Scegli Attributo</mat-label>
+              <mat-select   [(value)]="tabcondA" >
+                <mat-option *ngFor="let i of attributi" [value]="i.idattr">{{i.nomeattr}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            <mat-form-field appearance="fill" style="size: 100%; display: block;">
+              <input matInput [formControl]="valcondA" placeholder="Min." type="text" pattern="\d*">
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-5">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Descrizione</mat-label>
+              <textarea matInput [(ngModel)]="descrizioneA"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column is-2">
+            <button  mat-raised-button color="primary" (click)="addcond('A')" [disabled]=" !(valcondA.errors===null) || descrizioneA=='' || tabcondA=='' ">Aggiungi</button>
+          </div>
+        </div>
+
+        <div class="columns" >
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+              <mat-label>Scegli Skill</mat-label>
+              <mat-select   [(value)]="tabcondS" >
+                <mat-option *ngFor="let i of skill" [value]="i.idskill">{{i.nomeskill}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            <mat-form-field appearance="fill" style="size: 100%; display: block;">
+              <input matInput [formControl]="valcondS" placeholder="Min." type="text" pattern="\d*">
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-5">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Descrizione</mat-label>
+              <textarea matInput [(ngModel)]="descrizioneS"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column is-2">
+            <button  mat-raised-button color="primary" (click)="addcond('S')" [disabled]=" !(valcondS.errors===null) || descrizioneS=='' || tabcondS=='' ">Aggiungi</button>
+          </div>
+        </div>
+
+
+
+        <div class="columns" >
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+              <mat-label>Scegli Disciplina</mat-label>
+              <mat-select   [(value)]="tabcondD" >
+                <mat-option *ngFor="let i of discipline" [value]="i.iddisciplina">{{i.nomedisc}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            <mat-form-field appearance="fill" style="size: 100%; display: block;">
+              <input matInput [formControl]="valcondD" placeholder="Min." type="text" pattern="\d*">
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-5">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Descrizione</mat-label>
+              <textarea matInput [(ngModel)]="descrizioneD"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column is-2">
+            <button  mat-raised-button color="primary" (click)="addcond('D')" [disabled]=" !(valcondD.errors===null) || descrizioneD=='' || tabcondD=='' ">Aggiungi</button>
+          </div>
+        </div>
+
+        <div class="columns" >
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+              <mat-label>Scegli Potere</mat-label>
+              <mat-select   [(value)]="tabcondP" >
+                <mat-option *ngFor="let i of poteri" [value]="i.idpotere">{{i.nomepotere}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            <mat-form-field appearance="fill" style="size: 100%; display: block;">
+              <input matInput [formControl]="valcondP" placeholder="Min." type="text" pattern="\d*">
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-5">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Descrizione</mat-label>
+              <textarea matInput [(ngModel)]="descrizioneP"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column is-2">
+            <button  mat-raised-button color="primary" (click)="addcond('P')" [disabled]=" !(valcondP.errors===null) || descrizioneP=='' || tabcondP=='' ">Aggiungi</button>
+          </div>
+        </div>
+
+
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
