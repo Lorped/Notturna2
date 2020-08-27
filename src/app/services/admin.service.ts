@@ -81,5 +81,19 @@ export class AdminService {
     });
   }
 
+  cancpregio(idutente: number, idpregio: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancpregio.php',{
+      idutente: idutente,
+      idpregio: idpregio
+    });
+  }
+
+  addpregioadmin(idutente: number, idpregio: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpregioadmin.php',{
+      idutente: idutente,
+      idpregio: idpregio
+    });
+  }
+
 
 }

@@ -225,6 +225,131 @@
 
         </mat-expansion-panel>
 
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Pregi e Difetti
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
+            <div class="column is-12 nopadding alc" *ngIf="pregi.length >0">
+              Pregi
+            </div>
+            <div class="column is-4 nopadding" *ngFor="let tt of pregi">
+              <div class="columns ">
+                <div class="column ">
+                  {{tt.nomepregio}} ({{tt.classe}} {{tt.valore}})
+                </div>
+                <div class="column  is-4">
+                  <button  mat-raised-button class="small" (click)="cancpregio(tt.idpregio)" color="accent" >Rimuovi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
+            <div class="column is-12 nopadding alc" *ngIf="difetti.length >0">
+              Difetti
+            </div>
+            <div class="column is-4 nopadding" *ngFor="let tt of difetti">
+              <div class="columns ">
+                <div class="column ">
+                  {{tt.nomepregio}} ({{tt.classe}} {{tt.valore}})
+                </div>
+                <div class="column  is-4">
+                  <button  mat-raised-button class="small" (click)="cancpregio(tt.idpregio)" color="accent" >Rimuovi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <mat-card>
+
+            <div class="columns nopadding" style="margin-left: 0px;" >
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Difetti Fisici</mat-label>
+                <mat-select [(value)]="new_d_f" >
+                  <mat-option *ngFor="let tt of difetti_f" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('df')" >Aggiungi</button>
+              </div>
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Difetti Mentali</mat-label>
+                <mat-select [(value)]="new_d_m" >
+                  <mat-option *ngFor="let tt of difetti_m" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('dm')" >Aggiungi</button>
+              </div>
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Difetti Sociali</mat-label>
+                <mat-select [(value)]="new_d_s" >
+                  <mat-option *ngFor="let tt of difetti_s" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('ds')" >Aggiungi</button>
+              </div>
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Difetti Sovrannaturali</mat-label>
+                <mat-select [(value)]="new_d_x" >
+                  <mat-option *ngFor="let tt of difetti_x" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('dx')" >Aggiungi</button>
+              </div>
+            </div>
+
+            <div class="columns nopadding" style="margin-left: 0px;" >
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Pregi Fisici</mat-label>
+                <mat-select [(value)]="new_p_f" >
+                  <mat-option *ngFor="let tt of pregi_f" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}}) </mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('pf')" >Aggiungi</button>
+              </div>
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Pregi Mentali</mat-label>
+                <mat-select [(value)]="new_p_m" >
+                  <mat-option *ngFor="let tt of pregi_m" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('pm')" >Aggiungi</button>
+              </div>
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Pregi Sociali</mat-label>
+                <mat-select [(value)]="new_p_s" >
+                  <mat-option *ngFor="let tt of pregi_s" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('ps')" >Aggiungi</button>
+              </div>
+              <div class="column is-3 nopadding" >
+                <mat-form-field>
+                <mat-label>Pregi Sovrannaturali</mat-label>
+                <mat-select [(value)]="new_p_x" >
+                  <mat-option *ngFor="let tt of pregi_x" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('px')" >Aggiungi</button>
+              </div>
+            </div>
+
+          </mat-card>
+
+
+        </mat-expansion-panel>
+
+
+
       </mat-card>
     </div>
   <mat-sidenav-content>

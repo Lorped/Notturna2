@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../services/index';
-import { Background, Contatti, Skill, Sentiero } from '../global';
+import { Background, Contatti, Skill, Sentiero, Pregio } from '../global';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -76,6 +76,29 @@ export class AdminbgComponent implements OnInit {
 
   puntidisponibili = 0;
 
+  pregi: Array<Pregio> = [];
+  difetti: Array<Pregio> = [];
+
+  pregi_f: Array<Pregio> = [];
+  pregi_m: Array<Pregio> = [];
+  pregi_s: Array<Pregio> = [];
+  pregi_x: Array<Pregio> = [];
+  difetti_f: Array<Pregio> = [];
+  difetti_m: Array<Pregio> = [];
+  difetti_s: Array<Pregio> = [];
+  difetti_x: Array<Pregio> = [];
+
+  new_d_f = '';
+  new_d_m = '';
+  new_d_s = '';
+  new_d_x = '';
+
+  new_p_f = '';
+  new_p_m = '';
+  new_p_s = '';
+  new_p_x = '';
+
+
   constructor(private adminservice: AdminService, private schedaservice: SchedaService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -128,6 +151,14 @@ export class AdminbgComponent implements OnInit {
     );
 
     this.caricavalori();
+    this.getliste();
+
+    this.schedaservice.getpregi(this.idutente).subscribe(
+      (data: any) => {
+        this.pregi = data.pregi ;
+        this.difetti = data.difetti ;
+      }
+    );
 
   }
 
@@ -378,7 +409,102 @@ export class AdminbgComponent implements OnInit {
         this.caricavalori();  // cambiano gli skill per il passaggio status
       }
     );
+  }
 
+  getliste() {
+    this.schedaservice.getpregidifetti(this.idutente)
+    .subscribe(
+      (data: any) => {
+        this.pregi_f = data.pregi_f ;
+        this.pregi_m = data.pregi_m ;
+        this.pregi_s = data.pregi_s ;
+        this.pregi_x = data.pregi_x ;
+
+        this.difetti_f = data.difetti_f ;
+        this.difetti_m = data.difetti_m ;
+        this.difetti_s = data.difetti_s ;
+        this.difetti_x = data.difetti_x ;
+
+      }
+    );
+  }
+
+  cancpregio(idpregio: number){
+    this.adminservice.cancpregio(this.idutente, idpregio).subscribe(
+      (data) => {
+        for ( let j = 0 ; j < this.pregi.length; j++){
+          if ( this.pregi[j].idpregio == idpregio) {
+            this.pregi.splice(j,1);
+          }
+        }
+        for ( let j = 0 ; j < this.difetti.length; j++){
+          if ( this.difetti[j].idpregio == idpregio) {
+            this.difetti.splice(j,1);
+          }
+        }
+        this.getliste();
+      }
+    );
+  }
+
+  newpregio(tipopregio: string){
+    let idpregio = '';
+
+    switch (tipopregio) {
+      case 'df':
+        idpregio = this.new_d_f;
+        break;
+      case 'ds':
+        idpregio = this.new_d_s;
+        break;
+      case 'dm':
+        idpregio = this.new_d_m;
+        break;
+      case 'dx':
+        idpregio = this.new_d_x;
+        break;
+
+      case 'pf':
+        idpregio = this.new_p_f;
+        break;
+      case 'pm':
+        idpregio = this.new_p_m;
+        break;
+      case 'ps':
+        idpregio = this.new_p_s;
+        break;
+      case 'px':
+        idpregio = this.new_p_x;
+        break;
+    }
+
+    this.adminservice.addpregioadmin(this.idutente, Number(idpregio))
+    .subscribe(
+      (data: any) => {
+
+        this.new_d_f = '';
+        this.new_d_m = '';
+        this.new_d_s = '';
+        this.new_d_x = '';
+
+        this.new_p_f = '';
+        this.new_p_m = '';
+        this.new_p_s = '';
+        this.new_p_x = '';
+        this.getpregi();
+        this.getliste();
+      }
+    );
+  }
+
+
+  getpregi() {
+    this.schedaservice.getpregi(this.idutente).subscribe(
+      (data: any) => {
+        this.pregi = data.pregi ;
+        this.difetti = data.difetti ;
+      }
+    );
   }
 
 }
