@@ -68,7 +68,7 @@
       </div>
       <div class="column is-3 nopadding" >
         <mat-form-field>
-        <mat-label>Difetti Sovannaturali</mat-label>
+        <mat-label>Difetti Sovrannaturali</mat-label>
         <mat-select [(value)]="new_d_x" [disabled]= "ok_d_x>2">>
           <mat-option *ngFor="let tt of difetti_x" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
         </mat-select>
@@ -107,7 +107,7 @@
       </div>
       <div class="column is-3 nopadding" >
         <mat-form-field>
-        <mat-label>Pregi Sovannaturali</mat-label>
+        <mat-label>Pregi Sovrannaturali</mat-label>
         <mat-select [(value)]="new_p_x" [disabled]="! (ok_d_x>0 || okPX) " >
           <mat-option *ngFor="let tt of pregi_x" [value]="tt.idpregio" [disabled]=" !( (tt.valore <= -saldo) || ( okPX &&  (tt.valore * 2 + saldo * 2  <  pxdisponibili) ) ) ">{{tt.nomepregio}} ({{tt.valore}})</mat-option>
         </mat-select>

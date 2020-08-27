@@ -89,6 +89,8 @@ export class PersonaggioComponent implements OnInit {
         this.pregi = data.pregidifetti;
         this.rituali = data.rituali;
 
+        if (this.scheda.bio == '' || this.scheda.bio == null ) { this.scheda.bio = '- Non presente -';}
+        if (this.scheda.note == '' || this.scheda.note == null ) { this.scheda.note = '- Nessuna -';}
       }
     );
   }

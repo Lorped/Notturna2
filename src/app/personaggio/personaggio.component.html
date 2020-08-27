@@ -473,8 +473,39 @@
     </mat-card>
 
   </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Bio e annotazioni
+      </mat-panel-title>
+    </mat-expansion-panel-header>
 
+    <mat-card>
+      <div class="columns" style="margin-left: 0px;" >
+        <div class="column nopadding" >
+          <span class="red">Biografia:</span>
+        </div>
+      </div>
+      <div class="columns" style="margin-left: 0px;" >
+        <div class="column nopadding" >
+          {{scheda.bio}}
+        </div>
+      </div>
+      <div class="columns" style="margin-left: 0px;" >
+        <div class="column nopadding" >
+          <span class="red">Note:</span>
+        </div>
+      </div>
+      <div class="columns" style="margin-left: 0px;" >
+        <div class="column nopadding" >
+          {{scheda.note}}
+        </div>
+      </div>
+    </mat-card>
 
+  </mat-expansion-panel>
+
+  <p>&nbsp;<p>
 </div>
 
 
