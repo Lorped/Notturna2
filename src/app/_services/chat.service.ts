@@ -8,14 +8,14 @@ export class Chatrow {
   nomepg: string;
   Ora: string;
   Testo: string;
-  Destinatario: number;
+  Destinatario: string;
   constructor(
     aID: number,
     autente: number,
     anomepg: string,
     aOra: string,
     aTesto: string,
-    aDestinatario: number,
+    aDestinatario: string,
   ) {
     this.ID = aID;
     this.utente = autente;
@@ -43,6 +43,12 @@ export class ChatService {
   getchat() {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/dadi.php', {
       last: this.globalstatus.Last
+    });
+  }
+  master2user(destinatario: string, testo:string){
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/master2user.php', {
+      destinatario: destinatario,
+      testo: testo
     });
   }
 }

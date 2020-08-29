@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
-import { Chatrow, MyChat , ChatService } from '../_services/index';
+import { Chatrow, MyChat , ChatService , AdminService } from '../_services/index';
 import { GlobalStatus } from '../global';
 
 import { timer, Observable, Subscription } from 'rxjs';
-import { switchMap, takeUntil, catchError } from 'rxjs/operators';
+
+
+export interface unPg {
+  idutente: number;
+  nomepg: string;
+  tipo: string;
+}
 
 @Component({
   selector: 'app-chat',
@@ -20,10 +27,22 @@ export class ChatComponent implements OnInit {
   mytimer = new  Subscription();
   statusText = '';
 
+  chat: Array<Chatrow> = [];
 
-  constructor( private globalstatus: GlobalStatus, private chatservice: ChatService ) { }
+  msg =  new FormControl('', [] ) ;
+  selectedPG = '';
+  listapg: Array<unPg> = [];
+
+
+  constructor( private adminservice: AdminService , private globalstatus: GlobalStatus, private chatservice: ChatService ) { }
 
   ngOnInit(): void {
+
+    this.adminservice.getpersonaggio().subscribe(
+      (data: any) => {
+        this.listapg = data.pg;
+      }
+    );
 
     this.globalstatus.Last = 0;
 
@@ -36,11 +55,11 @@ export class ChatComponent implements OnInit {
       (val) => {
         this.chatservice.getchat().subscribe(
           (data: MyChat) => {
-            console.log( "Mychat");
-            console.log(data);
+            // console.log( "Mychat");
+            // console.log(data);
 
             this.dostuffwithdata(data);
-            this.scrollToBottom();
+
           }
         );
       }
@@ -52,20 +71,44 @@ export class ChatComponent implements OnInit {
   }
 
   dostuffwithdata(data: MyChat) {
-    console.log(data);
+    // console.log(data);
     this.statuschat = Number (data.Statuschat);
     this.globalstatus.Last = Number ( data.Last );
+
 
     if (this.statuschat === 0)  {
       this.globalstatus.Last = 0;
     } else {
+      // console.log(data.Listachat);
+      for ( let j = 0 ; j < data.Listachat.length ; j ++ ) {
 
-      console.log(data.Listachat);
+        if ( ! isNaN(Number(data.Listachat[j].Destinatario)) ) {
+          data.Listachat[j].Destinatario = '';
+        }
+        this.chat.splice(0, 0, data.Listachat[j]);
+
+      }
+
     }
   }
 
-  scrollToBottom() {
-    console.log("here");
+  sendmsg() {
+
+    this.chatservice.master2user(this.selectedPG, this.msg.value).subscribe(
+      (data: any) => {
+        this.msg.setValue( '' );
+        this.msg!.markAsPristine();
+        this.msg!.markAsUntouched();
+
+        this.chatservice.getchat().subscribe(
+          (data: MyChat) => {
+            this.dostuffwithdata(data);
+          }
+        );
+      }
+    );
+
+
   }
 
 }

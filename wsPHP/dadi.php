@@ -42,7 +42,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			if ( $res['ID'] > $last) {
 				$last = $res['ID'];
 			}
-			$out[] =$res;
+
+			if ( $res['Destinatario'] != 0 && ($res['idutente'] != $res['Destinatario'])  ) {
+				$id = $res['Destinatario'];
+				$MySql2 = "SELECT nomepg FROM personaggio where idutente = $id ";
+				$Result2 = mysql_query($MySql2);
+				$res2 = mysql_fetch_array($Result2);
+				$res['Destinatario'] = $res2['nomepg'];
+			}
+
+			$date = strtotime($res['Ora']);
+			$res['Ora'] = date('H:i', $date);
+
+			$out[] = $res;
 		}
 	}
 

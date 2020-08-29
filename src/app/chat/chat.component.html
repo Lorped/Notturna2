@@ -17,9 +17,43 @@
 
     <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
       <p>
-      <mat-card>
 
+      <mat-card>
+        <div class="columns">
+          <div class="column is-5">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Messaggio</mat-label>
+              <input matInput placeholder="Messaggio" [formControl]="msg">
+            </mat-form-field>
+          </div>
+          <div class="column is-3">
+            <mat-form-field appearance="fill" style="size: 75%; display: block; ">
+              <mat-label>Scegli Personaggio</mat-label>
+              <mat-select   [(value)]="selectedPG" >
+                <mat-option *ngFor="let i of listapg" [value]="i.idutente">{{i.nomepg}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button class="full" color="primary" [disabled]="selectedPG=='' || !(msg.dirty || msg.touched) " (click)="sendmsg()">Invia</button>
+          </div>
+        </div>
+
+      </mat-card>
+
+      <mat-card>
+        <div class="columns" *ngFor="let item of chat">
+          <div class="column is-1">
+          {{ item.Ora }}
+          </div>
+          <div class="column">
+          <span class="yellow">{{item.nomepg!='NARRAZIONE'? item.nomepg: '' }} </span>
+
+          {{item.Testo}}
+          <span class="yellow">{{item.Destinatario != '' ? ' [ '+item.Destinatario+' ]' : '' }} </span>
+          </div>
+        </div>
       </mat-card>
     </div>
   </mat-sidenav-content>
-</mat-sidenav-container>  
+</mat-sidenav-container>
