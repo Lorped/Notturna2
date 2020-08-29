@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SchedaService, AdminService } from '../services/index';
+import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Skill, Sentiero, Pregio } from '../global';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 

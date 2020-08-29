@@ -3,3 +3,4 @@
 export * from './authentication.service';
 export * from './scheda.service';
 export * from './admin.service';
+export * from './chat.service';

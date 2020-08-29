@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../services/index';
+import { AdminService } from '../_services/index';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface unPg {

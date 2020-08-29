@@ -294,3 +294,8 @@ export class FullOggetto {
   public condizioni: Array<Condizione> = [];
   public condizioni2: Array<Condizione> = [];
 }
+
+@Injectable()
+export class GlobalStatus {
+  Last = 0;
+}

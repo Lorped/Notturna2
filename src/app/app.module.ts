@@ -26,8 +26,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatRadioModule} from '@angular/material/radio';
 //
 
-import { AuthenticationService } from './services/index';
-import { SchedaService } from './services/index';
+import { GlobalStatus } from './global';
+
+import { AuthenticationService } from './_services/index';
+import { SchedaService } from './_services/index';
+import { ChatService } from './_services/index';
 
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
@@ -53,6 +56,7 @@ import { SideadmComponent } from './sideadm/sideadm.component';
 import { AdminbgComponent } from './adminbg/adminbg.component';
 import { OggettiComponent } from './oggetti/oggetti.component';
 import { CambiaoggComponent } from './cambiaogg/cambiaogg.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +84,8 @@ import { CambiaoggComponent } from './cambiaogg/cambiaogg.component';
     SideadmComponent,
     AdminbgComponent,
     OggettiComponent,
-    CambiaoggComponent
+    CambiaoggComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +115,9 @@ import { CambiaoggComponent } from './cambiaogg/cambiaogg.component';
   ],
   providers: [
     AuthenticationService,
-    SchedaService
+    SchedaService,
+    ChatService,
+    GlobalStatus
   ],
   bootstrap: [AppComponent]
 })

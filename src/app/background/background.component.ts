@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SchedaService } from '../services/index';
+import { SchedaService } from '../_services/index';
 import { Background, Contatti, Skill, Sentiero } from '../global';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../services/index';
+import { AdminService } from '../_services/index';
 import { Oggetto, Condizione, FullOggetto} from '../global';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';

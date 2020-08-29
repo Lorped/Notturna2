@@ -1,0 +1,25 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sideadm></app-sideadm>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+    <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
+      <p>
+      <mat-card>
+
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>  
