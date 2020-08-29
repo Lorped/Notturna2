@@ -35,7 +35,10 @@
             </mat-form-field>
           </div>
           <div class="column is-1">
-            <button  mat-raised-button class="full" color="primary" [disabled]="selectedPG=='' || !(msg.dirty || msg.touched) " (click)="sendmsg()">Invia</button>
+            <button  mat-raised-button class="full" color="primary"  [disabled]="selectedPG=='' || !(msg.dirty || msg.touched) " (click)="sendmsg()">Invia</button>
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button class="full" color="accent"  (click)="alea()">DADO</button>
           </div>
         </div>
 
@@ -47,7 +50,7 @@
           {{ item.Ora }}
           </div>
           <div class="column">
-          <span class="yellow">{{item.nomepg!='NARRAZIONE'? item.nomepg: '' }} </span>
+          <span class="yellow">{{item.nomepg!='NARRAZIONE' || item.Destinatario == '' ? item.nomepg: '' }} </span>
 
           {{item.Testo}}
           <span class="yellow">{{item.Destinatario != '' ? ' [ '+item.Destinatario+' ]' : '' }} </span>

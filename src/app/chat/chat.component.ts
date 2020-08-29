@@ -88,12 +88,12 @@ export class ChatComponent implements OnInit {
         this.chat.splice(0, 0, data.Listachat[j]);
 
       }
+      // console.log(this.chat);
 
     }
   }
 
   sendmsg() {
-
     this.chatservice.master2user(this.selectedPG, this.msg.value).subscribe(
       (data: any) => {
         this.msg.setValue( '' );
@@ -107,8 +107,18 @@ export class ChatComponent implements OnInit {
         );
       }
     );
+  }
 
-
+  alea(){
+    this.chatservice.lanciadado().subscribe(
+      (data: any) => {
+        this.chatservice.getchat().subscribe(
+          (data: MyChat) => {
+            this.dostuffwithdata(data);
+          }
+        );
+      }
+    );
   }
 
 }

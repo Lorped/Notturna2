@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GlobalStatus } from '../global';
 
 export interface unPg {
   idutente: number;
@@ -19,8 +20,6 @@ export class AdminComponent implements OnInit {
   selectedPG = '';
 
 
-  constructor(private adminservice: AdminService) { }
-
   chanceMform = new FormGroup ({
     chance: new FormControl('', [
       Validators.required,
@@ -31,9 +30,15 @@ export class AdminComponent implements OnInit {
 
   actual = '0' ;
 
+  constructor(private globalstatus: GlobalStatus, private adminservice: AdminService) { }
+
+
   ngOnInit(): void {
 
-
+    console.log(this.globalstatus);
+    if (this.globalstatus.lastpg != 0 ){
+      this.selectedPG = String( this.globalstatus.lastpg);
+    }
 
     this.adminservice.getpersonaggio().subscribe(
       (data: any) => {

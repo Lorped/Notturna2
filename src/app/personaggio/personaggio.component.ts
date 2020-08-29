@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
+import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
 
 
 @Component({
@@ -32,10 +32,11 @@ export class PersonaggioComponent implements OnInit {
   pregi: Array<Pregio> = [];
   rituali: Array<Rituale> = [];
 
-  constructor( private route: ActivatedRoute, private schedaservice: SchedaService ) { }
+  constructor( private globalstatus: GlobalStatus, private route: ActivatedRoute, private schedaservice: SchedaService ) { }
 
   ngOnInit(): void {
     const idutente = Number ( this.route.snapshot.paramMap.get('id') );
+    this.globalstatus.lastpg = idutente;
 
     this.schedaservice.getscheda(idutente)
     .subscribe (

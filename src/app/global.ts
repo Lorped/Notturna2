@@ -298,4 +298,5 @@ export class FullOggetto {
 @Injectable()
 export class GlobalStatus {
   Last = 0;
+  lastpg = 0;
 }

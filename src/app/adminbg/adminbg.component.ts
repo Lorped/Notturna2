@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
-import { Background, Contatti, Skill, Sentiero, Pregio } from '../global';
+import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus } from '../global';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -99,10 +99,12 @@ export class AdminbgComponent implements OnInit {
   new_p_x = '';
 
 
-  constructor(private adminservice: AdminService, private schedaservice: SchedaService, private route: ActivatedRoute) { }
+  constructor(private globalstatus: GlobalStatus, private adminservice: AdminService, private schedaservice: SchedaService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.idutente = Number ( this.route.snapshot.paramMap.get('id') );
+    this.globalstatus.lastpg = this.idutente;
+
     this.adminservice.getnome(this.idutente).subscribe(
       (data: any) => {
         this.nomepg = data;

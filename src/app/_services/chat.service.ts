@@ -51,4 +51,7 @@ export class ChatService {
       testo: testo
     });
   }
+  lanciadado() {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/lanciadado.php');
+  }
 }
