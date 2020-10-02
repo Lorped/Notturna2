@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 					}
 				}
 
-				if ( $res2['skillprereq'] != "") {
+				if ( $res2['skillprereq'] != "" && $res2['skillprereq'] != 24 ) {    /* RISSA E MISCHIA A PARTE */
 				 	$dp = $res2['skillprereq'];
 				 	$ldp = $res2['livskillprereq'];
 					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
@@ -103,6 +103,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 						$disabled = 1;
 					}
 				}
+
+				/*  Srissa e Mischia */
+				if ( $res2['skillprereq'] != "" && $res2['skillprereq'] == 24 ) {
+					$sk1 = 0 ;
+					$sk2 = 0 ;
+
+					$ldp = $res2['livdiscprereq'];
+					$dp = 25 ;  /* RISSA, oltre a 24 = mischia*/
+					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
+			 		$Result3 = mysql_query($MySql3);
+			 		$res3 = mysql_fetch_array($Result3);
+				 	if ( $res3['c'] == 0 ) {
+						$sk1 = 1;
+					}
+					$ldp = $res2['livdiscprereq'];
+					$dp = 24 ;  /* MISCHIA, oltre a 25 = sissa*/
+					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
+			 		$Result3 = mysql_query($MySql3);
+			 		$res3 = mysql_fetch_array($Result3);
+				 	if ( $res3['c'] == 0 ) {
+						$sk2 = 1;
+					}
+					if ( $sk1 == 1 && $sk2 == 1 ) {
+						$disabled = 1;
+					}
+
+				}
+				/******/
+
 
 				if ( $numpoteri + 1 < $res2['livellopot'] ) {
 					$disabled = 1;
