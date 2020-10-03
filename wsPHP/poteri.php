@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 					$sk2 = 0 ;
 
 					$ldp = $res2['livskillprereq'];
-					$dp = 25 ;  /* RISSA, oltre a 24 = mischia*/
+					$dp = 23 ;  /* RISSA, oltre a 24 = mischia*/
 					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
 			 		$Result3 = mysql_query($MySql3);
 			 		$res3 = mysql_fetch_array($Result3);
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 						$sk1 = 1;
 					}
 					$ldp = $res2['livskillprereq'];
-					$dp = 24 ;  /* MISCHIA, oltre a 25 = sissa*/
+					$dp = 24 ;  /* MISCHIA, oltre a 23 = rissa*/
 					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
 			 		$Result3 = mysql_query($MySql3);
 			 		$res3 = mysql_fetch_array($Result3);
