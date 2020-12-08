@@ -42,8 +42,7 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
 
   $nomedisc = $res['nomedisc'];
 
-
-  $spesapx = 10;
+  $spesapx = 5;
 
   $MySql = "INSERT INTO discipline (iddisciplina, livello, idutente, DiClan)
     VALUES ( $iddisciplina , 1 , $idutente , 'N') ";

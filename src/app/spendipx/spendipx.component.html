@@ -151,14 +151,14 @@
           </div>
         </div>
         <div class="column is-4 nopadding" >
-          Acquisisci altre Discipline (10px)
+          Acquisisci altre Discipline (5px)
           <mat-form-field>
           <mat-label>Nuova Disciplina</mat-label>
           <mat-select [(value)]="idnewdisc">
             <mat-option *ngFor="let tt of otherdisc" [value]="tt.iddisciplina" >{{tt.nomedisc}}</mat-option>
           </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc==''||xpdisponibili<10" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc==''||xpdisponibili<5" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
         </div>
       </div>
 

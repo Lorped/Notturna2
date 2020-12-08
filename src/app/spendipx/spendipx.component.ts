@@ -419,7 +419,7 @@ export class SpendipxComponent implements OnInit {
   }
 
   newdisc( ) {
-    this.xpdisponibili -= 10;
+    this.xpdisponibili -= 5;
     this.schedaservice.newdisc(this.idutente, this.idnewdisc )
     .subscribe(
       data => {
