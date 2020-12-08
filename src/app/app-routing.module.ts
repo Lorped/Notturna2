@@ -21,6 +21,7 @@ import { AdminbgComponent } from "./adminbg/adminbg.component";
 import { OggettiComponent } from "./oggetti/oggetti.component";
 import { CambiaoggComponent } from "./cambiaogg/cambiaogg.component";
 import { ChatComponent } from "./chat/chat.component";
+import { RubricaComponent } from "./rubrica/rubrica.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'oggetti', component: OggettiComponent },
   { path: 'cambiaogg/:id', component: CambiaoggComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'rubrica', component: RubricaComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

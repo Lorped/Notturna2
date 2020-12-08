@@ -1,0 +1,109 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sidex></app-sidex>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+
+<div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
+  <p>
+  <mat-card>
+    <mat-card-title>
+      Rubrica
+    </mat-card-title>
+    <mat-card-content>
+      <div class="columns">
+        <div class="column bigger">
+          Nome Contatto
+        </div>
+        <div class="column bigger is-1">
+          Cell.
+        </div>
+        <div class="column bigger is-1">
+          Email
+        </div>
+        <div class="column bigger is-1">
+          Rifugio
+        </div>
+        <div class="column bigger ">
+          Annotazioni
+        </div>
+        <div class="column bigger is-2">
+          &nbsp;
+        </div>
+      </div>
+
+
+
+
+      <div class="columns" *ngFor="let item of myrubrica">
+        <div class="column" >
+          {{item.contatto}}
+        </div>
+        <div class="column is-1">
+          <button   (click)="togglecell(item.idrubrica)" > <i class="fa fa-phone" [ngClass]="{'gray': item.cell==0 , 'red': item.cell==1}" > </i> </button>
+        </div>
+        <div class="column is-1">
+
+          <button   (click)="toggleemail(item.idrubrica)" > <i class="fa fa-laptop" [ngClass]="{'gray': item.email==0 , 'red': item.email==1}" > </i></button>
+        </div>
+        <div class="column is-1">
+          <button   (click)="togglehome(item.idrubrica)" > <i class="fa fa-home"  [ngClass]="{'gray': item.home==0 , 'red': item.home==1}" > </i></button>
+        </div>
+        <div class="column">
+          {{item.note}}
+        </div>
+        <div class="column is-1">
+          <!-- <button   (click)="edit(item.idrubrica)" >Edit</button> -->
+        </div>
+
+        <div class="column is-1">
+          <button   (click)="del(item.idrubrica)" >Canc</button>
+        </div>
+
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <hr>
+        </div>
+      </div>
+
+      <div class="columns" >
+        <div class="column" >
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Nuovo Contatto</mat-label>
+            <input matInput [formControl]="newcontatto" placeholder="Nome nuovo contatto" type="text" >
+            <mat-error *ngIf="newcontatto.hasError('pattern')">Non sono permessi solo "blank"</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="column" >
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Annotazioni</mat-label>
+            <input matInput placeholder="Annotazioni" [formControl]="newcontatto2">
+          </mat-form-field>
+        </div>
+        <div class="column is-2" >
+          <button  mat-raised-button class="large" (click)="addcontatto()" color="primary" [disabled]="newcontatto.hasError('pattern')||newcontatto.hasError('required') " style="width: 100%;">Aggiungi</button>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+
+</mat-sidenav-content>
+</mat-sidenav-container>

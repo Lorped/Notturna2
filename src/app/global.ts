@@ -300,3 +300,15 @@ export class GlobalStatus {
   Last = 0;
   lastpg = 0;
 }
+
+
+@Injectable()
+export class Rubricaitem {
+  public idrubrica = 0;
+  public owner = 0;
+  public contatto = '';
+  public cell = 0;
+  public email = 0 ;
+  public home = 0 ;
+  public note = '';
+}

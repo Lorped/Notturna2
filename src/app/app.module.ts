@@ -31,6 +31,7 @@ import { GlobalStatus } from './global';
 import { AuthenticationService } from './_services/index';
 import { SchedaService } from './_services/index';
 import { ChatService } from './_services/index';
+import { RubricaService } from './_services/index';
 
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
@@ -57,6 +58,7 @@ import { AdminbgComponent } from './adminbg/adminbg.component';
 import { OggettiComponent } from './oggetti/oggetti.component';
 import { CambiaoggComponent } from './cambiaogg/cambiaogg.component';
 import { ChatComponent } from './chat/chat.component';
+import { RubricaComponent } from './rubrica/rubrica.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,8 @@ import { ChatComponent } from './chat/chat.component';
     AdminbgComponent,
     OggettiComponent,
     CambiaoggComponent,
-    ChatComponent
+    ChatComponent,
+    RubricaComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +120,7 @@ import { ChatComponent } from './chat/chat.component';
     AuthenticationService,
     SchedaService,
     ChatService,
+    RubricaService,
     GlobalStatus
   ],
   bootstrap: [AppComponent]
