@@ -500,7 +500,7 @@ export class SpendipxComponent implements OnInit {
 
   scegliprimaria(){
 
-      this.schedaservice.addprimariataum(this.idutente, this.idnewprimaria)
+      this.schedaservice.addprimariataum(this.idutente, Number(this.idnewprimaria))
       .subscribe ( (data:any) => {
         this.tremeresenzataum = 0 ;
         this.xpdisponibili -= 2 ;
@@ -511,7 +511,7 @@ export class SpendipxComponent implements OnInit {
 
   scegliprimarianecro(){
 
-      this.schedaservice.addprimarianecro(this.idutente, this.idnewprimaria)
+      this.schedaservice.addprimarianecro(this.idutente, Number(this.idnewprimaria))
       .subscribe ( (data:any) => {
         this.giovannisenzanecro = 0 ;
         this.xpdisponibili -= 2 ;
