@@ -290,4 +290,17 @@ export class SchedaService {
     });
   }
 
+  addprimariataum (idutente: number ,  idtaum: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addprimariataum.php',{
+      idutente: idutente,
+      idtaum: idtaum
+    });
+  }
+  addprimarianecro (idutente: number ,  idnecro: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addprimarianecro.php',{
+      idutente: idutente,
+      idnecro: idnecro
+    });
+  }
+
 }

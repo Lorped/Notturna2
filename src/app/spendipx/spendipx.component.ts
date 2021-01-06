@@ -62,7 +62,9 @@ export class SpendipxComponent implements OnInit {
   otherdisc: Array<Disciplina> = [];
   idnewdisc = '';
 
-
+  idnewprimaria = '';
+  tremeresenzataum = 0 ;
+  giovannisenzanecro = 0 ;
 
   constructor( private schedaservice: SchedaService ) { }
 
@@ -130,6 +132,15 @@ export class SpendipxComponent implements OnInit {
           item.necromanzia.livello = Number (item.necromanzia.livello);
           this.livellinecro[i] = Number ( item.necromanzia.livello );
           i ++;
+        }
+
+        this.tremeresenzataum = 0 ;
+        if ( this.taumaturgie.length == 0 && this.scheda.idclan ==  7) {
+          this.tremeresenzataum = 1 ;
+        }
+        this.giovannisenzanecro = 0 ;
+        if ( this.necromanzie.length == 0 && (this.scheda.idclan ==  11 || this.scheda.idclan == 14) ) {
+          this.giovannisenzanecro = 1 ;
         }
 
 
@@ -378,42 +389,8 @@ export class SpendipxComponent implements OnInit {
     .subscribe(
       data => {
 
-        this.schedaservice.getscheda(this.idutente)
-        .subscribe (
-          (data: any) => {
-            this.discipline = data.discipline ;
-            for (let j=0 ; j < this.discipline.length ; j++ ) {
-              this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
-              this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-              if ( this.discipline[j].disciplina.DiClan == "S" ) {
-                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
-              } else {
-                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
-              }
-            }
+        this.reload_full ();
 
-            this.taumaturgie = data.taumaturgie ;
-            this.necromanzie = data.necromanzie ;
-
-            for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
-              this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
-              this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
-            }
-
-            for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
-              this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
-              this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
-            }
-
-            this.schedaservice.getnecrotaum(this.idutente)
-            .subscribe(
-              (data: any) => {
-                this.newtaumaturgie = data.taumaturgie;
-                this.newnecromanzie = data.necromanzie;
-              }
-            );
-          }
-        );
       }
     );
   }
@@ -424,48 +401,8 @@ export class SpendipxComponent implements OnInit {
     .subscribe(
       data => {
 
-        this.schedaservice.getscheda(this.idutente).
-        subscribe (
-          (data: any) => {
-            this.discipline = data.discipline ;
-            for (let j=0 ; j < this.discipline.length ; j++ ) {
-              this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
-              this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-              if ( this.discipline[j].disciplina.DiClan == 'S' ) {
-                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
-              } else {
-                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
-              }
-            }
+        this.reload_full();
 
-            this.taumaturgie = data.taumaturgie ;
-            this.necromanzie = data.necromanzie ;
-
-            for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
-              this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
-              this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
-            }
-
-            for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
-              this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
-              this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
-            }
-
-            this.schedaservice.getnecrotaum(this.idutente)
-            .subscribe(
-              (data: any) => {
-                this.newtaumaturgie = data.taumaturgie;
-                this.newnecromanzie = data.necromanzie;
-              }
-            );
-            this.schedaservice.getotherdisc(this.idutente)
-            .subscribe(
-              (data: any) => {
-                this.otherdisc = data.otherdisc;
-              }
-            );
-          }
-        );
       }
     );
   }
@@ -559,6 +496,67 @@ export class SpendipxComponent implements OnInit {
           /* */
         });
 
+  }
+
+  scegliprimaria(){
+
+      this.schedaservice.addprimariataum(this.idutente, this.idnewprimaria)
+      .subscribe ( (data:any) => {
+        this.tremeresenzataum = 0 ;
+        this.xpdisponibili -= 2 ;
+        this.reload_full ();
+      });
+
+  }
+
+  scegliprimarianecro(){
+
+      this.schedaservice.addprimarianecro(this.idutente, this.idnewprimaria)
+      .subscribe ( (data:any) => {
+        this.giovannisenzanecro = 0 ;
+        this.xpdisponibili -= 2 ;
+        this.reload_full ();
+      });
+
+  }
+
+  reload_full () {
+    this.schedaservice.getscheda(this.idutente)
+    .subscribe (
+      (data: any) => {
+        this.discipline = data.discipline ;
+        for (let j=0 ; j < this.discipline.length ; j++ ) {
+          this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
+          this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
+          if ( this.discipline[j].disciplina.DiClan == "S" ) {
+            this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
+          } else {
+            this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
+          }
+        }
+
+        this.taumaturgie = data.taumaturgie ;
+        this.necromanzie = data.necromanzie ;
+
+        for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
+          this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
+          this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
+        }
+
+        for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
+          this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
+          this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
+        }
+
+        this.schedaservice.getnecrotaum(this.idutente)
+        .subscribe(
+          (data: any) => {
+            this.newtaumaturgie = data.taumaturgie;
+            this.newnecromanzie = data.necromanzie;
+          }
+        );
+      }
+    );
   }
 
 }

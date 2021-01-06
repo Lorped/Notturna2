@@ -150,6 +150,7 @@
             </div>
           </div>
         </div>
+
         <div class="column is-4 nopadding" >
           Acquisisci altre Discipline (5px)
           <mat-form-field>
@@ -160,7 +161,32 @@
           </mat-form-field>
           <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc==''||xpdisponibili<5" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
         </div>
+
+        <div class="column is-4 nopadding" *ngIf="tremeresenzataum == 1">
+          Acquisisci Via Primaria (2px)<br>
+          <mat-form-field>
+          <mat-label>Via Primaria</mat-label>
+          <mat-select [(value)]="idnewprimaria">
+            <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||xpdisponibili<2" style="width: 66%;" (click)="scegliprimaria()">Aggiungi</button>
+        </div>
+        <div class="column is-4 nopadding" *ngIf="giovannisenzanecro == 1">
+          Acquisisci Via Primaria (2px)<br>
+          <mat-form-field>
+          <mat-label>Via Primaria</mat-label>
+          <mat-select [(value)]="idnewprimaria">
+            <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" >{{tt.nomenecro}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||xpdisponibili<2" style="width: 66%;" (click)="scegliprimarianecro()">Aggiungi</button>
+        </div>
+
       </div>
+
+
+
 
       <div class="columns" style="align-items: center;" *ngIf="taumaturgie.length >0">
         <div class="column"><hr></div>
