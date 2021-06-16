@@ -285,14 +285,14 @@
     <div class="columns is-multiline nopadding" style="margin-left: 0px;" *ngIf="taumaturgie.length >0">
       <div class="column is-4 nopadding" *ngFor="let lvl of taumaturgie[0].taumaturgia.livello | times; let ix = index">
         <div class="column nopadding" *ngIf="maxrituali >= ix">
-          Scegli Rituale di {{ix+1}}. Livello ({{(ix+1)*3}}px)
+          Scegli Rituale di {{ix+1}}. Livello ({{(ix+1)*2}}px)
           <mat-form-field>
             <mat-label>Rituale</mat-label>
             <mat-select [(value)]="idnewrituale[ix]">
               <mat-option *ngFor="let rx of rituali_t[ix]" [value]="rx.idrituale" >{{rx.nomerituale}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<3*ix" style="width: 66%;" (click)="addrituale(ix,'t')">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<2*(ix+1)" style="width: 66%;" (click)="addrituale(ix,'t')">Aggiungi</button>
         </div>
       </div>
     </div>
@@ -300,14 +300,14 @@
     <div class="columns is-multiline nopadding" style="margin-left: 0px;" *ngIf="necromanzie.length>0">
       <div class="column is-4 nopadding" *ngFor="let lvl of necromanzie[0].necromanzia.livello | times; let ix = index">
         <div class="column nopadding" *ngIf="maxrituali >= ix">
-          Scegli Rituale di {{ix+1}}. Livello ({{ (rituali.length==0?0:(ix+1)*3)   }}px)
+          Scegli Rituale di {{ix+1}}. Livello ({{ (rituali.length==0?0:(ix+1)*2)   }}px)
           <mat-form-field>
             <mat-label>Rituale</mat-label>
             <mat-select [(value)]="idnewrituale[ix]">
               <mat-option *ngFor="let rx of rituali_n[ix]" [value]="rx.idrituale" >{{rx.nomerituale}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<(rituali.length==0?0:(ix+1)*3)" style="width: 66%;" (click)="addrituale(ix,'n')">Aggiungi</button>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<(rituali.length==0?0:(ix+1)*2)" style="width: 66%;" (click)="addrituale(ix,'n')">Aggiungi</button>
         </div>
       </div>
     </div>

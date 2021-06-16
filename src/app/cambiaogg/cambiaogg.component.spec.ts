@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CambiaoggComponent } from './cambiaogg.component';
 
@@ -6,7 +6,7 @@ describe('CambiaoggComponent', () => {
   let component: CambiaoggComponent;
   let fixture: ComponentFixture<CambiaoggComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CambiaoggComponent ]
     })

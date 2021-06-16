@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SpendipxComponent } from './spendipx.component';
 
@@ -6,7 +6,7 @@ describe('SpendipxComponent', () => {
   let component: SpendipxComponent;
   let fixture: ComponentFixture<SpendipxComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SpendipxComponent ]
     })

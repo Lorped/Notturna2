@@ -46,7 +46,7 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
     $nomerituale = $res['nomerituale'];
     $livello = $res['livello'];
 
-    $spesapx =  $livello * 3 ;
+    $spesapx =  $livello * 2 ;
 
     $MySql = "INSERT INTO rituali_t (idrituale , idutente)
       VALUES ($idrituale , $idutente)";
@@ -61,7 +61,7 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
     $nomerituale = $res['nomerituale'];
     $livello = $res['livello'];
 
-    $spesapx =  $livello * 3 ;
+    $spesapx =  $livello * 2 ;
 
     /** check a costo zero **/
     $MySql = "SELECT count(*) as c FROM rituali_n WHERE idutente=$idutente";

@@ -408,7 +408,7 @@ export class SpendipxComponent implements OnInit {
   }
 
   addrituale(lvl: number, necrotaum: string) {
-    this.xpdisponibili -= 3 * (lvl + 1);
+    this.xpdisponibili -= 2 * (lvl + 1);
 
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
     .subscribe(
