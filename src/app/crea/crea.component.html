@@ -240,7 +240,7 @@
           </div>
           <div class="half mr">
             <button  class="btn  btn-xs" (click)="mintaum(1)" [disabled]="taumaturgie[1].livello<1||(taumaturgie[1].livello-1==taumaturgie[2].livello && taumaturgie[2].livello>0)"><i class="fa fa-minus"></i></button>
-            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[2].livello , 'dred': ix < taumaturgie[1].livello }"></i>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[1].livello , 'dred': ix < taumaturgie[1].livello }"></i>
             <button class="btn  btn-xs" (click)="addtaum(1)" [disabled]="taumaturgie[1].livello>4||(taumaturgie[1].livello+1>=taumaturgie[0].livello && taumaturgie[0].livello<5)||taumaturgie[1].idtaum == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
           </div>
         </mat-grid-tile>
@@ -296,7 +296,7 @@
           </div>
           <div class="half mr">
             <button  class="btn  btn-xs" (click)="minnecro(1)" [disabled]="necromanzie[1].livello<1||(necromanzie[1].livello-1==necromanzie[2].livello && necromanzie[2].livello>0)"><i class="fa fa-minus"></i></button>
-            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[2].livello , 'dred': ix < necromanzie[1].livello }"></i>
+            <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[1].livello , 'dred': ix < necromanzie[1].livello }"></i>
             <button class="btn  btn-xs" (click)="addnecro(1)" [disabled]="necromanzie[1].livello>4||(necromanzie[1].livello+1>=necromanzie[0].livello && necromanzie[0].livello<5)||necromanzie[1].idnecro == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
           </div>
         </mat-grid-tile>
