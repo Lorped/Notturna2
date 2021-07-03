@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$attributi[] = [ 'idattr' => 6 , 'nomeattr' => 'Saggezza'];
 	$attributi[] = [ 'idattr' => 7 , 'nomeattr' => 'Prontezza'];
 	$attributi[] = [ 'idattr' => 8 , 'nomeattr' => 'Intelligenza'];
-	$attributi[] = [ 'idattr' => 8 , 'nomeattr' => 'Percezione'];
+	$attributi[] = [ 'idattr' => 9 , 'nomeattr' => 'Percezione'];
 
 
 
