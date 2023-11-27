@@ -33,7 +33,7 @@ include ('db.inc.php');
 
 	$oggetti = [];
 
-	$MySql = "SELECT * FROM oggetti";
+	$MySql = "SELECT * FROM oggetti order by idoggetto ";
 	$Result = mysql_query($MySql);
 
 	while ( $res = mysql_fetch_array ($Result,MYSQL_ASSOC) ) {
@@ -95,9 +95,14 @@ include ('db.inc.php');
 
 	}
 
+
 	$out = [
 		'oggetti' => $oggetti
 	];
+
+	//print_r( $out);
+	//die();
+	
 
 
 header("HTTP/1.1 200 OK");
