@@ -60,7 +60,7 @@
       <div class="column is-3 nopadding" >
         <mat-form-field>
         <mat-label>Difetti Sociali</mat-label>
-        <mat-select [(value)]="new_d_s" [disabled]= "ok_d_m>2">
+        <mat-select [(value)]="new_d_s" [disabled]= "ok_d_s>2">
           <mat-option *ngFor="let tt of difetti_s" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
         </mat-select>
         </mat-form-field>
