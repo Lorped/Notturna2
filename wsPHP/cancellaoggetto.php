@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL//
 
 
 $postdata = file_get_contents("php://input");
@@ -36,10 +36,10 @@ $idoggetto = $request -> idoggetto;
 if ( isset($postdata) && $idoggetto != ""  ) {
 
   $MySql = "DELETE FROM cond_oggetti WHERE idoggetto = $idoggetto";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "DELETE FROM oggetti WHERE idoggetto = $idoggetto";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
 

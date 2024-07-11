@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');  //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -39,16 +39,16 @@ if ( isset($postdata) && $idutente != "" && $idtaum != "" ) {
   $spesapx =  2;
 
   $MySql = "INSERT into taumaturgie ( idtaum , livello, idutente , principale ) VALUES ( $idtaum , 1 ,  $idutente , 1 )";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "SELECT * FROM taumaturgie_main
     WHERE idtaum = $idtaum ";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array($Result);
 
   $nometaum = $res['nometaum'];
 
@@ -56,11 +56,11 @@ if ( isset($postdata) && $idutente != "" && $idtaum != "" ) {
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "UPDATE discipline SET livello = livello +1
       WHERE iddisciplina = 98 and idutente = $idutente";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
 

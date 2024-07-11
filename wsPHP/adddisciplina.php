@@ -37,8 +37,8 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
   $MySql = "SELECT * FROM discipline
     LEFT JOIN discipline_main on discipline_main.iddisciplina = discipline.iddisciplina
     WHERE discipline.iddisciplina = $iddisciplina AND idutente = $idutente";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
 
   $DiClan = $res['DiClan'];
   $livello = $res['livello'];
@@ -52,17 +52,17 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
 
   $MySql = "UPDATE discipline SET livello = livello + 1
     WHERE idutente = $idutente and iddisciplina = $iddisciplina" ;
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $Azione = $nomedisc.' a '.($livello+1); ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   header("HTTP/1.1 200 OK");

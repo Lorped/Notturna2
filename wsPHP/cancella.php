@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -34,117 +34,88 @@ $idutente = $request -> idutente;
 if ( isset($postdata) && $idutente != "" ) {
 
 	$Mysql = "SELECT count(*) AS a FROM personaggio WHERE idutente = $idutente";
-	$Res = mysql_fetch_array(mysql_query($Mysql));
+	$Res = mysqli_fetch_array(mysqli_query($db, $Mysql));
 
 	$numscheda = $Res['a'];
 
 	$Mysql = "SELECT count(*) AS a FROM HUNTERpersonaggio WHERE idutente = $idutente";
-	$Res = mysql_fetch_array(mysql_query($Mysql));
+	$Res = mysqli_fetch_array(mysqli_query($db, $Mysql));
 
 	$numschedaH = $Res['a'];
 
 	if ( $numscheda != 0 )  {   // VAMPIRO !!
 
     $Mysql = "DELETE FROM personaggio WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+   	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM background WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+   	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM discipline WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM taumaturgie WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM necromanzie WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM background WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM skill WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM contatti WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-  	$Mysql = "DELETE FROM logpx WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
+  	
+	$Mysql = "DELETE FROM logpx WHERE idutente = $idutente";
+	mysqli_query($db, $Mysql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM pregidifetti WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM rituali_t WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-  	$Mysql = "DELETE FROM rituali_n WHERE idutente = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
+  	
+	$Mysql = "DELETE FROM rituali_n WHERE idutente = $idutente";
+	mysqli_query($db, $Mysql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM rubrica WHERE owner = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM legami WHERE target = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM legami WHERE domitor = $idutente";
-   	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM poteri WHERE idutente = $idutente";
-  	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+  	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
   	$Mysql = "DELETE FROM logpx  WHERE idutente = $idutente";
-  	mysql_query($Mysql);
-  	if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
+	mysqli_query($db, $Mysql);
+  	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
 	}
 
-	if ( $numschedaH != 0 )  {   // CACCIATORE !!
-	   $Mysql = "DELETE FROM HUNTERpersonaggio WHERE idutente = $idutente";
-	 	mysql_query($Mysql);
-		if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
 
-		$Mysql = "DELETE FROM HUNdiscipline WHERE idutente = $idutente";
-	 	mysql_query($Mysql);
-		if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-		$Mysql = "DELETE FROM background WHERE idutente = $idutente";
-	 	mysql_query($Mysql);
-		if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-		$Mysql = "DELETE FROM skill WHERE idutente = $idutente";
-	 	mysql_query($Mysql);
-		if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-		$Mysql = "DELETE FROM logpx  WHERE idutente = $idutente";
-		mysql_query($Mysql);
-		if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-		$Mysql = "DELETE FROM contatti WHERE idutente = $idutente";
-	 	mysql_query($Mysql);
-		if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-		$Mysql = "DELETE FROM rubrica WHERE owner = $idutente";
-	 	mysql_query($Mysql);
-		if (mysql_errno()) die ( mysql_errno().": ".mysql_error() );
-
-  }
 
 
   header("HTTP/1.1 200 OK");

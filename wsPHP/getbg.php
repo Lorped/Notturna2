@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL//
 
 $idutente = $_GET['idutente'];
 
@@ -25,10 +25,10 @@ $idutente = $_GET['idutente'];
 	LEFT JOIN background ON background_main.idback = background.idback AND idutente = $idutente
 	WHERE background_main.idback != 5 AND background_main.idback != 77";
 
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
 	$back = [];
-	while ( $res = mysql_fetch_array ($Result) ) {
+	while ( $res = mysqli_fetch_array ($Result) ) {
 		$back[] = $res;
 	}
 

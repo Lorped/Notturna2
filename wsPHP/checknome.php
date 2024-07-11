@@ -18,14 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
   $nome=$_GET['nome'];
 
   $MySql = "SELECT * FROM utente WHERE nome='$nome'";
-  $Result = mysql_query($MySql);
-  if ( $res = mysql_fetch_array($Result) )  {
+  $Result = mysqli_query($db, $MySql);
+  if ( $res = mysqli_fetch_array($Result) )  {
   	$out = "OK" ;
   } else {
   	$out = "KO" ;

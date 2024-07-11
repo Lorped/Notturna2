@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');  //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -43,20 +43,20 @@ if ( isset($postdata) && $idutente != "" ) {
       $nomeskill = $skill -> nomeskill;
 
       $MySql = "SELECT * from skill WHERE idutente = $idutente AND idskill = $idskill";
-      $Result = mysql_query($MySql);
-      if ($res = mysql_fetch_array($Result)){
+      $Result = mysqli_query($db, $MySql);
+      if ($res = mysqli_fetch_array($Result)){
         $MySql = "UPDATE skill SET livello = livello + $liv WHERE idutente = $idutente AND idskill = $idskill";
-        $Result = mysql_query($MySql);
+        $Result = mysqli_query($db, $MySql);
       } else {
         $MySql = "INSERT INTO skill (idutente, idskill, livello) VALUES ( $idutente, $idskill, $liv)";
-        $Result = mysql_query($MySql);
+        $Result = mysqli_query($db, $MySql);
       }
 
       $Azione = 'Passaggio Status: '.$nomeskill.' a '.$liv ;
 
       $MySql = "INSERT INTO logpx (idutente, px, Azione )
         VALUES ( $idutente, 0 , '$Azione' ) ";
-      $Result = mysql_query($MySql);
+      $Result = mysqli_query($db, $MySql);
 
 
     }
@@ -66,8 +66,8 @@ if ( isset($postdata) && $idutente != "" ) {
 		LEFT JOIN statuscama on statuscama.idstatus = personaggio.idstatus
 		LEFT JOIN generazione on generazione.generazione = personaggio.generazione
 			WHERE  idutente = $idutente ";
-	$Result = mysql_query($MySql);
-	$res = mysql_fetch_array ($Result,MYSQL_ASSOC);
+	$Result = mysqli_query($db, $MySql);
+	$res = mysqli_fetch_array ($Result,MYSQLI_ASSOC);
 
 	$oldstatus = $res['idstatus'];
   $oldfdv = $res['fdvmax'];
@@ -80,8 +80,8 @@ if ( isset($postdata) && $idutente != "" ) {
 
 
 	$MySql = "SELECT * FROM statuscama  WHERE idstatus = $oldstatus + 1 ";
-	$Result = mysql_query($MySql);
-	$res = mysql_fetch_array ($Result,MYSQL_ASSOC);
+	$Result = mysqli_query($db, $MySql);
+	$res = mysqli_fetch_array ($Result,MYSQLI_ASSOC);
 
 	$newfdvbase = $res['fdvbase'];
   $newstatus = $res['status'];
@@ -101,12 +101,12 @@ if ( isset($postdata) && $idutente != "" ) {
     fdv = $newfdv ,
     bloodp = $newbloodp
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $Azione = 'Passaggio Status a '.$newstatus ;
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $out = "OK";
   $out = json_encode ($out, JSON_UNESCAPED_UNICODE);

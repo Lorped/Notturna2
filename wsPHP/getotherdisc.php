@@ -16,18 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL //
 
 $idutente = $_GET['idutente'];
 
 	$MySql="SELECT * FROM discipline_main
 		WHERE iddisciplina NOT IN ( select iddisciplina from discipline where idutente=$idutente )
 		AND iddisciplina != 98 and iddisciplina != 99 ";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
 	$otherdisc = [];
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 
 		$otherdisc [] = $res ;
 	}

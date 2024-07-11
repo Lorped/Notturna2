@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');  //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -38,7 +38,7 @@ if ( isset($postdata) && $idutente != "" && $idpotere != "" ) {
 
 	$MySql = "INSERT INTO poteri ( idpotere , idutente )
     VALUES ( $idpotere, $idutente) ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db,$MySql);
 
   header("HTTP/1.1 200 OK");
 

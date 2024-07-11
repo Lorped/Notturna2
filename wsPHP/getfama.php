@@ -16,16 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL //
 
 $idutente = $_GET['idutente'];
 
 
 	$MySql = "SELECT fama1, fama2, fama3  FROM personaggio
 			WHERE  idutente = $idutente ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
-	$res = mysql_fetch_array ($Result);
+	$res = mysqli_fetch_array ($Result);
 
 	$fama1 = $res['fama1'];
 	$fama2 = $res['fama2'];

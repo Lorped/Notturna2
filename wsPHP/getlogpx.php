@@ -16,16 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); // MYSQL //
 
 $idutente = $_GET['idutente'];
 
 	$MySql="SELECT * FROM logpx WHERE idutente=$idutente ORDER BY data ASC";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
 	$logpx = [];
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 
 		$logpx [] = $res ;
 	}

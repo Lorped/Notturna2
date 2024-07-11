@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-  include ('db.inc.php');
+  include ('db2.inc.php'); //MYSQL//
 
 
 	$attributi = [];
@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
   $skill = [];
   $MySql = "SELECT idskill, nomeskill  FROM skill_main ORDER BY nomeskill" ;
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $skill[] =  $res;
   }
 
@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	$discipline = [];
 	$MySql = "SELECT iddisciplina, nomedisc  FROM discipline_main ORDER BY nomedisc" ;
-	$Result = mysql_query($MySql);
-	while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	$Result = mysqli_query($db, $MySql);
+	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 		$discipline[] =  $res;
 	}
 
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	$poteri = [];
 	$MySql = "SELECT idpotere, livellopot, nomepotere  FROM poteri_main ORDER BY iddisciplina , livellopot" ;
-	$Result = mysql_query($MySql);
-	while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	$Result = mysqli_query($db, $MySql);
+	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 		$poteri[] =  $res;
 	}
 

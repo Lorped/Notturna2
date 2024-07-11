@@ -16,17 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL //
 
 $idutente = $_GET['idutente'];
 
 	$MySql="SELECT * FROM taumaturgie_main
 		WHERE idtaum NOT IN ( select idtaum from taumaturgie where idutente=$idutente )";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
 	$taumaturgie = [];
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 
 		$taumaturgie [] = $res ;
 	}
@@ -34,11 +34,11 @@ $idutente = $_GET['idutente'];
 
 	$MySql="SELECT * FROM necromanzie_main
 		WHERE idnecro NOT IN ( select idnecro from necromanzie where idutente=$idutente )";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
 	$necromanzie = [];
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 
 		$necromanzie [] = $res ;
 	}

@@ -16,13 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 $idrubrica = $_GET['idrubrica'];
 if ($idrubrica!="")  {
 	$MySql = "DELETE FROM rubrica WHERE idrubrica=$idrubrica";
-	$Result = mysql_query($MySql);
-	if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $Mysql );
+	$Result = mysqli_query($db, $MySql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $Mysql );
 
 }
 

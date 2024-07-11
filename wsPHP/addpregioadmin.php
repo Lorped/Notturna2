@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -36,8 +36,8 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
 
   $MySql = "SELECT * FROM pregidifetti_main
     WHERE idpregio = $idpregio ";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
 
   $nomepregio = $res['nomepregio'];
   $valore = $res['valore'];
@@ -45,7 +45,7 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
 
   $MySql = "INSERT INTO pregidifetti (idpregio, idutente, pxspesi)
     VALUES ( $idpregio , $idutente, 0 ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   if ( $valore < 0 ) {  /* difetto  */
     $Azione = 'ADMIN Aggiunto difetto '.$nomepregio ;
@@ -56,7 +56,7 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   header("HTTP/1.1 200 OK");

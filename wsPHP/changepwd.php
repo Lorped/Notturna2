@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -33,19 +33,19 @@ $email = $request -> email;
 //$nome = "lorenzo";
 //$password = "lor11ped";
 //$postdata = 1;
-$password = mysql_real_escape_string($password);
-$email = mysql_real_escape_string($email);
+$password = mysqli_real_escape_string($db, $password);
+$email = mysqli_real_escape_string($db, $email);
 
 if ( isset($postdata) && $idutente != ""  ) {
 
   if ( $email != "" ) {
     $MySql = "UPDATE utente SET email = '$email' WHERE idutente = $idutente" ;
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
   }
 
   if ( $password != "" ) {
     $MySql = "UPDATE utente SET password = '$password' WHERE idutente = $idutente" ;
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
   }
 
 
@@ -53,7 +53,7 @@ if ( isset($postdata) && $idutente != ""  ) {
 
 
 
-  if (mysql_errno()) {
+  if (mysqli_errno($db)) {
     header("HTTP/1.1 403 Forbidden");
     die($MySql);
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -32,7 +32,7 @@ $descrX = $request -> descrX;
 $risp = $request -> risp;
 
 
-$descrX = mysql_real_escape_string($descrX);
+$descrX = mysqli_real_escape_string($db, $descrX);
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
@@ -52,12 +52,12 @@ if ( isset($postdata) && $idoggetto != ""  ) {
     VALUES
     ($idoggetto, '$tipocond', $tabcond, $valcond, '$descrX', '$risp') ";
   }
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   $MySql = "SELECT idcondizione from cond_oggetti where idcondizione = last_insert_id() ";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
 
   //die($MySql);
 

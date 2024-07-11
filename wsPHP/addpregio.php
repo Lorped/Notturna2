@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -36,8 +36,8 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
 
   $MySql = "SELECT * FROM pregidifetti_main
     WHERE idpregio = $idpregio ";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
 
   $nomepregio = $res['nomepregio'];
   $valore = $res['valore'];
@@ -45,15 +45,15 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
   $MySql = "SELECT sum(valore) as somma, sum(pxspesi) as spesi FROM pregidifetti
     LEFT JOIN pregidifetti_main on pregidifetti_main.idpregio = pregidifetti.idpregio
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
   $somma = $res['somma'];
   $spesi = $res['spesi'];
 
   if ( $valore < 0 ) {  /* difetto ==> aggiungo in ogni caso */
     $MySql = "INSERT INTO pregidifetti (idpregio, idutente, pxspesi)
       VALUES ( $idpregio , $idutente, 0 ) ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
     $spesapx = 0 ;
     $Azione = 'Acquisito difetto '.$nomepregio ;
@@ -64,17 +64,17 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
         $spesapx = $delta * 2 ;
         $MySql = "INSERT INTO pregidifetti (idpregio, idutente, pxspesi)
           VALUES ( $idpregio , $idutente, $spesapx ) ";
-        $Result = mysql_query($MySql);
+        $Result = mysqli_query($db, $MySql);
 
         $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
           WHERE idutente = $idutente";
-        $Result = mysql_query($MySql);
+        $Result = mysqli_query($db, $MySql);
 
         $Azione = 'Acquisito pregio '.$nomepregio.' spendendo '.$spesapx.' px';
       } else {   /*es  pregio da 1 ,  2 difetti (-1) => -2  + 1 pregio 1 (+1) ma preso con px (2) */
         $MySql = "INSERT INTO pregidifetti (idpregio, idutente, pxspesi)
           VALUES ( $idpregio , $idutente, 0 ) ";
-        $Result = mysql_query($MySql);
+        $Result = mysqli_query($db, $MySql);
         $spesapx = 0 ;
         $Azione = 'Acquisito pregio '.$nomepregio;
       }
@@ -83,7 +83,7 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   header("HTTP/1.1 200 OK");

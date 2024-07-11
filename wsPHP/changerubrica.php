@@ -16,17 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL//
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
 $idrubrica = $request -> idrubrica;
-$contatto = mysql_real_escape_string($request -> contatto);
+$contatto = mysqli_real_escape_string($db, $request -> contatto);
 $email = $request -> email;
 $cell = $request -> cell;
 $home = $request -> home;
-$note = mysql_real_escape_string($request -> note);
+$note = mysqli_real_escape_string($db, $request -> note);
 
 if ( isset($postdata) && $idrubrica != ""  ) {
 
@@ -41,8 +41,8 @@ if ( isset($postdata) && $idrubrica != ""  ) {
 
 	$MySql = "UPDATE rubrica SET  contatto = '$contatto' , cell = $cell, email = $email, home = $home,  note = '$note'
 			WHERE idrubrica = $idrubrica  ";
-	$Result = mysql_query($MySql);
-	if (mysql_errno())  die ( mysql_errno().": ".mysql_error()."+". $MySql );
+	$Result = mysqli_query($db, $MySql);
+	if (mysqli_errno($db))  die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 
 
 

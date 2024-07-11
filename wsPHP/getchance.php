@@ -16,16 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 
 
 
 	$MySql = "SELECT chance FROM chanceviolazione ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
-	if ( $res = mysql_fetch_array ($Result) ) {
+	if ( $res = mysqli_fetch_array ($Result) ) {
 
 		$out = $res['chance'];
 

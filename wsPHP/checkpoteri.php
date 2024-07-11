@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-  include ('db.inc.php');
+  include ('db2.inc.php'); //MSQLI//
 
   $idutente=$_GET['idutente'];
 
@@ -28,16 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT  sum(livello) as somma  FROM discipline
         WHERE idutente = '$idutente'
 				AND iddisciplina != 98 and iddisciplina != 99";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array($Result,MYSQL_ASSOC);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array($Result,MYSQLI_ASSOC);
   $numdiscipline = $res ['somma'];
 
 
   $poteri = 0 ;
   $MySql = "SELECT count(*) as numero FROM poteri
 		WHERE idutente = '$idutente'";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array($Result,MYSQL_ASSOC);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array($Result,MYSQLI_ASSOC);
   $poteri =  $res['numero'];
 
 	$output = $numdiscipline - $poteri ;

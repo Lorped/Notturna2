@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -35,8 +35,8 @@ if ( isset($postdata) && $idutente != ""  ) {
 
   $MySql = "SELECT * FROM personaggio
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
   $bloodp = $res['bloodp'];
 
   $spesapx = ($bloodp + 1) * 4 ;
@@ -44,14 +44,14 @@ if ( isset($postdata) && $idutente != ""  ) {
 
   $MySql = "UPDATE personaggio SET  bloodp = bloodp + 1 , xpspesi = xpspesi + $spesapx
       WHERE idutente = $idutente " ;
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   $Azione = 'Blood Potency a '.($bloodp+1) ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   header("HTTP/1.1 200 OK");

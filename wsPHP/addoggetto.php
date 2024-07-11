@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -30,8 +30,8 @@ $fissomobile = $request -> fissomobile;
 
 $barcode=rand(100000000000,999999999999);
 
-$nomeoggetto = mysql_real_escape_string($nomeoggetto);
-$descrizione = mysql_real_escape_string($descrizione);
+$nomeoggetto = mysqli_real_escape_string($db, $nomeoggetto);
+$descrizione = mysqli_real_escape_string($db, $descrizione);
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
@@ -45,7 +45,7 @@ if ( isset($postdata) && $nomeoggetto != ""  ) {
   VALUES
   ('$nomeoggetto', '$descrizione', '$fissomobile', $barcode) ";
 
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   //die($MySql);
 

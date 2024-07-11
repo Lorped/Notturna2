@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL//
 
 
 $postdata = file_get_contents("php://input");
@@ -37,11 +37,11 @@ if ( isset($postdata) && $idoggetto != ""  ) {
 
   $MySql = "DELETE FROM cond_oggetti
     WHERE idoggetto = $idoggetto AND ( risp = 'S' OR risp = 'N' )";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "UPDATE oggetti SET domanda = '' , ifdomanda = 0 , r1 = '' , r2 = ''
     WHERE idoggetto = $idoggetto";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
       header("HTTP/1.1 200 OK");
 

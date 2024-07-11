@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -31,9 +31,9 @@ $r2 = $request -> r2;
 
 
 
-$domanda = mysql_real_escape_string($domanda);
-$r1 = mysql_real_escape_string($r1);
-$r2 = mysql_real_escape_string($r2);
+$domanda = mysqli_real_escape_string($db, $domanda);
+$r1 = mysqli_real_escape_string($db, $r1);
+$r2 = mysqli_real_escape_string($db, $r2);
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
@@ -46,7 +46,7 @@ if ( isset($postdata) && $idoggetto != ""  ) {
     SET ifdomanda = 1 , domanda = '$domanda' , r1 = '$r1' , r2 = '$r2'
     WHERE idoggetto = $idoggetto";
 
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   //die($MySql);
 
