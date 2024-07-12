@@ -17,13 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 
-	include ('./db.inc.php');
+	include ('./db2.inc.php'); //MYSQLI //
 
 	if ( $_GET['idutente'] != '') {
 		$idutente=$_GET['idutente'];
 		$Mysql="SELECT nomepg FROM personaggio WHERE idutente=$idutente";
-		$res=mysql_fetch_array(mysql_query($Mysql));
-		$nomepg=mysql_real_escape_string($res['nomepg']);
+		$res=mysqli_fetch_array(mysqli_query($db, $Mysql));
+		$nomepg=mysqli_real_escape_string($db, $res['nomepg']);
 	} else {
 		$idutente = 0 ;
 		$nomepg="NARRAZIONE";
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	}
 	$testo="tira ".$tiro;
 	$Mysql="INSERT INTO dadi ( idutente, nomepg, Ora, Testo) VALUES ( $idutente, '$nomepg', NOW(), '$testo' ) ";
-	mysql_query($Mysql);
+	mysqli_query($db, $Mysql);
 
 
 	$out = "OK";

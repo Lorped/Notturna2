@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 
-	include ('./db.inc.php');
+	include ('./db2.inc.php');  //MYSQLI //
 
 	include ('../../ionicPHP/messaggi.inc.php');
 
@@ -27,12 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$destinatario = $request -> destinatario;
 	$testo = $request -> testo;
 
-	$testo = mysql_real_escape_string($testo);
+	$testo = mysqli_real_escape_string($db, $testo);
 
 		$MySql = "INSERT  INTO dadi  (idutente,  nomepg, Ora, Testo, Destinatario)
 		VALUES ( 0 , 'NARRAZIONE', NOW(), '$testo' , $destinatario ) ";
 
-		mysql_query($MySql);
+		mysqli_query($db, $MySql);
 
 
 		master2user($destinatario,$testo);

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL //
 
 
 $postdata = file_get_contents("php://input");
@@ -31,15 +31,15 @@ $au = $request -> au;
 
 
 //$nome = "lorenzo";
-//$password = "lor11ped";
+//$password = "";
 //$postdata = 1;
 
 
 if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
 
   $MySql = "SELECT nomeback FROM background_main WHERE idback = $idback";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ( $Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ( $Result);
 
   $nomeback = $res ['nomeback'];
 
@@ -47,7 +47,7 @@ if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
   if ( $livello == 0) {
     $MySql = "DELETE FROM background
       WHERE idback = $idback AND idutente = $idutente";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
 
     $Azione = "Rimosso BG ".$nomeback;
@@ -56,18 +56,18 @@ if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
   if ( $livello == 1 ) {
     $MySql = "SELECT * FROM background
       WHERE idback = $idback AND idutente = $idutente";
-    $Result = mysql_query($MySql);
-    if ( $res = mysql_fetch_array($Result) ) {
+    $Result = mysqli_query($db, $MySql);
+    if ( $res = mysqli_fetch_array($Result) ) {
 
       $MySql2 = "UPDATE background SET livello = 1
         WHERE idback = $idback and idutente = $idutente";
-      $Result2 = mysql_query($MySql2);
+      $Result2 = mysqli_query($db, $MySql2);
 
     } else {
 
       $MySql2 = "INSERT INTO background (idback, idutente, livello)
         VALUES ( $idback, $idutente, 1)";
-      $Result2 = mysql_query($MySql2);
+      $Result2 = mysqli_query($db, $MySql2);
 
     }
 
@@ -78,7 +78,7 @@ if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
   if ($livello != 0 && $livello != 1 ) {
     $MySql = "UPDATE background SET livello = $livello
       WHERE idback = $idback and idutente = $idutente";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
     $Azione = "BG ".$nomeback.' a '.$livello;
   }
@@ -91,11 +91,11 @@ if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
   }
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
 
-  if (mysql_errno()) {
+  if (mysqli_errno($db)) {
     header("HTTP/1.1 403 Forbidden");
     die($MySql);
 

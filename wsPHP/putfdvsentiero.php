@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -31,7 +31,7 @@ $au = $request -> au;
 
 
 //$nome = "lorenzo";
-//$password = "lor11ped";
+//$password = "";
 //$postdata = 1;
 
 
@@ -42,7 +42,7 @@ if ( isset($postdata) && $idutente != "" ) {
     $MySql = "UPDATE personaggio
       SET fdvmax = $fdv , fdv = $fdv
       WHERE idutente = $idutente ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
     $Azione = "FDV a  ".$fdv;
     if ( $au == 'A') {
@@ -50,7 +50,7 @@ if ( isset($postdata) && $idutente != "" ) {
     }
     $MySql = "INSERT INTO logpx (idutente, px, Azione )
       VALUES ( $idutente, 0 , '$Azione' ) ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
   }
 
@@ -59,7 +59,7 @@ if ( isset($postdata) && $idutente != "" ) {
     $MySql = "UPDATE personaggio
       SET valsentiero = $sentiero
       WHERE idutente = $idutente ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
     $Azione = "Valore sentiero a  ".$sentiero;
     if ( $au == 'A') {
@@ -67,7 +67,7 @@ if ( isset($postdata) && $idutente != "" ) {
     }
     $MySql = "INSERT INTO logpx (idutente, px, Azione )
       VALUES ( $idutente, 0 , '$Azione' ) ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
   }
 

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 $idutente = $_GET['idutente'];
 
@@ -25,12 +25,12 @@ $idutente = $_GET['idutente'];
 	$MySql="SELECT * FROM rubrica
 			WHERE owner = $idutente
 			ORDER BY idrubrica ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
-	$res = mysql_fetch_array ($Result);
+	$res = mysqli_fetch_array ($Result);
 
 	$out = [];
-	while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 
 		$out[] =  $res;
   }

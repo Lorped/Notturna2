@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); // MYSQL //
 
 $idutente = $_GET['idutente'];
 
@@ -24,16 +24,16 @@ $idutente = $_GET['idutente'];
 	$sentieri = [];
 
 	$MySql = "SELECT *  FROM sentieri";
-	$Result = mysql_query($MySql);
-	while ( $res = mysql_fetch_array ($Result, MYSQL_ASSOC) ) {
+	$Result = mysqli_query($db, $MySql);
+	while ( $res = mysqli_fetch_array ($Result, MYSQLI_ASSOC) ) {
 		$sentieri[] = $res;
 	}
 
 	$MySql = "SELECT idsentiero , valsentiero, fdv, fdvmax FROM personaggio
 			WHERE  idutente = $idutente ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
-	$res = mysql_fetch_array ($Result);
+	$res = mysqli_fetch_array ($Result);
 
 
 

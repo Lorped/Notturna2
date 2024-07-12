@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-  include ('db.inc.php');
+  include ('db2.inc.php');  // MYSQLI //
 
   $idutente=$_GET['idutente'];
 
@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia  FROM skill_main
     LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
     WHERE tipologia = 0 ORDER BY nomeskill" ;
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $skill[] =  $res;
   }
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');  //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -31,17 +31,17 @@ $password = $request->password;
 //$password = "lor11ped";
 //$postdata = 1;
 
-$nome = mysql_real_escape_string($nome);
-$password = mysql_real_escape_string($password);
+$nome = mysqli_real_escape_string($db, $nome);
+$password = mysqli_real_escape_string($db, $password);
 
 
 if (isset($postdata) && $nome != "" && $password != "" ) {
 
 	$MySql = "SELECT * FROM utente WHERE nome = '$nome' AND password = '$password' ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
 
-	if ( $res = mysql_fetch_array($Result)   ) {
+	if ( $res = mysqli_fetch_array($Result)   ) {
 
 		$idutente = $res['idutente'];
 		$admin = $res['admin'];
@@ -49,16 +49,16 @@ if (isset($postdata) && $nome != "" && $password != "" ) {
 		$vampiro = 0 ;
 		$hunter = 0 ;
 		$MySql2 = "SELECT * FROM personaggio WHERE idutente = $idutente";
-		$Result2 = mysql_query ($MySql2);
-    if (mysql_errno()) { die ( mysql_errno().": ".mysql_error(). "  >>".$MySql2 ); }
-		if ( $res2 = mysql_fetch_array($Result2)   ) {
+		$Result2 = mysqli_query ($db, $MySql2);
+    if (mysqli_errno($db)) { die ( mysqli_errno($db).": ".mysqli_error($db). "  >>".$MySql2 ); }
+		if ( $res2 = mysqli_fetch_array($Result2)   ) {
 			$vampiro = 1 ;
 		}
 		$MySql2 = "SELECT * FROM HUNTERpersonaggio WHERE idutente = $idutente";
-		$Results2 = mysql_query ($MySql2);
-    if (mysql_errno()) { die ( mysql_errno().": ".mysql_error(). "  >>".$MySql2 ); }
+		$Results2 = mysqli_query ($db, $MySql2);
+    if (mysqli_errno($db)) { die ( mysqli_errno($db).": ".mysqli_error($db). "  >>".$MySql2 ); }
 
-		if ( $res2 = mysql_fetch_array($Results2)   ) {
+		if ( $res2 = mysqli_fetch_array($Results2)   ) {
 			$hunter = 1 ;
 		}
 

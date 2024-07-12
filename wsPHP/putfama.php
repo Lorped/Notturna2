@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -39,9 +39,9 @@ if ( isset($postdata) && $idutente != "" ) {
 
   $MySql = "SELECT fama1, fama2, fama3 FROM personaggio
     WHERE idutente = $idutente ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
-  $res = mysql_fetch_array ($Result);
+  $res = mysqli_fetch_array ($Result);
 
   $oldfama1 = $res['fama1'];
   $oldfama2 = $res['fama2'];
@@ -61,7 +61,7 @@ if ( isset($postdata) && $idutente != "" ) {
 
   $MySql = "UPDATE  personaggio SET fama1 = '$fama1' ,  fama2 = '$fama2' , fama3 = '$fama3'
     WHERE idutente = $idutente ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   if ( $au == 'A') {
@@ -69,11 +69,11 @@ if ( isset($postdata) && $idutente != "" ) {
   }
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
 
-  if (mysql_errno()) {
+  if (mysqli_errno($db)) {
     header("HTTP/1.1 403 Forbidden");
     die($MySql);
 

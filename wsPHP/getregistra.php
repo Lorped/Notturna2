@@ -16,70 +16,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');  //MYSQLI //
 
 
 
 $clan = [];
 $MySql = "SELECT idclan, nomeclan FROM clan ORDER BY nomeclan";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$clan[] = $res;
 }
 
 $background = [];
 $MySql = "SELECT *, 0 as livello FROM background_main ";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$background[] = $res;
 }
 
 $statuscama = [];
 $MySql = "SELECT idstatus, status FROM statuscama ";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$statuscama[] =$res;
 }
 
 $skill = [];
 $MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 0 ORDER BY nomeskill";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$skill[] =$res;
 }
 
 $attitudini = [];
 $MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 1";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$attitudini[] =$res;
 }
 
 $taumaturgie = [];
 $MySql = "SELECT * FROM taumaturgie_main ";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$taumaturgie[] =$res;
 }
 
 $necromanzie= [];
 $MySql = "SELECT * FROM necromanzie_main ";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$necromanzie[] =$res;
 }
 
 $sentieri = [];
 $MySql = "SELECT * FROM sentieri ";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$sentieri[] =$res;
 }
 
 $disciplinevili = [];
 $MySql = "SELECT * FROM discipline_main WHERE vili = 1 ";
-$Result = mysql_query($MySql);
-while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$disciplinevili[] =$res;
 }
 

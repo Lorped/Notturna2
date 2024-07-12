@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); // MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -30,21 +30,21 @@ $note = $request -> note;
 $urldt = $request -> urldt;
 
 //$nome = "lorenzo";
-//$password = "lor11ped";
+//$password = "";
 //$postdata = 1;
 
 
 if ( isset($postdata) && $idutente != "" ) {
 
-  $bio = mysql_real_escape_string ($bio);
-  $note = mysql_real_escape_string ($note);
-  $urldt = mysql_real_escape_string ($urldt);
+  $bio = mysqli_real_escape_string ($db, $bio);
+  $note = mysqli_real_escape_string ($db, $note);
+  $urldt = mysqli_real_escape_string ($db, $urldt);
 
   $MySql = "UPDATE  personaggio SET bio = '$bio' ,  note = '$note' , urldt = '$urldt'
     WHERE idutente = $idutente ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
-  if (mysql_errno()) {
+  if (mysqli_errno($db)) {
     header("HTTP/1.1 403 Forbidden");
     die($MySql);
 

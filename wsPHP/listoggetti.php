@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');  //MYSQLI //
 
 	$Atabcond = [
 		'ZERO',
@@ -34,18 +34,18 @@ include ('db.inc.php');
 	$oggetti = [];
 
 	$MySql = "SELECT * FROM oggetti order by idoggetto ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
-	while ( $res = mysql_fetch_array ($Result,MYSQL_ASSOC) ) {
+	while ( $res = mysqli_fetch_array ($Result,MYSQLI_ASSOC) ) {
 
 		$idoggetto = $res['idoggetto'];
 
 		$MySql2 = "SELECT * from cond_oggetti WHERE cond_oggetti.idoggetto = $idoggetto ";
-		$Result2 = mysql_query($MySql2);
+		$Result2 = mysqli_query($db, $MySql2);
 
 		$condizioni = [];
 		$condizioni2 = [];
-		while ( $res2 = mysql_fetch_array ($Result2,MYSQL_ASSOC) ) {
+		while ( $res2 = mysqli_fetch_array ($Result2,MYSQLI_ASSOC) ) {
 			$tipocond = $res2['tipocond'];
 
 			switch ( $tipocond ) {
@@ -55,22 +55,22 @@ include ('db.inc.php');
 				case 'S':
 					$ids=$res2['tabcond'];
 					$Mysqlx = "SELECT nomeskill FROM skill_main WHERE idskill = $ids";
-					$Resultx = mysql_query($Mysqlx);
-					$resx = mysql_fetch_array($Resultx);
+					$Resultx = mysqli_query($db, $Mysqlx);
+					$resx = mysqli_fetch_array($Resultx);
 					$cond = $resx['nomeskill'];
 					break;
 				case 'D':
 					$ids=$res2['tabcond'];
 					$Mysqlx="SELECT nomedisc FROM discipline_main WHERE iddisciplina = $ids";
-					$Resultx = mysql_query($Mysqlx);
-					$resx = mysql_fetch_array($Resultx);
+					$Resultx = mysqli_query($db, $Mysqlx);
+					$resx = mysqli_fetch_array($Resultx);
 					$cond = $resx['nomedisc'];
 					break;
 				case 'P':
 					$ids=$res2['tabcond'];
 					$Mysqlx="SELECT nomepotere FROM poteri_main WHERE idpotere = $ids";
-					$Resultx = mysql_query($Mysqlx);
-					$resx = mysql_fetch_array($Resultx);
+					$Resultx = mysqli_query($db, $Mysqlx);
+					$resx = mysqli_fetch_array($Resultx);
 					$cond = $resx['nomepotere'];
 					break;
 			}

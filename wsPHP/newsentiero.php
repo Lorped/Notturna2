@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
-
+include ('db2.inc.php');  //MYSQLI //
+ 
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
@@ -41,13 +41,13 @@ if ( isset($postdata) && $idutente != "" ) {
     $MySql = "UPDATE personaggio
       SET idsentiero = $idsentiero
       WHERE idutente = $idutente ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
 
     $MySql = "SELECT * from sentieri
       WHERE idsentiero = $idsentiero";
-    $Result = mysql_query($MySql);
-    $res = mysql_fetch_array($Result);
+    $Result = mysqli_query($db, $MySql);
+    $res = mysqli_fetch_array($Result);
     $sentiero = $res['sentiero'];
 
     $Azione = "Nuovo sentiero: ".$sentiero;
@@ -56,7 +56,7 @@ if ( isset($postdata) && $idutente != "" ) {
     }
     $MySql = "INSERT INTO logpx (idutente, px, Azione )
       VALUES ( $idutente, 0 , '$Azione' ) ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
 
 

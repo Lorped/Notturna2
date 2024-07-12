@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); // MYSQLI//
 
 $idutente = $_GET['idutente'];
 
@@ -25,8 +25,8 @@ $idutente = $_GET['idutente'];
 		LEFT JOIN statuscama on statuscama.idstatus = personaggio.idstatus
 		LEFT JOIN generazione on generazione.generazione = personaggio.generazione
 			WHERE  idutente = $idutente ";
-	$Result = mysql_query($MySql);
-	$res = mysql_fetch_array ($Result,MYSQL_ASSOC);
+	$Result = mysqli_query($db, $MySql);
+	$res = mysqli_fetch_array ($Result,MYSQLI_ASSOC);
 
 	$oldstatus = $res['idstatus'];
 
@@ -34,8 +34,8 @@ $idutente = $_GET['idutente'];
 
 
 	$MySql = "SELECT * FROM statuscama  WHERE idstatus = $oldstatus + 1 ";
-	$Result = mysql_query($MySql);
-	$res = mysql_fetch_array ($Result,MYSQL_ASSOC);
+	$Result = mysqli_query($db, $MySql);
+	$res = mysqli_fetch_array ($Result,MYSQLI_ASSOC);
 
 	$val_new = $res;
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); // MYSQL //
 
 
 $postdata = file_get_contents("php://input");
@@ -31,15 +31,15 @@ $au = $request -> au;
 
 
 //$nome = "lorenzo";
-//$password = "lor11ped";
+//$password = "";
 //$postdata = 1;
 
 
 if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello) ) {
 
   $MySql = "SELECT nomecontatto FROM contatti WHERE idcontatto = $idcontatto";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ( $Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ( $Result);
 
   $nomecontatto = $res ['nomecontatto'];
 
@@ -47,7 +47,7 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
   if ( $livello == 0) {
     $MySql = "DELETE FROM contatti
       WHERE idcontatto = $idcontatto";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
 
     $Azione = "Rimosso contatto ".$nomecontatto;
@@ -57,7 +57,7 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
   if ($livello != 0  ) {
     $MySql = "UPDATE contatti SET livello = $livello
       WHERE idcontatto = $idcontatto";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
     $Azione = "Contatto ".$nomecontatto.' a '.$livello;
   }
@@ -70,33 +70,33 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
   }
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   $MySql = "SELECT sum(livello) as s FROM contatti
   WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array($Result);
   $somma = $res['s'];
 
   if ( $somma == 0 ) {
     $MySql = "DELETE FROM background
     WHERE idutente = $idutente AND idback = 77 ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
   }
   if ( $somma != 0 AND $somma != 1 ) {
     $MySql = "UPDATE background
     SET livello = $somma
     WHERE idutente = $idutente AND idback = 77 ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
   }
   if (  $somma == 1 ) {
     $MySql = "DELETE FROM background
     WHERE idutente = $idutente AND idback = 77 ";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
     $MySql = " INSERT INTO background (idback, idutente, livello)
       VALUES (77, $idutente, 1 )";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
   }
 
 
@@ -104,7 +104,7 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
 
 
 
-  if (mysql_errno()) {
+  if (mysqli_errno($db)) {
     header("HTTP/1.1 403 Forbidden");
     die($MySql);
 

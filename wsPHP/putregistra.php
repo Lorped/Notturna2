@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-	include ('db.inc.php');
+	include ('db2.inc.php');  //MYSQLI //
 
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);
@@ -28,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	if (!isset($_POST)) die ("No post!");
 
 	$idutente = $request -> idutente;
-	$nomeplayer = mysql_real_escape_string($request -> aPG -> nomeplayer);
-	$nomepg = mysql_real_escape_string($request -> aPG -> nomepg);
+	$nomeplayer = mysqli_real_escape_string($db, $request -> aPG -> nomeplayer);
+	$nomepg = mysqli_real_escape_string($db, $request -> aPG -> nomepg);
 
 	$idclan = $request -> aPG -> idclan ;
 	$generazione = $request -> aPG -> generazione;
@@ -54,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	$valsentiero = $request -> aPG -> valsentiero;
 
-	$rifugio = mysql_real_escape_string( $request -> aPG -> rifugio);
-	$zona = mysql_real_escape_string(  $request -> aPG -> zona);
+	$rifugio = mysqli_real_escape_string( $db, $request -> aPG -> rifugio);
+	$zona = mysqli_real_escape_string( $db,  $request -> aPG -> zona);
 
 /************************************/
 
@@ -80,15 +80,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$MySql = "SELECT * from generazione where generazione = $generazione";
 
 //echo $MySql, "<br>";
-	$Result = mysql_query($MySql);
-	$res = mysql_fetch_array($Result);
+	$Result = mysqli_query($db, $MySql);
+	$res = mysqli_fetch_array($Result);
 	$bp1 = $res['bloodpmin'];
 
 	$MySql = "SELECT * from statuscama where idstatus = $idstatus";
 
 //echo $MySql, "<br>";
-	$Result = mysql_query($MySql);
-	$res = mysql_fetch_array($Result);
+	$Result = mysqli_query($db, $MySql);
+	$res = mysqli_fetch_array($Result);
 	$bp2 = $res['addbp'];
 
 	$bp = $bp1 + $bp2;
@@ -117,8 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 //echo $MySql, "<br>";
- 	mysql_query($MySql);
-	if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+ 	mysqli_query($db, $MySql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 
 	/*******************************************/
 
@@ -132,8 +132,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			$MySql = "INSERT INTO background ( idback, idutente, livello ) VALUES ( $idback, $idutente, $livello )";
 
 //echo $MySql, "<br>";
-			mysql_query($MySql);
-			if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 
 		}
 	}
@@ -142,13 +142,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	foreach ($contatti as $cc ) {
 		$livello = $cc -> livello;
-		$nomecontatto = mysql_real_escape_string( $cc -> nomecontatto);
+		$nomecontatto = mysqli_real_escape_string( $db, $cc -> nomecontatto);
 		if ( $livello != 0) {
 			$MySql = "INSERT INTO contatti (  idutente, livello, nomecontatto ) VALUES (  $idutente, $livello, '$nomecontatto' )";
 
 //echo $MySql, "<br>";
-			mysql_query($MySql);
-			if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 		}
 	}
 
@@ -164,8 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 										VALUES ( $iddisciplina, $idutente, $livello, 'S' )";
 
 //echo $MySql, "<br>";
-			mysql_query($MySql);
-			if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 
 		} else {
 			if ( $livello != 0 ) {
@@ -173,8 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 											VALUES ( $iddisciplina, $idutente, $livello, 'N' )";
 
 //echo $MySql, "<br>";
-				mysql_query($MySql);
-				if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+				mysqli_query($db, $MySql);
+				if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 
 			}
 		}
@@ -196,8 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 											VALUES ( $idtaum, $idutente, $livello, $primaria )";
 
 //echo $MySql, "<br>";
-				mysql_query($MySql);
-				if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+				mysqli_query($db, $MySql);
+				if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 			}
 			$primaria++;
 
@@ -221,8 +221,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 											VALUES ( $idnecro, $idutente, $livello, $primaria )";
 
 //echo $MySql, "<br>";
-				mysql_query($MySql);
-				if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+				mysqli_query($db, $MySql);
+				if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 			}
 			$primaria++;
 
@@ -240,8 +240,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			$MySql = "INSERT INTO skill (  idutente, livello, idskill ) VALUES (  $idutente, $livello, $idskill )";
 
 //echo $MySql, "<br>";
-			mysql_query($MySql);
-			if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 		}
 	}
 
@@ -253,8 +253,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			$MySql = "INSERT INTO skill (  idutente, livello, idskill ) VALUES (  $idutente, $livello, $idskill )";
 
 //echo $MySql, "<br>";
-			mysql_query($MySql);
-			if (mysql_errno()) die ( mysql_errno().": ".mysql_error()."+". $MySql );
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 		}
 	}
 

@@ -16,15 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 
 
 	$MySql = "SELECT idutente, nomepg, 'V' as tipo from personaggio ORDER BY nomepg";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
 	$pg = [];
-	while ( $res = mysql_fetch_array ($Result) ) {
+	while ( $res = mysqli_fetch_array ($Result) ) {
 		$pg[] = $res;
 	}
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -40,8 +40,8 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
   if ( $necrotaum == 't' ) {
 
     $MySql = "SELECT * FROM rituali_t_main WHERE idrituale = $idrituale";
-    $Result = mysql_query($MySql);
-    $res = mysql_fetch_array ($Result);
+    $Result = mysqli_query($db, $MySql);
+    $res = mysqli_fetch_array ($Result);
 
     $nomerituale = $res['nomerituale'];
     $livello = $res['livello'];
@@ -50,13 +50,13 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
 
     $MySql = "INSERT INTO rituali_t (idrituale , idutente)
       VALUES ($idrituale , $idutente)";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
   } else {
 
     $MySql = "SELECT * FROM rituali_n_main WHERE idrituale = $idrituale";
-    $Result = mysql_query($MySql);
-    $res = mysql_fetch_array ($Result);
+    $Result = mysqli_query($db, $MySql);
+    $res = mysqli_fetch_array ($Result);
 
     $nomerituale = $res['nomerituale'];
     $livello = $res['livello'];
@@ -65,8 +65,8 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
 
     /** check a costo zero **/
     $MySql = "SELECT count(*) as c FROM rituali_n WHERE idutente=$idutente";
-    $Result = mysql_query($MySql);
-    $res = mysql_fetch_array ($Result);
+    $Result = mysqli_query($db, $MySql);
+    $res = mysqli_fetch_array ($Result);
 
     if ( $res['c'] == 0 ) {
       $spesapx = 0 ;
@@ -75,19 +75,19 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
 
     $MySql = "INSERT INTO rituali_n (idrituale , idutente)
       VALUES ($idrituale , $idutente)";
-    $Result = mysql_query($MySql);
+    $Result = mysqli_query($db, $MySql);
 
   }
 
   $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $Azione = 'Acquisto rituale ' . $livello . "." . $nomerituale ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
 

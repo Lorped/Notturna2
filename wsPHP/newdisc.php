@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQL//
 
 
 $postdata = file_get_contents("php://input");
@@ -36,8 +36,8 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
 
   $MySql = "SELECT * FROM discipline_main
   WHERE iddisciplina = $iddisciplina";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array($Result);
 
 
   $nomedisc = $res['nomedisc'];
@@ -46,17 +46,17 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
 
   $MySql = "INSERT INTO discipline (iddisciplina, livello, idutente, DiClan)
     VALUES ( $iddisciplina , 1 , $idutente , 'N') ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $Azione = "Acquisita ".$nomedisc ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
 

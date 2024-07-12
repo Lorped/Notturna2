@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 
-  include ('db.inc.php');
+  include ('db2.inc.php'); //MYSQLI //
 
   $idutente=$_GET['idutente'];
 
@@ -28,18 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 				WHERE idutente = '$idutente'
 				AND discipline.iddisciplina != 98 AND discipline.iddisciplina != 99
 				ORDER BY discipline.iddisciplina";
-	$Result = mysql_query($MySql);
-	while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	$Result = mysqli_query($db, $MySql);
+	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 		$iddisciplina = $res ['iddisciplina'];
-		$livellodisc =  $res[livello];
+		$livellodisc =  $res['livello'];
 
 
 		$poteri = [];
 		$MySql2 = "SELECT * FROM poteri
 			LEFT join poteri_main on poteri.idpotere = poteri_main.idpotere
 			WHERE poteri_main.iddisciplina = $iddisciplina AND idutente = '$idutente'";
-		$Result2 = mysql_query($MySql2);
-		while ( $res2 = mysql_fetch_array($Result2,MYSQL_ASSOC)   ) {
+		$Result2 = mysqli_query($db, $MySql2);
+		while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ) {
 			$poteri[] =  $res2;
 		}
 
@@ -57,16 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 				AND livellopot <= $livellodisc
 				ORDER BY livellopot ASC";
 
-			$Result2 = mysql_query($MySql2);
-			while ($res2 = mysql_fetch_array($Result2,MYSQL_ASSOC)) {
+			$Result2 = mysqli_query($db, $MySql2);
+			while ($res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)) {
 				$disabled=0;
 
 				if ( $res2['discprereq'] != "" ) {
 			 		$dp = $res2['discprereq'];
 					$ldp = $res2['livdiscprereq'];
 				 	$MySql3 = "SELECT count(*) as c from discipline WHERE iddisciplina=$dp AND idutente=$idutente and livello>=$ldp ";
-				 	$Result3 = mysql_query($MySql3);
-				 	$res3 = mysql_fetch_array($Result3);
+				 	$Result3 = mysqli_query($db, $MySql3);
+				 	$res3 = mysqli_fetch_array($Result3);
 				 	if ( $res3['c'] == 0 ) {
 						$disabled=1;
 					}
@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 				 	$dp = $res2['skillprereq'];
 				 	$ldp = $res2['livskillprereq'];
 					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
-			 		$Result3 = mysql_query($MySql3);
-			 		$res3 = mysql_fetch_array($Result3);
+			 		$Result3 = mysqli_query($db, $MySql3);
+			 		$res3 = mysqli_fetch_array($Result3);
 				 	if ( $res3['c'] == 0 ) {
 						$disabled=1;
 					}
@@ -87,8 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			 		$dp = $res2['attrprereq'];
 			 		$ldp = $res2['livattrprereq'];
 					$MySql3 = "SELECT $dp FROM personaggio WHERE idutente=$idutente";
-					$Result3 = mysql_query($MySql3);
-					$res3 = mysql_fetch_array ($Result3);
+					$Result3 = mysqli_query($db, $MySql3);
+					$res3 = mysqli_fetch_array ($Result3);
 			 		if ( $res3[$dp] < $ldp) {
 						$disabled = 1;
 					}
@@ -97,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 				if ( $res2['potereprereq'] != "") {
 			 		$dp = $res2['potereprereq'];
 			 		$MySql3 = "SELECT count(*) as c from poteri WHERE idpotere=$dp AND idutente=$idutente  ";
-			 		$Result3 = mysql_query($MySql3);
-			 		$res3 = mysql_fetch_array($Result3);
+			 		$Result3 = mysqli_query($db, $MySql3);
+			 		$res3 = mysqli_fetch_array($Result3);
 			 		if ( $res3['c'] == 0 ) {
 						$disabled = 1;
 					}
@@ -112,16 +112,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 					$ldp = $res2['livskillprereq'];
 					$dp = 23 ;  /* RISSA, oltre a 24 = mischia*/
 					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
-			 		$Result3 = mysql_query($MySql3);
-			 		$res3 = mysql_fetch_array($Result3);
+			 		$Result3 = mysqli_query($db, $MySql3);
+			 		$res3 = mysqli_fetch_array($Result3);
 				 	if ( $res3['c'] == 0 ) {
 						$sk1 = 1;
 					}
 					$ldp = $res2['livskillprereq'];
 					$dp = 24 ;  /* MISCHIA, oltre a 23 = rissa*/
 					$MySql3 = "SELECT count(*) as c from skill WHERE idskill=$dp AND idutente=$idutente and livello>=$ldp ";
-			 		$Result3 = mysql_query($MySql3);
-			 		$res3 = mysql_fetch_array($Result3);
+			 		$Result3 = mysqli_query($db, $MySql3);
+			 		$res3 = mysqli_fetch_array($Result3);
 				 	if ( $res3['c'] == 0 ) {
 						$sk2 = 1;
 					}

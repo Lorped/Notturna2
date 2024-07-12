@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');
 
 $idutente = $_GET['idutente'];
 
@@ -27,10 +27,10 @@ $idutente = $_GET['idutente'];
 		$MySql="SELECT * FROM rituali_t_main
 			WHERE idrituale NOT IN ( select idrituale from rituali_t where idutente=$idutente )
 			AND livello = $lvl ";
-		$Result=mysql_query($MySql);
+		$Result=mysqli_query($db, $MySql);
 
 		$rituali_t_x = [];
-		while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+		while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 			$rituali_t_x [] = $res ;
 		}
 
@@ -45,10 +45,10 @@ $idutente = $_GET['idutente'];
 		$MySql="SELECT * FROM rituali_n_main
 			WHERE idrituale NOT IN ( select idrituale from rituali_n where idutente=$idutente )
 			AND livello = $lvl ";
-		$Result=mysql_query($MySql);
+		$Result=mysqli_query($db, $MySql);
 
 		$rituali_n_x = [];
-		while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+		while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 			$rituali_n_x [] = $res ;
 		}
 

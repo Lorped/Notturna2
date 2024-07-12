@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-  include ('db.inc.php');
+  include ('db2.inc.php');  //MYSQLI //
 
   $idutente=$_GET['idutente'];
 
@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
   /* controlli periodici */
 	$MM="DELETE FROM dadi WHERE DATE_ADD( Ora , INTERVAL 24 HOUR )<NOW()";
-	mysql_query($MM);
+	mysqli_query($db, $MM);
 
-  controlla_ps ( $idutente) ;
-  controlla_fdv ( $idutente) ;
-  controlla_legami ($idutente) ;
+  controlla_ps ( $idutente, $db) ;
+  controlla_fdv ( $idutente, $db) ;
+  controlla_legami ($idutente, $db) ;
   /************************/
 
   $user = "";
@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     LEFT JOIN blood ON personaggio.bloodp=blood.bloodp
     WHERE idutente = '$idutente' ";
 
-  $Result = mysql_query($MySql);
-  if ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  if ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $user = $res;
     } else {
     header("HTTP/1.1 404 Not Found");
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         LEFT JOIN discipline_main ON discipline_main.iddisciplina=discipline.iddisciplina
         WHERE idutente = '$idutente'
         ORDER BY discipline.iddisciplina";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $idd = $res ['iddisciplina'];
 
     $poteri = [];
@@ -68,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     $MySql2 = "SELECT * FROM poteri
       LEFT join poteri_main on poteri.idpotere = poteri_main.idpotere
       WHERE poteri_main.iddisciplina = $idd AND idutente = '$idutente'";
-    $Result2 = mysql_query($MySql2);
-    while ( $res2 = mysql_fetch_array($Result2,MYSQL_ASSOC)   ) {
+    $Result2 = mysqli_query($db, $MySql2);
+    while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ) {
       $poteri[] =  $res2;
     }
 
@@ -85,16 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT  *  FROM taumaturgie
         LEFT JOIN taumaturgie_main ON taumaturgie_main.idtaum=taumaturgie.idtaum
         WHERE idutente = '$idutente' ORDER BY principale ASC";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 		$idd = $res ['idtaum'];
 		$lid = $res ['livello'];
 
 		$MySql2 = "SELECT * FROM taumaturgie2
 						WHERE idtaum = $idd AND livello <= $lid";
-		$Result2 = mysql_query($MySql2);
+		$Result2 = mysqli_query($db, $MySql2);
 		$taums = [];
-		while ( $res2 = mysql_fetch_array($Result2,MYSQL_ASSOC)   ) {
+		while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ) {
 			$taums[] = 	$res2;
 		}
 		$taumaturgie[] =  [
@@ -109,16 +109,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT  *  FROM necromanzie
         LEFT JOIN necromanzie_main ON necromanzie_main.idnecro=necromanzie.idnecro
         WHERE idutente = '$idutente' ORDER BY principale ASC ";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 		$idd = $res ['idnecro'];
 		$lid = $res ['livello'];
 
 		$MySql2 = "SELECT * FROM necromanzie2
 						WHERE idnecro = $idd AND livello <= $lid";
-		$Result2 = mysql_query($MySql2);
+		$Result2 = mysqli_query($db, $MySql2);
 		$necros = [];
-		while ( $res2 = mysql_fetch_array($Result2,MYSQL_ASSOC)   ) {
+		while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ) {
 			$necros[] = 	$res2;
 		}
 		$necromanzie[] =  [
@@ -134,8 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         LEFT JOIN background_main ON background_main.idback=background.idback
         WHERE idutente = '$idutente'
         ORDER BY background.idback";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $background[] =  $res;
   }
 
@@ -145,8 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT  *  FROM contatti
         WHERE idutente = '$idutente'
         ORDER BY livello DESC";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $contatti[] =  $res;
   }
 
@@ -156,8 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia  FROM skill_main
     LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
     WHERE tipologia = 0 ORDER BY nomeskill" ;
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $skill[] =  $res;
   }
 
@@ -167,8 +167,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia FROM skill_main
 		LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
 		WHERE tipologia = 1 ORDER BY nomeskill" ;
-	$Result = mysql_query($MySql);
-	while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+	$Result = mysqli_query($db, $MySql);
+	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 		$attitudini[] =  $res;
 	}
 
@@ -179,8 +179,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT  *  FROM pregidifetti
     LEFT JOIN pregidifetti_main ON pregidifetti_main.idpregio=pregidifetti.idpregio
     WHERE idutente = '$idutente' ";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $pregidifetti[] =  $res;
   }
 
@@ -191,16 +191,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   $MySql = "SELECT  *  FROM rituali_t
     LEFT JOIN rituali_t_main ON rituali_t_main.idrituale=rituali_t.idrituale
     WHERE idutente = '$idutente' ORDER BY livello ASC";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $rituali[] =  $res;
   }
 
   $MySql = "SELECT * FROM rituali_n
     LEFT JOIN rituali_n_main ON rituali_n_main.idrituale=rituali_n.idrituale
     WHERE idutente = '$idutente' ORDER BY livello ASC";
-  $Result = mysql_query($MySql);
-  while ( $res = mysql_fetch_array($Result,MYSQL_ASSOC)   ) {
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $rituali[] =  $res;
   }
 
@@ -208,49 +208,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
   /***  PF **/
   $Mysql="SELECT attutimento FROM personaggio WHERE idutente=$idutente";
-  $Result=mysql_query($Mysql);
-  if ( $res=mysql_fetch_array($Result)) {
+  $Result=mysqli_query($db, $Mysql);
+  if ( $res=mysqli_fetch_array($Result)) {
     $attutimento=$res['attutimento'];
   }
 
 	$robustezza = 0;
   $Mysql="SELECT * FROM discipline WHERE iddisciplina = 12 and idutente=$idutente";
-  $Result=mysql_query($Mysql);
-  if ( $res=mysql_fetch_array($Result)) {
+  $Result=mysqli_query($db, $Mysql);
+  if ( $res=mysqli_fetch_array($Result)) {
     $robustezza=$res['livello'];
   }
 
 	$schivare = 0 ;
   $Mysql="SELECT * FROM skill WHERE idskill = 28 and idutente=$idutente";
-  $Result=mysql_query($Mysql);
-  if ( $res=mysql_fetch_array($Result)) {
+  $Result=mysqli_query($db, $Mysql);
+  if ( $res=mysqli_fetch_array($Result)) {
     $schivare=$res['livello'];
   }
 
   $pf = (3+$attutimento)*2 + $robustezza + $schivare ;
 
   $Mysql="SELECT * FROM poteri WHERE idpotere = 70 and idutente=$idutente";
-  $Result=mysql_query($Mysql);
-  if ( $res=mysql_fetch_array($Result)) {
+  $Result=mysqli_query($db, $Mysql);
+  if ( $res=mysqli_fetch_array($Result)) {
     $pf = $pf + $robustezza + 5 ;
   }
 
   $Mysql="SELECT * FROM poteri WHERE idpotere = 74 and idutente=$idutente";
-  $Result=mysql_query($Mysql);
-  if ( $res=mysql_fetch_array($Result)) {
+  $Result=mysqli_query($db, $Mysql);
+  if ( $res=mysqli_fetch_array($Result)) {
     $pf = $pf + 5 ;   //Resilienza già +5
   }
 
   // ferita permanente -3 PF
   $Mysql="SELECT * FROM pregidifetti WHERE idpregio = 11 and idutente=$idutente";
-  $Result=mysql_query($Mysql);
-  if ( $res=mysql_fetch_array($Result)) {
+  $Result=mysqli_query($db, $Mysql);
+  if ( $res=mysqli_fetch_array($Result)) {
     $pf=$pf-3;
   }
   // 9 vite +10 PF
   $Mysql="SELECT * FROM pregidifetti WHERE idpregio = 126 and idutente=$idutente";
-  $Result=mysql_query($Mysql);
-  if ( $res=mysql_fetch_array($Result)) {
+  $Result=mysqli_query($db, $Mysql);
+  if ( $res=mysqli_fetch_array($Result)) {
     $pf=$pf+10;
   }
 
@@ -286,11 +286,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 //  ================================  //
 
-function controlla_fdv ( $idutente ) {    //controllo-aggiorno fdv
+function controlla_fdv ( $idutente , $db ) {    //controllo-aggiorno fdv
 
   $Mysql="SELECT fdv,fdvmax,lastfdv FROM personaggio WHERE idutente=$idutente";
-  $Result=mysql_query ($Mysql);
-  $res=mysql_fetch_array($Result);
+  $Result=mysqli_query ($db, $Mysql);
+  $res=mysqli_fetch_array($Result);
 
   $fdv=$res['fdv'];
   $fdvmax=$res['fdvmax'];
@@ -298,7 +298,7 @@ function controlla_fdv ( $idutente ) {    //controllo-aggiorno fdv
 
   if ( $fdv == $fdvmax ) {  // tutto ok
     $Mysql="UPDATE personaggio SET lastfdv=NOW()  WHERE idutente=$idutente";
-    $Result=mysql_query ($Mysql);
+    $Result=mysqli_query ($db, $Mysql);
 
   } else {
     $base=strtotime("2017-01-01 18:00:00");
@@ -319,7 +319,7 @@ function controlla_fdv ( $idutente ) {    //controllo-aggiorno fdv
       $newlastfdvstring=date("Y-m-d H:i:s",$newlastfdv );
 
       $Mysql="UPDATE personaggio SET fdv = $newfdv , lastfdv = '$newlastfdvstring' WHERE idutente=$idutente";
-      $Result=mysql_query ($Mysql);
+      $Result=mysqli_query ($db, $Mysql);
 
     } else {
       // echo "<br>da quando ho controlato fdv non è passato un tramonto";
@@ -329,14 +329,14 @@ function controlla_fdv ( $idutente ) {    //controllo-aggiorno fdv
 
 
 
-function controlla_ps ( $idutente) {  //inizio test su ps
+function controlla_ps ( $idutente , $db) {  //inizio test su ps
 
   $Mysql="SELECT PScorrenti, sete, addsete, lastps FROM personaggio
     LEFT JOIN statuscama ON personaggio.idstatus = statuscama.idstatus
     LEFT JOIN blood ON personaggio.bloodp = blood.bloodp
   WHERE idutente=$idutente";
-  $Result=mysql_query ($Mysql);
-  $res=mysql_fetch_array($Result);
+  $Result=mysqli_query ($db, $Mysql);
+  $res=mysqli_fetch_array($Result);
 
   $PScorrenti=$res['PScorrenti'];
   $setetot=$res['sete']+$res['addsete'];
@@ -353,19 +353,19 @@ function controlla_ps ( $idutente) {  //inizio test su ps
     if ( $diff > 1 ) {
       $newlastps=date("Y-m-d H:i:s",$now );
       $Mysql="UPDATE personaggio SET PScorrenti = $setetot , lastps = '$newlastps' WHERE idutente=$idutente";
-      $Result=mysql_query ($Mysql);
+      $Result=mysqli_query ($db, $Mysql);
     }
   }
 }  //fine test su ps
 
-function controlla_legami ($idutente) {
+function controlla_legami ($idutente, $db) {
   // legami
   $Mysql="DELETE FROM legami WHERE target = $idutente and livello = 1 and (DATE_ADD(dataultima, INTERVAL 60 DAY) < NOW())";
-  $Result = mysql_query($Mysql);
+  $Result = mysqli_query($db, $Mysql);
   $Mysql="UPDATE legami SET livello=1 , dataultima=NOW() WHERE target = $idutente and livello = 2 and (DATE_ADD(dataultima, INTERVAL 150 DAY) < NOW())";
-  $Result = mysql_query($Mysql);
+  $Result = mysqli_query($db, $Mysql);
   $Mysql="UPDATE legami SET livello=2 , dataultima=NOW() WHERE target = $idutente and livello = 3 and (DATE_ADD(dataultima, INTERVAL 300 DAY) < NOW())";
-  $Result = mysql_query($Mysql);
+  $Result = mysqli_query($db, $Mysql);
 }
 
 

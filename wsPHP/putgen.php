@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -29,7 +29,7 @@ $generazione = $request -> generazione;
 $au = $request -> au;
 
 //$nome = "lorenzo";
-//$password = "lor11ped";
+//$password = "";
 //$postdata = 1;
 
 
@@ -37,14 +37,14 @@ if ( isset($postdata) && $idutente != "" ) {
 
   $MySql = "SELECT bloodpmin from generazione
     WHERE generazione = $generazione";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
   $bloodpmin = $res['bloodpmin'];
 
   $MySql = "SELECT bloodp from personaggio
     WHERE idutente = $idutente ";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array ($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array ($Result);
   $bloodp = $res['bloodp'];
 
   if ( $bloodp < $bloodpmin ) {
@@ -54,7 +54,7 @@ if ( isset($postdata) && $idutente != "" ) {
 
   $MySql = "UPDATE  personaggio SET generazione = '$generazione' , bloodp = $bloodp
     WHERE idutente = $idutente ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   $Azione = "Generazione a ".$generazione;
@@ -64,11 +64,11 @@ if ( isset($postdata) && $idutente != "" ) {
   }
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
 
-  if (mysql_errno()) {
+  if (mysqli_errno($db)) {
     header("HTTP/1.1 403 Forbidden");
     die($MySql);
 

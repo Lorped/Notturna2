@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); // MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -35,15 +35,15 @@ $email = $request -> email;
 
 if ( isset($postdata) && $nome != "" && $password != "" && $email != "") {
 
-  $nome = mysql_real_escape_string ($nome);
-  $password = mysql_real_escape_string ($password);
-  $email = mysql_real_escape_string ($email);
+  $nome = mysqli_real_escape_string ($db, $nome);
+  $password = mysqli_real_escape_string ($db, $password);
+  $email = mysqli_real_escape_string ($db, $email);
 
   $MySql = "INSERT INTO utente (nome, password, email)
     VALUES ( '$nome' , '$password', '$email') ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
-  if (mysql_errno()) {
+  if (mysqli_errno($db)) {
     header("HTTP/1.1 401 Unauthorized");
     die();
 

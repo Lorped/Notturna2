@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php');  //MYSQLI //
 
 $idutente = $_GET['idutente'];
 
@@ -26,9 +26,9 @@ $idutente = $_GET['idutente'];
 	$MySql="SELECT * FROM pregidifetti_main
 			WHERE idpregio NOT IN ( select idpregio from pregidifetti where idutente=$idutente )
 			AND classe = 'F' ORDER BY abs(valore) ";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 		if ( $res['valore'] <0 ) {
 			$difetti_f [] = $res;
 		} else {
@@ -43,9 +43,9 @@ $idutente = $_GET['idutente'];
 	$MySql="SELECT * FROM pregidifetti_main
 			WHERE idpregio NOT IN ( select idpregio from pregidifetti where idutente=$idutente )
 			AND classe = 'M' ORDER BY abs(valore) ";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 		if ( $res['valore'] <0 ) {
 			$difetti_m [] = $res;
 		} else {
@@ -61,9 +61,9 @@ $idutente = $_GET['idutente'];
 	$MySql="SELECT * FROM pregidifetti_main
 			WHERE idpregio NOT IN ( select idpregio from pregidifetti where idutente=$idutente )
 			AND classe = 'S' ORDER BY abs(valore) ";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 		if ( $res['valore'] <0 ) {
 			$difetti_s [] = $res;
 		} else {
@@ -79,9 +79,9 @@ $idutente = $_GET['idutente'];
 	$MySql="SELECT * FROM pregidifetti_main
 			WHERE idpregio NOT IN ( select idpregio from pregidifetti where idutente=$idutente )
 			AND classe = 'X' ORDER BY abs(valore) ";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 		if ( $res['valore'] <0 ) {
 			$difetti_x [] = $res;
 		} else {

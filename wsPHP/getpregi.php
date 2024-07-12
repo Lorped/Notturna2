@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2 .inc.php'); //MYSQLI//
 
 $idutente = $_GET['idutente'];
 
@@ -26,9 +26,9 @@ $idutente = $_GET['idutente'];
 	$MySql="SELECT * FROM pregidifetti
 			LEFT JOIN pregidifetti_main on pregidifetti.idpregio = pregidifetti_main.idpregio
 			WHERE  idutente = $idutente ";
-	$Result=mysql_query($MySql);
+	$Result=mysqli_query($db, $MySql);
 
-	while ( $res=mysql_fetch_array($Result,MYSQL_ASSOC) ) {
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
 		if ( $res['valore'] < 0 ) {
 			$difetti [] = $res;
 		} else {

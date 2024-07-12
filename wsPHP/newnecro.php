@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -37,8 +37,8 @@ if ( isset($postdata) && $idutente != "" && $idnecro != "" ) {
 
   $MySql = "SELECT * FROM necromanzie_main
     WHERE idnecro = $idnecro ";
-  $Result = mysql_query($MySql);
-  $res = mysql_fetch_array($Result);
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array($Result);
 
   $nometaum = $res['nomenecro'];
 
@@ -46,17 +46,17 @@ if ( isset($postdata) && $idutente != "" && $idnecro != "" ) {
 
   $MySql = "INSERT INTO necromanzie ( idnecro, livello, idutente, principale)
     VALUES ( $idnecro, 1 , $idutente , $pricipale ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
     WHERE idutente = $idutente";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
   $Azione = 'Acquisita '. $nometaum . ' a 1'  ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -2 , '$Azione' ) ";
-  $Result = mysql_query($MySql);
+  $Result = mysqli_query($db, $MySql);
 
 
   header("HTTP/1.1 200 OK");

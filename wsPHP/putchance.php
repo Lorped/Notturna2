@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db.inc.php');
+include ('db2.inc.php'); //MYSQLI //
 
 
 	$postdata = file_get_contents("php://input");
@@ -26,7 +26,7 @@ include ('db.inc.php');
 
 
 	$MySql = "UPDATE chanceviolazione SET chance = $chance  ";
-	$Result = mysql_query($MySql);
+	$Result = mysqli_query($db, $MySql);
 
 	$out="OK";
 
