@@ -22,6 +22,9 @@
     <mat-card-title>
       Log Spesa PX (e modifiche extra)
     </mat-card-title>
+    <mat-card-subtitle>
+      Eventi a Notturna {{myeventi}} <span *ngIf="eventodata !='' "><br>Ultimo evento: {{eventodata}} </span>
+    </mat-card-subtitle>
     <mat-card-content>
       <div class="columns">
         <div class="column bigger">

@@ -8,6 +8,11 @@ export interface LogPx {
   data: string;
 }
 
+export interface Eventi {
+  eventi: string;
+  eventodata: string;
+}
+
 @Component({
   selector: 'app-logpx',
   templateUrl: './logpx.component.html',
@@ -17,6 +22,9 @@ export class LogpxComponent implements OnInit {
 
   logpx: Array<LogPx> = [];
   idutente = 0;
+  myeventi = 0;
+  eventodata = '';
+
 
   constructor( private schedaservice: SchedaService) { }
 
@@ -26,6 +34,15 @@ export class LogpxComponent implements OnInit {
     .subscribe(
       (data: any) => {
         this.logpx = data;
+      }
+    );
+    this.schedaservice.geteventi(this.idutente)
+    .subscribe(
+      (data: any) => {
+        this.myeventi = data.eventi;
+        this.eventodata = data.eventodata;
+        console.log(this.myeventi);
+        console.log(this.eventodata);
       }
     );
 

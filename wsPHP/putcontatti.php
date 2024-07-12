@@ -112,7 +112,7 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
 
       header("HTTP/1.1 200 OK");
 
-      $out = "OK";
+      $out = "OK"; 
       $out = json_encode ($out, JSON_UNESCAPED_UNICODE);
       echo $out;
 

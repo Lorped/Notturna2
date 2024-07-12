@@ -58,6 +58,10 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getlogpx.php'+'?idutente='+idutente );
   }
 
+  geteventi(idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/geteventi.php'+'?idutente='+idutente );
+  }
+
   getnecrotaum(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getnecrotaum.php'+'?idutente='+idutente );
   }
