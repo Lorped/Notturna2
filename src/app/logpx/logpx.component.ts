@@ -41,8 +41,8 @@ export class LogpxComponent implements OnInit {
       (data: any) => {
         this.myeventi = data.eventi;
         this.eventodata = data.eventodata;
-        console.log(this.myeventi);
-        console.log(this.eventodata);
+        //console.log(this.myeventi);
+        //console.log(this.eventodata);
       }
     );
 

@@ -20,7 +20,7 @@ include ('db2.inc.php'); // MYSQL //
 
 $idutente = $_GET['idutente'];
 
-	$MySql="SELECT * FROM logpx WHERE idutente=$idutente ORDER BY data ASC";
+	$MySql="SELECT * FROM logpx WHERE idutente=$idutente ORDER BY data DESC";
 	$Result=mysqli_query($db, $MySql);
 
 	$logpx = [];
