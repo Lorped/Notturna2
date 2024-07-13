@@ -35,7 +35,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.globalstatus);
+    // console.log(this.globalstatus);
     if (this.globalstatus.lastpg != 0 ){
       this.selectedPG = String( this.globalstatus.lastpg);
     }

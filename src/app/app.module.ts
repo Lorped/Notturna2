@@ -59,6 +59,7 @@ import { OggettiComponent } from './oggetti/oggetti.component';
 import { CambiaoggComponent } from './cambiaogg/cambiaogg.component';
 import { ChatComponent } from './chat/chat.component';
 import { RubricaComponent } from './rubrica/rubrica.component';
+import { EventiComponent } from './eventi/eventi.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { RubricaComponent } from './rubrica/rubrica.component';
     OggettiComponent,
     CambiaoggComponent,
     ChatComponent,
-    RubricaComponent
+    RubricaComponent,
+    EventiComponent
   ],
   imports: [
     BrowserModule,

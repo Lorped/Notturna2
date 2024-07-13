@@ -22,6 +22,7 @@ import { OggettiComponent } from "./oggetti/oggetti.component";
 import { CambiaoggComponent } from "./cambiaogg/cambiaogg.component";
 import { ChatComponent } from "./chat/chat.component";
 import { RubricaComponent } from "./rubrica/rubrica.component";
+import { EventiComponent } from './eventi/eventi.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -46,6 +47,7 @@ const routes: Routes = [
   { path: 'cambiaogg/:id', component: CambiaoggComponent },
   { path: 'chat', component: ChatComponent },
   { path: 'rubrica', component: RubricaComponent },
+  { path: 'eventi', component: EventiComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

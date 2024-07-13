@@ -1,0 +1,91 @@
+<div>
+    <p>
+    <mat-toolbar>
+      <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+    </mat-toolbar>
+  </p>
+</div>
+
+<mat-sidenav-container>
+    <mat-sidenav class="sidenav" #sidenav mode="side"  >
+      <app-sideadm></app-sideadm>
+    </mat-sidenav>
+    <mat-sidenav-content>
+  
+  
+        <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
+            <p>
+            <mat-card>
+              <mat-card-title>
+                Eventi
+              </mat-card-title>
+
+              <mat-card-content>
+                <div class="columns">
+                <!--
+                  <div class="column bigger">
+                    IDutente
+                  </div>
+                -->
+                  <div class="column bigger">
+                    Giocatore
+                  </div>
+                  <div class="column bigger">
+                    PG Principale
+                  </div>
+                  <div class="column bigger">
+                    Email
+                  </div>
+                  <div class="column bigger">
+                    Eventi
+                  </div>
+                  <div class="column bigger">
+                    PX
+                  </div>
+                  <div class="column bigger">
+                    Ultimo Evento
+                  </div>
+                </div>
+                <div class="columns">
+                  <div class="column">
+                    <hr>
+                  </div>
+                </div>
+                <div class="columns" *ngFor="let fu of fulleventi">
+                <!-- 
+                   <div class="column">
+                    {{fu.idutente}}
+                  </div>
+                -->
+                  <div class="column">
+                    {{fu.nomeplayer}}
+                  </div>
+                  <div class="column ">
+                    {{fu.nomepg}}
+                  </div>
+                  <div class="column ">
+                    {{fu.email}}
+                  </div>
+                  <div class="column ">
+                    {{fu.eventi}}
+                  </div>
+                  <div class="column ">
+                    {{fu.xp}}
+                  </div>
+                  <div class="column ">
+                    {{fu.eventodata}}
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          
+          </div>
+          
+  
+  
+    </mat-sidenav-content>
+</mat-sidenav-container>
+  
