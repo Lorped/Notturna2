@@ -20,7 +20,7 @@ include ('db2.inc.php'); // MYSQL //
 
 
 
-	$MySql="SELECT segreteria.idutente, personaggio.nomeplayer, personaggio.nomepg , utente.email, segreteria.eventi, personaggio.xp, segreteria.eventodata 
+	$MySql="SELECT segreteria.idutente, personaggio.nomeplayer, personaggio.nomepg , utente.email, segreteria.eventi, personaggio.xp, segreteria.eventodata , segreteria.saldo
 		FROM segreteria
 		left join personaggio on segreteria.idutente = personaggio.idutente
 		left join utente on segreteria.idutente = utente.idutente

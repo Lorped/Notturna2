@@ -10,6 +10,7 @@ export interface FullEV {
   eventi: string;
   xp: string;
   eventodata: string;
+  saldo: boolean;
 
 }
 
@@ -31,7 +32,19 @@ export class EventiComponent implements OnInit {
     .subscribe( 
       (data: any) => {
         this.fulleventi = data;
-        // console.log ( this.fulleventi);
+        //console.log ( this.fulleventi);
+      }
+    )
+  }
+
+  checkpay (id:string) {
+    console.log ( "on-off ", id);
+    this.adminservice.cambiasaldo( Number(id) )
+    .subscribe(
+      (data:any) => {
+        //console.log(data);
+        this.fulleventi.filter(obj => obj.idutente == id)[0].saldo = data;
+        //console.log (this.fulleventi.filter(obj => obj.idutente == id)[0] );
       }
     )
   }

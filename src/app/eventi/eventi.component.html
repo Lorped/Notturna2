@@ -39,14 +39,17 @@
                   <div class="column bigger">
                     Email
                   </div>
-                  <div class="column bigger">
+                  <div class="column bigger is-1">
                     Eventi
                   </div>
-                  <div class="column bigger">
+                  <div class="column bigger is-1">
                     PX
                   </div>
                   <div class="column bigger">
                     Ultimo Evento
+                  </div>
+                  <div class="column bigger is-1">
+                    Saldo
                   </div>
                 </div>
                 <div class="columns">
@@ -60,7 +63,7 @@
                     {{fu.idutente}}
                   </div>
                 -->
-                  <div class="column">
+                  <div class="column ">
                     {{fu.nomeplayer}}
                   </div>
                   <div class="column ">
@@ -69,14 +72,17 @@
                   <div class="column ">
                     {{fu.email}}
                   </div>
-                  <div class="column ">
+                  <div class="column is-1">
                     {{fu.eventi}}
                   </div>
-                  <div class="column ">
+                  <div class="column is-1">
                     {{fu.xp}}
                   </div>
                   <div class="column ">
                     {{fu.eventodata}}
+                  </div>
+                  <div class="column is-1">
+                    <mat-checkbox (change)="checkpay(fu.idutente)" [checked]="fu.saldo"></mat-checkbox>
                   </div>
                 </div>
               </mat-card-content>
