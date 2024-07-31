@@ -809,7 +809,7 @@ for ( $i = $prontezza ; $i < 5; $i++) echo "A";
 	}
 	for (  $i=mysqli_num_rows($Result) ; $i< 6 ; $i++ ) {
 ?>
-						<div class="bg_name vab" style="width=60%;" ><hr></div>
+						<div class="bg_name vab" style="width:60%;" ><hr></div>
 						<div class="bg_value">AAAAA</div>
 <?php
 	}
