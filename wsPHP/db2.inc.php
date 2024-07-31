@@ -1,4 +1,5 @@
-<?
+<?php
+
 $par_DbHost = '62.149.150.60' ;
 // $par_DbHost = 'localhost' ;
 $par_DbUser = 'Sql153576';

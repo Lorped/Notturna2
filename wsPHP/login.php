@@ -18,7 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php');  //MYSQLI//
+//global $par_DbHost
+include 'db2.inc.php';  //MYSQLI//
+
+
 
 
 $postdata = file_get_contents("php://input");
@@ -35,6 +38,8 @@ $nome = mysqli_real_escape_string($db, $nome);
 $password = mysqli_real_escape_string($db, $password);
 
 
+
+
 if (isset($postdata) && $nome != "" && $password != "" ) {
 
 	$MySql = "SELECT * FROM utente WHERE nome = '$nome' AND password = '$password' ";
@@ -48,19 +53,8 @@ if (isset($postdata) && $nome != "" && $password != "" ) {
 
 		$vampiro = 0 ;
 		$hunter = 0 ;
-		$MySql2 = "SELECT * FROM personaggio WHERE idutente = $idutente";
-		$Result2 = mysqli_query ($db, $MySql2);
-    if (mysqli_errno($db)) { die ( mysqli_errno($db).": ".mysqli_error($db). "  >>".$MySql2 ); }
-		if ( $res2 = mysqli_fetch_array($Result2)   ) {
-			$vampiro = 1 ;
-		}
-		$MySql2 = "SELECT * FROM HUNTERpersonaggio WHERE idutente = $idutente";
-		$Results2 = mysqli_query ($db, $MySql2);
-    if (mysqli_errno($db)) { die ( mysqli_errno($db).": ".mysqli_error($db). "  >>".$MySql2 ); }
+		$vampiro = 1 ;
 
-		if ( $res2 = mysqli_fetch_array($Results2)   ) {
-			$hunter = 1 ;
-		}
 
 		$out = [
 			'idutente' => $idutente,
