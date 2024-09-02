@@ -24,7 +24,7 @@ $idutente = $_GET['idutente'];
 
 	$MySql = "SELECT bio, note, urldt , notemaster FROM personaggio
 			WHERE  idutente = $idutente ";
-	$Result = mysql2_query($db, $MySql);
+	$Result = mysqli_query($db, $MySql);
 
 	$res = mysqli_fetch_array ($Result);
 
