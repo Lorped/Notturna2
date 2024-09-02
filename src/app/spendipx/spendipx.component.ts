@@ -54,6 +54,7 @@ export class SpendipxComponent implements OnInit {
   statusPG = 1;
 
   xpdisponibili = 0;
+  xpspendibili = 0;
 
 
   livellitaum: Array<number> = [ 0 , 0 , 0 ];
@@ -65,6 +66,9 @@ export class SpendipxComponent implements OnInit {
   idnewprimaria = '';
   tremeresenzataum = 0 ;
   giovannisenzanecro = 0 ;
+
+  puntirigenera = 0 ;
+  prbonus = 0;
 
   constructor( private schedaservice: SchedaService ) { }
 
@@ -163,7 +167,42 @@ export class SpendipxComponent implements OnInit {
           }
         }
 
-        this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
+        // this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
+
+        if (this.scheda.xp > 106 )  {
+          this.xpspendibili = 58 + ( this.scheda.xp - 106)/4;
+        } else if ( this.scheda.xp > 64 ) {
+          this.xpspendibili = 44 + ( this.scheda.xp - 64)/3 ;  
+        } else if ( this.scheda.xp > 24 ) {
+          this.xpspendibili = 24 + ( this.scheda.xp - 24)/2;
+        } else {
+          this.xpspendibili = this.scheda.xp;
+        }
+        this.xpdisponibili = this.xpspendibili - this.scheda.xpspesi ;
+
+        console.log (this.statusPG);
+
+        switch (this.statusPG) {
+          case 5:
+            this.puntirigenera = Math.round(this.scheda.xp * 25/100 );
+            break;
+          case 4:
+            this.puntirigenera = Math.round(this.scheda.xp * 4/10 );
+            break;
+          case 3:
+            this.puntirigenera = Math.round(this.scheda.xp * 5/10 );
+            break;
+          case 2:
+              this.puntirigenera = Math.round(this.scheda.xp * 7/10 );
+              break;
+          default:
+            this.puntirigenera = Math.round(this.scheda.xp * 8 /10 );
+            console.log (this.puntirigenera);
+            break;
+        }
+
+        this.prbonus = this.puntirigenera + Math.round(this.puntirigenera/5) ;
+
 
         this.schedaservice.getnecrotaum(this.idutente)
         .subscribe(

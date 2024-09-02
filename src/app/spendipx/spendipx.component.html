@@ -27,10 +27,10 @@
     <mat-card-content>
       <div class="columns">
 
-        <div class="column is-3">Punti totali</div>
-        <div class="column is-1">{{scheda.xp}}</div>
-        <div class="column is-3">Punti Disponibili</div>
-        <div class="column is-1">{{xpdisponibili}}</div>
+        <div class="column is-3">Punti totali (PXT) <br>  Punti spendibili (PXS) <br> &nbsp; <br> Punti Rigenerazione</div>
+        <div class="column is-1">{{scheda.xp}} <br> {{xpspendibili}} <br> &nbsp; <br> {{prbonus}}</div>
+        <div class="column is-3">Punti spesi <br> Punti Disponibili</div>
+        <div class="column is-1">{{scheda.xpspesi}} <br> {{xpdisponibili}}</div>
         <div class="column is-3">
           <form [formGroup]="addXPform" (ngSubmit)="addxp()" #formDir="ngForm">
             <mat-form-field appearance="fill" style="size: 100%; display: block;">
