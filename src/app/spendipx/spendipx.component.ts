@@ -169,16 +169,19 @@ export class SpendipxComponent implements OnInit {
 
         // this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
 
-        if (this.scheda.xp > 106 )  {
-          this.xpspendibili = 58 + ( this.scheda.xp - 106)/4;
-        } else if ( this.scheda.xp > 64 ) {
-          this.xpspendibili = 44 + ( this.scheda.xp - 64)/3 ;  
-        } else if ( this.scheda.xp > 24 ) {
-          this.xpspendibili = 24 + ( this.scheda.xp - 24)/2;
+        if ( this.scheda.xp > 113 ) {
+          this.xpspendibili = 86 + ( this.scheda.xp - 113)/2 ;  
+        } else if ( this.scheda.xp > 32 ) {
+          this.xpspendibili = 32 + ( this.scheda.xp - 32)/3*2;
         } else {
           this.xpspendibili = this.scheda.xp;
         }
+
         this.xpdisponibili = this.xpspendibili - this.scheda.xpspesi ;
+        
+        // questo per arrotondare alla 2' cifra decimale
+        this.xpspendibili = Math.round(this.xpspendibili*100)/100;
+        this.xpdisponibili = Math.round(this.xpdisponibili*100)/100;
 
         console.log (this.statusPG);
 
