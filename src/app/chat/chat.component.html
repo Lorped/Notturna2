@@ -19,6 +19,7 @@
       <p>
 
       <mat-card>
+        <mat-card-content>
         <div class="columns">
           <div class="column is-5">
             <mat-form-field appearance="fill" class="full">
@@ -41,10 +42,11 @@
             <button  mat-raised-button class="full" color="accent"  (click)="alea()">DADO</button>
           </div>
         </div>
-
+      </mat-card-content>
       </mat-card>
 
       <mat-card>
+        <mat-card-content>
         <div class="columns" *ngFor="let item of chat">
           <div class="column is-1">
           {{ item.Ora }}
@@ -56,6 +58,7 @@
           <span class="yellow">{{item.Destinatario != '' ? ' [ '+item.Destinatario+' ]' : '' }} </span>
           </div>
         </div>
+      </mat-card-content>
       </mat-card>
     </div>
   </mat-sidenav-content>

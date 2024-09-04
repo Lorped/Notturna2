@@ -22,9 +22,10 @@
     <ng-template matStepLabel>Dati del personaggio e Status iniziale</ng-template>
     <form id="crea-form" [formGroup]="creaForm"  #formDir="ngForm">
 
-    <mat-card class="mycontainer">
-<!--         <mat-card-content>
--->
+    <mat-card >
+         <mat-card-content>
+
+          <div class="mycontainer" >
       <mat-form-field appearance="fill" class="full-width-input" >
         <mat-label>Nome Personaggio</mat-label>
         <input matInput placeholder="Nome Personaggio" formControlName="nomepersonaggio">
@@ -34,6 +35,8 @@
         <mat-label>Nome del Giocatore</mat-label>
         <input matInput placeholder="Nome Giocatore" formControlName="nomeplayer">
       </mat-form-field>
+    </div>
+    <div class="mycontainer" >
 
       <mat-form-field appearance="fill" class="full-width-input">
         <mat-label>Clan</mat-label>
@@ -49,7 +52,8 @@
         </mat-select>
       </mat-form-field>
 
-      <br>
+    </div>
+      <div class="mycontainer" >
 
       <mat-form-field appearance="fill" class="full-width-input">
         <mat-label>Rifugio</mat-label>
@@ -61,6 +65,8 @@
         <input matInput placeholder="Indirizzo o Zona" formControlName="zona">
       </mat-form-field>
 
+      </div>
+
       <mat-checkbox color="warn" (change)="gen14()" >
         14a Gen.
       </mat-checkbox>
@@ -68,8 +74,8 @@
       <div>
         <button mat-raised-button matStepperNext color="primary" [disabled]="!formDir.form.valid" >Prosegui</button>
       </div>
-<!--      </mat-card-content>
--->
+      </mat-card-content>
+
     </mat-card>
 
     <mat-card>
@@ -86,61 +92,90 @@
     <ng-template matStepLabel>Background</ng-template>
 
     <mat-card>
+      <mat-card-content>
       Punti background da assegnare: {{maxBG - sommaBG}}
+    </mat-card-content>
     </mat-card>
 
 
-    <div class="bgcard-container">
+    <div class="bgcard-container"> 
       <mat-card class="bgcard" *ngFor="let b of bg">
-        <!-- <mat-card-content> -->
-
+         <mat-card-content> 
+          <div class="column">
       <!--  <div> -->
           {{b.nomeback}}
           <button  class="btn  btn-xs" (click)="minbg(b.idback)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
           <i *ngFor="let i of b.MaxIniziale | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
           <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG||(is14 && b.idback==5)"><i class="fa fa-plus"></i></button>
       <!--  </div> -->
+          </div>
 
-      <!-- </mat-card-content> -->
+       </mat-card-content> 
       </mat-card>
     </div>
 
     <div class="bgcard-container" *ngIf="maxCont>0">
       <table>
         <tr>
+          <td colspan="3">
+            <span class="white small">Inserire una descrizione succinta (p.es. "Min. Interno", "Questura di Roma", "Banca XYZ" ecc. ) dei contatti e il loro valore.</span>
+        </td>
+        </tr>
+        <tr>
           <td>
             <mat-card>
+              <mat-card-content>
+                <mat-form-field>
               <input matInput placeholder="Contatto 1" [(ngModel)]="cont[0].nomecontatto" (change)="checkbg()" name="c0" [disabled]="cont[0].livello==0">
+            </mat-form-field>
               <mat-error *ngIf="cont[0].nomecontatto==''&& cont[0].livello>0">Inserire la descrizione</mat-error>
+              <div class = "column">
               <button  class="btn  btn-xs" (click)="mincont(0)" [disabled]="cont[0].livello<1"><i class="fa fa-minus"></i></button>
               <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > cont[0].livello , 'dred': ix < cont[0].livello }"></i>
               <button class="btn  btn-xs" (click)="addcont(0)" [disabled]="cont[0].livello>4||sommaCont>=maxCont"><i class="fa fa-plus"></i></button>
+            </div>
+            </mat-card-content>
             </mat-card>
           </td>
           <td>
             <mat-card>
+              <mat-card-content>
+              <mat-form-field>
               <input matInput placeholder="Contatto2" [(ngModel)]="cont[1].nomecontatto" (change)="checkbg()" name="c1" [disabled]="cont[1].livello==0">
+            </mat-form-field>
               <mat-error *ngIf="cont[1].nomecontatto==''&& cont[1].livello>0">Inserire la descrizione</mat-error>
+              <div class = "column">
               <button  class="btn  btn-xs" (click)="mincont(1)" [disabled]="cont[1].livello<1"><i class="fa fa-minus"></i></button>
               <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > cont[1].livello , 'dred': ix < cont[1].livello }"></i>
               <button class="btn  btn-xs" (click)="addcont(1)" [disabled]="cont[1].livello>4||sommaCont>=maxCont"><i class="fa fa-plus"></i></button>
+            </div>
+          </mat-card-content>
             </mat-card>
           </td>
           <td>
             <mat-card>
+              <mat-card-content>
+                <mat-form-field>
               <input matInput placeholder="Contatto3" [(ngModel)]="cont[2].nomecontatto" (change)="checkbg()" name="c2" [disabled]="cont[2].livello==0">
+            </mat-form-field>
               <mat-error *ngIf="cont[2].nomecontatto==''&& cont[2].livello>0">Inserire la descrizione!</mat-error>
+              <div class="column">
               <button  class="btn  btn-xs" (click)="mincont(2)" [disabled]="cont[2].livello<1"><i class="fa fa-minus"></i></button>
               <i *ngFor="let i of 5 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > cont[2].livello , 'dred': ix < cont[2].livello }"></i>
               <button class="btn  btn-xs" (click)="addcont(2)" [disabled]="cont[2].livello>4||sommaCont>=maxCont"><i class="fa fa-plus"></i></button>
+            </div>
+            </mat-card-content>
             </mat-card>
           </td>
         </tr>
+        <tr>
+          <td colspan="3">
+            <mat-error *ngIf="this.sommaCont != this.maxCont">La somma dei singoli contatti deve essere pari al valore del Background</mat-error>
+          </td>
+        </tr>
       </table>
-      <div >
-        <span class="white small">Inserire una descrizione succinta (p.es. "Min. Interno", "Questura di Roma", "Banca XYZ" ecc. ) dei contatti e il loro valore.</span>
-      </div>
-      <mat-error *ngIf="this.sommaCont != this.maxCont">La somma dei singoli contatti deve essere pari al valore del Background</mat-error>
+
+     
     </div>
 
     <mat-card>
@@ -159,9 +194,11 @@
     <ng-template matStepLabel>Attributi</ng-template>
 
     <mat-card>
+      <mat-card-content>
       Distribuzione Richiesta: [ {{attr0+3}} , {{attr1+3}} , {{attr2+3}} ]
       <br>
       Distribuzione Attuale: [ {{attrCorrenteSort[2]}} , {{attrCorrenteSort[1]}} , {{attrCorrenteSort[0]}} ]
+    </mat-card-content>
     </mat-card>
 
     <mat-card>
@@ -181,9 +218,11 @@
       </mat-grid-list>
     </mat-card>
     <mat-card>
+    <mat-card-content>
       <div>
         <button mat-raised-button matStepperNext color="primary" [disabled]="!attrOK" >Prosegui</button>
       </div>
+    </mat-card-content>
     </mat-card>
     <mat-card >
       <mat-card-content class="justified">
@@ -196,7 +235,9 @@
     <ng-template matStepLabel>Discipline</ng-template>
 
     <mat-card>
+      <mat-card-content>
       Punti da distribuire: {{ numDisc - sommaDisc }}   --   Massimo livello di disciplina: {{ maxDisc }}
+    </mat-card-content>
     </mat-card>
 
     <mat-card *ngIf="clanPG!.value!=20">
@@ -356,9 +397,11 @@
     </mat-card>
 
     <mat-card>
+      <mat-card-content>
       <div>
         <button mat-raised-button matStepperNext color="primary" [disabled]="!discOK" >Prosegui</button>
       </div>
+    </mat-card-content>
     </mat-card>
     <mat-card >
       <mat-card-content class="justified">
@@ -373,7 +416,9 @@
     <ng-template matStepLabel>Skill</ng-template>
 
     <mat-card>
+      <mat-card-content>
       Attitudini -- Punti da distribuire: {{ numAttitudini - sommaAttitudini }} - Livello massimo: {{ maxAttitudini }}
+    </mat-card-content>
     </mat-card>
     <mat-card>
       <mat-grid-list cols="3" rowHeight="3em">
@@ -388,7 +433,9 @@
       </mat-grid-list>
     </mat-card>
     <mat-card>
+      <mat-card-content>
       Conoscenze -- Punti da distribuire: {{ numSkill - sommaSkill }}
+    </mat-card-content>
     </mat-card>
     <mat-card>
       <mat-grid-list cols="4" rowHeight="3em">
@@ -403,9 +450,11 @@
       </mat-grid-list>
     </mat-card>
     <mat-card>
+    <mat-card-content>
       <div>
         <button mat-raised-button matStepperNext color="primary" [disabled]="!skillOK||!attitudiniOK" >Prosegui</button>
       </div>
+    </mat-card-content>
     </mat-card>
     <mat-card >
       <mat-card-content class="justified">
@@ -417,7 +466,9 @@
   <mat-step  errorMessage="Distribuzione non corretta" [completed]=freeOK [hasError]="(!freeOK && freepoint!=2)">
     <ng-template matStepLabel>FDV e Sentieri</ng-template>
     <mat-card>
+      <mat-card-content>
       Punti liberi: {{freepoint }}
+    </mat-card-content>
     </mat-card>
     <mat-card>
       <mat-grid-list cols="2" rowHeight="3em">
@@ -440,15 +491,19 @@
       </mat-grid-list>
     </mat-card>
     <mat-card>
+      <mat-card-content>
       <mat-label>Sentiero</mat-label>
       <mat-select  [disabled]="(baseFDVmax+FDVadd)<4" [(value)]="sentieroPG">
         <mat-option *ngFor="let i of sentieri" [value]="i.idsentiero">{{i.sentiero}}</mat-option>
       </mat-select>
+    </mat-card-content>
     </mat-card>
     <mat-card>
+      <mat-card-content>
       <div>
         <button mat-raised-button matStepperNext color="primary" [disabled]="!freeOK" >Prosegui</button>
       </div>
+    </mat-card-content>
     </mat-card>
     <mat-card >
       <mat-card-content class="justified">

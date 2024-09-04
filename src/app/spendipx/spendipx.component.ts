@@ -241,7 +241,7 @@ export class SpendipxComponent implements OnInit {
                 element.checkdisc = 0;
               }
             });
-            console.log(this.amalgame);
+            //console.log(this.amalgame);
           }
         );
       }

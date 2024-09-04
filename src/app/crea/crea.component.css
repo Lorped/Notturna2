@@ -25,8 +25,12 @@ mat-checkbox {
   margin-left: 8px;
 }
 
-.mycontainer .mat-form-field + .mat-form-field {
+.mycontainer mat-form-field + mat-form-field {
   margin-left: 8px;
+  width: 30vw;
+}
+.full-width-input{
+  width: 24vw;
 }
 
 .bgcard {
@@ -55,7 +59,10 @@ mat-card-content {
   text-justify: inter-word;
 }
 
-
+.btn {
+  background-color: white;
+  color: black;
+}
 .btn-xs {
     padding: 0px 2px;
     /*font-size: 20px; */
@@ -68,4 +75,7 @@ mat-card-content {
 }
 .btn:enabled:hover{
     background-color: #f02618;
+}
+table {
+  margin: 0 auto; /* or margin: 0 auto 0 auto */
 }

@@ -34,6 +34,8 @@ while ( $res = mysqli_fetch_array ($Result) ) {
 
 	$iddisc1 = $res['iddisc1'];
 	$iddisc2 = $res['iddisc2'];
+	$lvldisc1 = $res['lvldisc1'];
+	$lvldisc2 = $res['lvldisc2'];
 
 	$mysql2 = "SELECT nomedisc from discipline_main where iddisciplina = '$iddisc1' ";
 	$result2 = mysqli_query($db, $mysql2);
@@ -50,13 +52,13 @@ while ( $res = mysqli_fetch_array ($Result) ) {
 	$mysql2 = "SELECT livello from discipline where iddisciplina = '$iddisc1' and idutente = '$idutente' ";
 	$result2 = mysqli_query($db, $mysql2);
     $res2 = mysqli_fetch_array ($result2);
-	if ( $res2['livello'] < $res['lvldisc1'] ) {
+	if ( $res2['livello'] < $lvldisc1 ) {
 		$checkdisc = 0;
 	}
 	$mysql2 = "SELECT livello from discipline where iddisciplina = '$iddisc2' and idutente = '$idutente' ";
 	$result2 = mysqli_query($db, $mysql2);
 	$res2 = mysqli_fetch_array ($result2);
-	if ( $res2['livello'] < $res['lvldisc2'] ) {
+	if ( $res2['livello'] < $lvldisc2 ) {
 		$checkdisc = 0;
 	}
 

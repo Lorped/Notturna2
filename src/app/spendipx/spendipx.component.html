@@ -195,7 +195,7 @@
           <mat-form-field>
           <mat-label>Amalgama</mat-label>
           <mat-select [(value)]="idnewamalgama">
-            <mat-option *ngFor="let tt of amalgame" [value]="tt.idamalgama"  multiLineOption >{{tt.nomeamalgama}} - {{tt.costo}} px - ( {{tt.disc1 }} . {{tt.lvldisc1}} + {{tt.disc2}}. {{tt.lvldisc2}} ) </mat-option>
+            <mat-option *ngFor="let tt of amalgame" [value]="tt.idamalgama"  multiLineOption [disabled]="tt.checkdisc!=1 || tt.costo > xpdisponibili">{{tt.nomeamalgama}} - {{tt.costo}} px - ( {{tt.disc1 }} . {{tt.lvldisc1}} + {{tt.disc2}}. {{tt.lvldisc2}} ) </mat-option>
           </mat-select>
           </mat-form-field>
           <button  mat-raised-button class="large" color="primary" [disabled]="idnewamalgama==''" style="width: 66%;" (click)="newamalgama()">Aggiungi</button>
