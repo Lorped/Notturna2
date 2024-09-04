@@ -307,4 +307,11 @@ export class SchedaService {
     });
   }
 
+  listamalgame(idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/listamalgame.php'+'?idutente='+idutente );
+  }
+  getamalgame(idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getamalgame.php'+'?idutente='+idutente );
+  }
+
 }

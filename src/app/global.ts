@@ -312,3 +312,16 @@ export class Rubricaitem {
   public home = 0 ;
   public note = '';
 }
+
+
+@Injectable()
+export class Amalgama {
+  public idamalgama = 0;
+  public nomeamalgama = '';
+  public disc1 = '';
+  public lvldisc1 = 0;
+  public disc2 = '';
+  public lvldisc2 = '' ;
+  public checkdisc = 0 ;
+  public costo = 0;
+}

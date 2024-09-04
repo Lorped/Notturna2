@@ -183,6 +183,17 @@
           <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||xpdisponibili<2" style="width: 66%;" (click)="scegliprimarianecro()">Aggiungi</button>
         </div>
 
+        <div class="column is-4 nopadding" >
+          Apprendi Amalgame
+          <mat-form-field>
+          <mat-label>Amalgama</mat-label>
+          <mat-select [(value)]="idnewamalgama">
+            <mat-option *ngFor="let tt of amalgame" [value]="tt.idamalgama"  multiLineOption >{{tt.nomeamalgama}} - {{tt.costo}} px - ( {{tt.disc1 }} . {{tt.lvldisc1}} + {{tt.disc2}}. {{tt.lvldisc2}} ) </mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewamalgama==''" style="width: 66%;" (click)="newamalgama()">Aggiungi</button>
+        </div>
+
       </div>
 
 

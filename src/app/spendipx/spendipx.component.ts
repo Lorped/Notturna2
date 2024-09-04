@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
-import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Pregio, Rituale } from '../global';
+import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Pregio, Rituale , Amalgama} from '../global';
 
 
 
@@ -69,6 +69,9 @@ export class SpendipxComponent implements OnInit {
 
   puntirigenera = 0 ;
   prbonus = 0;
+
+  amalgame: Array<Amalgama> = [];
+  idnewamalgama = '';
 
   constructor( private schedaservice: SchedaService ) { }
 
@@ -183,7 +186,7 @@ export class SpendipxComponent implements OnInit {
         this.xpspendibili = Math.round(this.xpspendibili*100)/100;
         this.xpdisponibili = Math.round(this.xpdisponibili*100)/100;
 
-        console.log (this.statusPG);
+        // console.log (this.statusPG);
 
         switch (this.statusPG) {
           case 5:
@@ -225,6 +228,20 @@ export class SpendipxComponent implements OnInit {
           (data: any) => {
             this.rituali_t = data.rituali_t;
             this.rituali_n = data.rituali_n;
+          }
+        );
+        this.schedaservice.listamalgame(this.idutente)
+        .subscribe(
+          (data: any) => {
+            this.amalgame = data.amalgame;
+            this.amalgame.forEach(element => {
+              element.costo = Number (element.costo);
+              element.checkdisc = Number (element.checkdisc);
+              if (element.costo > this.xpdisponibili) {
+                element.checkdisc = 0;
+              }
+            });
+            console.log(this.amalgame);
           }
         );
       }
@@ -560,6 +577,10 @@ export class SpendipxComponent implements OnInit {
         this.reload_full ();
       });
 
+  }
+
+  newamalgama(){
+    console.log("new amalgama " + this.idnewamalgama);
   }
 
   reload_full () {

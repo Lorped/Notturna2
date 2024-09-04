@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../_services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
+import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama } from '../global';
 
 @Component({
   selector: 'app-scheda',
@@ -29,6 +29,8 @@ export class SchedaComponent implements OnInit {
 
   pregi: Array<Pregio> = [];
   rituali: Array<Rituale> = [];
+
+  amalgame: Array<Amalgama> = [];
 
   constructor(private schedaservice: SchedaService) { }
 
@@ -86,6 +88,13 @@ export class SchedaComponent implements OnInit {
 
         this.pregi = data.pregidifetti;
         this.rituali = data.rituali;
+
+        this.schedaservice.getamalgame(this.idutente).subscribe(
+          (data: any) => {
+            this.amalgame = data.amalgame;
+            console.log (this.amalgame);
+          }
+        );
 
       }
     );
