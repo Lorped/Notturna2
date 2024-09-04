@@ -1,19 +1,26 @@
 
+mat-card {
+  max-width: 800px;
+  margin: 2em auto;
+  text-align: center;
+}
 
 mat-card-title  {
   justify-content: center;
+  line-height: 4em !important;
   display: flex;
 }
 mat-card-subtitle  {
   justify-content: center;
-  display: flex;
+  line-height: 3em !important;
+
 }
 
 .true-primary {
   font-family: delphian ;
   font-weight: normal;
   font-size: 4em;
-  color: #E91E63;
+  color: white;
 }
 .true-primary-small {
   font-family: delphian  ;
@@ -22,11 +29,6 @@ mat-card-subtitle  {
 }
 
 
-mat-card {
-  max-width: 600px;
-  margin: 2em auto;
-  text-align: center;
-}
 
 .large {
   width:  100% !important;

@@ -24,9 +24,16 @@ mat-card {
     font-size: 0.7em;
 }
 
+
+.btn {
+  background-color: white;
+  color: black;
+}
 .btn:disabled{
     background-color: #a0a0a0;
+    color: #525252;
 }
+
 .btn:enabled:hover{
     background-color: #f02618;
 }

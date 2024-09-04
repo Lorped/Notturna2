@@ -19,6 +19,7 @@
 <div class="container" style="width: 80%; margin-top: 1em;">
 
   <mat-card>
+    <mat-card-content>
 
     <div class="columns">
       <div class="column" style="font-size: 1.5em; font-weight: 500;" >
@@ -160,6 +161,7 @@
       </div>
     </div >
 
+  </mat-card-content>
   </mat-card>
 
   <mat-expansion-panel>
@@ -170,6 +172,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
       <!---
       <div class="columns">
         <div class="column alc bigger">
@@ -243,6 +246,7 @@
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
         </div>
       </div>
+    </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -255,6 +259,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
       <div class="columns is-multiline" style="margin-left: 0px;" >
         <div class="column is-4 nopadding" *ngFor="let dd of discipline">
 
@@ -307,6 +312,7 @@
         </div>
       </div>
 
+    </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -319,6 +325,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
 
     <div class="columns is-multiline" style="margin-left: 0px;" >
       <div class="column is-3 nopadding" *ngFor="let dd of discipline| nonecrotaum ">
@@ -362,7 +369,7 @@
         </div>
       </div>
     </div>
-
+    </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -375,6 +382,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
 
     <div class="columns is-multiline" style="margin-left: 0px;" >
       <div class="column is-4 nopadding" *ngFor="let dd of attitudini">
@@ -389,6 +397,7 @@
       </div>
     </div>
 
+    </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -401,6 +410,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
 
     <div class="columns is-multiline" style="margin-left: 0px;" >
       <div class="column is-4 nopadding" *ngFor="let dd of skills">
@@ -415,6 +425,7 @@
       </div>
     </div>
 
+  </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -427,6 +438,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
       <div class="columns is-multiline" style="margin-left: 0px;" >
         <div class="column is-4 nopadding" *ngFor="let dd of background">
 
@@ -468,6 +480,7 @@
         </div>
       </div>
 
+    </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -480,11 +493,13 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
       <div class="columns is-multiline" style="margin-left: 0px;" >
         <div class="column is-4 nopadding" *ngFor="let dd of pregi">
           {{dd.nomepregio}} ({{dd.classe}})
         </div>
       </div>
+    </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>

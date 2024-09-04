@@ -16,13 +16,18 @@
   <mat-sidenav-content>
 
 
-<div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
+<div class="container" style="width: 85%; margin-top: 1em; min-height: 85vh;">
 <mat-card>
+  <mat-card-content>
+  
+
 
   <mat-card>
-    <mat-card-title>
-      Punti esperienza
-    </mat-card-title>
+    <mat-card-header>
+      <mat-card-title>
+        Punti esperienza
+      </mat-card-title>
+    </mat-card-header>
     <hr>
     <mat-card-content>
       <div class="columns">
@@ -55,6 +60,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
       <div class="columns">
         <div class="column">
           Forza {{ (scheda['forza']<5 ? '('+(1+scheda['forza'])*2+'px)' :'') }}
@@ -69,7 +75,7 @@
         <div class="column">
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
           <button *ngIf="scheda['carisma']<5" class="btn  btn-xs" (click)="addattr('carisma')" [disabled]="xpdisponibili<(1+scheda['carisma'])*2"><i class="fa fa-plus"></i></button>
-        </div>
+        </div>          <mat-card></mat-card>
         <div class="column">
           Percezione {{ (scheda['percezione']<5 ? '('+(1+scheda['percezione'])*2+'px)' :'') }}
         </div>
@@ -123,7 +129,8 @@
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
           <button *ngIf="scheda['prontezza']<5" class="btn  btn-xs" (click)="addattr('prontezza')" [disabled]="xpdisponibili<(1+scheda['prontezza'])*2"><i class="fa fa-plus"></i></button>
         </div>
-      </div>
+        </div>
+      </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -165,7 +172,7 @@
         <div class="column is-4 nopadding" *ngIf="tremeresenzataum == 1">
           Acquisisci Via Primaria (2px)<br>
           <mat-form-field>
-          <mat-label>Via Primaria</mat-label>
+            <mat-label>Via Primaria</mat-label>
           <mat-select [(value)]="idnewprimaria">
             <mat-option *ngFor="let tt of newtaumaturgie" [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
           </mat-select>
@@ -204,7 +211,6 @@
         <div class="column is-2" style="text-align: center;">Vie Taumaturgiche</div>
         <div class="column"><hr></div>
       </div>
-
       <div class="columns is-multiline nopadding" style="margin-left: 0px;" *ngIf="taumaturgie.length >0">
         <div class="column is-4 nopadding" *ngFor="let dd of taumaturgie ; let ii = index ">
           <div class="columns">
@@ -260,7 +266,7 @@
         <div class="column is-4 nopadding" *ngIf="livellinecro[1]==0 && livellinecro[0]>1">
           Scegli Via Secondaria (2px)
           <mat-form-field>
-          <mat-label>Via Secondaria</mat-label>
+            <mat-label>Via Secondaria</mat-label>
           <mat-select [(value)]="idnewnecro">
             <mat-option *ngFor="let tt of newnecromanzie" [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
           </mat-select>
@@ -334,6 +340,7 @@
     </mat-expansion-panel-header>
 
     <mat-card>
+      <mat-card-content>
 
     <div class="columns is-multiline" style="margin-left: 0px;" >
       <div class="column is-4 nopadding" *ngFor="let dd of attitudini">
@@ -349,9 +356,11 @@
       </div>
     </div>
 
+    </mat-card-content>
     </mat-card>
 
     <mat-card>
+    <mat-card-content>
 
       <div class="columns is-multiline" style="margin-left: 0px;" >
         <div class="column is-4 nopadding" *ngFor="let dd of skills">
@@ -367,6 +376,7 @@
         </div>
       </div>
 
+    </mat-card-content>
     </mat-card>
 
   </mat-expansion-panel>
@@ -403,8 +413,9 @@
     </div>
 
   </mat-expansion-panel>
-</mat-card>
 
+</mat-card-content>
+</mat-card>
 </div>
 
   </mat-sidenav-content>

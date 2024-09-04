@@ -19,9 +19,11 @@
 <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
   <p>
   <mat-card>
+    <mat-card-header>
     <mat-card-title>
       Rubrica
     </mat-card-title>
+  </mat-card-header>
     <mat-card-content>
       <div class="columns">
         <div class="column bigger">
@@ -52,14 +54,14 @@
           {{item.contatto}}
         </div>
         <div class="column is-1">
-          <button   (click)="togglecell(item.idrubrica)" > <i class="fa fa-phone" [ngClass]="{'gray': item.cell==0 , 'red': item.cell==1}" > </i> </button>
+          <button  class="btn  btn-xs" (click)="togglecell(item.idrubrica)" > <i class="fa fa-phone" [ngClass]="{'gray': item.cell==0 , 'red': item.cell==1}" > </i> </button>
         </div>
         <div class="column is-1">
 
-          <button   (click)="toggleemail(item.idrubrica)" > <i class="fa fa-laptop" [ngClass]="{'gray': item.email==0 , 'red': item.email==1}" > </i></button>
+          <button  class="btn  btn-xs"  (click)="toggleemail(item.idrubrica)" > <i class="fa fa-laptop" [ngClass]="{'gray': item.email==0 , 'red': item.email==1}" > </i></button>
         </div>
         <div class="column is-1">
-          <button   (click)="togglehome(item.idrubrica)" > <i class="fa fa-home"  [ngClass]="{'gray': item.home==0 , 'red': item.home==1}" > </i></button>
+          <button  class="btn  btn-xs" (click)="togglehome(item.idrubrica)" > <i class="fa fa-home"  [ngClass]="{'gray': item.home==0 , 'red': item.home==1}" > </i></button>
         </div>
         <div class="column">
           {{item.note}}
@@ -69,7 +71,7 @@
         </div>
 
         <div class="column is-1">
-          <button   (click)="del(item.idrubrica)" >Canc</button>
+          <button  class="btn  btn-xs" (click)="del(item.idrubrica)" >Canc</button>
         </div>
 
       </div>

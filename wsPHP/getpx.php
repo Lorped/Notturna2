@@ -31,7 +31,21 @@ $idutente = $_GET['idutente'];
 	$px = $res['xp'];
 	$pxspesi = $res['xpspesi'];
 
-	$pxdisponibili = $px - $pxspesi ;
+	if ( $px > 113 ) {
+		$pxs = 86 + ($px - 113)/2;
+	} elseif ( $px > 32 ) {
+		$pxs = 32 + ($px - 32)/ 1.5 ;
+	} else {
+		$psx = $px;
+	}
+
+	$pxdisponibili = floor( $pxs - $pxspesi );
+
+	if ( $pxdisponibili < 0 ) {
+		$pxdisponibili = 0 ;
+	}
+
+
 
 
 	$out = [

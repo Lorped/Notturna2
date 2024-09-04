@@ -19,12 +19,14 @@
 <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
   <p>
   <mat-card>
+    <mat-card-header>
     <mat-card-title>
       Log Spesa PX (e modifiche extra)
     </mat-card-title>
     <mat-card-subtitle>
       Eventi a Notturna {{myeventi}} <span *ngIf="eventodata !='' "><br>Ultimo evento: {{eventodata}} </span>
     </mat-card-subtitle>
+  </mat-card-header>
     <mat-card-content>
       <div class="columns">
         <div class="column bigger">
