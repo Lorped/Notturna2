@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Pregio, Rituale , Amalgama} from '../global';
 
@@ -75,8 +75,8 @@ export class SpendipxComponent implements OnInit {
 
   constructor( private schedaservice: SchedaService ) { }
 
-  addXPform = new FormGroup ({
-    xptoadd: new FormControl('', [
+  addXPform = new UntypedFormGroup ({
+    xptoadd: new UntypedFormControl('', [
       Validators.required,
       Validators.max(99),
       Validators.min(1),

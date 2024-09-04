@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { map } from 'rxjs/operators';
 
@@ -12,8 +12,8 @@ export class UtenteComponent implements OnInit {
 
   hide = true;
 
-  emailForm = new FormGroup ({
-    newemail: new FormControl('', [
+  emailForm = new UntypedFormGroup ({
+    newemail: new UntypedFormControl('', [
       Validators.required,
       Validators.email
     ], [
@@ -21,8 +21,8 @@ export class UtenteComponent implements OnInit {
     ]),
   });
 
-  pwdForm = new FormGroup ({
-    password: new FormControl('', [
+  pwdForm = new UntypedFormGroup ({
+    password: new UntypedFormControl('', [
       Validators.required,
       Validators.minLength(8)
       //,

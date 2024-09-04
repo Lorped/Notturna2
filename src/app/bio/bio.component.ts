@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, FormGroup } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 
 @Component({
@@ -10,9 +10,9 @@ import { SchedaService } from '../_services/index';
 export class BioComponent implements OnInit {
 
 
-  bio =  new FormControl('', [] ) ;
-  annotazioni = new FormControl('', [] ) ;
-  urlDT = new FormControl('', [] ) ;
+  bio =  new UntypedFormControl('', [] ) ;
+  annotazioni = new UntypedFormControl('', [] ) ;
+  urlDT = new UntypedFormControl('', [] ) ;
 
   idutente = 0;
 

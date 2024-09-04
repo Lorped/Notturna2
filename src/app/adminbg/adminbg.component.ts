@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus } from '../global';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-adminbg',
@@ -22,7 +22,7 @@ export class AdminbgComponent implements OnInit {
   listaContatti: Array<Contatti> = [];
   sommacontatti = 0;
 
-  myContatto = new FormControl ( '', [
+  myContatto = new UntypedFormControl ( '', [
     Validators.required,
     Validators.pattern(/.*[^ ].*/),
   ]);

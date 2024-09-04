@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { Oggetto, Condizione, FullOggetto} from '../global';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cambiaogg',
@@ -11,17 +11,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class CambiaoggComponent implements OnInit {
 
-  valcondA = new FormControl('', [
+  valcondA = new UntypedFormControl('', [
     Validators.required,
     Validators.max(10),
     Validators.min(1)
   ]);
-  valcondS = new FormControl('', [
+  valcondS = new UntypedFormControl('', [
     Validators.required,
     Validators.max(10),
     Validators.min(1)
   ]);
-  valcondD = new FormControl('', [
+  valcondD = new UntypedFormControl('', [
     Validators.required,
     Validators.max(10),
     Validators.min(1)

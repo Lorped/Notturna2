@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -16,8 +16,8 @@ export class RegistraComponent implements OnInit {
   hide = true;
   errmsg = '';
 
-  registrationForm = new FormGroup ({
-    regname: new FormControl('', [
+  registrationForm = new UntypedFormGroup ({
+    regname: new UntypedFormControl('', [
       Validators.required,
       Validators.pattern(/.*[^ ].*/),
       // ,
@@ -26,25 +26,25 @@ export class RegistraComponent implements OnInit {
       this.validateNomeNotTaken.bind(this)
     ]),
 
-    regemail: new FormControl('', [
+    regemail: new UntypedFormControl('', [
       Validators.required,
       Validators.email
     ], [
       this.validateEmailNotTaken.bind(this)
     ]),
 
-    password: new FormControl('', [
+    password: new UntypedFormControl('', [
       Validators.required,
       Validators.minLength(8)
       // ,
       // Validators.pattern('^.*((\\d.*[a-zA-Z])|([a-zA-Z].*\\d)).*$')
     ]),
 
-    password2: new FormControl('', [
+    password2: new UntypedFormControl('', [
       Validators.required
     ]),
 
-    check: new FormControl('', [
+    check: new UntypedFormControl('', [
       Validators.required
     ])
   });

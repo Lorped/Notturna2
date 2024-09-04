@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Background, Contatti, Skill, Sentiero } from '../global';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-background',
@@ -21,7 +21,7 @@ export class BackgroundComponent implements OnInit {
   listaContatti: Array<Contatti> = [];
   sommacontatti = 0;
 
-  myContatto = new FormControl ( '', [
+  myContatto = new UntypedFormControl ( '', [
     Validators.required,
     Validators.pattern(/.*[^ ].*/),
   ]);

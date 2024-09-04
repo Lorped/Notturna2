@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RubricaService } from '../_services/index';
 import { Rubricaitem } from '../global';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rubrica',
@@ -17,11 +17,11 @@ export class RubricaComponent implements OnInit {
   toedit_note  = '';
 
 
-  newcontatto = new FormControl ( '', [
+  newcontatto = new UntypedFormControl ( '', [
     Validators.required,
     Validators.pattern(/.*[^ ].*/),
   ]);
-  newcontatto2 = new FormControl ( '', [
+  newcontatto2 = new UntypedFormControl ( '', [
 
   ]);
 

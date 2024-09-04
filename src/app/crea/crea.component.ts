@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
@@ -34,26 +34,26 @@ export class CreaComponent implements OnInit {
   sommaCont = 0 ;
   maxCont = 0 ;
 
-  creaForm = new FormGroup ({
-    nomepersonaggio: new FormControl('', [
+  creaForm = new UntypedFormGroup ({
+    nomepersonaggio: new UntypedFormControl('', [
       Validators.required,
       Validators.pattern(/.*[^ ].*/),
     ]),
-    nomeplayer: new FormControl('', [
+    nomeplayer: new UntypedFormControl('', [
       Validators.required,
       Validators.pattern(/.*[^ ].*/),
     ]),
-    clanPG: new FormControl('', [
+    clanPG: new UntypedFormControl('', [
       Validators.required,
     ]),
-    statusPG: new FormControl('', [
+    statusPG: new UntypedFormControl('', [
       Validators.required,
     ]),
-    rifugio: new FormControl('', [
+    rifugio: new UntypedFormControl('', [
       Validators.required,
       Validators.pattern(/.*[^ ].*/),
     ]),
-    zona: new FormControl('', [
+    zona: new UntypedFormControl('', [
       Validators.required,
       Validators.pattern(/.*[^ ].*/),
     ]),

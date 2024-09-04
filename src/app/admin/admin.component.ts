@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../_services/index';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { GlobalStatus } from '../global';
 
 export interface unPg {
@@ -20,8 +20,8 @@ export class AdminComponent implements OnInit {
   selectedPG = '';
 
 
-  chanceMform = new FormGroup ({
-    chance: new FormControl('', [
+  chanceMform = new UntypedFormGroup ({
+    chance: new UntypedFormControl('', [
       Validators.required,
       Validators.max(99),
       Validators.min(1),

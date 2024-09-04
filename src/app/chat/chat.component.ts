@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { Chatrow, MyChat , ChatService , AdminService } from '../_services/index';
 import { GlobalStatus } from '../global';
@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit {
 
   chat: Array<Chatrow> = [];
 
-  msg =  new FormControl('', [] ) ;
+  msg =  new UntypedFormControl('', [] ) ;
   selectedPG = '';
   listapg: Array<unPg> = [];
 
