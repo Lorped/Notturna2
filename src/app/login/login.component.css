@@ -1,14 +1,24 @@
 
 
 mat-card-title  {
-  font-family: delphian  ;
-  font-size: 4em;
-  font-weight: normal;
+  justify-content: center;
+  display: flex;
 }
 mat-card-subtitle  {
+  justify-content: center;
+  display: flex;
+}
+
+.true-primary {
+  font-family: delphian ;
+  font-weight: normal;
+  font-size: 4em;
+  color: #E91E63;
+}
+.true-primary-small {
   font-family: delphian  ;
+  font-weight: normal;
   font-size: 2em;
-  /*font-weight: normal;*/
 }
 
 

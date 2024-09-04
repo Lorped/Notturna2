@@ -9,22 +9,36 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // MATERIAL
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+
+//import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+//import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
+//import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+//import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSelectModule} from '@angular/material/select';
+//import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
 import {MatStepperModule} from '@angular/material/stepper';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+//import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatListModule} from '@angular/material/list';
+//import {MatLegacyListModule as MatListModule} from '@angular/material/legacy-list';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatRadioModule} from '@angular/material/radio';
+
 //
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatListModule} from '@angular/material/list';
+import {MatRadioModule} from '@angular/material/radio';
+
+
 
 import { GlobalStatus } from './global';
 
