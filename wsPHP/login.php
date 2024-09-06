@@ -51,16 +51,17 @@ if (isset($postdata) && $nome != "" && $password != "" ) {
 		$idutente = $res['idutente'];
 		$admin = $res['admin'];
 
-		$vampiro = 0 ;
-		$hunter = 0 ;
-		$vampiro = 1 ;
+		$mysql = "SELECT count(*) as x from personaggio where idutente = '$idutente' ";
+		$result = mysqli_query($db, $mysql);
+		$res = mysqli_fetch_array($result);
+
+		$scheda = $res['x'];
 
 
 		$out = [
 			'idutente' => $idutente,
 			'admin' => $admin ,
-			'vampiro' => $vampiro,
-			'hunter' => $hunter
+			'scheda' => $scheda
 		];
 
 		echo json_encode ($out, JSON_UNESCAPED_UNICODE);

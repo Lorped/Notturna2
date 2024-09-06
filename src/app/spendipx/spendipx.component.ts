@@ -170,45 +170,11 @@ export class SpendipxComponent implements OnInit {
           }
         }
 
-        // this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
+        // NUOVO CALCOLO XP //
 
-        if ( this.scheda.xp > 113 ) {
-          this.xpspendibili = 86 + ( this.scheda.xp - 113)/2 ;  
-        } else if ( this.scheda.xp > 32 ) {
-          this.xpspendibili = 32 + ( this.scheda.xp - 32)/3*2;
-        } else {
-          this.xpspendibili = this.scheda.xp;
-        }
+        this.ricalcolo_xp();  
 
-        this.xpdisponibili = this.xpspendibili - this.scheda.xpspesi ;
-        
-        // questo per arrotondare alla 2' cifra decimale
-        this.xpspendibili = Math.round(this.xpspendibili*100)/100;
-        this.xpdisponibili = Math.round(this.xpdisponibili*100)/100;
-
-        // console.log (this.statusPG);
-
-        switch (this.statusPG) {
-          case 5:
-            this.puntirigenera = Math.round(this.scheda.xp * 25/100 );
-            break;
-          case 4:
-            this.puntirigenera = Math.round(this.scheda.xp * 4/10 );
-            break;
-          case 3:
-            this.puntirigenera = Math.round(this.scheda.xp * 5/10 );
-            break;
-          case 2:
-              this.puntirigenera = Math.round(this.scheda.xp * 7/10 );
-              break;
-          default:
-            this.puntirigenera = Math.round(this.scheda.xp * 8 /10 );
-            console.log (this.puntirigenera);
-            break;
-        }
-
-        this.prbonus = this.puntirigenera + Math.round(this.puntirigenera/5) ;
-
+        // *********************
 
         this.schedaservice.getnecrotaum(this.idutente)
         .subscribe(
@@ -252,12 +218,12 @@ export class SpendipxComponent implements OnInit {
 
     let newpx: number = Number (this.addXPform.get('xptoadd')!.value );
 
-    this.xpdisponibili += newpx ;
-    this.scheda.xp += newpx ;
 
     this.schedaservice.addpx(this.idutente, newpx)
     .subscribe(
       data => {
+        this.scheda.xp += newpx ;
+        this.ricalcolo_xp(); 
         /* */
       }
     );
@@ -340,7 +306,8 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
     .subscribe(
       data => {
-        /* */
+        
+        this.reload_full();
       }
     );
 
@@ -581,6 +548,24 @@ export class SpendipxComponent implements OnInit {
 
   newamalgama(){
     console.log("new amalgama " + this.idnewamalgama);
+   
+
+    const found = this.amalgame.find((xx)=> xx.idamalgama == Number(this.idnewamalgama));
+
+    if (found){
+      this.scheda.xp = this.scheda.xp - found.costo;
+    }
+    
+    this.ricalcolo_xp();
+
+    this.schedaservice.addamalgama(this.idutente, Number(this.idnewamalgama) )
+    .subscribe(
+      data => {
+
+        this.reload_full();
+
+      }
+    );
   }
 
   reload_full () {
@@ -618,8 +603,69 @@ export class SpendipxComponent implements OnInit {
             this.newnecromanzie = data.necromanzie;
           }
         );
+
+        this.schedaservice.listamalgame(this.idutente)
+        .subscribe(
+          (data: any) => {
+            this.amalgame = data.amalgame;
+            this.amalgame.forEach(element => {
+              element.costo = Number (element.costo);
+              element.checkdisc = Number (element.checkdisc);
+              if (element.costo > this.xpdisponibili) {
+                element.checkdisc = 0;
+              }
+            });
+          }
+        );
+
       }
     );
+  }
+
+
+  ricalcolo_xp (){
+
+    // this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
+
+    if ( this.scheda.xp > 113 ) {
+      this.xpspendibili = 86 + ( this.scheda.xp - 113)/2 ;  
+    } else if ( this.scheda.xp > 32 ) {
+      this.xpspendibili = 32 + ( this.scheda.xp - 32)/3*2;
+    } else {
+      this.xpspendibili = this.scheda.xp;
+    }
+
+
+
+    this.xpdisponibili = this.xpspendibili - this.scheda.xpspesi ;
+        
+    // questo per arrotondare alla 2' cifra decimale
+    this.xpspendibili = Math.round(this.xpspendibili*100)/100;
+    this.xpdisponibili = Math.round(this.xpdisponibili*100)/100;
+
+    // console.log (this.statusPG);
+
+    switch (this.statusPG) {
+      case 5:
+        this.puntirigenera = Math.round(this.scheda.xp * 25/100 );
+        break;
+      case 4:
+        this.puntirigenera = Math.round(this.scheda.xp * 4/10 );
+        break;
+      case 3:
+        this.puntirigenera = Math.round(this.scheda.xp * 5/10 );
+        break;
+      case 2:
+          this.puntirigenera = Math.round(this.scheda.xp * 7/10 );
+          break;
+      default:
+        this.puntirigenera = Math.round(this.scheda.xp * 8 /10 );
+        console.log (this.puntirigenera);
+        break;
+    }
+
+    this.prbonus = this.puntirigenera + Math.round(this.puntirigenera/5) ;
+
   }
 
 }

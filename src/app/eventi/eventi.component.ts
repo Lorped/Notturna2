@@ -32,7 +32,10 @@ export class EventiComponent implements OnInit {
     .subscribe( 
       (data: any) => {
         this.fulleventi = data;
-        //console.log ( this.fulleventi);
+        this.fulleventi.forEach(element => {
+          element.saldo = ( element.saldo.toString() == "1" )
+        });
+        // console.log ( this.fulleventi);
       }
     )
   }
@@ -42,8 +45,8 @@ export class EventiComponent implements OnInit {
     this.adminservice.cambiasaldo( Number(id) )
     .subscribe(
       (data:any) => {
-        //console.log(data);
-        this.fulleventi.filter(obj => obj.idutente == id)[0].saldo = data;
+        // console.log(data);
+        this.fulleventi.filter(obj => obj.idutente == id)[0].saldo = (data == "1") ;
         //console.log (this.fulleventi.filter(obj => obj.idutente == id)[0] );
       }
     )

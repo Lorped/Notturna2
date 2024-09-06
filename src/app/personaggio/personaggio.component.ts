@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
-import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale } from '../global';
+import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama } from '../global';
 
 
 @Component({
@@ -31,6 +31,8 @@ export class PersonaggioComponent implements OnInit {
 
   pregi: Array<Pregio> = [];
   rituali: Array<Rituale> = [];
+
+  amalgame: Array<Amalgama> = [];
 
   constructor( private globalstatus: GlobalStatus, private route: ActivatedRoute, private schedaservice: SchedaService ) { }
 
@@ -92,6 +94,13 @@ export class PersonaggioComponent implements OnInit {
 
         if (this.scheda.bio == '' || this.scheda.bio == null ) { this.scheda.bio = '- Non presente -';}
         if (this.scheda.note == '' || this.scheda.note == null ) { this.scheda.note = '- Nessuna -';}
+
+        this.schedaservice.getamalgame(idutente).subscribe(
+          (data: any) => {
+            this.amalgame = data.amalgame;
+            //console.log (this.amalgame);
+          }
+        );
       }
     );
   }

@@ -314,4 +314,11 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getamalgame.php'+'?idutente='+idutente );
   }
 
+  addamalgama(idutente: number , idamalgama: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addamalgama.php',{
+      idutente: idutente,
+      idamalgama: idamalgama
+    });
+  }
+
 }

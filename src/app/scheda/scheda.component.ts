@@ -92,7 +92,7 @@ export class SchedaComponent implements OnInit {
         this.schedaservice.getamalgame(this.idutente).subscribe(
           (data: any) => {
             this.amalgame = data.amalgame;
-            console.log (this.amalgame);
+            //console.log (this.amalgame);
           }
         );
 

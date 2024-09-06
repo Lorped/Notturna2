@@ -17,7 +17,7 @@ export class SidexComponent implements OnInit {
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
 
-    if ( sessionStorage.getItem('NotturnaUser1') != '0' || sessionStorage.getItem('NotturnaUser1') != '0' ) {
+    if ( sessionStorage.getItem('NotturnaUser1') != '0'  ) {
       this.ingate = false ;
     }
 

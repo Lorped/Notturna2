@@ -20,8 +20,7 @@ export class AuthenticationService {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         sessionStorage.setItem('NotturnaUser', user.idutente );
         sessionStorage.setItem('NotturnaUser0', user.admin );
-        sessionStorage.setItem('NotturnaUser1', user.vampiro );
-        sessionStorage.setItem('NotturnaUser2', user.hunter );
+        sessionStorage.setItem('NotturnaUser1', user.scheda );
       }
       return user;
     }));
@@ -32,7 +31,6 @@ export class AuthenticationService {
     sessionStorage.removeItem('NotturnaUser');
     sessionStorage.removeItem('NotturnaUser0');
     sessionStorage.removeItem('NotturnaUser1');
-    sessionStorage.removeItem('NotturnaUser2');
   }
 
 

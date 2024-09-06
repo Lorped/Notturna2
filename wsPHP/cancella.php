@@ -33,17 +33,30 @@ $idutente = $request -> idutente;
 
 if ( isset($postdata) && $idutente != "" ) {
 
-	$Mysql = "SELECT count(*) AS a FROM personaggio WHERE idutente = $idutente";
-	$Res = mysqli_fetch_array(mysqli_query($db, $Mysql));
+	$Mysql = "SELECT *  FROM personaggio WHERE idutente = $idutente";
+	$res = mysqli_fetch_array(mysqli_query($db, $Mysql));
 
-	$numscheda = $Res['a'];
+	$testo = "Cancellazione PG: " . $res['nomepg'] . " di: " . $res['nomeplayer'] . ".";
 
-	$Mysql = "SELECT count(*) AS a FROM HUNTERpersonaggio WHERE idutente = $idutente";
-	$Res = mysqli_fetch_array(mysqli_query($db, $Mysql));
+	$testo = $testo. " PXT alla data: ".$res['xp'] . " .";
 
-	$numschedaH = $Res['a'];
+	$Mysql = "SELECT *  FROM segreteria WHERE idutente = $idutente";
+	if ( $res = mysqli_fetch_array(mysqli_query($db, $Mysql)) ) {
 
-	if ( $numscheda != 0 )  {   // VAMPIRO !!
+		$testo = $testo. " Eventi alla data: ".$res['eventi'] . " .";
+
+	} else {
+		// nessun evento
+		$testo = $testo. " Eventi alla data: 0 .";
+	}
+
+
+	$Mysql = "INSERT INTO log (log) VALUES ('$testo')";
+	mysqli_query($db,$Mysql);
+
+	
+
+
 
     $Mysql = "DELETE FROM personaggio WHERE idutente = $idutente";
    	mysqli_query($db, $Mysql);
@@ -113,7 +126,11 @@ if ( isset($postdata) && $idutente != "" ) {
 	mysqli_query($db, $Mysql);
   	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
-	}
+	$Mysql = "DELETE FROM amalgame  WHERE idutente = $idutente";
+	mysqli_query($db, $Mysql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
+
+	
 
 
 

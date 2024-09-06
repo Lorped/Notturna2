@@ -549,6 +549,14 @@ export class CreaComponent implements OnInit {
         this.discipline[1].nomedisc = 'Necromanzia';
         this.discipline[2].nomedisc = 'Robustezza';
       break;
+      case '15':	// Baali
+        this.discipline[0].iddisciplina = 2;          // Ascendente
+        this.discipline[1].iddisciplina = 19;         // Daimonion
+        this.discipline[2].iddisciplina = 8;          // Oscurazione
+        this.discipline[0].nomedisc = 'Ascendente';
+        this.discipline[1].nomedisc = 'Daimonion';
+        this.discipline[2].nomedisc = 'Oscurazione';
+      break;
       case '20':	// Vili
         this.discipline[0].iddisciplina = 0;
         this.discipline[1].iddisciplina = 0;

@@ -352,6 +352,16 @@
           <div class="column">({{dd.livello}}) {{dd.nomerituale }} </div>
         </div>
       </div>
+
+      <div class="column is-3 nopadding" *ngIf="amalgame.length > 0">
+        <div class="columns" >
+          <div class="column red">Amalgame</div>
+        </div>
+        <div class="columns" *ngFor="let dd of amalgame">
+          <div class="column">{{dd.nomeamalgama}} - ( {{dd.disc1 }} . {{dd.lvldisc1}} + {{dd.disc2}}. {{dd.lvldisc2}} )</div>
+        </div>
+      </div>
+
     </div>
   </mat-card-content>
     </mat-card>
