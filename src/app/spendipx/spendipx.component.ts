@@ -203,11 +203,14 @@ export class SpendipxComponent implements OnInit {
             this.amalgame.forEach(element => {
               element.costo = Number (element.costo);
               element.checkdisc = Number (element.checkdisc);
+              /*
               if (element.costo > this.xpdisponibili) {
                 element.checkdisc = 0;
               }
+              */
+             //console.log(element);
             });
-            //console.log(this.amalgame);
+
           }
         );
       }
@@ -611,9 +614,12 @@ export class SpendipxComponent implements OnInit {
             this.amalgame.forEach(element => {
               element.costo = Number (element.costo);
               element.checkdisc = Number (element.checkdisc);
+              /*
               if (element.costo > this.xpdisponibili) {
                 element.checkdisc = 0;
               }
+              */
+             //console.log(element);
             });
           }
         );
