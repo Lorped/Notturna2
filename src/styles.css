@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: delphian;
-  src: url('/assets/delphian.woff') ;
+  src: url('./assets/delphian.woff') ;
 }
 
 html, body {
