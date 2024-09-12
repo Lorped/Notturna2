@@ -24,7 +24,8 @@ include ('db2.inc.php'); // MYSQL //
 		FROM segreteria
 		left join personaggio on segreteria.idutente = personaggio.idutente
 		left join utente on segreteria.idutente = utente.idutente
-		order by segreteria.eventodata DESC";
+		order by personaggio.nomeplayer ASC";
+		//order by segreteria.eventodata DESC";
 	$Result=mysqli_query($db, $MySql);
 
 	$eventi = [];
