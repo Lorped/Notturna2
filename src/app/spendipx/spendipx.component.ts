@@ -170,6 +170,9 @@ export class SpendipxComponent implements OnInit {
           }
         }
 
+        this.scheda.xp = Number(this.scheda.xp);
+        this.scheda.xpspesi = Number(this.scheda.xpspesi);
+
         // NUOVO CALCOLO XP //
 
         this.ricalcolo_xp();  
@@ -242,38 +245,47 @@ export class SpendipxComponent implements OnInit {
       case 'forza':
         this.scheda['forza'] ++;
         this.xpdisponibili -= this.scheda['forza'] * 2;
+        this.scheda.xpspesi += this.scheda['forza'] * 2;
         break;
       case 'destrezza':
         this.scheda['destrezza'] ++;
         this.xpdisponibili -= this.scheda['destrezza'] * 2;
+        this.scheda.xpspesi += this.scheda['destrezza'] * 2;
         break;
       case 'attutimento':
         this.scheda['attutimento'] ++;
         this.xpdisponibili -= this.scheda['attutimento'] * 2;
+        this.scheda.xpspesi += this.scheda['attutimento'] * 2;
         break;
       case 'carisma':
         this.scheda['carisma'] ++;
         this.xpdisponibili -= this.scheda['carisma'] * 2;
+        this.scheda.xpspesi += this.scheda['carisma'] * 2;
         break;
       case 'persuasione':
         this.scheda['persuasione'] ++;
         this.xpdisponibili -= this.scheda['persuasione'] * 2;
+        this.scheda.xpspesi += this.scheda['persuasione'] * 2;
         break;
       case 'saggezza':
         this.scheda['saggezza'] ++;
         this.xpdisponibili -= this.scheda['saggezza'] * 2;
+        this.scheda.xpspesi += this.scheda['saggezza'] * 2;
         break;
       case 'percezione':
         this.scheda['percezione'] ++;
         this.xpdisponibili -= this.scheda['percezione'] * 2;
+        this.scheda.xpspesi += this.scheda['percezione'] * 2;
         break;
       case 'intelligenza':
         this.scheda['intelligenza'] ++;
         this.xpdisponibili -= this.scheda['intelligenza'] * 2;
+        this.scheda.xpspesi += this.scheda['intelligenza'] * 2;
         break;
       case 'prontezza':
         this.scheda['prontezza'] ++;
         this.xpdisponibili -= this.scheda['prontezza'] * 2;
+        this.scheda.xpspesi += this.scheda['prontezza'] * 2;
         break;
       default:
         break;
@@ -281,7 +293,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.addattr(this.idutente, attributo)
     .subscribe(
       data => {
-        /* */
+        this.ricalcolo_xp(); 
       }
     );
   }
@@ -305,12 +317,14 @@ export class SpendipxComponent implements OnInit {
     }
 
     this.xpdisponibili -= spesapx;
+    this.scheda.xpspesi += spesapx;
 
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
     .subscribe(
       data => {
         
         this.reload_full();
+        this.ricalcolo_xp(); 
       }
     );
 
@@ -336,7 +350,8 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.addtaum(this.idutente, idtaum)
     .subscribe(
       data => {
-        /* */
+        this.reload_full();
+        this.ricalcolo_xp(); 
       }
     );
 
@@ -344,6 +359,7 @@ export class SpendipxComponent implements OnInit {
 
   newtaum( lvl: number ) {
     this.xpdisponibili -= 2;
+    this.scheda.xpspesi += 2;
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
       data => {
@@ -379,6 +395,8 @@ export class SpendipxComponent implements OnInit {
               (data: any) => {
                 this.newtaumaturgie = data.taumaturgie;
                 this.newnecromanzie = data.necromanzie;
+                this.ricalcolo_xp(); 
+
               }
             );
           }
@@ -392,6 +410,7 @@ export class SpendipxComponent implements OnInit {
       if ( this.necromanzie[j].necromanzia.idnecro == idnecro ) {
         this.necromanzie[j].necromanzia.livello ++ ;
         this.xpdisponibili -= ( this.necromanzie[j].necromanzia.livello * 2  );
+        this.scheda.xpspesi += ( this.necromanzie[j].necromanzia.livello * 2  );
 
         if (this.necromanzie[j].necromanzia.principale == 1 ) {
           for (let j = 0 ; j < this.discipline.length ; j++) {
@@ -406,7 +425,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.addnecro(this.idutente, idnecro)
     .subscribe(
       data => {
-        /* */
+        this.ricalcolo_xp(); 
       }
     );
 
@@ -414,11 +433,13 @@ export class SpendipxComponent implements OnInit {
 
   newnecro( lvl: number ) {
     this.xpdisponibili -= 2;
+    this.scheda.xpspesi += 2;
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
       data => {
 
         this.reload_full ();
+        this.ricalcolo_xp();
 
       }
     );
@@ -426,11 +447,13 @@ export class SpendipxComponent implements OnInit {
 
   newdisc( ) {
     this.xpdisponibili -= 5;
+    this.scheda.xpspesi += 5;
     this.schedaservice.newdisc(this.idutente, this.idnewdisc )
     .subscribe(
       data => {
 
         this.reload_full();
+        this.ricalcolo_xp();
 
       }
     );
@@ -438,6 +461,7 @@ export class SpendipxComponent implements OnInit {
 
   addrituale(lvl: number, necrotaum: string) {
     this.xpdisponibili -= 2 * (lvl + 1);
+    this.scheda.xpspesi += 2 * (lvl + 1);
 
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
     .subscribe(
@@ -463,6 +487,8 @@ export class SpendipxComponent implements OnInit {
               (data: any) => {
                 this.rituali_t = data.rituali_t;
                 this.rituali_n = data.rituali_n;
+                this.reload_full();
+                this.ricalcolo_xp();
               }
             );
           }
@@ -478,6 +504,7 @@ export class SpendipxComponent implements OnInit {
           this.skills[j].livello ++ ;
 
           this.xpdisponibili -= 2 * this.skills[j].livello ;
+          this.scheda.xpspesi += 2 * this.skills[j].livello ;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
@@ -494,7 +521,8 @@ export class SpendipxComponent implements OnInit {
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
-            /* */
+            this.reload_full();
+            this.ricalcolo_xp();
           });
         }
       }
@@ -506,10 +534,12 @@ export class SpendipxComponent implements OnInit {
 
     this.scheda.fdvmax ++;
     this.xpdisponibili -= 4 * this.scheda.fdvmax ;
+    this.scheda.xpspesi += 4 * this.scheda.fdvmax ;
 
     this.schedaservice.addfdv(this.idutente)
     .subscribe( (data:any) => {
-      /* */
+      this.reload_full();
+      this.ricalcolo_xp();
     });
 
   }
@@ -519,10 +549,12 @@ export class SpendipxComponent implements OnInit {
 
         this.scheda.bloodp ++;
         this.xpdisponibili -= 4 * this.scheda.bloodp ;
+        this.scheda.xpspesi += 4 * this.scheda.bloodp ;
 
         this.schedaservice.addbp(this.idutente)
         .subscribe( (data:any) => {
-          /* */
+          this.reload_full();
+          this.ricalcolo_xp();
         });
 
   }
@@ -533,7 +565,9 @@ export class SpendipxComponent implements OnInit {
       .subscribe ( (data:any) => {
         this.tremeresenzataum = 0 ;
         this.xpdisponibili -= 2 ;
+        this.scheda.xpspesi += 2 ;
         this.reload_full ();
+        this.ricalcolo_xp();
       });
 
   }
@@ -544,13 +578,15 @@ export class SpendipxComponent implements OnInit {
       .subscribe ( (data:any) => {
         this.giovannisenzanecro = 0 ;
         this.xpdisponibili -= 2 ;
+        this.scheda.xpspesi += 2 ;
         this.reload_full ();
+        this.ricalcolo_xp();
       });
 
   }
 
   newamalgama(){
-    console.log("new amalgama " + this.idnewamalgama);
+    //console.log("new amalgama " + this.idnewamalgama);
    
 
     const found = this.amalgame.find((xx)=> xx.idamalgama == Number(this.idnewamalgama));
@@ -566,6 +602,7 @@ export class SpendipxComponent implements OnInit {
       data => {
 
         this.reload_full();
+        this.ricalcolo_xp();
 
       }
     );
