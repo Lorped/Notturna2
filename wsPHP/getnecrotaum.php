@@ -20,8 +20,14 @@ include ('db2.inc.php'); //MYSQL //
 
 $idutente = $_GET['idutente'];
 
+	$MySql = "SELECT idclan from personaggio WHERE idutente = $idutente";
+	$Result=mysqli_query($db, $MySql);
+	$res=mysqli_fetch_array($Result);
+	$idclan = $res['idclan'];
+
+
 	$MySql="SELECT * FROM taumaturgie_main
-		WHERE idtaum NOT IN ( select idtaum from taumaturgie where idutente=$idutente )";
+		WHERE idtaum NOT IN ( select idtaum from taumaturgie where idutente=$idutente ) AND clanesclusivo = $idclan";
 	$Result=mysqli_query($db, $MySql);
 
 	$taumaturgie = [];
