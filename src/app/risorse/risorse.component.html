@@ -1,0 +1,130 @@
+<div>
+  <p>
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="font-family:delphian; font-size:1.2em;">NOTTURNA</span>
+  </mat-toolbar>
+</p>
+</div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sideadm></app-sideadm>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+    <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
+      <p>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            {{nomepg}}: Gestione risorse
+          </mat-card-title>
+          <mat-card-subtitle>
+
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <hr>
+
+          <mat-card>
+            <div class="columns">
+              <div class="column is-6">
+                Fama in Città
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minfama(1)" [disabled]="fama1<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama1, 'dred': ix < fama1}"></i>
+                <button class="btn  btn-xs" (click)="addfama(1)" [disabled]="fama1>4"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-6">
+                Fama tra i Vampiri
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minfama(2)" [disabled]="fama2<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama2, 'dred': ix < fama2}"></i>
+                <button class="btn  btn-xs" (click)="addfama(2)" [disabled]="fama2>4"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-6">
+                Fama nel Mondo Oscuro
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minfama(3)" [disabled]="fama3<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama3, 'dred': ix < fama3}"></i>
+                <button class="btn  btn-xs" (click)="addfama(3)" [disabled]="fama3>4"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+          </mat-card>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Background e Contatti
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+  
+  
+            <div class="columns" *ngFor="let tt of listabg">
+              <div class="column is-6">
+                {{ tt.nomeback}}
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+  
+            <div class="columns">
+              <div class="column">&nbsp;</div>
+              <div class="column"><hr></div>
+              <div class="column">&nbsp;</div>
+            </div>
+  
+            <div class="columns">
+              <div class="column is-6">
+                Contatti:
+              </div>
+              <div class="column ">
+                {{sommacontatti}} / 20
+              </div>
+            </div>
+  
+            <div class="columns" *ngFor="let tt of listaContatti">
+              <div class="column ">
+                {{ tt.nomecontatto}}
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="mincon(tt.idcontatto)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommacontatti==20"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+  
+            <div class="columns ">
+              <div class="column is-6">
+                  <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                    <input matInput [formControl]="myContatto" placeholder="Nuovo contatto" type="text" >
+                  </mat-form-field>
+                  <mat-error *ngIf="myContatto.hasError('pattern')">Non sono permessi solo "blank"</mat-error>
+              </div>
+              <div class="column is-2 ">
+                  <button  mat-raised-button class="large" (click)="newcontatto()" color="primary" [disabled]="myContatto.hasError('pattern')||myContatto.hasError('required') " style="width: 100%;">Aggiungi</button>
+              </div>
+            </div>
+  
+          </mat-expansion-panel>
+
+        </mat-card-content>
+        
+      </mat-card>
+
+    </div>
+  <mat-sidenav-content>
+<mat-sidenav-container>

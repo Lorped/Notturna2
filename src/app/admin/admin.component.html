@@ -44,10 +44,10 @@
     </div>
 
     <div class="column is-3">
-      <a routerLink="/eventi" >
+      <a routerLink="/risorse/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
         <mat-card class="movable">
           <mat-card-content class="all">
-            <i class="fa fa-plus-square"></i> Gestione Eventi
+            <i class="fa fa-money"></i> Gestisci Risorse
           </mat-card-content>
         </mat-card>
       </a>
@@ -73,20 +73,13 @@
 
 
     <div class="column is-3">
-      <a [routerLink]="['/oggetti']">
-        <mat-card class="movable">
-          <mat-card-content class="all">
-            <i class="fa fa-bolt"></i> Gestisci oggetti
-          </mat-card-content>
-        </mat-card>
-      </a>
     </div>
 
     <div class="column is-3">
-      <a [routerLink]="['/chat']">
+      <a routerLink="/eventi" >
         <mat-card class="movable">
           <mat-card-content class="all">
-            <i class="fa fa-telegram"></i> Messaggi e fattore aleatorio
+            <i class="fa fa-plus-square"></i> Gestione Eventi
           </mat-card-content>
         </mat-card>
       </a>
@@ -108,7 +101,26 @@
     <div class="column is-3">
     </div>
 
+
+
     <div class="column is-3">
+      <a [routerLink]="['/oggetti']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-bolt"></i> Gestisci oggetti
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+
+    <div class="column is-3">
+      <a [routerLink]="['/chat']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-telegram"></i> Messaggi e fattore aleatorio
+          </mat-card-content>
+        </mat-card>
+      </a>
     </div>
 
     <div class="column is-3">

@@ -74,6 +74,7 @@ import { CambiaoggComponent } from './cambiaogg/cambiaogg.component';
 import { ChatComponent } from './chat/chat.component';
 import { RubricaComponent } from './rubrica/rubrica.component';
 import { EventiComponent } from './eventi/eventi.component';
+import { RisorseComponent } from './risorse/risorse.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { EventiComponent } from './eventi/eventi.component';
     CambiaoggComponent,
     ChatComponent,
     RubricaComponent,
-    EventiComponent
+    EventiComponent,
+    RisorseComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<div>
+<div> 
   <p>
   <mat-toolbar>
     <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
@@ -18,337 +18,340 @@
     <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
       <p>
       <mat-card>
-        <mat-card-title>
-          {{nomepg}}: Aggiorna Fama, Background, Status
-        </mat-card-title>
-        <mat-card-subtitle>
+        <mat-card-header>
+          <mat-card-title>
+            {{nomepg}}: Aggiorna Fama, Background, Status
+          </mat-card-title>
+          <mat-card-subtitle>
 
-        </mat-card-subtitle>
+          </mat-card-subtitle>
+        </mat-card-header>
 
-        <hr>
+        <mat-card-content>
+        
+          <hr>
 
-        <mat-card>
-          <div class="columns">
-            <div class="column is-6">
-              Fama in Città
+          <mat-card>
+            <div class="columns">
+              <div class="column is-6">
+                Fama in Città
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minfama(1)" [disabled]="fama1<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama1, 'dred': ix < fama1}"></i>
+                <button class="btn  btn-xs" (click)="addfama(1)" [disabled]="fama1>4"><i class="fa fa-plus"></i></button>
+              </div>
             </div>
-            <div class="column ">
-              <button  class="btn  btn-xs" (click)="minfama(1)" [disabled]="fama1<1"><i class="fa fa-minus"></i></button>
-              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama1, 'dred': ix < fama1}"></i>
-              <button class="btn  btn-xs" (click)="addfama(1)" [disabled]="fama1>4"><i class="fa fa-plus"></i></button>
+            <div class="columns">
+              <div class="column is-6">
+                Fama tra i Vampiri
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minfama(2)" [disabled]="fama2<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama2, 'dred': ix < fama2}"></i>
+                <button class="btn  btn-xs" (click)="addfama(2)" [disabled]="fama2>4"><i class="fa fa-plus"></i></button>
+              </div>
             </div>
-          </div>
-          <div class="columns">
-            <div class="column is-6">
-              Fama tra i Vampiri
+            <div class="columns">
+              <div class="column is-6">
+                Fama nel Mondo Oscuro
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minfama(3)" [disabled]="fama3<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama3, 'dred': ix < fama3}"></i>
+                <button class="btn  btn-xs" (click)="addfama(3)" [disabled]="fama3>4"><i class="fa fa-plus"></i></button>
+              </div>
             </div>
-            <div class="column ">
-              <button  class="btn  btn-xs" (click)="minfama(2)" [disabled]="fama2<1"><i class="fa fa-minus"></i></button>
-              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama2, 'dred': ix < fama2}"></i>
-              <button class="btn  btn-xs" (click)="addfama(2)" [disabled]="fama2>4"><i class="fa fa-plus"></i></button>
-            </div>
-          </div>
-          <div class="columns">
-            <div class="column is-6">
-              Fama nel Mondo Oscuro
-            </div>
-            <div class="column ">
-              <button  class="btn  btn-xs" (click)="minfama(3)" [disabled]="fama3<1"><i class="fa fa-minus"></i></button>
-              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama3, 'dred': ix < fama3}"></i>
-              <button class="btn  btn-xs" (click)="addfama(3)" [disabled]="fama3>4"><i class="fa fa-plus"></i></button>
-            </div>
-          </div>
-        </mat-card>
+          </mat-card>
 
 
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Background e Contatti
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Background e Contatti
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
+            <div class="columns" *ngFor="let tt of listabg">
 
-          <div class="columns" *ngFor="let tt of listabg">
+              <div class="column is-6">
+                {{ tt.nomeback}}
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
+              </div>
 
-            <div class="column is-6">
-              {{ tt.nomeback}}
-            </div>
-            <div class="column ">
-              <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
-              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
-              <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
             </div>
 
-          </div>
-
-          <div class="columns">
-            <div class="column">&nbsp;</div>
-            <div class="column"><hr></div>
-            <div class="column">&nbsp;</div>
-          </div>
-
-          <div class="columns">
-
-            <div class="column is-6">
-              Contatti:
+            <div class="columns">
+              <div class="column">&nbsp;</div>
+              <div class="column"><hr></div>
+              <div class="column">&nbsp;</div>
             </div>
-            <div class="column ">
-              {{sommacontatti}} / 20
+
+            <div class="columns">
+
+              <div class="column is-6">
+                Contatti:
+              </div>
+              <div class="column ">
+                {{sommacontatti}} / 20
+              </div>
             </div>
-          </div>
 
-          <div class="columns" *ngFor="let tt of listaContatti">
-            <div class="column ">
-              {{ tt.nomecontatto}}
+            <div class="columns" *ngFor="let tt of listaContatti">
+              <div class="column ">
+                {{ tt.nomecontatto}}
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="mincon(tt.idcontatto)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommacontatti==20"><i class="fa fa-plus"></i></button>
+              </div>
             </div>
-            <div class="column ">
-              <button  class="btn  btn-xs" (click)="mincon(tt.idcontatto)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
-              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
-              <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommacontatti==20"><i class="fa fa-plus"></i></button>
-            </div>
-          </div>
 
-          <div class="columns ">
+            <div class="columns ">
 
 
-            <div class="column is-6">
+              <div class="column is-6">
                 <mat-form-field appearance="fill" style="size: 100%; display: block;">
                   <input matInput [formControl]="myContatto" placeholder="Nuovo contatto" type="text" >
                 </mat-form-field>
                 <mat-error *ngIf="myContatto.hasError('pattern')">Non sono permessi solo "blank"</mat-error>
-            </div>
-            <div class="column is-2 ">
+              </div>
+              <div class="column is-2 ">
                 <button  mat-raised-button class="large" (click)="newcontatto()" color="primary" [disabled]="myContatto.hasError('pattern')||myContatto.hasError('required') " style="width: 100%;">Aggiungi</button>
+              </div>
+
             </div>
 
-          </div>
-
-        </mat-expansion-panel>
+          </mat-expansion-panel>
 
 
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Passaggio di Status
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Passaggio di Status
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
-  <div *ngIf="status_new != '' " >
-          <div class="columns">
-            <div class="column is-2">Da: {{status_old}} [+{{this.attivazione_old}}]</div>
-            <div class="column ">A: {{status_new}} [+{{this.attivazione_new}}]</div>
-          </div>
-          <div class="columns">
-            <div class="column is-2">Blood Potency: {{ bloodp_new  }} (+{{bloodp_new-bloodp_old}})</div>
-            <div class="column is-1">FdV: {{ fdv_new }} (+{{fdv_new-fdv_old}})</div>
-            <div class="column is-2">Punti BG addizionali: {{bgbase_new-bgbase_old}}</div>
-            <div class="column is-3">Livelli sete addizionali: {{sete_new-sete_old}}</div>
-            <div class="column is-4">Punti competenza addizionali: {{conoscenze_new-conoscenze_old}}</div>
-          </div>
+            <div *ngIf="status_new != '' " >
+              <div class="columns">
+                <div class="column is-2">Da: {{status_old}} [+{{this.attivazione_old}}]</div>
+                <div class="column ">A: {{status_new}} [+{{this.attivazione_new}}]</div>
+              </div>
+              <div class="columns">
+                <div class="column is-2">Blood Potency: {{ bloodp_new  }} (+{{bloodp_new-bloodp_old}})</div>
+                <div class="column is-1">FdV: {{ fdv_new }} (+{{fdv_new-fdv_old}})</div>
+                <div class="column is-2">Punti BG addizionali: {{bgbase_new-bgbase_old}}</div>
+                <div class="column is-3">Livelli sete addizionali: {{sete_new-sete_old}}</div>
+                <div class="column is-4">Punti competenza addizionali: {{conoscenze_new-conoscenze_old}}</div>
+              </div>
 
-          <hr>
+              <hr>
 
-          <div class="columns is-multiline " style="margin-left: 0px;" >
-            <div class="column is-4 nopadding" *ngFor="let dd of listaskill; let ski = index">
-              <div class="columns ">
-                <div class="column ">
-                  {{dd.nomeskill}}
-                </div>
-                <div class="column alc">
-                  <button *ngIf="dd.livello<5" class="btn btn-xs" (click)="minsk(ski)" [disabled]="listanew[ski].livello == 0"><i class="fa fa-plus"></i></button>
-                  <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello+listanew[ski].livello, 'dred': ix < dd.livello+listanew[ski].livello}"></i>
-                  <button *ngIf="dd.livello+listanew[ski].livello<5" class="btn btn-xs" (click)="addsk(ski)" [disabled]="puntidisponibili==0"><i class="fa fa-plus"></i></button>
+              <div class="columns is-multiline " style="margin-left: 0px;" >
+                <div class="column is-4 nopadding" *ngFor="let dd of listaskill; let ski = index">
+                  <div class="columns ">
+                    <div class="column ">
+                      {{dd.nomeskill}}
+                    </div>
+                    <div class="column alc">
+                      <button *ngIf="dd.livello<5" class="btn btn-xs" (click)="minsk(ski)" [disabled]="listanew[ski].livello == 0"><i class="fa fa-plus"></i></button>
+                      <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello+listanew[ski].livello, 'dred': ix < dd.livello+listanew[ski].livello}"></i>
+                      <button *ngIf="dd.livello+listanew[ski].livello<5" class="btn btn-xs" (click)="addsk(ski)" [disabled]="puntidisponibili==0"><i class="fa fa-plus"></i></button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="columns">
-            <div class="column">Distribuire i punti competenze disponibili e poi finalizzare il Passaggio di Status. Ricordarsi di aggiungere anche i punti BG addizionali.</div>
-          </div>
-          <div class="columns">
-            <div class="column is-4 ">&nbsp;</div>
-            <div class="column is-4 ">
-                <button  mat-raised-button class="large" (click)="cambiastatus()" color="primary" [disabled]="puntidisponibili != 0" style="width: 100%;">Cambia Status</button>
-            </div>
-            <div class="column is-4 ">&nbsp;</div>
-          </div>
-    </div>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Forza di Volontà, Umanità/Sentiero e Generazione
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <div class="columns">
-            <div class = "column">
-              <mat-form-field appearance="fill" style="size: 75%; display: block;">
-              <mat-select   [(value)]="sentieroPG">
-                <mat-option *ngFor="let i of listasentieri" [value]="i.idsentiero">{{i.sentiero}}</mat-option>
-              </mat-select>
-              </mat-form-field>
-            </div>
-            <div class = "column">
-              <button  mat-raised-button class="large" (click)="changesentiero()" color="primary" [disabled]="sentieroPG==oldsentieroPG" style="width: 100%;">Modifica Sentiero</button>
-            </div>
-          </div>
-          <div class="columns">
-            <div class="column is-2">
-              Valore Sentiero
-            </div>
-            <div class="column is-4 ">
-              <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero==0"><i class="fa fa-minus"></i></button>
-              <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > valsentiero , 'dred': ix < valsentiero}"></i>
-              <button class="btn  btn-xs" (click)="addsentiero()" [disabled]="valsentiero>9"><i class="fa fa-plus"></i></button>
-            </div>
-            <div class="column is-2">
-              Forza di Volontà
-            </div>
-            <div class="column is-4 ">
-              <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="fdv==0"><i class="fa fa-minus"></i></button>
-              <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > fdv , 'dred': ix < fdv }"></i>
-              <button class="btn  btn-xs" (click)="addfdv()" [disabled]="fdv>9"><i class="fa fa-plus"></i></button>
-            </div>
-          </div>
-          <div class="columns">
-            <div class = "column">
-              Generazione attuale: {{generazione}}
-            </div>
-            <div class = "column">
-              <button  mat-raised-button class="large" (click)="riducigen()" color="primary"  [disabled]="generazione==4" style="width: 100%;">Diminuisci Generazione</button>
-            </div>
-          </div>
-
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Pregi e Difetti
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
-            <div class="column is-12 nopadding alc" *ngIf="pregi.length >0">
-              Pregi
-            </div>
-            <div class="column is-4 nopadding" *ngFor="let tt of pregi">
-              <div class="columns ">
-                <div class="column ">
-                  {{tt.nomepregio}} ({{tt.classe}} {{tt.valore}})
+              <div class="columns">
+                <div class="column">Distribuire i punti competenze disponibili e poi finalizzare il Passaggio di Status. Ricordarsi di aggiungere anche i punti BG addizionali.</div>
+              </div>
+              <div class="columns">
+                <div class="column is-4 ">&nbsp;</div>
+                <div class="column is-4 ">
+                  <button  mat-raised-button class="large" (click)="cambiastatus()" color="primary" [disabled]="puntidisponibili != 0" style="width: 100%;">Cambia Status</button>
                 </div>
-                <div class="column  is-4">
-                  <button  mat-raised-button class="small" (click)="cancpregio(tt.idpregio)" color="accent" >Rimuovi</button>
-                </div>
+                <div class="column is-4 ">&nbsp;</div>
               </div>
             </div>
-          </div>
-          <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
-            <div class="column is-12 nopadding alc" *ngIf="difetti.length >0">
-              Difetti
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Forza di Volontà, Umanità/Sentiero e Generazione
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="columns">
+              <div class = "column">
+                <mat-form-field appearance="fill" style="size: 75%; display: block;">
+                  <mat-select   [(value)]="sentieroPG">
+                    <mat-option *ngFor="let i of listasentieri" [value]="i.idsentiero">{{i.sentiero}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class = "column">
+                <button  mat-raised-button class="large" (click)="changesentiero()" color="primary" [disabled]="sentieroPG==oldsentieroPG" style="width: 100%;">Modifica Sentiero</button>
+              </div>
             </div>
-            <div class="column is-4 nopadding" *ngFor="let tt of difetti">
-              <div class="columns ">
-                <div class="column ">
-                  {{tt.nomepregio}} ({{tt.classe}} {{tt.valore}})
-                </div>
-                <div class="column  is-4">
-                  <button  mat-raised-button class="small" (click)="cancpregio(tt.idpregio)" color="accent" >Rimuovi</button>
+            <div class="columns">
+              <div class="column is-2">
+                Valore Sentiero
+              </div>
+              <div class="column is-4 ">
+                <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero==0"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > valsentiero , 'dred': ix < valsentiero}"></i>
+                <button class="btn  btn-xs" (click)="addsentiero()" [disabled]="valsentiero>9"><i class="fa fa-plus"></i></button>
+              </div>
+              <div class="column is-2">
+                Forza di Volontà
+              </div>
+              <div class="column is-4 ">
+                <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="fdv==0"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let i of 10 | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > fdv , 'dred': ix < fdv }"></i>
+                <button class="btn  btn-xs" (click)="addfdv()" [disabled]="fdv>9"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="columns">
+              <div class = "column">
+                Generazione attuale: {{generazione}}
+              </div>
+              <div class = "column">
+                <button  mat-raised-button class="large" (click)="riducigen()" color="primary"  [disabled]="generazione==4" style="width: 100%;">Diminuisci Generazione</button>
+              </div>
+            </div>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Pregi e Difetti
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
+              <div class="column is-12 nopadding alc" *ngIf="pregi.length >0">
+                Pregi
+              </div>
+              <div class="column is-4 nopadding" *ngFor="let tt of pregi">
+                <div class="columns ">
+                  <div class="column ">
+                    {{tt.nomepregio}} ({{tt.classe}} {{tt.valore}})
+                  </div>
+                  <div class="column  is-4">
+                    <button  mat-raised-button class="small" (click)="cancpregio(tt.idpregio)" color="accent" >Rimuovi</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <mat-card>
-
-            <div class="columns nopadding" style="margin-left: 0px;" >
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Difetti Fisici</mat-label>
-                <mat-select [(value)]="new_d_f" >
-                  <mat-option *ngFor="let tt of difetti_f" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('df')" >Aggiungi</button>
+            <div class="columns is-multiline nopadding" style="margin-left: 0px;" >
+              <div class="column is-12 nopadding alc" *ngIf="difetti.length >0">
+                Difetti
               </div>
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Difetti Mentali</mat-label>
-                <mat-select [(value)]="new_d_m" >
-                  <mat-option *ngFor="let tt of difetti_m" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('dm')" >Aggiungi</button>
-              </div>
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Difetti Sociali</mat-label>
-                <mat-select [(value)]="new_d_s" >
-                  <mat-option *ngFor="let tt of difetti_s" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('ds')" >Aggiungi</button>
-              </div>
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Difetti Sovrannaturali</mat-label>
-                <mat-select [(value)]="new_d_x" >
-                  <mat-option *ngFor="let tt of difetti_x" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('dx')" >Aggiungi</button>
+              <div class="column is-4 nopadding" *ngFor="let tt of difetti">
+                <div class="columns ">
+                  <div class="column ">
+                    {{tt.nomepregio}} ({{tt.classe}} {{tt.valore}})
+                  </div>
+                  <div class="column  is-4">
+                    <button  mat-raised-button class="small" (click)="cancpregio(tt.idpregio)" color="accent" >Rimuovi</button>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="columns nopadding" style="margin-left: 0px;" >
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Pregi Fisici</mat-label>
-                <mat-select [(value)]="new_p_f" >
-                  <mat-option *ngFor="let tt of pregi_f" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}}) </mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('pf')" >Aggiungi</button>
+            <mat-card>
+
+              <div class="columns nopadding" style="margin-left: 0px;" >
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Difetti Fisici</mat-label>
+                    <mat-select [(value)]="new_d_f" >
+                      <mat-option *ngFor="let tt of difetti_f" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('df')" >Aggiungi</button>
+                </div>
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Difetti Mentali</mat-label>
+                    <mat-select [(value)]="new_d_m" >
+                      <mat-option *ngFor="let tt of difetti_m" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('dm')" >Aggiungi</button>
+                </div>
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Difetti Sociali</mat-label>
+                    <mat-select [(value)]="new_d_s" >
+                      <mat-option *ngFor="let tt of difetti_s" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('ds')" >Aggiungi</button>
+                </div>
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Difetti Sovrannaturali</mat-label>
+                    <mat-select [(value)]="new_d_x" >
+                      <mat-option *ngFor="let tt of difetti_x" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('dx')" >Aggiungi</button>
+                </div>
               </div>
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Pregi Mentali</mat-label>
-                <mat-select [(value)]="new_p_m" >
-                  <mat-option *ngFor="let tt of pregi_m" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('pm')" >Aggiungi</button>
+
+              <div class="columns nopadding" style="margin-left: 0px;" >
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Pregi Fisici</mat-label>
+                    <mat-select [(value)]="new_p_f" >
+                      <mat-option *ngFor="let tt of pregi_f" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}}) </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('pf')" >Aggiungi</button>
+                </div>
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Pregi Mentali</mat-label>
+                    <mat-select [(value)]="new_p_m" >
+                      <mat-option *ngFor="let tt of pregi_m" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('pm')" >Aggiungi</button>
+                </div>
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Pregi Sociali</mat-label>
+                    <mat-select [(value)]="new_p_s" >
+                      <mat-option *ngFor="let tt of pregi_s" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('ps')" >Aggiungi</button>
+                </div>
+                <div class="column is-3 nopadding" >
+                  <mat-form-field>
+                    <mat-label>Pregi Sovrannaturali</mat-label>
+                    <mat-select [(value)]="new_p_x" >
+                      <mat-option *ngFor="let tt of pregi_x" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('px')" >Aggiungi</button>
+                </div>
               </div>
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Pregi Sociali</mat-label>
-                <mat-select [(value)]="new_p_s" >
-                  <mat-option *ngFor="let tt of pregi_s" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('ps')" >Aggiungi</button>
-              </div>
-              <div class="column is-3 nopadding" >
-                <mat-form-field>
-                <mat-label>Pregi Sovrannaturali</mat-label>
-                <mat-select [(value)]="new_p_x" >
-                  <mat-option *ngFor="let tt of pregi_x" [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
-                </mat-select>
-                </mat-form-field>
-                <button  mat-raised-button class="large" color="primary"  style="width: 66%;" (click)="newpregio('px')" >Aggiungi</button>
-              </div>
-            </div>
 
-          </mat-card>
+            </mat-card>
 
 
-        </mat-expansion-panel>
+          </mat-expansion-panel>
 
-
+        </mat-card-content>
 
       </mat-card>
     </div>
