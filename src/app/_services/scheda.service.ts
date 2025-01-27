@@ -321,4 +321,9 @@ export class SchedaService {
     });
   }
 
+
+  getrisorse(idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getrisorse.php'+'?idutente='+idutente );
+  }
+
 }

@@ -30,96 +30,77 @@
           <hr>
 
           <mat-card>
-            <div class="columns">
+            <div class="columns" >
               <div class="column is-6">
-                Fama in Città
+                Risorse base (Background)
               </div>
               <div class="column ">
-                <button  class="btn  btn-xs" (click)="minfama(1)" [disabled]="fama1<1"><i class="fa fa-minus"></i></button>
-                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama1, 'dred': ix < fama1}"></i>
-                <button class="btn  btn-xs" (click)="addfama(1)" [disabled]="fama1>4"><i class="fa fa-plus"></i></button>
+                <button  class="btn  btn-xs" (click)="minbg(2)" [disabled]="risorse_base<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base, 'dred': ix < risorse_base}"></i>
+                <button class="btn  btn-xs" (click)="addbg(2)" [disabled]="risorse_base>4"><i class="fa fa-plus"></i></button>
               </div>
             </div>
-            <div class="columns">
+            <div class="columns" >
               <div class="column is-6">
-                Fama tra i Vampiri
+                Risorse effettive
               </div>
               <div class="column ">
-                <button  class="btn  btn-xs" (click)="minfama(2)" [disabled]="fama2<1"><i class="fa fa-minus"></i></button>
-                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama2, 'dred': ix < fama2}"></i>
-                <button class="btn  btn-xs" (click)="addfama(2)" [disabled]="fama2>4"><i class="fa fa-plus"></i></button>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="column is-6">
-                Fama nel Mondo Oscuro
-              </div>
-              <div class="column ">
-                <button  class="btn  btn-xs" (click)="minfama(3)" [disabled]="fama3<1"><i class="fa fa-minus"></i></button>
-                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama3, 'dred': ix < fama3}"></i>
-                <button class="btn  btn-xs" (click)="addfama(3)" [disabled]="fama3>4"><i class="fa fa-plus"></i></button>
+                
+                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base+saldo, 'dred': ix < risorse_base+saldo}"></i>
+                
               </div>
             </div>
           </mat-card>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Background e Contatti
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-  
-  
-            <div class="columns" *ngFor="let tt of listabg">
-              <div class="column is-6">
-                {{ tt.nomeback}}
+          <p>&nbsp;</p>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>
+            </mat-card-title>
+            <mat-card-subtitle>
+            </mat-card-subtitle>
+          </mat-card-header>
+            <mat-card-content>
+              <div class="columns">
+                <div class="column bigger">
+                  Data
+                </div>
+                <div class="column bigger">
+                  Risorse impegnate
+                </div>
+                <div class="column bigger ">
+                  Recupero
+                </div>
+                <div class="column bigger alr">
+                  Risorse recuperate
+                </div>
               </div>
-              <div class="column ">
-                <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
-                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
-                <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
+              <div class="columns">
+                <div class="column">
+                  <hr>
+                </div>
               </div>
-            </div>
-  
-            <div class="columns">
-              <div class="column">&nbsp;</div>
-              <div class="column"><hr></div>
-              <div class="column">&nbsp;</div>
-            </div>
-  
-            <div class="columns">
-              <div class="column is-6">
-                Contatti:
+              <div class="columns" *ngFor="let px of listaarray">
+                <div class="column">
+                  {{px.data}}
+                </div>
+                <div class="column">
+                  {{px.spesa}}
+                </div>
+                <div class="column ">
+                  1 risorsa ogni {{px.cadenza}} gg.
+                </div>
+                <div class="column alr ">
+                  {{px.recuperati}}
+                </div>
               </div>
-              <div class="column ">
-                {{sommacontatti}} / 20
-              </div>
-            </div>
-  
-            <div class="columns" *ngFor="let tt of listaContatti">
-              <div class="column ">
-                {{ tt.nomecontatto}}
-              </div>
-              <div class="column ">
-                <button  class="btn  btn-xs" (click)="mincon(tt.idcontatto)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
-                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
-                <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommacontatti==20"><i class="fa fa-plus"></i></button>
-              </div>
-            </div>
-  
-            <div class="columns ">
-              <div class="column is-6">
-                  <mat-form-field appearance="fill" style="size: 100%; display: block;">
-                    <input matInput [formControl]="myContatto" placeholder="Nuovo contatto" type="text" >
-                  </mat-form-field>
-                  <mat-error *ngIf="myContatto.hasError('pattern')">Non sono permessi solo "blank"</mat-error>
-              </div>
-              <div class="column is-2 ">
-                  <button  mat-raised-button class="large" (click)="newcontatto()" color="primary" [disabled]="myContatto.hasError('pattern')||myContatto.hasError('required') " style="width: 100%;">Aggiungi</button>
-              </div>
-            </div>
-  
-          </mat-expansion-panel>
+            </mat-card-content>
+          </mat-card>
+
+
+
+
 
         </mat-card-content>
         
