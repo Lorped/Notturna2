@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { AuthenticationService } from '../_services/index';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus } from '../global';
+import { Observable, of } from 'rxjs';
+
 
 export class listaspese {
   public data = '' ;
@@ -31,6 +35,19 @@ export class RisorseComponent implements OnInit {
 
   listaarray: Array <listaspese> = [];
 
+
+  RisorseForm = new FormGroup ({
+      spesa: new FormControl('', [
+        Validators.required
+      ],[
+        this.validateRisorse.bind(this)
+      ]),
+  
+      recupero: new FormControl('', [
+        Validators.required
+      ])
+
+    });
   
   
 
@@ -100,5 +117,23 @@ export class RisorseComponent implements OnInit {
     this.schedaservice.putbg(this.idutente, id , newlivello, 'A' ).subscribe();
   }
 
+
+
+  get spesa() {
+    return this.RisorseForm.get('spesa');
+  }
+  get recupero() {
+    return this.RisorseForm.get('recupero');
+  }
+
+
+  validateRisorse (control: AbstractControl) : Observable<any> {
+    
+    const esito = (this.RisorseForm == undefined) || (Number(this.spesa!.value) >  this.risorse_base + this.saldo ) ? null : { erroreeta: true };
+     
+    //const esito = null;
+    //console.log("here");
+    return of(esito);
+  }
 
 }
