@@ -36,8 +36,8 @@
               </div>
               <div class="column ">
                 <button  class="btn  btn-xs" (click)="minbg(2)" [disabled]="risorse_base<1"><i class="fa fa-minus"></i></button>
-                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base, 'dred': ix < risorse_base}"></i>
-                <button class="btn  btn-xs" (click)="addbg(2)" [disabled]="risorse_base>4"><i class="fa fa-plus"></i></button>
+                <i *ngFor="let item of 10|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base, 'dred': ix < risorse_base}"></i>
+                <button class="btn  btn-xs" (click)="addbg(2)" [disabled]="risorse_base>9"><i class="fa fa-plus"></i></button>
               </div>
             </div>
             <div class="columns" >
@@ -46,7 +46,7 @@
               </div>
               <div class="column ">
                 
-                <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base+saldo, 'dred': ix < risorse_base+saldo}"></i>
+                <i *ngFor="let item of 10|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base+saldo, 'dred': ix < risorse_base+saldo}"></i>
                 
               </div>
             </div>
@@ -54,11 +54,34 @@
 
           <p>&nbsp;</p>
 
+          <form [formGroup]="RisorseForm" (ngSubmit)="addspesa()" #RisForm=ngForm>
+            <div class="columns" >
+              <div class="column is-3">
+                <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;" >
+                  <mat-label>Risorse Spese</mat-label>
+                  <input matInput formControlName="spesa"  type="number" min="0">
+                  <mat-hint >Max {{risorse_base+saldo}}</mat-hint>
+                </mat-form-field>
+              </div>
+
+              <div class="column is-6">
+                <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;" >
+                  <mat-label>Periodo di recupero (giorni)</mat-label>
+                  <input matInput formControlName="recupero"  type="number" min="0" step="10">
+                  <mat-hint >Suggeriti multipli di 30</mat-hint>
+                </mat-form-field>
+                <button  mat-raised-button type="submit" class="large" color="primary" [disabled]="!RisorseForm.valid" >Spendi</button>
+              </div>
+ 
+            </div>
+          </form>
+
           <mat-card>
             <mat-card-header>
               <mat-card-title>
-            </mat-card-title>
-            <mat-card-subtitle>
+                Storico impiego risorse
+              </mat-card-title>
+              <mat-card-subtitle>
             </mat-card-subtitle>
           </mat-card-header>
             <mat-card-content>

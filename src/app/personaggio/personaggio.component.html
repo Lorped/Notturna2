@@ -434,12 +434,21 @@
       <div class="columns is-multiline" style="margin-left: 0px;" >
         <div class="column is-4 nopadding" *ngFor="let dd of background">
 
-          <div class="columns" *ngIf="dd.idback != 77">
+          <div class="columns" *ngIf="dd.idback != 77 && dd.idback != 2 ">
             <div class="column">
               {{dd.nomeback}}
             </div>
             <div class="column">
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+          <div class="columns" *ngIf="dd.idback == 2">
+            <div class="column">
+              {{dd.nomeback}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+              <i *ngFor="let item of dd.livello-5|times ; let ix = index" class="fa fa-circle mymedicon dred" ></i>
             </div>
           </div>
           <div class="columns" *ngIf="dd.idback == 77">

@@ -10,7 +10,9 @@ hr {
   padding: 0;
 }
 
-
+.large {
+  width:  100% !important;
+}
 mat-card {
   /*margin-top: 0.25em;*/
   font-size: 1em

@@ -326,4 +326,12 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getrisorse.php'+'?idutente='+idutente );
   }
 
+  addspesa(idutente: number , spesa: number|null , recupero: number|null ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addspesa.php',{
+      idutente: idutente,
+      spesa: spesa,
+      recupero: recupero
+    });
+  }
+
 }

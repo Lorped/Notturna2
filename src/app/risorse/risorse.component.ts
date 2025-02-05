@@ -37,14 +37,16 @@ export class RisorseComponent implements OnInit {
 
 
   RisorseForm = new FormGroup ({
-      spesa: new FormControl('', [
-        Validators.required
+      spesa: new FormControl(0, [
+        Validators.required,
+        Validators.min(1)
       ],[
         this.validateRisorse.bind(this)
       ]),
   
-      recupero: new FormControl('', [
-        Validators.required
+      recupero: new FormControl(30, [
+        Validators.required,
+        Validators.min(1)
       ])
 
     });
@@ -117,7 +119,35 @@ export class RisorseComponent implements OnInit {
     this.schedaservice.putbg(this.idutente, id , newlivello, 'A' ).subscribe();
   }
 
+  addspesa(){
+    console.log("here");
+    console.log ("spesa "+this.spesa!.value);
+    console.log ("recupero "+this.recupero!.value);
 
+
+
+
+
+    this.schedaservice.addspesa(this.idutente, this.spesa!.value, this.recupero!.value).subscribe(
+      data => {
+
+        this.RisorseForm.reset();
+
+        this.schedaservice.getrisorse(this.idutente).subscribe(
+          (data: any) => {
+            this.saldo = Number(data.saldo);
+    
+            this.listaarray = data.lista;
+    
+            //console.log(this.listaarray);
+          });
+
+      }
+    );
+
+
+    
+  }
 
   get spesa() {
     return this.RisorseForm.get('spesa');
@@ -129,7 +159,9 @@ export class RisorseComponent implements OnInit {
 
   validateRisorse (control: AbstractControl) : Observable<any> {
     
-    const esito = (this.RisorseForm == undefined) || (Number(this.spesa!.value) >  this.risorse_base + this.saldo ) ? null : { erroreeta: true };
+    const esito = (this.RisorseForm == undefined) || (Number(this.spesa!.value) >  this.risorse_base + this.saldo ) || Number(this.spesa!.value) <1 ?  { notok: true }: null;
+
+    console.log(esito);
      
     //const esito = null;
     //console.log("here");

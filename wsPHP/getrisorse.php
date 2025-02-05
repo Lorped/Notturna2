@@ -44,9 +44,9 @@ $lista = [];
 
 		$datediff = $now - $dataspesa;
 
-		$giorni = round($datediff / (60 * 60 * 24));
+		$giorni = floor($datediff / (60 * 60 * 24));
 
-		$recuperati = round ( $giorni / $cadenza);
+		$recuperati = floor ( $giorni / $cadenza);
 
 		$itemlista = [
 			'data' =>  date('d-m-Y', $dataspesa),
