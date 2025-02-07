@@ -40,7 +40,7 @@ import {MatRadioModule} from '@angular/material/radio';
 
 
 
-import { GlobalStatus } from './global';
+import { Basicpg, GlobalStatus } from './global';
 
 import { AuthenticationService } from './_services/index';
 import { SchedaService } from './_services/index';

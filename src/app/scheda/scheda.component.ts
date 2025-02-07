@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama } from '../global';
 
+export class listaspese {
+  public data = '' ;
+  public spesa = 0 ;
+  public cadenza = 30 ;
+  public recuperati = 0 ;
+};
+
 @Component({
   selector: 'app-scheda',
   templateUrl: './scheda.component.html',
@@ -31,6 +38,11 @@ export class SchedaComponent implements OnInit {
   rituali: Array<Rituale> = [];
 
   amalgame: Array<Amalgama> = [];
+
+  listaarray: Array <listaspese> = [];
+
+  risorse_base=0;
+  saldo = 0 ;
 
   constructor(private schedaservice: SchedaService) { }
 
@@ -89,10 +101,28 @@ export class SchedaComponent implements OnInit {
         this.pregi = data.pregidifetti;
         this.rituali = data.rituali;
 
+        for ( const item of this.background) {
+          item.livello = Number (item.livello);
+          item.idback = Number (item.idback);
+          if (item.idback == 2) {
+            this.risorse_base = item.livello;
+          }
+        }
+
         this.schedaservice.getamalgame(this.idutente).subscribe(
           (data: any) => {
             this.amalgame = data.amalgame;
             //console.log (this.amalgame);
+          }
+        );
+
+        this.schedaservice.getrisorse(this.idutente).subscribe(
+          (data: any) => {
+            this.saldo = Number(data.saldo);
+    
+            this.listaarray = data.lista;
+    
+            //console.log(this.listaarray);
           }
         );
 

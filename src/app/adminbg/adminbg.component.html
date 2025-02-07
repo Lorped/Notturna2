@@ -77,10 +77,20 @@
               <div class="column is-6">
                 {{ tt.nomeback}}
               </div>
-              <div class="column ">
+              <div class="column " *ngIf="tt.idback != 2">
                 <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                 <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
                 <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
+              </div>
+              <div class="column " *ngIf="tt.idback == 2">
+                <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
+                <i *ngFor="let item of 10|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
+
+                &nbsp;
+                <a routerLink="/risorse/{{idutente}}">
+                  <button mat-raised-button> Gestione dettaglio risorse </button>
+                </a>
               </div>
 
             </div>

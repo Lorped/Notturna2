@@ -492,6 +492,89 @@
 
     </mat-card-content>
     </mat-card>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Dettaglio Risorse
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-card>
+        <mat-card-content>
+  
+  
+            <div class="columns" >
+              <div class="column is-6">
+                Risorse base (Background)
+              </div>
+              <div class="column ">
+                <i *ngFor="let item of 10|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base, 'dred': ix < risorse_base}"></i>
+              </div>
+            </div>
+            <div class="columns" >
+              <div class="column is-6">
+                Risorse effettive
+              </div>
+              <div class="column ">              
+                <i *ngFor="let item of 10|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base+saldo, 'dred': ix < risorse_base+saldo}"></i>              
+              </div>
+            </div>
+            <div class="columns" >
+              <div class="column is-6">
+                Risorse temporanee (contanti)
+              </div>
+              <div class="column ">             
+                {{ scheda['contanti']}}
+              </div>
+            </div>
+  
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content>
+
+          <div class="columns">
+            <div class="column">
+              <hr>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column bigger">
+              Data
+            </div>
+            <div class="column bigger">
+              Risorse impegnate
+            </div>
+            <div class="column bigger ">
+              Recupero
+            </div>
+            <div class="column bigger alr">
+              Risorse recuperate
+            </div>
+          </div>
+  
+          <div class="columns" *ngFor="let px of listaarray">            
+            <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+              {{px.data}}
+            </div>
+            <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+              {{px.spesa}}
+            </div>
+            <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+              1 risorsa ogni {{px.cadenza}} gg.
+            </div>
+            <div class="column alr" [ngClass]="{'green':px.spesa == px.recuperati }">
+              {{px.recuperati}}
+            </div>
+          </div>
+          
+        </mat-card-content>
+      </mat-card>
+ 
 
   </mat-expansion-panel>
 

@@ -50,6 +50,16 @@
                 
               </div>
             </div>
+            <div class="columns" >
+              <div class="column is-6">
+                Risorse temporanee (contanti)
+              </div>
+              <div class="column ">
+                <button  class="btn  btn-xs" (click)="mincontanti()" [disabled]="contanti<1"><i class="fa fa-minus"></i></button>
+                {{ contanti}}
+                <button class="btn  btn-xs" (click)="addcontanti()" [disabled]="contanti>999"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
           </mat-card>
 
           <p>&nbsp;</p>
@@ -105,19 +115,22 @@
                 </div>
               </div>
               <div class="columns" *ngFor="let px of listaarray">
-                <div class="column">
+                
+                <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
                   {{px.data}}
                 </div>
-                <div class="column">
+                <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
                   {{px.spesa}}
                 </div>
-                <div class="column ">
+                <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
                   1 risorsa ogni {{px.cadenza}} gg.
                 </div>
-                <div class="column alr ">
+                <div class="column alr" [ngClass]="{'green':px.spesa == px.recuperati }">
                   {{px.recuperati}}
                 </div>
+
               </div>
+              
             </mat-card-content>
           </mat-card>
 

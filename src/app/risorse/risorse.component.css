@@ -53,3 +53,7 @@ mat-expansion-panel {
 .sidenav {
   padding: 1em;
 }
+
+.green {
+  color: green;
+}

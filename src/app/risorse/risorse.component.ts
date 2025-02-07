@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { SchedaService, AdminService } from '../_services/index';
-import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus } from '../global';
+import { Background, Basicpg, GlobalStatus } from '../global';
 import { Observable, of } from 'rxjs';
 
 
@@ -51,14 +51,16 @@ export class RisorseComponent implements OnInit {
 
     });
   
+    contanti = 0;
   
 
 
-  constructor(private globalstatus: GlobalStatus, private adminservice: AdminService, private schedaservice: SchedaService, private route: ActivatedRoute) { }
+  constructor( private globalstatus: GlobalStatus, private adminservice: AdminService, private schedaservice: SchedaService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.idutente = Number ( this.route.snapshot.paramMap.get('id') );
     this.globalstatus.lastpg = this.idutente;
+    
 
     this.adminservice.getnome(this.idutente).subscribe(
       (data: any) => {
@@ -66,7 +68,12 @@ export class RisorseComponent implements OnInit {
       }
     );
 
-
+    this.schedaservice.getscheda(this.idutente).subscribe (
+      (data: any) => {
+        //console.log(data);
+        this.contanti = Number(data.user.contanti);
+      }
+    );
 
     this.schedaservice.getbg(this.idutente).subscribe(
       (data: any) => {
@@ -120,9 +127,9 @@ export class RisorseComponent implements OnInit {
   }
 
   addspesa(){
-    console.log("here");
-    console.log ("spesa "+this.spesa!.value);
-    console.log ("recupero "+this.recupero!.value);
+    //console.log("here");
+    //console.log ("spesa "+this.spesa!.value);
+    //console.log ("recupero "+this.recupero!.value);
 
 
 
@@ -161,11 +168,32 @@ export class RisorseComponent implements OnInit {
     
     const esito = (this.RisorseForm == undefined) || (Number(this.spesa!.value) >  this.risorse_base + this.saldo ) || Number(this.spesa!.value) <1 ?  { notok: true }: null;
 
-    console.log(esito);
+    //console.log(esito);
      
     //const esito = null;
     //console.log("here");
     return of(esito);
+  }
+
+  addcontanti(){
+    
+    
+    this.schedaservice.addcontanti(this.idutente).subscribe(
+      data => {
+        
+        this.contanti++;
+      }
+    )
+    
+  }
+  mincontanti(){
+    this.schedaservice.mincontanti(this.idutente).subscribe(
+      data => {
+        
+        this.contanti--;
+      }
+    )
+    
   }
 
 }

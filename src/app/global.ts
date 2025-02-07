@@ -47,6 +47,7 @@ export class Basicpg {
   public bloodpmin = 0;  // FROM LEFT JOIN
   public bane = 0 ;
   public urldt = '';
+  public contanti = 0 ;
 }
 
 @Injectable()

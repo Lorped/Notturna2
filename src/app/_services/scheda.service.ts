@@ -334,4 +334,15 @@ export class SchedaService {
     });
   }
 
+  addcontanti(idutente: number  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addcontanti.php',{
+      idutente: idutente
+    });
+  }
+  mincontanti(idutente: number  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/mincontanti.php',{
+      idutente: idutente
+    });
+  }
+
 }
