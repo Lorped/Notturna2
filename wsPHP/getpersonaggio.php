@@ -24,7 +24,7 @@ include ('db2.inc.php'); //MYSQLI //
 	$Result = mysqli_query($db, $MySql);
 
 	$pg = [];
-	while ( $res = mysqli_fetch_array ($Result) ) {
+	while ( $res = mysqli_fetch_array ($Result,MYSQLI_ASSOC) ) {
 		$pg[] = $res;
 	}
 
