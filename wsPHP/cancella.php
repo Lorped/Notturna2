@@ -49,6 +49,7 @@ if ( isset($postdata) && $idutente != "" ) {
 		// nessun evento
 		$testo = $testo. " Eventi alla data: 0 .";
 	}
+	$testo=mysqli_real_escape_string ($db , $testo);
 
 
 	$Mysql = "INSERT INTO log (log) VALUES ('$testo')";
