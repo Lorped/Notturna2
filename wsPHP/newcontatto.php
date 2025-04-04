@@ -84,6 +84,7 @@ if ( isset($postdata) && $idutente != "" && $nomecontatto != ""  ) {
   }
   $Azione = "Aggiunto contatto ".$nomecontatto;
 
+  $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);

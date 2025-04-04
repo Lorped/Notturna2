@@ -53,7 +53,7 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
     $Azione = 'ADMIN Aggiunto pregio '.$nomepregio;
   }
 
-
+  $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);

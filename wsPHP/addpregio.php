@@ -80,7 +80,7 @@ if ( isset($postdata) && $idutente != "" && $idpregio != "" ) {
       }
   }
 
-
+  $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);

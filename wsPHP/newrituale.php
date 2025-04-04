@@ -85,6 +85,7 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
 
   $Azione = 'Acquisto rituale ' . $livello . "." . $nomerituale ;
 
+  $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, -$spesapx , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
