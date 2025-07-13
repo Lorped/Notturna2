@@ -345,4 +345,20 @@ export class SchedaService {
     });
   }
 
+  changeattr_master(idutente: number , attributo: string|null , valore: number|null ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changeattr-master.php',{
+      idutente: idutente,
+      attributo: attributo,
+      valore: valore
+    });
+  }
+
+  changeskill_master(idutente: number , skill: number|null , valore: number|null ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changeskill-master.php',{
+      idutente: idutente,
+      skill: skill,
+      valore: valore
+    });
+  }
+
 }

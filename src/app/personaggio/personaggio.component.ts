@@ -107,4 +107,88 @@ export class PersonaggioComponent implements OnInit {
     );
   }
 
+  rdx (id: number) {
+    const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
+    if (disciplina) {
+      disciplina.disciplina.livello--; 
+      console.log ( "riduco", disciplina.disciplina.nomedisc);
+    }
+    
+  }
+
+  adx (id: number) {
+    const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
+    if (disciplina) {
+      disciplina.disciplina.livello++;
+      console.log ( "aumento", disciplina.disciplina.nomedisc);
+    }
+    
+  }
+
+  rda (stat: string) {    
+    
+    this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, -1).subscribe(
+      (data:any) => {
+        (this.scheda as any) [stat] --;
+        console.log ( "riduco", stat);
+        
+      }
+    );
+  }
+  ada (stat: string) {    
+
+    this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, 1).subscribe(
+      (data:any) => {
+        (this.scheda as any) [stat] ++;
+        console.log ( "aumento", stat);
+      }
+    );
+  } 
+  
+  rds (idskill: number) {
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
+      (data:any) => {
+        const skill = this.skills.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello--;
+          console.log ( "riduco", skill.nomeskill);
+        }
+      }
+    );
+  }
+  ads (idskill: number) {
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
+      (data:any) => {
+        const skill = this.skills.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello++;
+          console.log ( "aumento", skill.nomeskill);
+        }
+      }
+    );
+  }
+
+  rdsx (idskill: number) {
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
+      (data:any) => {
+        const skill = this.attitudini.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello--;
+          console.log ( "riduco", skill.nomeskill);
+        }
+      }
+    );
+  }
+  adsx (idskill: number) {
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
+      (data:any) => {
+        const skill = this.attitudini.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello++;
+          console.log ( "aumento", skill.nomeskill);
+        }
+      }
+    );
+  }
+
 }

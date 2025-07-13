@@ -184,19 +184,25 @@
           Forza
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('forza')" [disabled]="scheda['forza']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
+          <button class="btn  btn-xs" (click)="ada('forza')" [disabled]="scheda['forza']>4"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
           Carisma
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('carisma')" [disabled]="scheda['carisma']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
+          <button class="btn  btn-xs" (click)="ada('carisma')" [disabled]="scheda['carisma']>4"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
           Percezione
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('percezione')" [disabled]="scheda['percezione']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
+          <button class="btn  btn-xs" (click)="ada('percezione')" [disabled]="scheda['percezione']>4"><i class="fa fa-plus"></i></button>
         </div>
       </div>
       <div class="columns">
@@ -204,19 +210,25 @@
           Destrezza
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('destrezza')" [disabled]="scheda['destrezza']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
+          <button class="btn  btn-xs" (click)="ada('destrezza')" [disabled]="scheda['destrezza']>4"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
           Persuasione
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('persuasione')" [disabled]="scheda['persuasione']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
+          <button class="btn  btn-xs" (click)="ada('persuasione')" [disabled]="scheda['persuasione']>4"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
           Intelligenza
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('intelligenza')" [disabled]="scheda['intelligenza']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
+          <button class="btn  btn-xs" (click)="ada('intelligenza')" [disabled]="scheda['intelligenza']>4"><i class="fa fa-plus"></i></button>
         </div>
       </div>
       <div class="columns">
@@ -224,19 +236,25 @@
           Attutimento
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('attutimento')" [disabled]="scheda['attutimento']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
+          <button class="btn  btn-xs" (click)="ada('attutimento')" [disabled]="scheda['attutimento']>4"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
           Saggezza
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('saggezza')" [disabled]="scheda['saggezza']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
+          <button class="btn  btn-xs" (click)="ada('saggezza')" [disabled]="scheda['saggezza']>4"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
           Prontezza
         </div>
         <div class="column">
+          <button  class="btn  btn-xs" (click)="rda('prontezza')" [disabled]="scheda['prontezza']<2"><i class="fa fa-minus"></i></button>
           <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
+          <button class="btn  btn-xs" (click)="ada('prontezza')" [disabled]="scheda['prontezza']>4"><i class="fa fa-plus"></i></button>
         </div>
       </div>
     </mat-card-content>
@@ -261,7 +279,9 @@
               {{dd.disciplina.nomedisc}}
             </div>
             <div class="column">
+              <button *ngIf="dd.disciplina.iddisciplina < 98" class="btn  btn-xs" (click)="rdx(dd.disciplina.iddisciplina)" [disabled]="dd.disciplina.livello<1 "><i class="fa fa-minus"></i></button>
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
+              <button *ngIf="dd.disciplina.iddisciplina < 98" class="btn  btn-xs" (click)="adx(dd.disciplina.iddisciplina)" [disabled]="dd.disciplina.livello>4 "><i class="fa fa-plus"></i></button>
             </div>
           </div>
         </div>
@@ -385,7 +405,9 @@
             {{dd.nomeskill}}
           </div>
           <div class="column">
+            <button  class="btn  btn-xs" (click)="rdsx(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
             <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            <button  class="btn  btn-xs" (click)="adsx(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
           </div>
         </div>
       </div>
@@ -412,7 +434,9 @@
             {{dd.nomeskill}}
           </div>
           <div class="column">
+             <button  class="btn  btn-xs" (click)="rds(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
             <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+             <button  class="btn  btn-xs" (click)="ads(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
           </div>
         </div>
       </div>
