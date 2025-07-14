@@ -276,7 +276,7 @@
 
           <div class="columns">
             <div class="column">
-              {{dd.disciplina.nomedisc}}
+              {{dd.disciplina.nomedisc}} - {{dd.disciplina.DiClan}}
             </div>
             <div class="column">
               <button *ngIf="dd.disciplina.iddisciplina < 98" class="btn  btn-xs" (click)="rdx(dd.disciplina.iddisciplina)" [disabled]="dd.disciplina.livello<1 "><i class="fa fa-minus"></i></button>
@@ -286,6 +286,18 @@
           </div>
         </div>
       </div>
+
+
+        <div class="column is-4 nopadding" >
+          Aggiungi altre Discipline
+          <mat-form-field>
+          <mat-label>Nuova Disciplina</mat-label>
+          <mat-select [(value)]="idnewdisc">
+            <mat-option *ngFor="let tt of otherdisc" [value]="tt.iddisciplina" >{{tt.nomedisc}}</mat-option>
+          </mat-select>
+          </mat-form-field>
+          <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc=='' " style="width: 66%;" (click)="newdisc()">Aggiungi</button>
+        </div>
 
       <div class="columns" style="align-items: center;" *ngIf="taumaturgie.length >0">
         <div class="column"><hr></div>

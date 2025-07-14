@@ -361,4 +361,12 @@ export class SchedaService {
     });
   }
 
+    changedisc_master(idutente: number , disc: number|null , valore: number|null ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changedisc-master.php',{
+      idutente: idutente,
+      disciplina: disc,
+      valore: valore
+    });
+  }
+
 }

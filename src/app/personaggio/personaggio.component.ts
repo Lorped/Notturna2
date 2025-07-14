@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
-import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama } from '../global';
+import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale, Amalgama } from '../global';
 
 
 @Component({
@@ -10,6 +10,9 @@ import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia
   styleUrls: ['./personaggio.component.css']
 })
 export class PersonaggioComponent implements OnInit {
+
+  otherdisc: Array<Disciplina> = [];
+  idnewdisc = '';
 
 
   scheda: Basicpg = new Basicpg();
@@ -103,27 +106,54 @@ export class PersonaggioComponent implements OnInit {
             //console.log (this.amalgame);
           }
         );
+        this.schedaservice.getotherdisc(idutente)
+        .subscribe(
+          (data: any) => {
+            this.otherdisc = data.otherdisc;
+            console.log (this.otherdisc);
+          }
+        );
       }
     );
   }
 
+
+  // DISCIPLINE
+
   rdx (id: number) {
-    const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
-    if (disciplina) {
-      disciplina.disciplina.livello--; 
-      console.log ( "riduco", disciplina.disciplina.nomedisc);
-    }
-    
+
+    this.schedaservice.changedisc_master(this.globalstatus.lastpg, id, -1).subscribe(
+      (data:any) => {
+        const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
+        if (disciplina) {
+          disciplina.disciplina.livello--;
+          console.log ( "riduco", disciplina.disciplina.nomedisc);
+        }
+      }
+    );
   }
 
   adx (id: number) {
-    const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
-    if (disciplina) {
-      disciplina.disciplina.livello++;
-      console.log ( "aumento", disciplina.disciplina.nomedisc);
-    }
-    
+
+    this.schedaservice.changedisc_master(this.globalstatus.lastpg, id, 1).subscribe(
+      (data:any) => {
+        const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
+        if (disciplina) {
+          disciplina.disciplina.livello++;
+          console.log ( "aumento", disciplina.disciplina.nomedisc);
+        }
+      }
+    );
   }
+
+    
+
+
+
+
+
+
+  // STAT BASE
 
   rda (stat: string) {    
     
@@ -135,6 +165,8 @@ export class PersonaggioComponent implements OnInit {
       }
     );
   }
+
+
   ada (stat: string) {    
 
     this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, 1).subscribe(
@@ -144,6 +176,8 @@ export class PersonaggioComponent implements OnInit {
       }
     );
   } 
+
+  // SKILL
   
   rds (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
@@ -168,6 +202,8 @@ export class PersonaggioComponent implements OnInit {
     );
   }
 
+  //SKILL - ATTITUDINI
+
   rdsx (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
       (data:any) => {
@@ -189,6 +225,11 @@ export class PersonaggioComponent implements OnInit {
         }
       }
     );
+  }
+
+  newdisc() {
+    console.log("disciplina ", this.idnewdisc);
+
   }
 
 }
