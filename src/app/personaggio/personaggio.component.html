@@ -276,7 +276,7 @@
 
           <div class="columns">
             <div class="column">
-              {{dd.disciplina.nomedisc}} - {{dd.disciplina.DiClan}}
+              {{dd.disciplina.nomedisc}} - <button class="btn" (click)="disclan(dd.disciplina.iddisciplina)">&nbsp;{{dd.disciplina.DiClan}}&nbsp;</button> - <button class="btn" (click)="cancdisciplina(dd.disciplina.iddisciplina)">&nbsp;X&nbsp;</button>
             </div>
             <div class="column">
               <button *ngIf="dd.disciplina.iddisciplina < 98" class="btn  btn-xs" (click)="rdx(dd.disciplina.iddisciplina)" [disabled]="dd.disciplina.livello<1 "><i class="fa fa-minus"></i></button>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {  Background, Contatti, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg} from '../global';
+import { matSelectAnimations } from '@angular/material/select';
 
 
 @Injectable({
@@ -361,11 +362,32 @@ export class SchedaService {
     });
   }
 
-    changedisc_master(idutente: number , disc: number|null , valore: number|null ) {
+  changedisc_master(idutente: number , disc: number|null , valore: number|null ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changedisc-master.php',{
       idutente: idutente,
       disciplina: disc,
       valore: valore
+    });
+  }
+
+  adddisciplina_master(idutente: number , disc: string|null  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/adddisciplina-master.php',{
+      idutente: idutente,
+      iddisciplina: disc
+    });
+  }
+
+  diclan_master(idutente: number , iddisciplina: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/diclan-master.php',{
+      idutente: idutente,
+      iddisciplina: iddisciplina
+    });
+  }
+
+  cancdisciplina_master(idutente: number , iddisciplina: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancdisc-master.php',{
+      idutente: idutente,
+      iddisciplina: iddisciplina
     });
   }
 

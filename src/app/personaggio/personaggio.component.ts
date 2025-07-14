@@ -228,8 +228,44 @@ export class PersonaggioComponent implements OnInit {
   }
 
   newdisc() {
-    console.log("disciplina ", this.idnewdisc);
+    this.schedaservice.adddisciplina_master(this.globalstatus.lastpg, this.idnewdisc).subscribe(
+      (data:any) => {
+        console.log ( "aggiunta", this.idnewdisc);
+        this.schedaservice.getscheda(this.globalstatus.lastpg)
+          .subscribe (
+            (data: any) => {
+              this.discipline = data.discipline ;
+              
+            }
+          );
+      } 
+    );
+    
+  }
 
+  disclan(iddisciplina: number){
+    this.schedaservice.diclan_master(this.globalstatus.lastpg, iddisciplina).subscribe(
+      (data:any) => {
+        console.log( "diclan", iddisciplina);
+        var disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
+        if ( disc) {
+          disc.disciplina.DiClan == "S" ? disc.disciplina.DiClan = "N" : disc.disciplina.DiClan = "S";
+        }
+      }
+    );
+  }
+
+
+  cancdisciplina(iddisciplina: number){
+    this.schedaservice.cancdisciplina_master(this.globalstatus.lastpg, iddisciplina).subscribe(
+      (data:any) => {
+        console.log( "cancdisciplina", iddisciplina);
+        var disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
+        if ( disc) {
+          this.discipline.splice(this.discipline.indexOf(disc), 1);
+        }
+      }
+    );
   }
 
 }
