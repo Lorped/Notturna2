@@ -110,7 +110,7 @@ export class PersonaggioComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.otherdisc = data.otherdisc;
-            console.log (this.otherdisc);
+            // console.log (this.otherdisc);
           }
         );
       }
@@ -127,7 +127,7 @@ export class PersonaggioComponent implements OnInit {
         const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
         if (disciplina) {
           disciplina.disciplina.livello--;
-          console.log ( "riduco", disciplina.disciplina.nomedisc);
+          // console.log ( "riduco", disciplina.disciplina.nomedisc);
         }
       }
     );
@@ -140,7 +140,7 @@ export class PersonaggioComponent implements OnInit {
         const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
         if (disciplina) {
           disciplina.disciplina.livello++;
-          console.log ( "aumento", disciplina.disciplina.nomedisc);
+          // console.log ( "aumento", disciplina.disciplina.nomedisc);
         }
       }
     );
@@ -160,7 +160,7 @@ export class PersonaggioComponent implements OnInit {
     this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, -1).subscribe(
       (data:any) => {
         (this.scheda as any) [stat] --;
-        console.log ( "riduco", stat);
+        // console.log ( "riduco", stat);
         
       }
     );
@@ -172,7 +172,7 @@ export class PersonaggioComponent implements OnInit {
     this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, 1).subscribe(
       (data:any) => {
         (this.scheda as any) [stat] ++;
-        console.log ( "aumento", stat);
+        // console.log ( "aumento", stat);
       }
     );
   } 
@@ -185,7 +185,7 @@ export class PersonaggioComponent implements OnInit {
         const skill = this.skills.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello--;
-          console.log ( "riduco", skill.nomeskill);
+          // console.log ( "riduco", skill.nomeskill);
         }
       }
     );
@@ -196,7 +196,7 @@ export class PersonaggioComponent implements OnInit {
         const skill = this.skills.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello++;
-          console.log ( "aumento", skill.nomeskill);
+          // console.log ( "aumento", skill.nomeskill);
         }
       }
     );
@@ -210,7 +210,7 @@ export class PersonaggioComponent implements OnInit {
         const skill = this.attitudini.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello--;
-          console.log ( "riduco", skill.nomeskill);
+          // console.log ( "riduco", skill.nomeskill);
         }
       }
     );
@@ -221,7 +221,7 @@ export class PersonaggioComponent implements OnInit {
         const skill = this.attitudini.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello++;
-          console.log ( "aumento", skill.nomeskill);
+          // console.log ( "aumento", skill.nomeskill);
         }
       }
     );
@@ -230,7 +230,7 @@ export class PersonaggioComponent implements OnInit {
   newdisc() {
     this.schedaservice.adddisciplina_master(this.globalstatus.lastpg, this.idnewdisc).subscribe(
       (data:any) => {
-        console.log ( "aggiunta", this.idnewdisc);
+        // console.log ( "aggiunta", this.idnewdisc);
         this.schedaservice.getscheda(this.globalstatus.lastpg)
           .subscribe (
             (data: any) => {
@@ -246,7 +246,7 @@ export class PersonaggioComponent implements OnInit {
   disclan(iddisciplina: number){
     this.schedaservice.diclan_master(this.globalstatus.lastpg, iddisciplina).subscribe(
       (data:any) => {
-        console.log( "diclan", iddisciplina);
+        // console.log( "diclan", iddisciplina);
         var disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
         if ( disc) {
           disc.disciplina.DiClan == "S" ? disc.disciplina.DiClan = "N" : disc.disciplina.DiClan = "S";
@@ -259,7 +259,7 @@ export class PersonaggioComponent implements OnInit {
   cancdisciplina(iddisciplina: number){
     this.schedaservice.cancdisciplina_master(this.globalstatus.lastpg, iddisciplina).subscribe(
       (data:any) => {
-        console.log( "cancdisciplina", iddisciplina);
+        // console.log( "cancdisciplina", iddisciplina);
         var disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
         if ( disc) {
           this.discipline.splice(this.discipline.indexOf(disc), 1);
