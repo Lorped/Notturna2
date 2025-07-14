@@ -235,6 +235,13 @@ export class PersonaggioComponent implements OnInit {
           .subscribe (
             (data: any) => {
               this.discipline = data.discipline ;
+
+              this.schedaservice.getotherdisc(this.globalstatus.lastpg).subscribe(
+                (data: any) => {
+                  this.otherdisc = data.otherdisc;
+                  // console.log (this.otherdisc);
+                }
+              );
               
             }
           );
@@ -264,6 +271,12 @@ export class PersonaggioComponent implements OnInit {
         if ( disc) {
           this.discipline.splice(this.discipline.indexOf(disc), 1);
         }
+        this.schedaservice.getotherdisc(this.globalstatus.lastpg).subscribe(
+          (data: any) => {
+            this.otherdisc = data.otherdisc;
+            // console.log (this.otherdisc);
+          }
+        );
       }
     );
   }
