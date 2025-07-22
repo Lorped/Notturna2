@@ -156,6 +156,7 @@ include('phpqrcode/qrlib.php');
 				} else {
 					$tt=(string)$res['barcode'];
 					$text='https://www.facebook.com/NotturnaCronacadiRoma/#/'.(string)$res['barcode'];
+					$text='https://www.lucisaps.com/IlCastelloDellaFollia/#/'.(string)$res['barcode'];
 				}
 
 				$id=$res['idoggetto'];
