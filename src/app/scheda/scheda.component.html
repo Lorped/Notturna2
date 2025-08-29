@@ -433,7 +433,7 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Background
+        Background e Influenze
       </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -482,6 +482,25 @@
           <div class="columns">
             <div class="column">
               {{dd.nomecontatto}}
+            </div>
+            <div class="column">
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns" style="align-items: center;" *ngIf="influenze.length >0">
+        <div class="column"><hr></div>
+        <div class="column is-2" style="text-align: center;">Influenze</div>
+        <div class="column"><hr></div>
+      </div>
+
+      <div class="columns is-multiline" style="margin-left: 0px;" *ngIf="influenze.length >0">
+        <div class="column is-4 nopadding" *ngFor="let dd of influenze">
+          <div class="columns">
+            <div class="column">
+              {{dd.nomeinfluenza}}
             </div>
             <div class="column">
               <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>

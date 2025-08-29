@@ -173,6 +173,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	}
 
 
+  	/*** influenze **/
+
+	$influenze = [];
+	$MySql = "SELECT  *  FROM influenze
+        LEFT JOIN influenze_main ON influenze_main.idinfluenza=influenze.idinfluenza
+        WHERE idutente = '$idutente'
+        ORDER BY influenze.idinfluenza";
+	$Result = mysqli_query($db, $MySql);
+	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
+		$influenze[] =  $res;
+	}
+
   /*** pregidifetti **/
 
   $pregidifetti = [];
@@ -273,7 +285,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     "skill" => $skill,
 		"attitudini" => $attitudini,
 		"rituali" => $rituali,
-    "pregidifetti" => $pregidifetti
+    "pregidifetti" => $pregidifetti,
+    "influenze" => $influenze,
   ];
 
 	header("HTTP/1.1 200 OK");

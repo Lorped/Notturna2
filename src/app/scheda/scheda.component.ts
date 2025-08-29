@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../_services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama } from '../global';
+import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama , Influenze} from '../global';
 
 export class listaspese {
   public data = '' ;
@@ -29,6 +29,7 @@ export class SchedaComponent implements OnInit {
 
   background: Array<Background> = [] ;
   contatti: Array<Contatti> = [];
+  influenze: Array<Influenze> = [];
   maxcontatti = 0;
 
   skills: Array<Skill> = [];
@@ -92,6 +93,7 @@ export class SchedaComponent implements OnInit {
         this.attitudini = data.attitudini ;
         this.background = data.background ;
         this.contatti = data.contatti;
+        this.influenze = data.influenze;
 
         this.maxcontatti = 0;
         for ( let item of this.contatti) {

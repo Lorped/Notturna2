@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {  Background, Contatti, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg} from '../global';
+import {  Background, Contatti, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, Influenze} from '../global';
 
 
 

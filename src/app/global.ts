@@ -192,7 +192,12 @@ export class FullTaumaturgia {
   public taums: Array<Taums> = [];
 }
 
-
+@Injectable()
+export class Influenze {
+  public idinfluenza = 0;
+  public nomeinfluenza = '';
+  public livello = 0;
+}
 
 
 
@@ -207,6 +212,8 @@ export class Personaggio {
   public listaSkill: Array<Skill>;
   public listaAbilita: Array<Abilita>;
 
+  public listalistaInfluenze: Array<Influenze>;
+
 
   constructor ( ) {
     this.aPG = new Basicpg() ;
@@ -215,6 +222,7 @@ export class Personaggio {
     this.listaDiscipline = [];
     this.listaSkill = [];
     this.listaAbilita = [];
+    this.listalistaInfluenze = [];
   }
 
 }

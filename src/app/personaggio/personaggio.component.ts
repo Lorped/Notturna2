@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
-import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale, Amalgama } from '../global';
+import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale, Amalgama, Influenze } from '../global';
 
 
 @Component({
@@ -26,7 +26,8 @@ export class PersonaggioComponent implements OnInit {
   taumaturgie: Array<FullTaumaturgia> = [] ;
 
   background: Array<Background> = [] ;
-  contatti: Array<Contatti> = [];
+  contatti: Array<Contatti> = [] ;
+  influenze: Array<Influenze> = [] ;
   maxcontatti = 0;
 
   skills: Array<Skill> = [];
@@ -88,6 +89,7 @@ export class PersonaggioComponent implements OnInit {
         this.attitudini = data.attitudini ;
         this.background = data.background ;
         this.contatti = data.contatti;
+        this.influenze = data.influenze;
 
         this.maxcontatti = 0;
         for ( let item of this.contatti) {
