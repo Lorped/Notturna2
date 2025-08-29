@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
-import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus } from '../global';
+import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus, Influenze } from '../global';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -21,6 +21,10 @@ export class AdminbgComponent implements OnInit {
   listabg: Array<Background> = [];
   listaContatti: Array<Contatti> = [];
   sommacontatti = 0;
+
+  listainfluenze: Array<Influenze> = [];
+    sommaInfluenze = 0;
+    maxinfluenze = 0;
 
   myContatto = new UntypedFormControl ( '', [
     Validators.required,
@@ -137,6 +141,25 @@ export class AdminbgComponent implements OnInit {
         for ( const item of this.listaContatti ) {
           item.livello = Number (item.livello);
           this.sommacontatti += item.livello;
+        }
+
+      }
+    );
+
+    this.schedaservice.getinfluenze(this.idutente).subscribe(
+      (data: any) => {
+        this.listainfluenze = data.influenze;
+        this.maxinfluenze = data.maxinfluenze;
+
+        /* for ( let j=0 ; j< this.listabg.length ; j++) {
+          this.listabg[j].livello = Number (this.listabg[j].livello);
+        } */
+
+        this.sommaInfluenze = 0;
+
+        for ( const item of this.listainfluenze) {
+          item.livello = Number (item.livello);
+          this.sommaInfluenze += item.livello;
         }
 
       }
@@ -507,6 +530,36 @@ export class AdminbgComponent implements OnInit {
         this.difetti = data.difetti ;
       }
     );
+  }
+
+    mininf(id: number){
+    
+
+    let newlivello = 0 ;
+
+    for ( let item of this.listainfluenze ){
+      if ( item.idinfluenza == id){
+        item.livello -- ;
+        this.sommaInfluenze -- ;
+        newlivello = item.livello;
+      }
+    }
+    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'A' ).subscribe();
+
+  }
+  addinf(id: number){
+    let newlivello = 0 ;
+
+    for ( let item of this.listainfluenze ){
+      if ( item.idinfluenza == id){
+        item.livello ++;
+        this.sommaInfluenze ++;
+        newlivello = item.livello;
+      }
+    }
+    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'A' ).subscribe();
+
+
   }
 
 }

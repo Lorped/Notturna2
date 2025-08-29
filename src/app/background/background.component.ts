@@ -23,6 +23,7 @@ export class BackgroundComponent implements OnInit {
 
   listainfluenze: Array<Influenze> = [];
   sommaInfluenze = 0;
+  maxinfluenze = 0;
 
   myContatto = new UntypedFormControl ( '', [
     Validators.required,
@@ -94,6 +95,7 @@ export class BackgroundComponent implements OnInit {
     this.schedaservice.getbg(this.idutente).subscribe(
       (data: any) => {
         this.listabg = data.background;
+        this.maxinfluenze = data.maxinfluenze;
 
         /* for ( let j=0 ; j< this.listabg.length ; j++) {
           this.listabg[j].livello = Number (this.listabg[j].livello);
@@ -108,6 +110,7 @@ export class BackgroundComponent implements OnInit {
     this.schedaservice.getinfluenze(this.idutente).subscribe(
       (data: any) => {
         this.listainfluenze = data.influenze;
+        this.maxinfluenze = data.maxinfluenze;
 
         /* for ( let j=0 ; j< this.listabg.length ; j++) {
           this.listabg[j].livello = Number (this.listabg[j].livello);

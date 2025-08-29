@@ -21,10 +21,16 @@ include ('db2.inc.php'); //MYSQL//
 $idutente = $_GET['idutente'];
 
 
-$MySql = "SELECT idclan from personaggio where idutente = $idutente";
+$MySql = "SELECT idclan, idstatus from personaggio where idutente = $idutente";
 $Result = mysqli_query($db, $MySql);
 $res = mysqli_fetch_array ($Result);
 $idclan = $res['idclan'];
+$idstatus = $res['idstatus'];
+
+$MySql = "SELECT maxinfluenze from statuscama where idstatus = $idstatus";
+$Result = mysqli_query($db, $MySql);
+$res = mysqli_fetch_array ($Result);
+$maxinfluenze = $res['maxinfluenze'];
 
 	if ( $idclan == 3 ) {   // NOSFERATU
 
@@ -50,7 +56,8 @@ $idclan = $res['idclan'];
 	}
 
 	$out = [
-		'influenze' => $back
+		'influenze' => $back,
+		'maxinfluenze' => $maxinfluenze
 	];
 
 
