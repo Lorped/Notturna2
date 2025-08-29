@@ -135,6 +135,38 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              Influenze
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+
+          <div class="columns">
+            <div class="column">&nbsp;</div>
+            <div class="column"><hr> </div>
+            <div class="column is-2" style="text-align: center;">{{sommaInfluenze}} / MAX </div>
+            <div class="column"><hr> </div>
+            <div class="column">&nbsp;</div>
+          </div>
+
+          <div class="columns" *ngFor="let tt of listainfluenze">
+
+            <div class="column is-6">
+              {{ tt.nomeinfluenza}}
+            </div>
+            <div class="column ">
+              <button  class="btn  btn-xs" (click)="mininf(tt.idinfluenza)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
+              <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+              <button class="btn  btn-xs" (click)="addinf(tt.idinfluenza)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
+            </div>
+
+          </div>
+
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
               Passaggio di Status
             </mat-panel-title>
           </mat-expansion-panel-header>

@@ -220,6 +220,15 @@ export class SchedaService {
     });
   }
 
+  putinfluenze(idutente: number , idinfluenza: number, livello: number , au: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putinfluenze.php',{
+      idutente: idutente,
+      idinfluenza: idinfluenza,
+      livello: livello,
+      au: au
+    });
+  }
+
   getcontatti(idutente: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcontatti.php'+'?idutente='+idutente );
   }
@@ -389,6 +398,10 @@ export class SchedaService {
       idutente: idutente,
       iddisciplina: iddisciplina
     });
+  }
+
+    getinfluenze(idutente: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getinfluenze.php'+'?idutente='+idutente );
   }
 
 }

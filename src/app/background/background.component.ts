@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../_services/index';
-import { Background, Contatti, Skill, Sentiero } from '../global';
+import { Background, Contatti, Skill, Sentiero , Influenze} from '../global';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -20,6 +20,9 @@ export class BackgroundComponent implements OnInit {
   listabg: Array<Background> = [];
   listaContatti: Array<Contatti> = [];
   sommacontatti = 0;
+
+  listainfluenze: Array<Influenze> = [];
+  sommaInfluenze = 0;
 
   myContatto = new UntypedFormControl ( '', [
     Validators.required,
@@ -97,6 +100,24 @@ export class BackgroundComponent implements OnInit {
         } */
         for ( const item of this.listabg) {
           item.livello = Number (item.livello);
+        }
+
+      }
+    );
+
+    this.schedaservice.getinfluenze(this.idutente).subscribe(
+      (data: any) => {
+        this.listainfluenze = data.influenze;
+
+        /* for ( let j=0 ; j< this.listabg.length ; j++) {
+          this.listabg[j].livello = Number (this.listabg[j].livello);
+        } */
+
+        this.sommaInfluenze = 0;
+
+        for ( const item of this.listainfluenze) {
+          item.livello = Number (item.livello);
+          this.sommaInfluenze += item.livello;
         }
 
       }
@@ -400,6 +421,37 @@ export class BackgroundComponent implements OnInit {
         this.caricavalori();  // cambiano gli skill per il passaggio status
       }
     );
+
+  }
+
+
+  mininf(id: number){
+    
+
+    let newlivello = 0 ;
+
+    for ( let item of this.listainfluenze ){
+      if ( item.idinfluenza == id){
+        item.livello -- ;
+        this.sommaInfluenze -- ;
+        newlivello = item.livello;
+      }
+    }
+    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'U' ).subscribe();
+
+  }
+  addinf(id: number){
+    let newlivello = 0 ;
+
+    for ( let item of this.listainfluenze ){
+      if ( item.idinfluenza == id){
+        item.livello ++;
+        this.sommaInfluenze ++;
+        newlivello = item.livello;
+      }
+    }
+    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'U' ).subscribe();
+
 
   }
 
