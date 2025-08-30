@@ -197,6 +197,8 @@ export class Influenze {
   public idinfluenza = 0;
   public nomeinfluenza = '';
   public livello = 0;
+  public MaxIniziale = 0;
+  public MinIniziale = 0;
 }
 
 

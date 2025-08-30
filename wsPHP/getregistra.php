@@ -83,6 +83,13 @@ while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$disciplinevili[] =$res;
 }
 
+$influenze = [];
+$MySql = "SELECT *, 0 as livello, 5 as MaxIniziale , 0 as MinIniziale FROM influenze_main ";
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
+	$influenze[] =$res;
+}
+
 $out = [
   "clan" => $clan ,
   "statuscama" => $statuscama ,
@@ -92,6 +99,7 @@ $out = [
   "taumaturgie" => $taumaturgie,
   "necromanzie" => $necromanzie,
 	"background" => $background,
+	"influenze" => $influenze,
 	"disciplinevili" => $disciplinevili
 ];
 

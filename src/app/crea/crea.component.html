@@ -88,7 +88,7 @@
     </form>
   </mat-step>
 
-  <mat-step errorMessage="Distribuzione non corretta" [completed]=bgOK [hasError]="!bgOK && sommaBG!=0" >
+  <mat-step errorMessage="Distribuzione non corretta" [completed]= "bgOK && influOK" [hasError]="(!bgOK && sommaBG!=0) || (!influOK && sommaInfluenze!=0)" >
     <ng-template matStepLabel>Background</ng-template>
 
     <mat-card>
@@ -179,13 +179,35 @@
     </div>
 
     <mat-card>
+      <mat-card-content>
+      Punti Influenza da assegnare: {{maxInfluenze - sommaInfluenze}}
+      </mat-card-content>
+    </mat-card>
+    <div class="bgcard-container"> 
+      <mat-card class="bgcard" *ngFor="let b of influenze">
+         <mat-card-content> 
+          <div class="column">
+      <!--  <div> -->
+          {{b.nomeinfluenza}}
+          <button  class="btn  btn-xs" (click)="mininfl(b.idinfluenza)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
+          <i *ngFor="let i of b.MaxIniziale | times ; let ix = index" class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
+          <button class="btn  btn-xs" (click)="addinfl(b.idinfluenza)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaInfluenze>=maxInfluenze||(this.clanPG!.value!=3 && b.idinfluenza==10)"><i class="fa fa-plus"></i></button>
+      <!--  </div> -->
+          </div>
+
+       </mat-card-content> 
+      </mat-card>
+    </div>
+
+    <mat-card>
       <div>
-        <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK" >Prosegui</button>
+        <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK || !influOK" >Prosegui</button>
       </div>
     </mat-card>
     <mat-card >
       <mat-card-content class="justified">
       Distribuite i punti Background a vostra disposizione. Il Rifugio ha automaticamente un valore di uno (ma nel corso della cronaca potrete perderlo). In caso sceglieste il background Contatti vi sarà chiesto di dettagliarlo e (in caso voleste avere più di un contatto) di distribuire tra quelli indicati i punti di tale Background.
+      Analogamente distribuite i punti Influenza a vostra disposizione.
       </mat-card-content>
     </mat-card>
   </mat-step>

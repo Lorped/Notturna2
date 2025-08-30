@@ -73,6 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	$skill = $request -> skill ;
 
+	$influenze = $request -> influenze ;
+
 
 
 //echo $generazione, "<br>";
@@ -137,6 +139,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 		}
 	}
+
+
+
+	/*******************************************/
+
+	foreach ($influenze as $xx ) {
+
+		if ( $xx -> livello != 0 ) {
+
+			$idinfluenza = $xx -> idinfluenza;
+			$livello = $xx -> livello;
+
+			$MySql = "INSERT INTO influenze ( idinfluenza, idutente, livello ) VALUES ( $idinfluenza, $idutente, $livello )";
+
+//echo $MySql, "<br>";
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+
+		}
+	}
+
 
 	/*******************************************/
 

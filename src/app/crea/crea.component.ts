@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
-import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg} from '../global';
+import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Influenze} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
@@ -133,6 +133,10 @@ export class CreaComponent implements OnInit {
 
   sentieroPG = '1';       /* umanità */
 
+  influenze: Array<Influenze> = [];
+  maxInfluenze = 3;            /* Numer Influenze disponibili */
+  sommaInfluenze = 0;
+  influOK = false;
 
   constructor(private schedaservice: SchedaService , private router: Router) { }
 
@@ -157,6 +161,7 @@ export class CreaComponent implements OnInit {
         this.skill = data.skill;
         this.attitudini = data.attitudini;
         this.sentieri = data.sentieri;
+        this.influenze = data.influenze;
 
         for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
             this.bg[j].livello = this.bg[j].MinIniziale;
@@ -219,41 +224,53 @@ export class CreaComponent implements OnInit {
         this.maxBG = 5;
         this.numDisc = 4;
         this.baseFDVmax = 1;
+        this.maxInfluenze = 0;
         break;
       case '1':
         this.maxBG = 6;
         this.numDisc = 5;
         this.baseFDVmax = 2;
+        this.maxInfluenze = 3;
         break;
       case '2':
         this.maxBG = 8;
         this.numDisc = 6;
         this.baseFDVmax = 3;
+        this.maxInfluenze = 9;
         break;
       case '3':
         this.maxBG = 10;
         this.numDisc = 7;
         this.baseFDVmax = 4;
+        this.maxInfluenze = 15;
         break;
       case '4':
         this.maxBG = 15;
         this.numDisc = 10;
         this.baseFDVmax = 5;
+        this.maxInfluenze = 20;
         break;
       case '5':
         this.maxBG = 25;
         this.numDisc = 15;
         this.baseFDVmax = 7;
+        this.maxInfluenze = 24;
         break;
       default:
         this.maxBG = 6;
         this.numDisc = 5;
         this.baseFDVmax = 2;
+        this.maxInfluenze = 15;
+        break;
+        this.maxInfluenze = 3;
         break;
     }
     this.changeMaxDisc();
     this.changeNumSkill();
     this.checkbg () ;
+    if (this.sommaInfluenze != this.maxInfluenze) {
+      this.influOK = false;
+    }
   }
 
   addbg(bg: number){
@@ -581,6 +598,23 @@ export class CreaComponent implements OnInit {
     this.sommaDisc = 0 ;
     this.discOK = false;
 
+    // REST Influenze per evitare problemi
+    if (this.clanPG!.value != 3 ) {
+
+      let xx = this.influenze.find(i => i.idinfluenza == 10);
+      if (xx) {
+
+        //console.log(xx);
+        if (xx.livello > 0 ) {
+          this.sommaInfluenze = this.sommaInfluenze - xx.livello ;
+          xx.livello = 0 ;
+          this.influOK = false;
+        }
+        
+
+      }
+    }
+
   }
 
   mindisc(dd: number) {
@@ -813,7 +847,7 @@ export class CreaComponent implements OnInit {
     aPG.rifugio = this.rifugio!.value;
     aPG.zona = this.zona!.value;
 
-    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill )
+    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill , this.influenze )
       .subscribe(
         data => {
           //  OK!
@@ -826,6 +860,36 @@ export class CreaComponent implements OnInit {
         }
       );
 
+  }
+
+
+  addinfl(infl: number){
+    this.influOK = false ;
+    for (let j = 0; j < this.influenze.length; j++ ) {
+      if ( this.influenze[j].idinfluenza === infl) {
+        this.influenze[j].livello++;
+        this.sommaInfluenze++;
+      }
+    }
+    if (this.sommaInfluenze == this.maxInfluenze) {
+      this.influOK = true;
+    }
+  }
+
+
+  mininfl(infl: number){
+    this.influOK = false ;
+    for (let item of this.influenze ) {
+      if ( item.idinfluenza === infl) {
+        item.livello--;
+        this.sommaInfluenze--;
+
+      }
+    }
+
+    if (this.sommaInfluenze == this.maxInfluenze) {
+      this.influOK = true;
+    }
   }
 
 }
