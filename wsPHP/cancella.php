@@ -131,7 +131,10 @@ if ( isset($postdata) && $idutente != "" ) {
 	mysqli_query($db, $Mysql);
 	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
-	
+	$Mysql = "DELETE FROM influenze  WHERE idutente = $idutente";
+	mysqli_query($db, $Mysql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
+
 
 
 
