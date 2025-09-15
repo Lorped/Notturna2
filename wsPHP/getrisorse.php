@@ -48,6 +48,10 @@ $lista = [];
 
 		$recuperati = floor ( $giorni / $cadenza);
 
+		if ( $recuperati > $spesa ) {
+			$recuperati = $spesa;
+		}
+
 		$itemlista = [
 			'data' =>  date('d-m-Y', $dataspesa),
 			'spesa' => $spesa,
@@ -58,9 +62,6 @@ $lista = [];
 		$lista[] = $itemlista;
 
 
-		if ( $recuperati > $spesa ) {
-			$recuperati = $spesa;
-		}
 
 
 		$saldo = $saldo - $spesa + $recuperati;
