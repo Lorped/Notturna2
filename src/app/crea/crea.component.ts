@@ -582,6 +582,14 @@ export class CreaComponent implements OnInit {
         this.discipline[1].nomedisc = '';
         this.discipline[2].nomedisc = '';
       break;
+      case '21':   //  City Gangrel
+        this.discipline[0].iddisciplina = 8;          // Oscurazione  
+        this.discipline[1].iddisciplina = 10;         // Proteide      
+        this.discipline[2].iddisciplina = 15;         // Velocità
+        this.discipline[0].nomedisc = 'Oscurazione';
+        this.discipline[1].nomedisc = 'Proteide';
+        this.discipline[2].nomedisc = 'Velocità';
+      break;
     }
 
     // RESET Discipline pr evitare problemi
