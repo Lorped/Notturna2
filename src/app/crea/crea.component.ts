@@ -271,6 +271,9 @@ export class CreaComponent implements OnInit {
     if (this.sommaInfluenze != this.maxInfluenze) {
       this.influOK = false;
     }
+    if (this.statusPG!.value == 0){
+      this.influOK = true;
+    }
   }
 
   addbg(bg: number){
