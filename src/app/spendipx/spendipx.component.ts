@@ -13,15 +13,16 @@ import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, 
 export class SpendipxComponent implements OnInit {
 
   matriceMaxDisc: number[][] = [
-    [ 2, 3, 3, 4, 4, 5, 5 ],
-    [ 3, 3, 4, 4, 5, 5, 5 ],
-    [ 3, 4, 5, 5, 5, 5, 5 ],
-    [ 4, 5, 5, 5, 5, 5, 5 ],
-    [ 4, 5, 5, 5, 5, 5, 5 ],
-    [ 5, 5, 5, 5, 5, 5, 5 ]
+    [ 2, 3, 3, 4, 4, 5, 5, 6, 7 ],
+    [ 3, 3, 4, 4, 5, 5, 5, 6, 7 ],
+    [ 3, 4, 5, 5, 5, 5, 5, 6, 7 ],
+    [ 4, 5, 5, 5, 5, 5, 5, 6, 7 ],
+    [ 4, 5, 5, 5, 5, 5, 5, 6, 7 ],
+    [ 5, 5, 5, 5, 5, 5, 5, 6, 7 ]
   ];
 
   maxdisc = 0 ;
+  maxpallini = 5 ; //numero pallini disciplina visibili
 
   idutente = 0 ;
   scheda: Basicpg = new Basicpg();
@@ -112,6 +113,12 @@ export class SpendipxComponent implements OnInit {
 
 
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
+
+        if (this.maxdisc > 5) {
+          this.maxpallini = this.maxdisc;
+        } else {
+          this.maxpallini = 5;
+        }
 
         this.discipline = data.discipline ;
         for (let j = 0 ; j < this.discipline.length ; j++ ) {
