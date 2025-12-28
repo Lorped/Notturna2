@@ -63,71 +63,71 @@
       <mat-card-content>
       <div class="columns">
         <div class="column">
-          Forza {{ (scheda['forza']<5 ? '('+(1+scheda['forza'])*2+'px)' :'') }}
+          Forza {{ (scheda['forza']< maxattributi ? '('+(1+scheda['forza'])*2+'px)' :'') }}
         </div>
         <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
-          <button  *ngIf="scheda['forza']<5" class="btn  btn-xs" (click)="addattr('forza')" [disabled]="xpdisponibili<(1+scheda['forza'])*2"><i class="fa fa-plus"></i></button>
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
+          <button  *ngIf="scheda['forza']<maxattributi" class="btn  btn-xs" (click)="addattr('forza')" [disabled]="xpdisponibili<(1+scheda['forza'])*2"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
-          Carisma {{ (scheda['carisma']<5 ? '('+(1+scheda['carisma'])*2+'px)' :'') }}
+          Carisma {{ (scheda['carisma']< maxattributi ? '('+(1+scheda['carisma'])*2+'px)' :'') }}
         </div>
         <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
-          <button *ngIf="scheda['carisma']<5" class="btn  btn-xs" (click)="addattr('carisma')" [disabled]="xpdisponibili<(1+scheda['carisma'])*2"><i class="fa fa-plus"></i></button>
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
+          <button *ngIf="scheda['carisma']<maxattributi" class="btn  btn-xs" (click)="addattr('carisma')" [disabled]="xpdisponibili<(1+scheda['carisma'])*2"><i class="fa fa-plus"></i></button>
         </div>          <mat-card></mat-card>
         <div class="column">
-          Percezione {{ (scheda['percezione']<5 ? '('+(1+scheda['percezione'])*2+'px)' :'') }}
+          Percezione {{ (scheda['percezione']< maxattributi ? '('+(1+scheda['percezione'])*2+'px)' :'') }}
         </div>
         <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
-          <button *ngIf="scheda['percezione']<5" class="btn  btn-xs" (click)="addattr('percezione')" [disabled]="xpdisponibili<(1+scheda['percezione'])*2"><i class="fa fa-plus"></i></button>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-          Destrezza {{ (scheda['destrezza']<5 ? '('+(1+scheda['destrezza'])*2+'px)' :'') }}
-        </div>
-        <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
-          <button *ngIf="scheda['destrezza']<5" class="btn  btn-xs" (click)="addattr('destrezza')" [disabled]="xpdisponibili<(1+scheda['destrezza'])*2"><i class="fa fa-plus"></i></button>
-        </div>
-        <div class="column">
-          Persuasione {{ (scheda['persuasione']<5 ? '('+(1+scheda['persuasione'])*2+'px)' :'') }}
-        </div>
-        <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
-          <button *ngIf="scheda['persuasione']<5" class="btn  btn-xs" (click)="addattr('persuasione')" [disabled]="xpdisponibili<(1+scheda['persuasione'])*2"><i class="fa fa-plus"></i></button>
-        </div>
-        <div class="column">
-          Intelligenza {{ (scheda['intelligenza']<5 ? '('+(1+scheda['intelligenza'])*2+'px)' :'') }}
-        </div>
-        <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
-          <button *ngIf="scheda['intelligenza']<5" class="btn  btn-xs" (click)="addattr('intelligenza')" [disabled]="xpdisponibili<(1+scheda['intelligenza'])*2"><i class="fa fa-plus"></i></button>
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
+          <button *ngIf="scheda['percezione']<maxattributi" class="btn  btn-xs" (click)="addattr('percezione')" [disabled]="xpdisponibili<(1+scheda['percezione'])*2"><i class="fa fa-plus"></i></button>
         </div>
       </div>
       <div class="columns">
         <div class="column">
-          Attutimento {{ (scheda['attutimento']<5 ? '('+(1+scheda['attutimento'])*2+'px)' :'') }}
+          Destrezza {{ (scheda['destrezza']< maxattributi ? '('+(1+scheda['destrezza'])*2+'px)' :'') }}
         </div>
         <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
-          <button *ngIf="scheda['attutimento']<5" class="btn  btn-xs" (click)="addattr('attutimento')" [disabled]="xpdisponibili<(1+scheda['attutimento'])*2"><i class="fa fa-plus"></i></button>
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
+          <button *ngIf="scheda['destrezza']<maxattributi" class="btn  btn-xs" (click)="addattr('destrezza')" [disabled]="xpdisponibili<(1+scheda['destrezza'])*2"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
-          Saggezza {{ (scheda['saggezza']<5 ? '('+(1+scheda['saggezza'])*2+'px)' :'') }}
+          Persuasione {{ (scheda['persuasione']< maxattributi ? '('+(1+scheda['persuasione'])*2+'px)' :'') }}
         </div>
         <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
-          <button *ngIf="scheda['saggezza']<5" class="btn  btn-xs" (click)="addattr('saggezza')" [disabled]="xpdisponibili<(1+scheda['saggezza'])*2"><i class="fa fa-plus"></i></button>
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
+          <button *ngIf="scheda['persuasione']<maxattributi" class="btn  btn-xs" (click)="addattr('persuasione')" [disabled]="xpdisponibili<(1+scheda['persuasione'])*2"><i class="fa fa-plus"></i></button>
         </div>
         <div class="column">
-          Prontezza  {{ (scheda['prontezza']<5 ? '('+(1+scheda['prontezza'])*2+'px)' :'') }}
+          Intelligenza {{ (scheda['intelligenza']< maxattributi ? '('+(1+scheda['intelligenza'])*2+'px)' :'') }}
         </div>
         <div class="column">
-          <i *ngFor="let item of 5|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
-          <button *ngIf="scheda['prontezza']<5" class="btn  btn-xs" (click)="addattr('prontezza')" [disabled]="xpdisponibili<(1+scheda['prontezza'])*2"><i class="fa fa-plus"></i></button>
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
+          <button *ngIf="scheda['intelligenza']<maxattributi" class="btn  btn-xs" (click)="addattr('intelligenza')" [disabled]="xpdisponibili<(1+scheda['intelligenza'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          Attutimento {{ (scheda['attutimento']< maxattributi ? '('+(1+scheda['attutimento'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
+          <button *ngIf="scheda['attutimento']<maxattributi" class="btn  btn-xs" (click)="addattr('attutimento')" [disabled]="xpdisponibili<(1+scheda['attutimento'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Saggezza {{ (scheda['saggezza']< maxattributi? '('+(1+scheda['saggezza'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
+          <button *ngIf="scheda['saggezza']<maxattributi" class="btn  btn-xs" (click)="addattr('saggezza')" [disabled]="xpdisponibili<(1+scheda['saggezza'])*2"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="column">
+          Prontezza  {{ (scheda['prontezza']< maxattributi ? '('+(1+scheda['prontezza'])*2+'px)' :'') }}
+        </div>
+        <div class="column">
+          <i *ngFor="let item of maxattributi|times ; let ix = index" class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
+          <button *ngIf="scheda['prontezza']<maxattributi" class="btn  btn-xs" (click)="addattr('prontezza')" [disabled]="xpdisponibili<(1+scheda['prontezza'])*2"><i class="fa fa-plus"></i></button>
         </div>
         </div>
       </mat-card-content>

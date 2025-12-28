@@ -48,6 +48,8 @@ export class Basicpg {
   public bane = 0 ;
   public urldt = '';
   public contanti = 0 ;
+
+  public maxstat = 0 ; // from LEFT JOIN
 }
 
 @Injectable()

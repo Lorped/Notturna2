@@ -13,16 +13,17 @@ import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, 
 export class SpendipxComponent implements OnInit {
 
   matriceMaxDisc: number[][] = [
-    [ 2, 3, 3, 4, 4, 5, 5, 6, 7 ],
-    [ 3, 3, 4, 4, 5, 5, 5, 6, 7 ],
-    [ 3, 4, 5, 5, 5, 5, 5, 6, 7 ],
-    [ 4, 5, 5, 5, 5, 5, 5, 6, 7 ],
-    [ 4, 5, 5, 5, 5, 5, 5, 6, 7 ],
-    [ 5, 5, 5, 5, 5, 5, 5, 6, 7 ]
+    [ 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9, 10 ],
+    [ 3, 3, 4, 4, 5, 5, 5, 6, 7, 8, 9, 10 ],
+    [ 3, 4, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10 ],
+    [ 4, 5, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10 ],
+    [ 4, 5, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10 ],
+    [ 5, 5, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10 ]
   ];
 
   maxdisc = 0 ;
   maxpallini = 5 ; //numero pallini disciplina visibili
+  maxattributi = 5 ; //numero max attributi fisici/mentali/sociali
 
   idutente = 0 ;
   scheda: Basicpg = new Basicpg();
@@ -108,6 +109,8 @@ export class SpendipxComponent implements OnInit {
         this.scheda['bloodp'] = Number(this.scheda['bloodp']);
         this.scheda['bloodpmax'] = Number(this.scheda['bloodpmax']);
 
+        this.scheda['maxstat'] = Number(this.scheda['maxstat']);
+
 
         this.statusPG = Number(this.scheda.idstatus);
 
@@ -119,6 +122,9 @@ export class SpendipxComponent implements OnInit {
         } else {
           this.maxpallini = 5;
         }
+
+        this.maxattributi = this.scheda['maxstat'];
+
 
         this.discipline = data.discipline ;
         for (let j = 0 ; j < this.discipline.length ; j++ ) {
