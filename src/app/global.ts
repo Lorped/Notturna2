@@ -302,10 +302,18 @@ export class Condizione {
 }
 
 @Injectable()
+export class Paired {
+  idpaired = 0;
+  nomepaired = '';
+  descpaired = '';
+}
+
+@Injectable()
 export class FullOggetto {
   public oggetto = new Oggetto() ;
   public condizioni: Array<Condizione> = [];
   public condizioni2: Array<Condizione> = [];
+  public paired: Paired = new Paired() ;
 }
 
 @Injectable()

@@ -83,12 +83,39 @@ include ('db2.inc.php');  //MYSQLI //
 				$condizioni[] = $res2;
 			}
 
+
+
 		}
+		$ids=0;
+		$descpaired = '';
+		$nomepaired = '';
+		$Mysqly = "SELECT * FROM paired where IDoggetto1 = $idoggetto or IDoggetto2 = $idoggetto ";
+		$Resulty = mysqli_query($db, $Mysqly);
+		while ( $resy = mysqli_fetch_array ($Resulty,MYSQLI_ASSOC) ) {
+			if ( $resy['IDoggetto1'] == $idoggetto ) {
+				$ids = $resy['IDoggetto2'];
+			} else {
+				$ids = $resy['IDoggetto1'];
+			}
+			$descpaired = $resy['Paired'];
+		}
+
+		$Mysqlx = "SELECT nomeoggetto FROM oggetti WHERE idoggetto = $ids ";
+		$Resultx = mysqli_query($db, $Mysqlx);
+		$resx = mysqli_fetch_array($Resultx);
+		$nomepaired = $resx['nomeoggetto'];
+		
 
 		$fulloggetto = [
 			'oggetto' => $res,
 			'condizioni' => $condizioni,
-			'condizioni2' => $condizioni2
+			'condizioni2' => $condizioni2,
+
+			'paired' => [
+				'idpaired' => $ids,
+				'nomepaired' => $nomepaired,
+				'descpaired' => $descpaired
+			]
 		];
 
 		$oggetti[] = $fulloggetto;

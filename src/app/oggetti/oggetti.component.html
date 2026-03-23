@@ -151,6 +151,24 @@
           </div>
         </div>
 
+        <div class="columns" *ngIf="item.paired.idpaired!=0">
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            Paired
+          </div>
+          <div class="column is-2">
+            <span class="blue"> [ ID {{item.paired.idpaired}} - {{item.paired.nomepaired}} ]</span>
+          </div>
+          <div class="column is-6">
+            {{item.paired.descpaired}}
+          </div>
+        </div>
+
+
+
+
 
       </div>
       <mat-divider></mat-divider>
