@@ -125,6 +125,26 @@
           </div>
         </div>
 
+        <div class="columns" *ngIf="item.paired.idpaired!=0">
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2">
+            Paired
+          </div>
+          <div class="column is-2">
+            {{item.paired.nomepaired}}
+          </div>
+          <div class="column is-5">
+            {{item.paired.descpaired}}
+          </div>
+          <div class="column is-1">
+            <button  mat-raised-button color="warn" (click)="cancellapaired()">Cancella</button>
+          </div>
+
+        </div>
+
+
         <mat-divider></mat-divider>
         <div class="columns"><div class="column">&nbsp;</div></div>
 

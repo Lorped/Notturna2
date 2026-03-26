@@ -219,4 +219,15 @@ export class CambiaoggComponent implements OnInit {
     );
   }
 
+  cancellapaired(){
+    this.adminservice.cancellapaired(this.idoggetto).subscribe(
+      (data) => {
+        this.item.paired.idpaired = 0;
+        this.item.paired.descpaired = '';
+        this.item.paired.nomepaired = '';
+        console.log("cancello paired");
+      } 
+    );
+  }
+
 }

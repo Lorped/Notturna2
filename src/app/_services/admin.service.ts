@@ -105,5 +105,11 @@ export class AdminService {
     });
   }
 
+  cancellapaired(idoggetto: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancellapaired.php',{
+      idoggetto: idoggetto
+    });
+  }
+
 
 }
