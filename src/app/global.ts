@@ -346,3 +346,10 @@ export class Amalgama {
   public checkdisc = 0 ;
   public costo = 0;
 }
+
+
+@Injectable()
+export class Unpaired {
+  public idoggetto = 0;
+  public nomeoggetto = '';
+}

@@ -111,5 +111,18 @@ export class AdminService {
     });
   }
 
+  getunpaired(idoggetto: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/getunpaired.php',{
+      idoggetto: idoggetto
+    });
+  }
+
+  addpaired(idoggetto1: number, idoggetto2: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpaired.php',{
+      idoggetto1: idoggetto1,
+      idoggetto2: idoggetto2
+    });
+  }
+
 
 }

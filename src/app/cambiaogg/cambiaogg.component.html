@@ -288,6 +288,48 @@
           </div>
         </div>
 
+
+
+        <div class="columns" *ngIf="item.paired.idpaired==0">
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-2 ">
+            <mat-form-field appearance="fill" style="size: 75%; display: block;" >
+              <mat-label>Scegli Accoppiamento</mat-label>
+              <mat-select   [(value)]="tabpaired" >
+                <mat-option *ngFor="let i of unpaired" [value]="i.idoggetto">{{i.nomeoggetto}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="column is-1">
+            &nbsp;
+          </div>
+          <div class="column is-1">
+            <!---
+            <mat-radio-group [(ngModel)]="quandoP"  *ngIf="item.oggetto.ifdomanda==1">
+              <mat-radio-button  class="example-radio-button"  *ngFor="let tipo of quando" [value]="tipo.id">
+                {{tipo.nome}}
+              </mat-radio-button>
+            </mat-radio-group>
+            --->
+            &nbsp;
+          </div>
+          <div class="column is-5">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Descrizione</mat-label>
+              <textarea matInput [(ngModel)]="descrizionePaired"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="column is-2">
+            <button  mat-raised-button color="primary" (click)="addpaired()" [disabled]="  descrizionePaired=='' || tabpaired=='' ">Aggiungi</button>
+          </div>
+        </div>
+
+
+
+
+
         <div class="columns" *ngIf="item.oggetto.ifdomanda==0">
           <div class="column">
             <mat-form-field appearance="fill" class="full">

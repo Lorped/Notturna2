@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../_services/index';
-import { Oggetto, Condizione, FullOggetto} from '../global';
+import { Oggetto, Condizione, FullOggetto, Unpaired} from '../global';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -61,6 +61,10 @@ export class CambiaoggComponent implements OnInit {
     {id: 'N', nome: 'Se NO'}
   ];
 
+  unpaired: Array<Unpaired> = [];
+  tabpaired = '';
+  descrizionePaired = '';
+
   constructor(private route: ActivatedRoute , private adminservice: AdminService) { }
 
   ngOnInit(): void {
@@ -78,6 +82,11 @@ export class CambiaoggComponent implements OnInit {
       }
     );
 
+    this.adminservice.getunpaired(this.idoggetto).subscribe(
+      (data: any) => {
+        this.unpaired = data.unpaired;
+      }
+    );
 
 
   }
@@ -226,8 +235,43 @@ export class CambiaoggComponent implements OnInit {
         this.item.paired.descpaired = '';
         this.item.paired.nomepaired = '';
         console.log("cancello paired");
+
+        this.adminservice.getunpaired(this.idoggetto).subscribe(
+          (data: any) => {
+            this.unpaired = data.unpaired;
+          }
+        );
+
+
+
       } 
     );
+  }
+
+  addpaired(){
+      console.log("aggiungo paired");
+      console.log("idoggetto1: " + this.idoggetto);
+      console.log("idoggetto2: " + Number(this.tabpaired));
+      console.log("descpaired: " + this.descrizionePaired);
+
+      const result = this.unpaired.find(unpaired => unpaired.idoggetto == Number(this.tabpaired));
+
+      console.log("nomepaired: " + result?.nomeoggetto);
+
+      
+      
+      this.adminservice.addpaired(this.idoggetto, Number(this.tabpaired)).subscribe(
+        (data) => {
+          this.item.paired.idpaired = Number(this.tabpaired);
+          this.item.paired.descpaired = this.descrizionePaired;
+          this.item.paired.nomepaired = result?.nomeoggetto ?? '';
+          console.log("add paired");
+
+          this.tabpaired = '';
+          this.descrizionePaired = '';
+        } 
+      );
+    
   }
 
 }
