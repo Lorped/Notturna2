@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -76,71 +76,62 @@ import { RubricaComponent } from './rubrica/rubrica.component';
 import { EventiComponent } from './eventi/eventi.component';
 import { RisorseComponent } from './risorse/risorse.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    MainComponent,
-    GateComponent,
-    AdminComponent,
-    RegistraComponent,
-    CreaComponent,
-    TimesPipe,
-    SchedaComponent,
-    NonecrotaumPipe,
-    AddpoteriComponent,
-    LogpxComponent,
-    SpendipxComponent,
-    SidexComponent,
-    PregidifettiComponent,
-    BioComponent,
-    BackgroundComponent,
-    CancellaComponent,
-    DocsComponent,
-    UtenteComponent,
-    PersonaggioComponent,
-    SideadmComponent,
-    AdminbgComponent,
-    OggettiComponent,
-    CambiaoggComponent,
-    ChatComponent,
-    RubricaComponent,
-    EventiComponent,
-    RisorseComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatToolbarModule,
-    MatSelectModule,
-    MatStepperModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatListModule,
-    MatBadgeModule,
-    MatSidenavModule,
-    MatRadioModule
-
-
-  ],
-  providers: [
-    AuthenticationService,
-    SchedaService,
-    ChatService,
-    RubricaService,
-    GlobalStatus
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LoginComponent,
+        MainComponent,
+        GateComponent,
+        AdminComponent,
+        RegistraComponent,
+        CreaComponent,
+        TimesPipe,
+        SchedaComponent,
+        NonecrotaumPipe,
+        AddpoteriComponent,
+        LogpxComponent,
+        SpendipxComponent,
+        SidexComponent,
+        PregidifettiComponent,
+        BioComponent,
+        BackgroundComponent,
+        CancellaComponent,
+        DocsComponent,
+        UtenteComponent,
+        PersonaggioComponent,
+        SideadmComponent,
+        AdminbgComponent,
+        OggettiComponent,
+        CambiaoggComponent,
+        ChatComponent,
+        RubricaComponent,
+        EventiComponent,
+        RisorseComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatToolbarModule,
+        MatSelectModule,
+        MatStepperModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatListModule,
+        MatBadgeModule,
+        MatSidenavModule,
+        MatRadioModule], providers: [
+        AuthenticationService,
+        SchedaService,
+        ChatService,
+        RubricaService,
+        GlobalStatus,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
