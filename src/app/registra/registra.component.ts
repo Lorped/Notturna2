@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-registra',
-  templateUrl: './registra.component.html',
-  styleUrls: ['./registra.component.css']
+    selector: 'app-registra',
+    templateUrl: './registra.component.html',
+    styleUrls: ['./registra.component.css'],
+    standalone: false
 })
 export class RegistraComponent implements OnInit {
 

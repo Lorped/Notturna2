@@ -5,9 +5,10 @@ import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus, Influenze
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-adminbg',
-  templateUrl: './adminbg.component.html',
-  styleUrls: ['./adminbg.component.css']
+    selector: 'app-adminbg',
+    templateUrl: './adminbg.component.html',
+    styleUrls: ['./adminbg.component.css'],
+    standalone: false
 })
 export class AdminbgComponent implements OnInit {
 

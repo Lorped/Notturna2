@@ -10,9 +10,10 @@ export class listaspese {
 };
 
 @Component({
-  selector: 'app-scheda',
-  templateUrl: './scheda.component.html',
-  styleUrls: ['./scheda.component.css']
+    selector: 'app-scheda',
+    templateUrl: './scheda.component.html',
+    styleUrls: ['./scheda.component.css'],
+    standalone: false
 })
 export class SchedaComponent implements OnInit {
 

@@ -6,9 +6,10 @@ import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, 
 
 
 @Component({
-  selector: 'app-spendipx',
-  templateUrl: './spendipx.component.html',
-  styleUrls: ['./spendipx.component.css']
+    selector: 'app-spendipx',
+    templateUrl: './spendipx.component.html',
+    styleUrls: ['./spendipx.component.css'],
+    standalone: false
 })
 export class SpendipxComponent implements OnInit {
 

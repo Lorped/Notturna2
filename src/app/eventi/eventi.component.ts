@@ -16,9 +16,10 @@ export interface FullEV {
 
 
 @Component({
-  selector: 'app-eventi',
-  templateUrl: './eventi.component.html',
-  styleUrls: ['./eventi.component.css']
+    selector: 'app-eventi',
+    templateUrl: './eventi.component.html',
+    styleUrls: ['./eventi.component.css'],
+    standalone: false
 })
 export class EventiComponent implements OnInit {
 

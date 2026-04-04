@@ -4,9 +4,10 @@ import { Background, Contatti, Skill, Sentiero , Influenze} from '../global';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-background',
-  templateUrl: './background.component.html',
-  styleUrls: ['./background.component.css']
+    selector: 'app-background',
+    templateUrl: './background.component.html',
+    styleUrls: ['./background.component.css'],
+    standalone: false
 })
 export class BackgroundComponent implements OnInit {
 

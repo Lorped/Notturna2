@@ -14,9 +14,10 @@ export interface Eventi {
 }
 
 @Component({
-  selector: 'app-logpx',
-  templateUrl: './logpx.component.html',
-  styleUrls: ['./logpx.component.css']
+    selector: 'app-logpx',
+    templateUrl: './logpx.component.html',
+    styleUrls: ['./logpx.component.css'],
+    standalone: false
 })
 export class LogpxComponent implements OnInit {
 

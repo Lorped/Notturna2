@@ -4,9 +4,10 @@ import { Rubricaitem } from '../global';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-rubrica',
-  templateUrl: './rubrica.component.html',
-  styleUrls: ['./rubrica.component.css']
+    selector: 'app-rubrica',
+    templateUrl: './rubrica.component.html',
+    styleUrls: ['./rubrica.component.css'],
+    standalone: false
 })
 export class RubricaComponent implements OnInit {
 

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 @Component({
-  selector: 'app-sidex',
-  templateUrl: './sidex.component.html',
-  styleUrls: ['./sidex.component.css']
+    selector: 'app-sidex',
+    templateUrl: './sidex.component.html',
+    styleUrls: ['./sidex.component.css'],
+    standalone: false
 })
 export class SidexComponent implements OnInit {
 

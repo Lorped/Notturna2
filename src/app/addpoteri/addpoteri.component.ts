@@ -5,9 +5,10 @@ import { FullDisciplina } from '../global';
 
 
 @Component({
-  selector: 'app-addpoteri',
-  templateUrl: './addpoteri.component.html',
-  styleUrls: ['./addpoteri.component.css']
+    selector: 'app-addpoteri',
+    templateUrl: './addpoteri.component.html',
+    styleUrls: ['./addpoteri.component.css'],
+    standalone: false
 })
 export class AddpoteriComponent implements OnInit {
 

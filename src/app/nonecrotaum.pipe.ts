@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'nonecrotaum'
+    name: 'nonecrotaum',
+    standalone: false
 })
 export class NonecrotaumPipe implements PipeTransform {
 

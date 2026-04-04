@@ -4,9 +4,10 @@ import { AuthenticationService } from '../_services/index';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-utente',
-  templateUrl: './utente.component.html',
-  styleUrls: ['./utente.component.css']
+    selector: 'app-utente',
+    templateUrl: './utente.component.html',
+    styleUrls: ['./utente.component.css'],
+    standalone: false
 })
 export class UtenteComponent implements OnInit {
 

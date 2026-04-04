@@ -16,9 +16,10 @@ export class listaspese {
 
 
 @Component({
-  selector: 'app-risorse',
-  templateUrl: './risorse.component.html',
-  styleUrls: ['./risorse.component.css']
+    selector: 'app-risorse',
+    templateUrl: './risorse.component.html',
+    styleUrls: ['./risorse.component.css'],
+    standalone: false
 })
 
 

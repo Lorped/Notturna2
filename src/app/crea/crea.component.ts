@@ -6,12 +6,13 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-crea',
-  templateUrl: './crea.component.html',
-  styleUrls: ['./crea.component.css'],
-  providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
-  }]
+    selector: 'app-crea',
+    templateUrl: './crea.component.html',
+    styleUrls: ['./crea.component.css'],
+    providers: [{
+            provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
+        }],
+    standalone: false
 })
 export class CreaComponent implements OnInit {
 

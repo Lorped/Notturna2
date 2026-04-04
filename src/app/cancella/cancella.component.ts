@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { SchedaService } from '../_services/index';
 
 @Component({
-  selector: 'app-cancella',
-  templateUrl: './cancella.component.html',
-  styleUrls: ['./cancella.component.css']
+    selector: 'app-cancella',
+    templateUrl: './cancella.component.html',
+    styleUrls: ['./cancella.component.css'],
+    standalone: false
 })
 export class CancellaComponent implements OnInit {
 

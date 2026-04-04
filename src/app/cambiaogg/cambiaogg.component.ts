@@ -5,9 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-cambiaogg',
-  templateUrl: './cambiaogg.component.html',
-  styleUrls: ['./cambiaogg.component.css']
+    selector: 'app-cambiaogg',
+    templateUrl: './cambiaogg.component.html',
+    styleUrls: ['./cambiaogg.component.css'],
+    standalone: false
 })
 export class CambiaoggComponent implements OnInit {
 

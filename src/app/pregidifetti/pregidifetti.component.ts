@@ -3,9 +3,10 @@ import { SchedaService } from '../_services/index';
 import { Pregio } from '../global';
 
 @Component({
-  selector: 'app-pregidifetti',
-  templateUrl: './pregidifetti.component.html',
-  styleUrls: ['./pregidifetti.component.css']
+    selector: 'app-pregidifetti',
+    templateUrl: './pregidifetti.component.html',
+    styleUrls: ['./pregidifetti.component.css'],
+    standalone: false
 })
 export class PregidifettiComponent implements OnInit {
 

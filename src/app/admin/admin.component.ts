@@ -10,9 +10,10 @@ export interface unPg {
 }
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+    selector: 'app-admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.css'],
+    standalone: false
 })
 export class AdminComponent implements OnInit {
 

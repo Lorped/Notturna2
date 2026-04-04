@@ -7,9 +7,10 @@ import { Router, NavigationExtras } from '@angular/router';
 
 
 @Component({
-  selector: 'app-oggetti',
-  templateUrl: './oggetti.component.html',
-  styleUrls: ['./oggetti.component.css']
+    selector: 'app-oggetti',
+    templateUrl: './oggetti.component.html',
+    styleUrls: ['./oggetti.component.css'],
+    standalone: false
 })
 export class OggettiComponent implements OnInit {
 

@@ -3,9 +3,10 @@ import { UntypedFormControl, FormGroup } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 
 @Component({
-  selector: 'app-bio',
-  templateUrl: './bio.component.html',
-  styleUrls: ['./bio.component.css']
+    selector: 'app-bio',
+    templateUrl: './bio.component.html',
+    styleUrls: ['./bio.component.css'],
+    standalone: false
 })
 export class BioComponent implements OnInit {
 

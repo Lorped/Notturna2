@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-gate',
-  templateUrl: './gate.component.html',
-  styleUrls: ['./gate.component.css']
+    selector: 'app-gate',
+    templateUrl: './gate.component.html',
+    styleUrls: ['./gate.component.css'],
+    standalone: false
 })
 export class GateComponent implements OnInit {
 
