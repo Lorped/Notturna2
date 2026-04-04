@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Notturna2:build"
+            "buildTarget": "Notturna2:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Notturna2:build:production"
+              "buildTarget": "Notturna2:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Notturna2:build"
+            "buildTarget": "Notturna2:build"
           }
         },
         "test": {
