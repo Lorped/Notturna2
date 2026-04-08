@@ -41,7 +41,8 @@ if ( isset($postdata) && $idoggetto != ""  ) {
   $MySql = "DELETE FROM oggetti WHERE idoggetto = $idoggetto";
   $Result = mysqli_query($db, $MySql);
 
-
+  $MySql = "DELETE FROM paired WHERE IDoggetto1 = $idoggetto OR IDoggetto2 = $idoggetto";
+  $Result = mysqli_query($db, $MySql);
 
 
       header("HTTP/1.1 200 OK");

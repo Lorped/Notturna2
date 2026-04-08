@@ -26,13 +26,13 @@ $request = json_decode($postdata);
 
 $idoggetto1 = $request -> idoggetto1;
 $idoggetto2 = $request -> idoggetto2;
-
+$descrizionePaired = mysqli_real_escape_string($db, $request -> descrizionePaired);
 
 
 
 if ( isset($postdata) && $idoggetto1 != "" && $idoggetto2 != ""  ) {
 
-  $MySql = "INSERT INTO paired (IDoggetto1, IDoggetto2) VALUES ($idoggetto1, $idoggetto2)";
+  $MySql = "INSERT INTO paired (IDoggetto1, IDoggetto2, Paired) VALUES ($idoggetto1, $idoggetto2, '$descrizionePaired')";
   $Result = mysqli_query($db, $MySql);
 
 

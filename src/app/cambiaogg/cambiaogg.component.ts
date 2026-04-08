@@ -261,7 +261,7 @@ export class CambiaoggComponent implements OnInit {
 
       
       
-      this.adminservice.addpaired(this.idoggetto, Number(this.tabpaired)).subscribe(
+      this.adminservice.addpaired(this.idoggetto, Number(this.tabpaired), this.descrizionePaired).subscribe(
         (data) => {
           this.item.paired.idpaired = Number(this.tabpaired);
           this.item.paired.descpaired = this.descrizionePaired;

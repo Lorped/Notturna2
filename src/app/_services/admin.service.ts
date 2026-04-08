@@ -117,10 +117,11 @@ export class AdminService {
     });
   }
 
-  addpaired(idoggetto1: number, idoggetto2: number) {
+  addpaired(idoggetto1: number, idoggetto2: number, descrizionePaired: string) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpaired.php',{
       idoggetto1: idoggetto1,
-      idoggetto2: idoggetto2
+      idoggetto2: idoggetto2,
+      descrizionePaired: descrizionePaired
     });
   }
 
