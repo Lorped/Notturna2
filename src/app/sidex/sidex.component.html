@@ -1,137 +1,122 @@
 
-  <span *ngIf="ingate">
-
-        <a [routerLink]="['/crea']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-user-circle"></i> Crea la scheda
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/docs']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-book"></i> Consulta il Regolamento
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/utente']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-user"></i> Modifica Email e Password
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-sign-out"></i>  Logout
-            </mat-card-content>
-          </mat-card>
-        </a>
-
+@if (ingate) {
+  <span>
+    <a [routerLink]="['/crea']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-user-circle"></i> Crea la scheda
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/docs']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-book"></i> Consulta il Regolamento
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/utente']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-user"></i> Modifica Email e Password
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-sign-out"></i>  Logout
+        </mat-card-content>
+      </mat-card>
+    </a>
   </span>
+}
 
-  <span *ngIf="! ingate">
-
-        <a [routerLink]="['/scheda']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-user-circle"></i> Vedi la scheda
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/spendipx']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-plus-square"></i> Aggiungi / Spendi PX
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-
-        <a [routerLink]="['/pregidifetti']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-pencil-square"></i> Aggiungi Pregi e Difetti
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/bio']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-file-text"></i> Inserisci Biografia e Annotazioni
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/poteri']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-bolt" ></i> <span [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after"  matBadgeColor="warn" > Scegli Poteri &nbsp; &nbsp;</span>
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/background']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-address-card"></i> Modifica Fama, Background ecc..
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/rubrica']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-list-alt"></i> Gestisci Rubrica
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/logpx']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-list"></i> Visualizza log PX
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/docs']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-book"></i> Consulta il Regolamento
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/utente']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-user"></i> Modifica Email e Password
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['/cancella']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-trash"></i> Cancella la scheda
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-        <a [routerLink]="['']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-sign-out"></i>  Logout
-            </mat-card-content>
-          </mat-card>
-        </a>
-
-</span>
+@if (! ingate) {
+  <span>
+    <a [routerLink]="['/scheda']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-user-circle"></i> Vedi la scheda
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/spendipx']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-plus-square"></i> Aggiungi / Spendi PX
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/pregidifetti']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-pencil-square"></i> Aggiungi Pregi e Difetti
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/bio']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-file-text"></i> Inserisci Biografia e Annotazioni
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/poteri']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-bolt" ></i> <span [matBadge]="mybadge" [matBadgeHidden]="mybadge == '0'" matBadgePosition="after"  matBadgeColor="warn" > Scegli Poteri &nbsp; &nbsp;</span>
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/background']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-address-card"></i> Modifica Fama, Background ecc..
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/rubrica']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-list-alt"></i> Gestisci Rubrica
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/logpx']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-list"></i> Visualizza log PX
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/docs']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-book"></i> Consulta il Regolamento
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/utente']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-user"></i> Modifica Email e Password
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['/cancella']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-trash"></i> Cancella la scheda
+        </mat-card-content>
+      </mat-card>
+    </a>
+    <a [routerLink]="['']">
+      <mat-card class="movable">
+        <mat-card-content class="all">
+          <i class="fa fa-sign-out"></i>  Logout
+        </mat-card-content>
+      </mat-card>
+    </a>
+  </span>
+}
