@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SchedaService } from '../_services/index';
 
@@ -6,6 +6,7 @@ import { SchedaService } from '../_services/index';
     selector: 'app-cancella',
     templateUrl: './cancella.component.html',
     styleUrls: ['./cancella.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CancellaComponent implements OnInit {

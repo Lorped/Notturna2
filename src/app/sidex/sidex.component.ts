@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 @Component({
     selector: 'app-sidex',
     templateUrl: './sidex.component.html',
     styleUrls: ['./sidex.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SidexComponent implements OnInit {

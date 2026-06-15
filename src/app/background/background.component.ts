@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Background, Contatti, Skill, Sentiero , Influenze} from '../global';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
     selector: 'app-background',
     templateUrl: './background.component.html',
     styleUrls: ['./background.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class BackgroundComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, FormGroup } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 
@@ -6,6 +6,7 @@ import { SchedaService } from '../_services/index';
     selector: 'app-bio',
     templateUrl: './bio.component.html',
     styleUrls: ['./bio.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class BioComponent implements OnInit {

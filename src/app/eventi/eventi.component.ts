@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services';
 
 
@@ -19,6 +19,7 @@ export interface FullEV {
     selector: 'app-eventi',
     templateUrl: './eventi.component.html',
     styleUrls: ['./eventi.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class EventiComponent implements OnInit {

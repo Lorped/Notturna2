@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus, Influenze } from '../global';
@@ -8,6 +8,7 @@ import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
     selector: 'app-adminbg',
     templateUrl: './adminbg.component.html',
     styleUrls: ['./adminbg.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AdminbgComponent implements OnInit {

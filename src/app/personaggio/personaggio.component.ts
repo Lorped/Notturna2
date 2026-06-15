@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
 import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale, Amalgama, Influenze } from '../global';
@@ -8,6 +8,7 @@ import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia
     selector: 'app-personaggio',
     templateUrl: './personaggio.component.html',
     styleUrls: ['./personaggio.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PersonaggioComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Influenze} from '../global';
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
     providers: [{
             provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
         }],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CreaComponent implements OnInit {

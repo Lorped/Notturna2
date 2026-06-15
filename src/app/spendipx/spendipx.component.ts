@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Pregio, Rituale , Amalgama} from '../global';
@@ -9,6 +9,7 @@ import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, 
     selector: 'app-spendipx',
     templateUrl: './spendipx.component.html',
     styleUrls: ['./spendipx.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SpendipxComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { map } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
     selector: 'app-utente',
     templateUrl: './utente.component.html',
     styleUrls: ['./utente.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class UtenteComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { Oggetto, Condizione, FullOggetto, Unpaired} from '../global';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,7 @@ import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
     selector: 'app-cambiaogg',
     templateUrl: './cambiaogg.component.html',
     styleUrls: ['./cambiaogg.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CambiaoggComponent implements OnInit {

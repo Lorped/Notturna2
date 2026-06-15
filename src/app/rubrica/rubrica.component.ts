@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RubricaService } from '../_services/index';
 import { Rubricaitem } from '../global';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
     selector: 'app-rubrica',
     templateUrl: './rubrica.component.html',
     styleUrls: ['./rubrica.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class RubricaComponent implements OnInit {

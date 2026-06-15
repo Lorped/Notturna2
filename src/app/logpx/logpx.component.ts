@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 
@@ -17,6 +17,7 @@ export interface Eventi {
     selector: 'app-logpx',
     templateUrl: './logpx.component.html',
     styleUrls: ['./logpx.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LogpxComponent implements OnInit {

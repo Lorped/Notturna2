@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { FullDisciplina } from '../global';
 
@@ -8,6 +8,7 @@ import { FullDisciplina } from '../global';
     selector: 'app-addpoteri',
     templateUrl: './addpoteri.component.html',
     styleUrls: ['./addpoteri.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AddpoteriComponent implements OnInit {

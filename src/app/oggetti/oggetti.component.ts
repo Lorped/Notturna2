@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { Oggetto, Condizione, FullOggetto} from '../global';
 import { Router, NavigationExtras } from '@angular/router';
@@ -10,6 +10,7 @@ import { Router, NavigationExtras } from '@angular/router';
     selector: 'app-oggetti',
     templateUrl: './oggetti.component.html',
     styleUrls: ['./oggetti.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class OggettiComponent implements OnInit {

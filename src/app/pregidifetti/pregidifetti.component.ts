@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Pregio } from '../global';
 
@@ -6,6 +6,7 @@ import { Pregio } from '../global';
     selector: 'app-pregidifetti',
     templateUrl: './pregidifetti.component.html',
     styleUrls: ['./pregidifetti.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PregidifettiComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama , Influenze} from '../global';
 
@@ -13,6 +13,7 @@ export class listaspese {
     selector: 'app-scheda',
     templateUrl: './scheda.component.html',
     styleUrls: ['./scheda.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SchedaComponent implements OnInit {
