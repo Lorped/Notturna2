@@ -8,7 +8,7 @@ function pushmsg ($data) {
 
 	$url = "https://fcm.googleapis.com/v1/projects/notturna-93b8f/messages:send";
 
-	$access_token = get_access_token("notturna-93b8f-firebase-adminsdk-lsd7l-b077c17d5a.json");
+	$access_token = get_access_token("notturna-93b8f-firebase-adminsdk-lsd7l-aaae60211e.json");
     
     $options = array(
         CURLOPT_URL => $url,
