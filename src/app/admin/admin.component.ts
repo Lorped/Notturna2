@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { GlobalStatus } from '../global';
+import { GlobalStatus, Cronaca } from '../global';
 
 export interface unPg {
   idutente: number;
@@ -19,7 +19,9 @@ export interface unPg {
 export class AdminComponent implements OnInit {
 
   listapg: Array<unPg> = [];
+  listacronache: Array<Cronaca> = [];
   selectedPG = '';
+  cronacaprincipale = '';
 
 
   chanceMform = new UntypedFormGroup ({
@@ -37,16 +39,23 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
     // console.log(this.globalstatus);
     if (this.globalstatus.lastpg != 0 ){
       this.selectedPG = String( this.globalstatus.lastpg);
     }
+    if (this.globalstatus.cronacaprincipale != 0 ){
+      this.cronacaprincipale = String( this.globalstatus.cronacaprincipale);
+    }
 
-    this.adminservice.getpersonaggio().subscribe(
+    this.adminservice.getlistcronache().subscribe(
       (data: any) => {
-        this.listapg = data.pg;
+        this.listacronache = data;
       }
     );
+
+    this.aggiornaPersonaggi();
 
     this.adminservice.getchance().subscribe(
       (data: any) => {
@@ -59,6 +68,14 @@ export class AdminComponent implements OnInit {
 
   get chance(){
     return this.chanceMform.get('chance');
+  }
+
+  aggiornaPersonaggi(): void {
+    this.adminservice.getpersonaggio(Number(this.cronacaprincipale || 0)).subscribe(
+      (data: any) => {
+        this.listapg = data.pg;
+      }
+    );
   }
 
   cambiachance(){

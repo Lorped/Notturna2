@@ -16,30 +16,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-require_once __DIR__ . '/db2.inc.php'; //MYSQLI //
+// include ('db2.inc.php'); // MYSQL //
+require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
-$idcronaca = $_GET['idcronaca'];
 
-if (isset($idcronaca) && $idcronaca != "" ) {
-		$MySql = "SELECT idutente, nomepg, 'V' as tipo from personaggio WHERE idcronaca = $idcronaca ORDER BY nomepg";
-} else{
-	$MySql = "SELECT idutente, nomepg, 'V' as tipo from personaggio ORDER BY nomepg";
-}
 
-	
-	$Result = mysqli_query($db, $MySql);
+	$MySql="SELECT idcronaca, descrizione
+		FROM cronaca
+		order by idcronaca ASC";
+		//order by segreteria.eventodata DESC";
+	$Result=mysqli_query($db, $MySql);
 
-	$pg = [];
-	while ( $res = mysqli_fetch_array ($Result,MYSQLI_ASSOC) ) {
-		$pg[] = $res;
+	$cronache = [];
+
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
+
+		$cronache [] = $res ;
 	}
-
-	$out = [
-		'pg' => $pg
-	];
 
 
 header("HTTP/1.1 200 OK");
-echo json_encode ($out, JSON_UNESCAPED_UNICODE);
+echo json_encode ($cronache, JSON_UNESCAPED_UNICODE);
 
 ?>

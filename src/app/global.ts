@@ -320,6 +320,7 @@ export class FullOggetto {
 export class GlobalStatus {
   Last = 0;
   lastpg = 0;
+  cronacaprincipale = 0;
 }
 
 
@@ -353,3 +354,10 @@ export class Unpaired {
   public idoggetto = 0;
   public nomeoggetto = '';
 }
+
+@Injectable()
+export class Cronaca {
+  idcronaca = 0;
+  descrizione = '';
+}
+

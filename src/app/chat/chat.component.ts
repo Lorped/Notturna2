@@ -40,7 +40,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.adminservice.getpersonaggio().subscribe(
+    this.adminservice.getpersonaggio(this.globalstatus.cronacaprincipale).subscribe(
       (data: any) => {
         this.listapg = data.pg;
       }

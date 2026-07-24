@@ -11,6 +11,20 @@
 
     <div class="columns is-multiline">
 
+      <div class="column is-3">
+
+        <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
+          <mat-label>Cronaca Principale</mat-label>
+          <mat-select [(value)]="cronacaprincipale" (selectionChange)="aggiornaPersonaggi()">
+            @for (i of listacronache; track i) {
+              <mat-option [value]="i.idcronaca">{{i.descrizione}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+
 
       <div class="column is-3">
 

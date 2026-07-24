@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //global $par_DbHost
-include 'db2.inc.php';  //MYSQLI//
+require_once __DIR__ . '/db2.inc.php';  //MYSQLI//
 
 
 

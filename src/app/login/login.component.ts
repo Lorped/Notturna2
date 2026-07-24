@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
+import { GlobalStatus } from '../global';
+
 
 @Component({
     selector: 'app-login',
@@ -24,7 +26,7 @@ export class LoginComponent implements OnInit {
   loginInvalid = false ;
   hide = true ;
 
-  constructor( private authenticationService: AuthenticationService , private router: Router) { }
+  constructor( private authenticationService: AuthenticationService , private router: Router, private globalstatus: GlobalStatus) { }
 
   ngOnInit(): void {
     this.authenticationService.logout();
@@ -47,7 +49,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
 
-          if (data.admin == '1'){
+          if (data.admin !== '0'){
+            this.globalstatus.cronacaprincipale = data.admin;
             this.router.navigate(['/admin']);
           } else {
             if (data.scheda == '0' ){

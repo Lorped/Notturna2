@@ -9,8 +9,8 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
 
-  getpersonaggio() {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpersonaggio.php' );
+  getpersonaggio(idcronaca: number) {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpersonaggio.php'+'?idcronaca='+idcronaca  );
   }
 
   getnome(idutente: number) {
@@ -123,6 +123,10 @@ export class AdminService {
       idoggetto2: idoggetto2,
       descrizionePaired: descrizionePaired
     });
+  }
+
+  getlistcronache() {
+    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getlistcronache.php' );
   }
 
 

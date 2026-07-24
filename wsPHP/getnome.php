@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php'); //MYSQL //
+require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
 $idutente = $_GET['idutente'];
 
