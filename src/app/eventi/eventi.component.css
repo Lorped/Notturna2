@@ -20,4 +20,33 @@
     /*margin-top: 0.25em;*/
     font-size: 1em
   }
+
+.sort-btn {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+.sort-btn:hover {
+  color: #f02618;
+}
+
+.sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sort-icon {
+  color: #f02618;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.sort-btn .sort-label {
+  display: inline-block;
+}
   

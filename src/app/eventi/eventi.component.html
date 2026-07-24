@@ -16,8 +16,8 @@
   <mat-sidenav-content>
 
 
-    <div class="container" style="width: 80%; margin-top: 1em; min-height: 85vh;">
-      <p>
+    <div class="container" style="width: 100%; margin: 1em auto 0; min-height: 85vh; display: flex; justify-content: center;">
+      <p style="width: 200%;">
         <mat-card>
           <mat-card-title>
             <mat-card-header>
@@ -27,31 +27,55 @@
 
           <mat-card-content>
             <div class="columns">
-              <!--
               <div class="column bigger">
-                IDutente
+                <button type="button" class="sort-btn" (click)="sortBy('nomeplayer')">
+                  <span class="sort-label">Giocatore</span>
+                  <span class="sort-icon" *ngIf="currentSortColumn === 'nomeplayer'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
+              </div>
+              <div class="column bigger">
+                <button type="button" class="sort-btn" (click)="sortBy('nomepg')">
+                  <span class="sort-label">PG Principale</span>
+                  <span class="sort-icon" *ngIf="currentSortColumn === 'nomepg'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
+              </div>
+              <div class="column bigger">
+                <button type="button" class="sort-btn" (click)="sortBy('Cronaca')">
+                  <span class="sort-label">Cronaca Principale</span>
+                  <span class="sort-icon" *ngIf="currentSortColumn === 'Cronaca'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
+              </div>
+              <!---
+              <div class="column bigger">
+                <button type="button" class="sort-btn" (click)="sortBy('email')">
+                  Email
+                  <span *ngIf="currentSortColumn === 'email'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
               </div>
               -->
-              <div class="column bigger">
-                Giocatore
-              </div>
-              <div class="column bigger">
-                PG Principale
-              </div>
-              <div class="column bigger">
-                Email
+              <div class="column bigger is-1">
+                <button type="button" class="sort-btn" (click)="sortBy('eventi')">
+                  <span class="sort-label">Eventi</span>
+                  <span class="sort-icon" *ngIf="currentSortColumn === 'eventi'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
               </div>
               <div class="column bigger is-1">
-                Eventi
-              </div>
-              <div class="column bigger is-1">
-                PX
+                <button type="button" class="sort-btn" (click)="sortBy('xp')">
+                  <span class="sort-label">PX</span>
+                  <span class="sort-icon" *ngIf="currentSortColumn === 'xp'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
               </div>
               <div class="column bigger">
-                Ultimo Evento
+                <button type="button" class="sort-btn" (click)="sortBy('eventodata')">
+                  <span class="sort-label">Ultimo Evento</span>
+                  <span class="sort-icon" *ngIf="currentSortColumn === 'eventodata'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
               </div>
               <div class="column bigger is-1">
-                Saldo
+                <button type="button" class="sort-btn" (click)="sortBy('saldo')">
+                  <span class="sort-label">Saldo</span>
+                  <span class="sort-icon" *ngIf="currentSortColumn === 'saldo'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                </button>
               </div>
             </div>
             <div class="columns">
@@ -59,7 +83,7 @@
                 <hr>
                 </div>
               </div>
-              @for (fu of fulleventi; track fu) {
+              @for (fu of displayedEventi; track fu) {
                 <div class="columns">
                   <!--
                   <div class="column">
@@ -73,8 +97,13 @@
                     {{fu.nomepg}}
                   </div>
                   <div class="column ">
+                    {{fu.Cronaca}}
+                  </div>
+                  <!---
+                  <div class="column ">
                     {{fu.email}}
                   </div>
+                  -->
                   <div class="column is-1">
                     {{fu.eventi}}
                   </div>

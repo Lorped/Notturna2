@@ -21,10 +21,12 @@ require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
 
 
-	$MySql="SELECT segreteria.idutente, personaggio.nomeplayer, personaggio.nomepg , utente.email, segreteria.eventi, personaggio.xp, segreteria.eventodata , segreteria.saldo
+	$MySql="SELECT segreteria.idutente, personaggio.nomeplayer, personaggio.nomepg , utente.email, segreteria.eventi, personaggio.xp, segreteria.eventodata , segreteria.saldo, cronaca.Descrizione as Cronaca
 		FROM segreteria
 		left join personaggio on segreteria.idutente = personaggio.idutente
 		left join utente on segreteria.idutente = utente.idutente
+		left join cronaca on cronaca.IDcronaca = personaggio.IDcronaca
+		where segreteria.eventodata IS NOT NULL
 		order by personaggio.nomeplayer ASC";
 		//order by segreteria.eventodata DESC";
 	$Result=mysqli_query($db, $MySql);
