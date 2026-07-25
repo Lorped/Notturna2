@@ -21,8 +21,19 @@
         <mat-card>
           <mat-card-title>
             <mat-card-header>
-              Eventi
+              <span class="bigger">Eventi</span>
             </mat-card-header>
+
+            <p></p>
+            <mat-chip-listbox aria-label="Cronache"></mat-chip-listbox>
+            @for (item of listacronache; track $index) { 
+  
+                <mat-chip-option (click)="filterByCronaca(item.idcronaca)" [selected]="selectedCronache.includes(item.idcronaca)">
+                  <mat-chip color="primary" selected>{{item.descrizione}}</mat-chip>
+                </mat-chip-option>
+
+            }
+            <p></p>
           </mat-card-title>
 
           <mat-card-content>

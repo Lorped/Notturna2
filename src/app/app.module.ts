@@ -37,6 +37,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatListModule} from '@angular/material/list';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 
@@ -126,7 +127,8 @@ import { RisorseComponent } from './risorse/risorse.component';
         MatListModule,
         MatBadgeModule,
         MatSidenavModule,
-        MatRadioModule], providers: [
+        MatRadioModule,
+        MatChipsModule], providers: [
         AuthenticationService,
         SchedaService,
         ChatService,

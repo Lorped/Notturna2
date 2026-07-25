@@ -12,7 +12,6 @@
     <div class="columns is-multiline">
 
       <div class="column is-3">
-
         <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
           <mat-label>Cronaca Principale</mat-label>
           <mat-select [(value)]="cronacaprincipale" (selectionChange)="aggiornaPersonaggi()">
@@ -21,13 +20,11 @@
             }
           </mat-select>
         </mat-form-field>
-
       </div>
 
 
 
       <div class="column is-3">
-
         <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
           <mat-label>Scegli Personaggio</mat-label>
           <mat-select   [(value)]="selectedPG" >
@@ -36,7 +33,6 @@
             }
           </mat-select>
         </mat-form-field>
-
       </div>
 
       <div class="column is-3">
@@ -60,6 +56,20 @@
       </div>
 
       <div class="column is-3">
+        <a routerLink="/eventi" >
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-plus-square"></i> Gestione Eventi
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
+
+      <div class="column is-3">
+        <!-- FILLER -->
+      </div>
+
+      <div class="column is-3">
         <a routerLink="/risorse/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
           <mat-card class="movable">
             <mat-card-content class="all">
@@ -69,6 +79,9 @@
         </a>
       </div>
 
+      <div class="column is-3">
+        <!-- FILLER -->
+      </div>
 
 
 
@@ -87,21 +100,33 @@
       </div>
 
 
-
       <div class="column is-3">
-      </div>
-
-      <div class="column is-3">
-        <a routerLink="/eventi" >
+        <a [routerLink]="['/oggetti']">
           <mat-card class="movable">
             <mat-card-content class="all">
-              <i class="fa fa-plus-square"></i> Gestione Eventi
+              <i class="fa fa-bolt"></i> Gestisci oggetti
             </mat-card-content>
           </mat-card>
         </a>
       </div>
 
 
+
+      <div class="column is-3">
+        <a [routerLink]="['/chat']">
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-telegram"></i> Messaggi e fattore aleatorio
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
+
+
+
+      <div class="column is-9"> 
+        <!-- FILLER -->
+      </div>
 
 
       <div class="column is-3">
@@ -114,33 +139,6 @@
         </a>
       </div>
 
-      <div class="column is-3">
-      </div>
-
-
-
-      <div class="column is-3">
-        <a [routerLink]="['/oggetti']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-bolt"></i> Gestisci oggetti
-            </mat-card-content>
-          </mat-card>
-        </a>
-      </div>
-
-      <div class="column is-3">
-        <a [routerLink]="['/chat']">
-          <mat-card class="movable">
-            <mat-card-content class="all">
-              <i class="fa fa-telegram"></i> Messaggi e fattore aleatorio
-            </mat-card-content>
-          </mat-card>
-        </a>
-      </div>
-
-      <div class="column is-3">
-      </div>
 
     </div>
 

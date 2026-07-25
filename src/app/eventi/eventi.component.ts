@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services';
+import { GlobalStatus, Cronaca } from '../global';
 
 
 export interface FullEV {
@@ -7,12 +8,14 @@ export interface FullEV {
   nomeplayer: string;
   nomepg: string;
   email: string;
-  eventi: string;
-  xp: string;
+  eventi: number;
+  xp: number;
   eventodata: string;
   saldo: boolean;
+  IDcronaca: number;
   Cronaca: string;
 }
+
 
 
 @Component({
@@ -24,14 +27,23 @@ export interface FullEV {
 })
 export class EventiComponent implements OnInit {
 
+  listacronache: Array<Cronaca> = [];
+
   fulleventi: Array<FullEV> = [];
   displayedEventi: Array<FullEV> = [];
   currentSortColumn: keyof FullEV | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
+  selectedCronache: number[] = [];
 
-  constructor(private adminservice: AdminService) { }
+  constructor(private adminservice: AdminService, private globalstatus: GlobalStatus) { }
 
   ngOnInit(): void {
+
+    this.adminservice.getlistcronache().subscribe(
+      (data: any) => {
+        this.listacronache = data;
+      }
+    );
 
     this.adminservice.getfulleventi()
     .subscribe( 
@@ -39,12 +51,16 @@ export class EventiComponent implements OnInit {
         this.fulleventi = data;
         this.fulleventi.forEach(element => {
           element.saldo = ( element.saldo.toString() == "1" )
+          element.eventi = Number(element.eventi);
+          element.xp = Number(element.xp);
         });
         this.displayedEventi = [...this.fulleventi];
         this.applySorting();
         // console.log ( this.fulleventi);
       }
     )
+
+    //console.log ( this.selectedCronache);
   }
 
   sortBy(column: keyof FullEV): void {
@@ -58,17 +74,49 @@ export class EventiComponent implements OnInit {
     this.applySorting();
   }
 
+  private getVisibleEventi(): FullEV[] {
+    if (!this.selectedCronache.length) {
+      return [...this.fulleventi];
+    }
+
+    return this.fulleventi.filter(evento => this.selectedCronache.includes(evento.IDcronaca));
+  }
+
+  filterByCronaca(idcronaca: number): void {
+    const index = this.selectedCronache.indexOf(idcronaca);
+
+    if (index >= 0) {
+      this.selectedCronache.splice(index, 1);
+    } else {
+      this.selectedCronache.push(idcronaca);
+    }
+
+    this.applySorting();
+  }
+
   private applySorting(): void {
+    const source = this.getVisibleEventi();
+
     if (!this.currentSortColumn) {
-      this.displayedEventi = [...this.fulleventi];
+      this.displayedEventi = [...source];
       return;
     }
 
-    this.displayedEventi = [...this.fulleventi].sort((a, b) => {
+    this.displayedEventi = [...source].sort((a, b) => {
       const valueA = a[this.currentSortColumn!];
       const valueB = b[this.currentSortColumn!];
 
+      //console.log(`Sorting by ${this.currentSortColumn}:`, valueA, valueB);
+      //console.log(`Sort direction: ${this.sortDirection}`);
+      //console.log(`Type of valueA: ${typeof valueA}, Type of valueB: ${typeof valueB}`);
+
       if (typeof valueA === 'boolean' && typeof valueB === 'boolean') {
+        return this.sortDirection === 'asc'
+          ? Number(valueA) - Number(valueB)
+          : Number(valueB) - Number(valueA);
+      }
+
+      if (typeof valueA === 'number' && typeof valueB === 'number') {
         return this.sortDirection === 'asc'
           ? Number(valueA) - Number(valueB)
           : Number(valueB) - Number(valueA);
