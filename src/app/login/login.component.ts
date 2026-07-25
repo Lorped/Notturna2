@@ -32,6 +32,14 @@ export class LoginComponent implements OnInit {
     this.authenticationService.logout();
   }
 
+  togglePasswordVisibility(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.hide = !this.hide;
+  }
+
   get nome() {
       return this.loginForm.get('nome');
   }

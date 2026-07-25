@@ -1,22 +1,34 @@
 
-
-mat-card-title  {
-  font-family: delphian  ;
-  font-size: 4em;
-  font-weight: normal;
-}
-mat-card-subtitle  {
-  font-family: delphian  ;
-  font-size: 2em;
-  /*font-weight: normal;*/
-}
-
-
 mat-card {
-  max-width: 600px;
+  max-width: 700px;
   margin: 2em auto;
   text-align: center;
 }
+
+mat-card-title  {
+  justify-content: center;
+  line-height: 4em !important;
+  display: flex;
+}
+mat-card-subtitle  {
+  justify-content: center;
+  line-height: 3em !important;
+
+}
+
+.true-primary {
+  font-family: delphian ;
+  font-weight: normal;
+  font-size: 4em;
+  color: white;
+}
+.true-primary-small {
+  font-family: delphian  ;
+  font-weight: normal;
+  font-size: 2em;
+}
+
+
 
 .large {
   width:  100% !important;
@@ -43,3 +55,9 @@ a:visited
 a:hover {
   color: #5391f5;
 }
+
+.form-check-label  {
+  color: white;
+  text-align: justify;
+  font-size: 0.8em;
+} 

@@ -21,22 +21,28 @@
         <mat-card>
           <mat-card-title>
             <mat-card-header>
-              <span class="bigger">Eventi</span>
+              <span style="font-size: 1.5em;">Eventi</span>
             </mat-card-header>
 
-            <p></p>
+
+          </mat-card-title>
+          <mat-card-subtitle>
+            <mat-card-header>
+              <span style="font-size: 1.2em;">Filtra per Cronaca &nbsp;</span>
+                
             <mat-chip-listbox aria-label="Cronache"></mat-chip-listbox>
             @for (item of listacronache; track $index) { 
   
-                <mat-chip-option (click)="filterByCronaca(item.idcronaca)" [selected]="selectedCronache.includes(item.idcronaca)">
+                <mat-chip-option (click)="filterByCronaca(item.idcronaca)" [selected]="selectedCronache.includes(item.idcronaca)" style="margin-left: 5px; margin-bottom: 5px;">
                   <mat-chip color="primary" selected>{{item.descrizione}}</mat-chip>
                 </mat-chip-option>
 
             }
-            <p></p>
-          </mat-card-title>
+            
+            </mat-card-header>
+          </mat-card-subtitle>
 
-          <mat-card-content>
+          <mat-card-content style="margin-top: 10px;">
             <div class="columns">
               <div class="column bigger">
                 <button type="button" class="sort-btn" (click)="sortBy('nomeplayer')">

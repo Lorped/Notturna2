@@ -30,9 +30,7 @@ $request = json_decode($postdata);
 $nome = $request->nome;
 $password = $request->password;
 
-//$nome = "lorenzo";
-//$password = "lor11ped";
-//$postdata = 1;
+
 
 $nome = mysqli_real_escape_string($db, $nome);
 $password = mysqli_real_escape_string($db, $password);
