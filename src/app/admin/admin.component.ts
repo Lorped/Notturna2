@@ -78,6 +78,10 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  aggiornaSelected(): void {
+    this.globalstatus.lastpg = Number(this.selectedPG || 0);
+  }
+
   cambiachance(){
     let newc = Number ( this.chanceMform.get('chance')!.value );
     this.adminservice.putchance( newc ).subscribe(

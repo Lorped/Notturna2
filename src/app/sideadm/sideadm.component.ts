@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {GlobalStatus} from '../global';
 
 @Component({
     selector: 'app-sideadm',
@@ -9,9 +10,12 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class SideadmComponent implements OnInit {
 
-  constructor() { }
+  selectedPG = '';
+
+  constructor(private globalstatus: GlobalStatus) { }
 
   ngOnInit(): void {
+    this.selectedPG = String(this.globalstatus.lastpg);
   }
 
 }

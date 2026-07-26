@@ -27,7 +27,7 @@
       <div class="column is-3">
         <mat-form-field appearance="fill" style="size: 75%; display: block; margin-top: 1em;">
           <mat-label>Scegli Personaggio</mat-label>
-          <mat-select   [(value)]="selectedPG" >
+          <mat-select   [(value)]="selectedPG"  (selectionChange)="aggiornaSelected()" >
             @for (i of listapg; track i) {
               <mat-option [value]="i.idutente">{{i.nomepg}}</mat-option>
             }

@@ -8,14 +8,30 @@
         </mat-card>
       </a>
 
-      <a [routerLink]="['/chat']">
+      <a routerLink="/personaggio/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
         <mat-card class="movable">
           <mat-card-content class="all">
-            <i class="fa fa-telegram"></i> Messaggi e fattore aleatorio
+            <i class="fa fa-user-circle"></i> Vedi la scheda
           </mat-card-content>
         </mat-card>
       </a>
 
+
+      <a routerLink="/adminbg/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-plus-square"></i> Modifica Background
+          </mat-card-content>
+        </mat-card>
+      </a>
+
+      <a routerLink="/risorse/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-money"></i> Gestisci Risorse
+          </mat-card-content>
+        </mat-card>
+      </a>
 
       <a [routerLink]="['/oggetti']">
         <mat-card class="movable">
@@ -24,6 +40,15 @@
           </mat-card-content>
         </mat-card>
       </a>
+
+      <a [routerLink]="['/chat']">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-telegram"></i> Messaggi e fattore aleatorio
+          </mat-card-content>
+        </mat-card>
+      </a>
+
 
       <a [routerLink]="['']">
         <mat-card class="movable">
