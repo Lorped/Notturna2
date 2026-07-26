@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php');  //MYSQLI //
+require_once __DIR__ . '/db2.inc.php';  //MYSQLI //
 
 	$Atabcond = [
 		'ZERO',

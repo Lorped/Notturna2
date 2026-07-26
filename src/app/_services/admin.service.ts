@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { GlobalStatus } from '../global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private globalstatus: GlobalStatus) { }
 
 
   getpersonaggio(idcronaca: number) {
@@ -41,7 +42,8 @@ export class AdminService {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addoggetto.php',{
       nomeoggetto: nomeoggetto,
       descrizione: descrizione,
-      fissomobile: fissomobile
+      fissomobile: fissomobile,
+      cronaca:  this.globalstatus.cronacaprincipale
     });
   }
 

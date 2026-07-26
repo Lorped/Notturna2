@@ -22,7 +22,7 @@
         <mat-card-content>
 
           <div class="column" style="font-size: 1.5em; font-weight: 500;">
-            Gestione oggetti
+            Gestione oggetti - Gestione completa per " {{globalstatus.cronacadescrizione}} "
           </div>
 
           <div><hr></div>
@@ -106,10 +106,10 @@
                     {{item.oggetto.fissomobile}}
                   </div>
                   <div class="column is-1">
-                    <button  mat-raised-button color="accent" (click)="modifica(item.oggetto.idoggetto, item)">Modifica</button>
+                    <button mat-raised-button color="accent" [disabled]="!puoGestireOggetto(item)" (click)="modifica(item.oggetto.idoggetto, item)">Modifica</button>
                   </div>
                   <div class="column is-1">
-                    <button  mat-raised-button color="warn" (click)="cancellaoggetto(item.oggetto.idoggetto)">Cancella</button>
+                    <button mat-raised-button color="warn" [disabled]="!puoGestireOggetto(item)" (click)="cancellaoggetto(item.oggetto.idoggetto)">Cancella</button>
                   </div>
                 </div>
                 @for (cond of item.condizioni; track cond) {

@@ -59,6 +59,8 @@ export class LoginComponent implements OnInit {
 
           if (data.admin !== '0'){
             this.globalstatus.cronacaprincipale = data.admin;
+            this.globalstatus.cronacadescrizione = data.cronacadescrizione;
+            console.log('Login admin: ' + this.globalstatus.cronacaprincipale + ' - ' + this.globalstatus.cronacadescrizione);  
             this.router.navigate(['/admin']);
           } else {
             if (data.scheda == '0' ){

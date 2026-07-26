@@ -277,6 +277,7 @@ export class Oggetto {
   domanda: string;
   r1: string;
   r2: string;
+  IDcronaca: number;
   constructor(  ) {
     this.idoggetto = 0 ;
     this.barcode = 0;
@@ -287,6 +288,7 @@ export class Oggetto {
     this.domanda = '';
     this.r1 = '';
     this.r2 = '';
+    this.IDcronaca = 0;
   }
 }
 
@@ -321,6 +323,7 @@ export class GlobalStatus {
   Last = 0;
   lastpg = 0;
   cronacaprincipale = 0;
+  cronacadescrizione = '';
 }
 
 

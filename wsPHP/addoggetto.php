@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MYSQLI//
+require_once __DIR__ . '/db2.inc.php';  //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -33,6 +33,8 @@ $barcode=rand(100000000000,999999999999);
 $nomeoggetto = mysqli_real_escape_string($db, $nomeoggetto);
 $descrizione = mysqli_real_escape_string($db, $descrizione);
 
+$cronaca = $request -> cronaca;
+
 //$nome = "lorenzo";
 //$password = "lor11ped";
 //$postdata = 1;
@@ -41,9 +43,9 @@ $descrizione = mysqli_real_escape_string($db, $descrizione);
 if ( isset($postdata) && $nomeoggetto != ""  ) {
 
   $MySql = "INSERT INTO oggetti
-  (nomeoggetto, descrizione, fissomobile, barcode)
+  (nomeoggetto, descrizione, fissomobile, barcode, IDcronaca)
   VALUES
-  ('$nomeoggetto', '$descrizione', '$fissomobile', $barcode) ";
+  ('$nomeoggetto', '$descrizione', '$fissomobile', $barcode, $cronaca) ";
 
   $Result = mysqli_query($db, $MySql);
 

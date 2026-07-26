@@ -55,11 +55,18 @@ if (isset($postdata) && $nome != "" && $password != "" ) {
 
 		$scheda = $res['x'];
 
+		if ($admin != 0) {
+			$MySql = "SELECT * FROM cronaca WHERE IDcronaca = $admin";
+			$Result = mysqli_query($db, $MySql);
+			$res = mysqli_fetch_array($Result);
+			$cronacadescrizione = $res['Descrizione'];
+		}
 
 		$out = [
 			'idutente' => $idutente,
 			'admin' => $admin ,
-			'scheda' => $scheda
+			'scheda' => $scheda,
+			'cronacadescrizione' => $cronacadescrizione
 		];
 
 		echo json_encode ($out, JSON_UNESCAPED_UNICODE);

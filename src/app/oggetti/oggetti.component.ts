@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
-import { Oggetto, Condizione, FullOggetto} from '../global';
+import { Oggetto, Condizione, FullOggetto, GlobalStatus} from '../global';
 import { Router, NavigationExtras } from '@angular/router';
 /* import { FormControl, FormGroup, Validators } from '@angular/forms'; */
 
@@ -29,16 +29,34 @@ export class OggettiComponent implements OnInit {
   ];
   fissomobile = 'F';
 
-  constructor( private adminservice: AdminService, private router: Router) { }
+  constructor( private adminservice: AdminService, private router: Router, public globalstatus: GlobalStatus) { }
 
   ngOnInit(): void {
 
     this.adminservice.listoggetti().subscribe(
       (data: any) => {
         this.listaoggetti = data.oggetti;
+
+
+
+        this.sortListaOggetti();
         // console.log(this.listaoggetti);
       }
     );
+  }
+
+  private sortListaOggetti(): void {
+    const cronacaCorrente = Number(this.globalstatus.cronacaprincipale ?? 0);
+
+    this.listaoggetti.sort((a, b) => {
+      const aPriorita = Number(a.oggetto.IDcronaca ?? 0) === cronacaCorrente ? 0 : 1;
+      const bPriorita = Number(b.oggetto.IDcronaca ?? 0) === cronacaCorrente ? 0 : 1;
+      return aPriorita - bPriorita;
+    });
+  }
+
+  puoGestireOggetto(item: FullOggetto): boolean {
+    return Number(item?.oggetto?.IDcronaca ?? 0) === Number(this.globalstatus?.cronacaprincipale ?? 0);
   }
 
   cancellaoggetto(idoggetto: number){
@@ -59,6 +77,7 @@ export class OggettiComponent implements OnInit {
         this.adminservice.listoggetti().subscribe(
           (data: any) => {
             this.listaoggetti = data.oggetti;
+            this.sortListaOggetti();
             this.nomeoggetto = '';
             this.descrizione = '';
             this.fissomobile = 'F';
