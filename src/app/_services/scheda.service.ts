@@ -18,7 +18,7 @@ export class SchedaService {
 
   putregistra( aPG: Basicpg , bg: Array<Background> , cont: Array<Contatti> ,
     discipline: Array<Disciplina> , taumaturgie: Array<Taumaturgia> , necromanzie: Array<Necromanzia> ,
-    attitudini: Array<Skill> , skill: Array<Skill> , influenze: Array<Influenze> ) {
+    attitudini: Array<Skill> , skill: Array<Skill>  ) {
 
     const idutente = sessionStorage.getItem('NotturnaUser');
 
@@ -33,7 +33,7 @@ export class SchedaService {
       necromanzie: necromanzie,
       attitudini: attitudini,
       skill: skill,
-      influenze: influenze
+      //influenze: influenze
     });
   }
 

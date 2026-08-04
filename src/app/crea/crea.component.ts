@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
-import { Clan, Status, Background, Contatti, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Influenze} from '../global';
+import { Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class CreaComponent implements OnInit {
 
-  isLinear = true;  // FALSE SOLO PER TEST !!!!!
+  isLinear = false;  // FALSE SOLO PER TEST !!!!!
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
@@ -32,9 +32,12 @@ export class CreaComponent implements OnInit {
   maxBG = 6;            /* Numer BG disponibili */
 
   cont: Array<Contatti> = [];
+  alleati: Array<Alleati> = [];
 
   sommaCont = 0 ;
   maxCont = 0 ;
+  sommaAlleati = 0 ;
+  maxAlleati = 0 ;
 
   creaForm = new UntypedFormGroup ({
     nomepersonaggio: new UntypedFormControl('', [
@@ -88,7 +91,10 @@ export class CreaComponent implements OnInit {
   numDisc = 5 ;             /* punti disciplina  */
   maxDisc = 3 ;             /* max livello disciplina  */
 
+  bp = 1;                    /* blood potency / controllo del sangue */
+  
   discOK = false;
+
 
 
   matriceMaxDisc: number[][] = [
@@ -120,6 +126,7 @@ export class CreaComponent implements OnInit {
   maxAttitudini = 1;
 
   skill: Array<Skill> = [];
+  skillother: Array<Skill> = [];
   attitudini: Array<Skill> = [];
 
 
@@ -127,7 +134,7 @@ export class CreaComponent implements OnInit {
   baseFDVmax = 2;           /* Dipende da Status */
   FDVadd = 0;
 
-  baseumanita = 5;          /* Punteggio base */
+  baseumanita = 6;          /* Punteggio base */
   umanitaadd = 0;
 
   freepoint = 2;        /* da spendere su FdV o umanità */
@@ -135,10 +142,7 @@ export class CreaComponent implements OnInit {
 
   sentieroPG = '1';       /* umanità */
 
-  influenze: Array<Influenze> = [];
-  maxInfluenze = 3;            /* Numer Influenze disponibili */
-  sommaInfluenze = 0;
-  influOK = false;
+
 
   constructor(private schedaservice: SchedaService , private router: Router) { }
 
@@ -161,9 +165,13 @@ export class CreaComponent implements OnInit {
         this.listaNecro = data.necromanzie;
         this.disciplinevili = data.disciplinevili;
         this.skill = data.skill;
+
+        //console.log('skill: ' + JSON.stringify(this.skill));
+        this.skillother = data.skillother;
         this.attitudini = data.attitudini;
+
         this.sentieri = data.sentieri;
-        this.influenze = data.influenze;
+
 
         for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
             this.bg[j].livello = this.bg[j].MinIniziale;
@@ -175,6 +183,10 @@ export class CreaComponent implements OnInit {
 
     for ( let j = 0 ; j <3 ; j++) {               // Inizializzo i contatti
       this.cont[j] = new Contatti();
+    }
+
+    for ( let j = 0 ; j <3 ; j++) {               // Inizializzo gli alleati
+      this.alleati[j] = new Alleati();
     }
 
     this.attributi[0] = new Attributo ( 0, 'Forza'        , 'F' , 1 );
@@ -225,57 +237,38 @@ export class CreaComponent implements OnInit {
       case '0':
         this.maxBG = 5;
         this.numDisc = 4;
-        this.baseFDVmax = 1;
-        this.maxInfluenze = 0;
         break;
       case '1':
         this.maxBG = 6;
         this.numDisc = 5;
-        this.baseFDVmax = 2;
-        this.maxInfluenze = 3;
         break;
       case '2':
         this.maxBG = 8;
         this.numDisc = 6;
-        this.baseFDVmax = 3;
-        this.maxInfluenze = 9;
         break;
       case '3':
         this.maxBG = 10;
         this.numDisc = 7;
-        this.baseFDVmax = 4;
-        this.maxInfluenze = 15;
         break;
       case '4':
         this.maxBG = 15;
         this.numDisc = 10;
-        this.baseFDVmax = 5;
-        this.maxInfluenze = 20;
         break;
       case '5':
         this.maxBG = 25;
         this.numDisc = 15;
-        this.baseFDVmax = 7;
-        this.maxInfluenze = 24;
         break;
       default:
         this.maxBG = 6;
         this.numDisc = 5;
-        this.baseFDVmax = 2;
-        this.maxInfluenze = 15;
         break;
-        this.maxInfluenze = 3;
-        break;
+
     }
     this.changeMaxDisc();
     this.changeNumSkill();
     this.checkbg () ;
-    if (this.sommaInfluenze != this.maxInfluenze) {
-      this.influOK = false;
-    }
-    if (this.statusPG!.value == 0){
-      this.influOK = true;
-    }
+
+
   }
 
   addbg(bg: number){
@@ -291,6 +284,10 @@ export class CreaComponent implements OnInit {
     }
     if ( bg == 77 ) {     /* contatti */
       this.maxCont++;
+    }
+    if ( bg == 88 ) {     /* alleati */
+      this.maxAlleati++;
+      console.log('maxAlleati: ' + this.maxAlleati);
     }
 
     this.checkbg () ;
@@ -310,6 +307,9 @@ export class CreaComponent implements OnInit {
     if ( bg == 77 ) {    /* contatti */
       this.maxCont--;
     }
+    if ( bg == 88 ) {    /* alleati */
+      this.maxAlleati--;
+    }
 
     this.checkbg () ;
   }
@@ -318,6 +318,12 @@ export class CreaComponent implements OnInit {
   addcont(cc: number){
     this.cont[cc].livello++;
     this.sommaCont++;
+    this.bgOK = false ;
+    this.checkbg () ;
+  }
+  addalleato(cc: number){
+    this.alleati[cc].livello++;
+    this.sommaAlleati++;
     this.bgOK = false ;
     this.checkbg () ;
   }
@@ -331,6 +337,18 @@ export class CreaComponent implements OnInit {
     this.bgOK = false ;
     this.checkbg () ;
   }
+
+  minalleato(cc: number){
+    this.alleati[cc].livello--;
+    if (this.alleati[cc].livello == 0) {
+      this.alleati[cc].nomealleato = '';
+    }
+    this.sommaAlleati--;
+    this.bgOK = false ;
+    this.checkbg () ;
+  }
+
+
 
   checkbg () {
     let ok = false;
@@ -349,6 +367,18 @@ export class CreaComponent implements OnInit {
         ok = false;
       }
     }
+    if (this.maxAlleati > 0) {
+
+      if (this.alleati[0].livello > 0 && this.alleati[0].nomealleato == '') {
+        ok = false;
+      }
+      if (this.alleati[1].livello > 0 && this.alleati[1].nomealleato == '') {
+        ok = false;
+      }
+      if (this.alleati[2].livello > 0 && this.alleati[2].nomealleato == '') {
+        ok = false;
+      }
+    }
     this.bgOK = ok;
   }
 
@@ -362,6 +392,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 2;
         this.maxAttr = 9;
         this.numAttitudini = 4;
+        this.bp = 1;
         break;
       case 13:
         this.attr0 = 5;
@@ -369,6 +400,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 2;
         this.maxAttr = 11;
         this.numAttitudini = 4;
+        this.bp = 1;
         break;
       case 12:
         this.attr0 = 6;
@@ -376,6 +408,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 2;
         this.maxAttr = 12;
         this.numAttitudini = 4;
+        this.bp = 1;
         break;
       case 11:
         this.attr0 = 6;
@@ -383,6 +416,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 2;
         this.maxAttr = 13;
         this.numAttitudini = 4;
+        this.bp = 1;
         break;
       case 10:
         this.attr0 = 7;
@@ -390,6 +424,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 3;
         this.maxAttr = 15;
         this.numAttitudini = 5;
+        this.bp = 1;
         break;
       case 9:
         this.attr0 = 7;
@@ -397,6 +432,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 4;
         this.maxAttr = 17;
         this.numAttitudini = 7;
+        this.bp = 2;
         break;
       case 8:
         this.attr0 = 8;
@@ -404,6 +440,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 4;
         this.maxAttr = 18;
         this.numAttitudini = 8;
+        this.bp = 2;
         break;
       default:
         this.attr0 = 5;
@@ -411,6 +448,7 @@ export class CreaComponent implements OnInit {
         this.attr2 = 2;
         this.maxAttr = 11;
         this.numAttitudini = 4;
+        this.bp = 1;
         break;
     }
     this.changeMaxDisc();
@@ -611,22 +649,6 @@ export class CreaComponent implements OnInit {
     this.sommaDisc = 0 ;
     this.discOK = false;
 
-    // REST Influenze per evitare problemi
-    if (this.clanPG!.value != 3 ) {
-
-      let xx = this.influenze.find(i => i.idinfluenza == 10);
-      if (xx) {
-
-        //console.log(xx);
-        if (xx.livello > 0 ) {
-          this.sommaInfluenze = this.sommaInfluenze - xx.livello ;
-          xx.livello = 0 ;
-          this.influOK = false;
-        }
-        
-
-      }
-    }
 
   }
 
@@ -745,10 +767,16 @@ export class CreaComponent implements OnInit {
     }
   }
 
+    // SKILL con SUBSKILL
   addsk(sk: number) {
     for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         this.skill[j].livello++;
+
+        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
+          this.skill[j].subskill2[k].max = this.skill[j].livello;
+        }
+
       }
     }
     this.sommaSkill++;
@@ -758,11 +786,23 @@ export class CreaComponent implements OnInit {
     for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         this.skill[j].livello--;
+
+        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
+          this.skill[j].subskill2[k].max = this.skill[j].livello;
+          if (this.skill[j].subskill2[k].livello > this.skill[j].subskill2[k].max) {  
+            this.skill[j].subskill2[k].livello = this.skill[j].subskill2[k].max;
+            this.sommaSkill--;
+          }
+        }
       }
     }
     this.sommaSkill--;
     this.checkSkill();
   }
+
+
+  // ATTITUDINI
+
   addsk2(sk: number) {
     for (let j = 0 ; j < this.attitudini.length ; j++ ) {
       if ( this.attitudini[j].idskill === sk) {
@@ -781,6 +821,63 @@ export class CreaComponent implements OnInit {
     this.sommaAttitudini--;
     this.checkSkill();
   }
+
+// SUBSKILL
+
+  addsk3(sk: number, ssk: number){
+    console.log('addsk3: ' + sk + ' - ' + ssk);
+    for (let j = 0 ; j < this.skill.length ; j++ ) {
+      if ( this.skill[j].idskill === sk) {
+        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
+          if (this.skill[j].subskill2[k].idskill === ssk) {
+            this.skill[j].subskill2[k].livello++;
+
+              this.sommaSkill++;
+              this.checkSkill();
+          }
+        }
+      }
+    }
+  }
+  minsk3(sk: number, ssk: number){
+    console.log('minsk3: ' + sk + ' - ' + ssk);
+    for (let j = 0 ; j < this.skill.length ; j++ ) {
+      if ( this.skill[j].idskill === sk) {
+        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
+          if (this.skill[j].subskill2[k].idskill === ssk) {
+            this.skill[j].subskill2[k].livello--;
+
+              this.sommaSkill--;
+              this.checkSkill();
+          }
+        }
+      }
+    }
+  }
+
+// OTHERSKILL
+  addsk4(sk: number){
+    console.log('addsk4: ' + sk);
+    for (let j = 0 ; j < this.skillother.length ; j++ ) {
+      if ( this.skillother[j].idskill === sk) {
+        this.skillother[j].livello++;
+      }
+    }
+    this.sommaSkill++;
+    this.checkSkill();
+  }
+  minsk4(sk: number){
+    console.log('minsk4: ' + sk);
+        for (let j = 0 ; j < this.skillother.length ; j++ ) {
+      if ( this.skillother[j].idskill === sk) {
+        this.skillother[j].livello--;
+      }
+    }
+    this.sommaSkill--;
+    this.checkSkill();
+  }
+
+
 
   checkSkill() {
     this.skillOK = false;
@@ -860,7 +957,7 @@ export class CreaComponent implements OnInit {
     aPG.rifugio = this.rifugio!.value;
     aPG.zona = this.zona!.value;
 
-    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill , this.influenze )
+    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill  )
       .subscribe(
         data => {
           //  OK!
@@ -876,6 +973,9 @@ export class CreaComponent implements OnInit {
   }
 
 
+
+
+  /*
   addinfl(infl: number){
     this.influOK = false ;
     for (let j = 0; j < this.influenze.length; j++ ) {
@@ -888,8 +988,9 @@ export class CreaComponent implements OnInit {
       this.influOK = true;
     }
   }
+    */
 
-
+  /*
   mininfl(infl: number){
     this.influOK = false ;
     for (let item of this.influenze ) {
@@ -904,5 +1005,6 @@ export class CreaComponent implements OnInit {
       this.influOK = true;
     }
   }
+  */
 
 }

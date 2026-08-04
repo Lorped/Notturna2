@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php');  //MYSQLI //
+require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
 
 
@@ -35,21 +35,50 @@ while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 }
 
 $statuscama = [];
-$MySql = "SELECT idstatus, status FROM statuscama ";
+$MySql = "SELECT idstatus, status, bgbase FROM statuscama ";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$statuscama[] =$res;
 }
 
 $skill = [];
-$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 0 ORDER BY nomeskill";
+$MySql = "SELECT *  FROM skill_main WHERE tipologia = 0 and subskill = 0 ORDER BY nomeskill";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
-	$skill[] =$res;
+	$idskill =$res['idskill'];
+	$nomeskill =$res['nomeskill'];
+	$subskill = 0;
+	$livello = 0;
+	$tipologia = 0;
+	$susbkill2 = [];
+
+	$MySql2 = "SELECT * , 0 as livello , 0 as max  FROM skill_main WHERE tipologia = 0 and subskill = $idskill ORDER BY nomeskill";
+	$Result2 = mysqli_query($db, $MySql2);
+	while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ){
+		$susbkill2[] = $res2;
+	}
+
+
+	$skill[] = [
+		'idskill' => $idskill,
+		'nomeskill' => $nomeskill,
+		'livello' => $livello,
+		'subskill' => $subskill,
+		'tipologia' => $tipologia,
+		'subskill2' => $susbkill2
+	];
 }
 
+$skillother = [];
+$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 1  ORDER BY nomeskill";
+$Result = mysqli_query($db, $MySql);
+while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
+	$skillother[] =$res;
+}
+
+
 $attitudini = [];
-$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 1";
+$MySql = "SELECT * , 0 as livello FROM skill_main WHERE tipologia = 2 ORDER BY nomeskill";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$attitudini[] =$res;
@@ -83,23 +112,26 @@ while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$disciplinevili[] =$res;
 }
 
+/*
 $influenze = [];
 $MySql = "SELECT *, 0 as livello, 5 as MaxIniziale , 0 as MinIniziale FROM influenze_main ";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$influenze[] =$res;
 }
+*/
 
 $out = [
   "clan" => $clan ,
   "statuscama" => $statuscama ,
   "skill" => $skill ,
+  "skillother" => $skillother ,
 	"attitudini" => $attitudini ,
   "sentieri" => $sentieri,
   "taumaturgie" => $taumaturgie,
   "necromanzie" => $necromanzie,
 	"background" => $background,
-	"influenze" => $influenze,
+	//"influenze" => $influenze,
 	"disciplinevili" => $disciplinevili
 ];
 

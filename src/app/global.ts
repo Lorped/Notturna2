@@ -90,6 +90,13 @@ export class Contatti {
 }
 
 @Injectable()
+export class Alleati {
+  public idalleato = 0;
+  public nomealleato = '';
+  public livello = 0;
+}
+
+@Injectable()
 export class Pregio {
   public idpregio = 0;
   public nomepregio = '';
@@ -127,11 +134,23 @@ export class FullDisciplina {
 }
 
 @Injectable()
+export class SubSkill {
+  public idskill = 0;
+  public nomeskill = '';
+  public subskill = 0;
+  public livello = 0;
+  public tipologia = 0;
+  public max = 0;
+}
+
+@Injectable()
 export class Skill {
   public idskill = 0;
   public nomeskill = '';
+  public subskill = 0;
   public livello = 0;
   public tipologia = 0;
+  public subskill2: Array<SubSkill> = [];
 }
 
 @Injectable()
@@ -212,6 +231,7 @@ export class Personaggio {
 
   public listaBackground: Array<Background> ;
   public listaContatti: Array<Contatti> ;
+  public listaAlleati: Array<Alleati> ;
   public listaDiscipline: Array<Disciplina> ;
   public listaSkill: Array<Skill>;
   public listaAbilita: Array<Abilita>;
@@ -223,6 +243,7 @@ export class Personaggio {
     this.aPG = new Basicpg() ;
     this.listaBackground = [];
     this.listaContatti = [];
+    this.listaAlleati = [];
     this.listaDiscipline = [];
     this.listaSkill = [];
     this.listaAbilita = [];
@@ -243,6 +264,7 @@ export class Clan {
 export class Status {
   idstatus = 0;
   status = '';
+  bgbase = 0;
 }
 
 /* @Injectable() */

@@ -3,7 +3,7 @@
   font-size: 0.75em;
 }
 .half {
-  width: 50%;
+  width: 40%;
 }
 .all {
     text-align: left;
@@ -19,6 +19,7 @@ mat-card {
   /* max-width: 600px; */
   margin: 1em auto;
   text-align: center;
+  /*width: 100%;*/
 }
 
 mat-checkbox {

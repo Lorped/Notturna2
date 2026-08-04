@@ -92,7 +92,7 @@
           </form>
         </mat-step>
 
-        <mat-step errorMessage="Distribuzione non corretta" [completed]= "bgOK && influOK" [hasError]="(!bgOK && sommaBG!=0) || (!influOK && sommaInfluenze!=0)" >
+        <mat-step errorMessage="Distribuzione non corretta" [completed]= "bgOK " [hasError]="(!bgOK && sommaBG!=0) " >
           <ng-template matStepLabel>Background</ng-template>
 
           <mat-card>
@@ -199,33 +199,92 @@
           </div>
         }
 
-        <mat-card>
-          <mat-card-content>
-            Punti Influenza da assegnare: {{maxInfluenze - sommaInfluenze}}
-          </mat-card-content>
-        </mat-card>
-        <div class="bgcard-container">
-          @for (b of influenze; track b) {
-            <mat-card class="bgcard">
-              <mat-card-content>
-                <div class="column">
-                  <!--  <div> -->
-                  {{b.nomeinfluenza}}
-                  <button  class="btn  btn-xs" (click)="mininfl(b.idinfluenza)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
-                  @for (i of b.MaxIniziale | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
+        @if (maxAlleati>0) {
+          <div class="bgcard-container">
+            <table>
+              <tr>
+                <td colspan="3">
+                  <span class="white small">Inserire una descrizione succinta (p.es. "Maresciallo CC", "Baby Gang", "Finanziere XYZ" ecc. ) degli e il loro valore.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-card>
+                    <mat-card-content>
+                      <mat-form-field>
+                        <input matInput placeholder="Alleato 1" [(ngModel)]="alleati[0].nomealleato" (change)="checkbg()" name="a0" [disabled]="alleati[0].livello==0">
+                      </mat-form-field>
+                      @if (alleati[0].nomealleato==''&& alleati[0].livello>0) {
+                        <mat-error>Inserire la descrizione</mat-error>
+                      }
+                      <div class = "column">
+                        <button  class="btn  btn-xs" (click)="minalleato(0)" [disabled]="alleati[0].livello<1"><i class="fa fa-minus"></i></button>
+                        @for (i of 5 | times ; track i; let ix = $index) {
+                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > alleati[0].livello , 'dred': ix < alleati[0].livello }"></i>
+                        }
+                        <button class="btn  btn-xs" (click)="addalleato(0)" [disabled]="alleati[0].livello>4||sommaAlleati>=maxAlleati"><i class="fa fa-plus"></i></button>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </td>
+                <td>
+                  <mat-card>
+                    <mat-card-content>
+                      <mat-form-field>
+                        <input matInput placeholder="Alleato 2" [(ngModel)]="alleati[1].nomealleato" (change)="checkbg()" name="a1" [disabled]="alleati[1].livello==0">
+                      </mat-form-field>
+                      @if (alleati[1].nomealleato==''&& alleati[1].livello>0) {
+                        <mat-error>Inserire la descrizione</mat-error>
+                      }
+                      <div class = "column">
+                        <button  class="btn  btn-xs" (click)="minalleato(1)" [disabled]="alleati[1].livello<1"><i class="fa fa-minus"></i></button>
+                        @for (i of 5 | times ; track i; let ix = $index) {
+                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > alleati[1].livello , 'dred': ix < alleati[1].livello }"></i>
+                        }
+                        <button class="btn  btn-xs" (click)="addalleato(1)" [disabled]="alleati[1].livello>4||sommaAlleati>=maxAlleati"><i class="fa fa-plus"></i></button>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </td>
+                <td>
+                  <mat-card>
+                    <mat-card-content>
+                      <mat-form-field>
+                        <input matInput placeholder="Alleato 3" [(ngModel)]="alleati[2].nomealleato" (change)="checkbg()" name="a2" [disabled]="alleati[2].livello==0">
+                      </mat-form-field>
+                      @if (alleati[2].nomealleato==''&& alleati[2].livello>0) {
+                        <mat-error>Inserire la descrizione!</mat-error>
+                      }
+                      <div class="column">
+                        <button  class="btn  btn-xs" (click)="minalleato(2)" [disabled]="alleati[2].livello<1"><i class="fa fa-minus"></i></button>
+                        @for (i of 5 | times ; track i; let ix = $index) {
+                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > alleati[2].livello , 'dred': ix < alleati[2].livello }"></i>
+                        }
+                        <button class="btn  btn-xs" (click)="addalleato(2)" [disabled]="alleati[2].livello>4||sommaAlleati>=maxAlleati"><i class="fa fa-plus"></i></button>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  @if (this.sommaAlleati != this.maxAlleati) {
+                    <mat-error>La somma dei singoli alleati deve essere pari al valore del Background</mat-error>
                   }
-                  <button class="btn  btn-xs" (click)="addinfl(b.idinfluenza)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaInfluenze>=maxInfluenze||(this.clanPG!.value!=3 && b.idinfluenza==10)"><i class="fa fa-plus"></i></button>
-                <!--  </div> -->
-              </div>
-            </mat-card-content>
-          </mat-card>
+                </td>
+              </tr>
+            </table>
+          </div>
         }
-      </div>
+
+
+
+
+
 
       <mat-card>
         <div>
-          <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK || !influOK" >Prosegui</button>
+          <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK " >Prosegui</button>
         </div>
       </mat-card>
       <mat-card >
@@ -541,18 +600,60 @@
               Conoscenze -- Punti da distribuire: {{ numSkill - sommaSkill }}
             </mat-card-content>
           </mat-card>
-          <mat-card>
-            <mat-grid-list cols="4" rowHeight="3em">
-              @for (sk of skill; track sk) {
+
+
+            <mat-card>
+            <mat-grid-list cols="3" rowHeight="3em">
+              @for (sk of skillother; track sk) {
                 <mat-grid-tile>
-                  <div class="half all ml ">{{sk.nomeskill}}</div>
-                  <div class="half mr ">
-                    <button  class="btn  btn-xs" (click)="minsk(sk.idskill)" [disabled]="sk.livello<1"><i class="fa fa-minus"></i></button>
+                  <div class="half all ml">{{sk.nomeskill}}</div>
+                  <div class="half mr">
+                    <button  class="btn  btn-xs" (click)="minsk4(sk.idskill)" [disabled]="sk.livello<1"><i class="fa fa-minus"></i></button>
                     @for (i of 5 | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello }"></i>
                     }
-                    <button class="btn  btn-xs" (click)="addsk(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
+                    <button class="btn  btn-xs" (click)="addsk4(sk.idskill)" [disabled]="sk.livello>=4||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
                   </div>
+                </mat-grid-tile>
+              }
+            </mat-grid-list>
+          </mat-card>
+
+
+
+
+          <mat-card style="width: 100%">
+            <mat-grid-list cols="4" rowHeight="15em">
+              @for (sk of skill; track sk) {
+                <mat-grid-tile>
+                  <mat-card style="width: 100%">
+                    <mat-card-content >
+                    
+                      <div style="display:flex; width:100%">
+                        <div class="half all ml ">{{sk.nomeskill}}</div>
+                        <div class="half mr ">
+                        <button  class="btn  btn-xs" (click)="minsk(sk.idskill)" [disabled]="sk.livello<1"><i class="fa fa-minus"></i></button>
+                          @for (i of 5 | times ; track i; let ix = $index) {
+                            <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello }"></i>
+                          }
+                          <button class="btn  btn-xs" (click)="addsk(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
+                        </div>
+                      </div>
+                  
+                    @for (ssk of sk.subskill2; track ssk) {
+                      <div style="display:flex; width:100%">
+                        <div class="half all ml ">-- {{ssk.nomeskill}}</div>
+                        <div class="half mr ">
+                          <button  class="btn  btn-xs" (click)="minsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello<1"><i class="fa fa-minus"></i></button>
+                            @for (i of 5 | times ; track i; let ix = $index) {
+                              <i class="fa fa-circle" [ngClass]="{'white': ix+1 > ssk.livello , 'dred': ix < ssk.livello }"></i>
+                            }
+                          <button class="btn  btn-xs" (click)="addsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello>=sk.livello"><i class="fa fa-plus"></i></button>
+                        </div>
+                      </div>
+                    }
+                    </mat-card-content>
+                  </mat-card>
                 </mat-grid-tile>
               }
             </mat-grid-list>
