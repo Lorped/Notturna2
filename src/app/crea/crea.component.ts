@@ -5,6 +5,18 @@ import { Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Tau
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
+
+
+  interface ListaDisciplineVie  {
+    disc_vie: string; // D o V
+    id: number;
+    nome: string;
+    focus: number;
+  }
+
+
+
+
 @Component({
     selector: 'app-crea',
     templateUrl: './crea.component.html',
@@ -15,7 +27,12 @@ import { Router } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
+
+
 export class CreaComponent implements OnInit {
+
+  listaDisciplineVie: ListaDisciplineVie[] = [];
+  selectedFocusIndex = -1;
 
   isLinear = false;  // FALSE SOLO PER TEST !!!!!
 
@@ -131,16 +148,18 @@ export class CreaComponent implements OnInit {
 
 
   sentieri: Array<Sentiero> = [];
-  baseFDVmax = 2;           /* Dipende da Status */
-  FDVadd = 0;
+  baseFDVmax = 2;           /* Calcolare */
+
 
   baseumanita = 6;          /* Punteggio base */
-  umanitaadd = 0;
 
-  freepoint = 2;        /* da spendere su FdV o umanità */
+
+
   freeOK = false;
 
   sentieroPG = '1';       /* umanità */
+
+ 
 
 
 
@@ -267,7 +286,7 @@ export class CreaComponent implements OnInit {
     this.changeMaxDisc();
     this.changeNumSkill();
     this.checkbg () ;
-
+    this.fixattr();
 
   }
 
@@ -291,6 +310,7 @@ export class CreaComponent implements OnInit {
     }
 
     this.checkbg () ;
+
   }
 
   minbg(bg: number){
@@ -312,6 +332,7 @@ export class CreaComponent implements OnInit {
     }
 
     this.checkbg () ;
+
   }
 
 
@@ -380,6 +401,7 @@ export class CreaComponent implements OnInit {
       }
     }
     this.bgOK = ok;
+    this.fixattr();
   }
 
   changeGen(bggen: number) {
@@ -454,6 +476,9 @@ export class CreaComponent implements OnInit {
     this.changeMaxDisc();
     this.changeNumSkill();
     this.checkattr();
+
+
+
   }
 
   minattr(id: number) {
@@ -491,7 +516,12 @@ export class CreaComponent implements OnInit {
       this.attrOK = true;
     }
 
+    console.log ("saggezza: " + this.attributi[7].Livello + " prontezza: " + this.attributi[8].Livello);
+    this.baseFDVmax = Math.ceil((this.attributi[7].Livello + this.attributi[8].Livello)/2);
+
     this.maxAttitudini = this.attributi[3].Livello;  /* DESTREZZA */
+
+    this.fixattr();
 
   }
 
@@ -678,10 +708,80 @@ export class CreaComponent implements OnInit {
 
     this.maxDisc = this.matriceMaxDisc [indexStat][indexGen];
 
+    let xmaxDisc = 3;
+
+    if ( this.statusPG!.value > 1 ) {
+      this.bp=4;
+    }
+
+    switch( this.bp){
+      case 0:
+      case 1:
+        xmaxDisc = 3;
+        break;
+      case 2:
+        xmaxDisc = 4;
+        break;
+      case 3:
+      case 4:
+        xmaxDisc = 5;
+        break;
+      case 5:
+        xmaxDisc = 6;
+        break;
+      case 6:
+        xmaxDisc = 7;
+        break;
+      case 7:
+        xmaxDisc = 8;
+        break;
+      case 8:
+      case 9:
+        xmaxDisc = 9;
+        break;
+      case 10:
+        xmaxDisc = 10;
+        break; 
+      default:
+        xmaxDisc = 3;
+        break;  
+    }
+
+    if ( this.maxDisc > xmaxDisc ) {
+      this.maxDisc = xmaxDisc;
+    }
+
     this.checkDisc();
   }
 
   checkDisc() {
+
+    this.listaDisciplineVie = [];
+
+    for ( let j = 0 ; j < 3 ; j++) {
+      if (this.discipline[j].livello > 0 && this.discipline[j].iddisciplina != 98 && this.discipline[j].iddisciplina != 99 ) {
+        const disc: ListaDisciplineVie = { disc_vie: 'D', id: this.discipline[j].iddisciplina, nome: this.discipline[j].nomedisc, focus: 0  };
+        this.listaDisciplineVie.push(disc);
+      }
+    }
+    for ( let j = 0 ; j < this.necromanzie.length ; j++) {
+      if (this.necromanzie[j].livello > 0  ) {
+        const disc: ListaDisciplineVie = { disc_vie: 'N', id: j-1, nome: this.listaNecro[j].nomenecro, focus: 0  };
+        this.listaDisciplineVie.push(disc);
+      }
+    }
+    for ( let j = 0 ; j < this.taumaturgie.length ; j++) {
+      if (this.taumaturgie[j].livello > 0  ) {
+        const disc: ListaDisciplineVie = { disc_vie: 'T', id: j-1, nome: this.listaTaum[j].nometaum, focus: 0  };
+        this.listaDisciplineVie.push(disc);
+      }
+    }
+
+
+
+
+
+
     this.discOK = false;
     if ( this.sommaDisc === this.numDisc ) {
       this.discOK = true;
@@ -741,6 +841,13 @@ export class CreaComponent implements OnInit {
     }
     this.sommaDisc++;
     this.checkDisc();
+  }
+
+  setFocusItem(index: number) {
+    this.selectedFocusIndex = index;
+    this.listaDisciplineVie.forEach((item, idx) => {
+      item.focus = idx === index ? 1 : 0;
+    });
   }
 
   gen14() {
@@ -825,7 +932,7 @@ export class CreaComponent implements OnInit {
 // SUBSKILL
 
   addsk3(sk: number, ssk: number){
-    console.log('addsk3: ' + sk + ' - ' + ssk);
+    //console.log('addsk3: ' + sk + ' - ' + ssk);
     for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
@@ -840,7 +947,7 @@ export class CreaComponent implements OnInit {
     }
   }
   minsk3(sk: number, ssk: number){
-    console.log('minsk3: ' + sk + ' - ' + ssk);
+    //console.log('minsk3: ' + sk + ' - ' + ssk);
     for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
@@ -900,6 +1007,7 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
 
+  /*
   addfdv() {
     this.FDVadd++;
     this.freepoint--;
@@ -929,6 +1037,7 @@ export class CreaComponent implements OnInit {
       this.freeOK = true;
     }
   }
+  */
 
   salvascheda() {
     let aPG = new Basicpg();
@@ -948,11 +1057,11 @@ export class CreaComponent implements OnInit {
     aPG.saggezza = this.attributi[7].Livello ;
     aPG.prontezza = this.attributi[8].Livello ;
 
-    aPG.fdv = this.baseFDVmax + this.FDVadd ;
+    aPG.fdv = Math.ceil((this.attributi[7].Livello + this.attributi[8].Livello)/2);
     aPG.idstatus = this.statusPG!.value ;
 
     aPG.idsentiero = Number(this.sentieroPG) ;
-    aPG.valsentiero = this.baseumanita + this.umanitaadd ;
+    aPG.valsentiero = this.baseumanita  ;
 
     aPG.rifugio = this.rifugio!.value;
     aPG.zona = this.zona!.value;
@@ -973,7 +1082,33 @@ export class CreaComponent implements OnInit {
   }
 
 
+  fixattr() {
+    //console.log('fixattr');
+    this.changeNumSkill();
+    //console.log('old NS', this.numSkill);
+    this.numAttitudini = 4;
+    if ( this.generazionePG == 10 ) {
+      this.numAttitudini = 5;
+    } else if ( this.generazionePG == 9 ) {
+      this.numAttitudini = 7;
+    } else if ( this.generazionePG == 8 ) {
+      this.numAttitudini = 8;
+    }
+    if ( this.attributi[3].Livello == 1 ) {
+      //console.log('dex 1 ');
+      if (this.generazionePG == 9){
+        this.numAttitudini = 6;
+        this.numSkill = this.numSkill + 1;       
+        //console.log('new NS', this.numSkill);
+      }
+      if (this.generazionePG == 8){
+        this.numAttitudini = 6;
+        this.numSkill = this.numSkill + 2;       
+        //console.log('new NS', this.numSkill);
+      }
 
+    }
+  }
 
   /*
   addinfl(infl: number){

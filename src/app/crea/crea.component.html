@@ -354,7 +354,8 @@
             <mat-grid-list cols="3" rowHeight="6:1">
               @for (dd of discipline; track dd) {
                 <mat-grid-tile>
-                  <div class="half all ml">{{dd.nomedisc}}</div>
+                  <div class="half all ml">
+                    {{dd.nomedisc}}</div>
                   <div class="half mr">
                     @if (dd.iddisciplina!=99 && dd.iddisciplina!=98) {
                       <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<1"><i class="fa fa-minus"></i></button>
@@ -672,11 +673,23 @@
           </mat-card>
         </mat-step >
 
-        <mat-step  errorMessage="Distribuzione non corretta" [completed]=freeOK [hasError]="(!freeOK && freepoint!=2)">
-          <ng-template matStepLabel>FDV e Sentieri</ng-template>
+        <mat-step  errorMessage="Distribuzione non corretta" [completed]=freeOK [hasError]="(!freeOK )">
+          <ng-template matStepLabel>Focus, Pregi/Difetti ecc...</ng-template>
           <mat-card>
             <mat-card-content>
-              Punti liberi: {{freepoint }}
+              Focalizzazione: rappresenta un’elevata maestria in una determinata Disciplina, Via Taumaturgica o Via Necromantica. La scelta deve ricadere su una sola Disciplina o Via e rimane fissa. 
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-content>
+              <mat-form-field appearance="fill">
+                <mat-label>Focus</mat-label>
+                <mat-select [value]="selectedFocusIndex" (selectionChange)="setFocusItem($event.value)">
+                  @for (item of listaDisciplineVie; track item; let idx = $index) {
+                    <mat-option [value]="idx">{{item.disc_vie}} - {{item.nome}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
             </mat-card-content>
           </mat-card>
           <mat-card>
@@ -684,29 +697,31 @@
               <mat-grid-tile>
                 <div class="half all ml ">Forza di Volontà</div>
                 <div class="half mr ">
-                  <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="FDVadd==0"><i class="fa fa-minus"></i></button>
+                  <!-- <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="FDVadd==0"><i class="fa fa-minus"></i></button> -->
+
                   @for (i of 10 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseFDVmax+FDVadd , 'dred': ix < baseFDVmax+FDVadd }"></i>
+                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseFDVmax , 'dred': ix < baseFDVmax }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="addfdv()" [disabled]="baseFDVmax+FDVadd>9||freepoint==0"><i class="fa fa-plus"></i></button>
+                  <!--  <button class="btn  btn-xs" (click)="addfdv()" [disabled]="baseFDVmax+FDVadd>9||freepoint==0"><i class="fa fa-plus"></i></button> -->
                 </div>
               </mat-grid-tile>
               <mat-grid-tile>
                 <div class="half all ml ">Umanità / Sentiero</div>
                 <div class="half mr ">
-                  <button  class="btn  btn-xs" (click)="minuma()" [disabled]="umanitaadd==0"><i class="fa fa-minus"></i></button>
+                  <!-- <button  class="btn  btn-xs" (click)="minuma()" [disabled]="umanitaadd==0"><i class="fa fa-minus"></i></button> -->
                   @for (i of 10 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseumanita+umanitaadd , 'dred': ix < baseumanita+umanitaadd }"></i>
+                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseumanita , 'dred': ix < baseumanita }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="adduma()" [disabled]="baseumanita+umanitaadd>9||freepoint==0"><i class="fa fa-plus"></i></button>
+                  <!-- <button class="btn  btn-xs" (click)="adduma()" [disabled]="baseumanita+umanitaadd>9||freepoint==0"><i class="fa fa-plus"></i></button> -->
                 </div>
               </mat-grid-tile>
             </mat-grid-list>
           </mat-card>
+          
           <mat-card>
             <mat-card-content>
               <mat-label>Sentiero</mat-label>
-              <mat-select  [disabled]="(baseFDVmax+FDVadd)<4" [(value)]="sentieroPG">
+              <mat-select  [disabled]="statusPG!.value<3" [(value)]="sentieroPG">
                 @for (i of sentieri; track i) {
                   <mat-option [value]="i.idsentiero">{{i.sentiero}}</mat-option>
                 }

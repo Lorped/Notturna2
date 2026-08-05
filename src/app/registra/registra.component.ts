@@ -21,7 +21,7 @@ export class RegistraComponent implements OnInit {
   registrationForm = new UntypedFormGroup ({
     regname: new UntypedFormControl('', [
       Validators.required,
-      Validators.pattern(/.*[^ ].*/),
+      Validators.pattern(/^\S+$/),
       // ,
       // Validators.pattern('^[A-Za-zàèìòù \']+$')
     ] , [
