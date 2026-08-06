@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {  Background, Contatti, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, Influenze} from '../global';
+import {  Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, Influenze} from '../global';
 
 
 
@@ -16,9 +16,9 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getregistra.php' );
   }
 
-  putregistra( aPG: Basicpg , bg: Array<Background> , cont: Array<Contatti> ,
+  putregistra( aPG: Basicpg , bg: Array<Background> , cont: Array<Contatti> , alleati: Array<Alleati>,
     discipline: Array<Disciplina> , taumaturgie: Array<Taumaturgia> , necromanzie: Array<Necromanzia> ,
-    attitudini: Array<Skill> , skill: Array<Skill>  ) {
+    attitudini: Array<Skill> , skill: Array<Skill> , skillother: Array<Skill> , new_p: number , new_d: number , bp: number ) {
 
     const idutente = sessionStorage.getItem('NotturnaUser');
 
@@ -28,11 +28,16 @@ export class SchedaService {
       aPG: aPG,
       bg: bg,
       cont: cont,
+      alleati: alleati,
       discipline: discipline,
       taumaturgie: taumaturgie,
       necromanzie: necromanzie,
       attitudini: attitudini,
       skill: skill,
+      skillother: skillother,
+      new_p: new_p,
+      new_d: new_d,
+      bp: bp
       //influenze: influenze
     });
   }

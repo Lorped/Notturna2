@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { SchedaService } from '../_services/index';
-import { Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg} from '../global';
+import { SchedaService, AdminService } from '../_services/index';
+import { Cronaca, Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Pregio} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
@@ -31,10 +31,22 @@ import { Router } from '@angular/router';
 
 export class CreaComponent implements OnInit {
 
+  cronacaPG = 1;   /* 1 = Lazio , 2 = xxx */
+  listacronache: Array<Cronaca> = [];
+
+  focusOK= false;
+  cronacaOK = false;
+
+  listapregi: Array<Pregio> = [];
+  listadifetti: Array<Pregio> = [];
+  new_d = 0 ; //difetto
+  new_p = 0 ; //pregio
+  valorePregioDifetto = 0;
+
   listaDisciplineVie: ListaDisciplineVie[] = [];
   selectedFocusIndex = -1;
 
-  isLinear = false;  // FALSE SOLO PER TEST !!!!!
+  isLinear = true;  // FALSE SOLO PER TEST !!!!!
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
@@ -163,7 +175,7 @@ export class CreaComponent implements OnInit {
 
 
 
-  constructor(private schedaservice: SchedaService , private router: Router) { }
+  constructor(private schedaservice: SchedaService , private router: Router, private adminservice: AdminService) { }
 
 
   ngOnInit(): void {
@@ -229,6 +241,24 @@ export class CreaComponent implements OnInit {
     this.necromanzie[0] = new Necromanzia();
     this.necromanzie[1] = new Necromanzia();
     this.necromanzie[2] = new Necromanzia();
+
+    // pregi 
+    this.schedaservice.getpregidifetti(-1)
+    .subscribe(
+      (data: any) => {
+        this.listapregi = data.pregi_f.concat(data.pregi_m).concat(data.pregi_s).concat(data.pregi_x);
+        this.listadifetti = data.difetti_f.concat(data.difetti_m).concat(data.difetti_s).concat(data.difetti_x);
+        this.updateValoreSelections();
+      }
+    );
+
+    this.adminservice.getlistcronache().subscribe(
+      (data: any) => {
+        this.listacronache = data;
+      }
+    );
+
+    //
 
   }
 
@@ -848,6 +878,37 @@ export class CreaComponent implements OnInit {
     this.listaDisciplineVie.forEach((item, idx) => {
       item.focus = idx === index ? 1 : 0;
     });
+    this.focusOK = true;
+  }
+
+ onCronacaChange(val: number) {
+    this.cronacaPG = val;
+    this.cronacaOK = true;
+  }
+
+
+  onPregioChange(val: number) {
+    this.new_p = val;
+    this.updateValoreSelections();
+  }
+
+  onDifettoChange(val: number) {
+    this.new_d = val;
+    this.updateValoreSelections();
+  }
+
+  updateValoreSelections() {
+    let pVal = 0;
+    let dVal = 0;
+    if (this.listapregi && this.new_p) {
+      const p = this.listapregi.find(x => x.idpregio === this.new_p);
+      if (p) { pVal = Number(p.valore) || 0; }
+    }
+    if (this.listadifetti && this.new_d) {
+      const d = this.listadifetti.find(x => x.idpregio === this.new_d);
+      if (d) { dVal = Number(d.valore) || 0; }
+    }
+    this.valorePregioDifetto = pVal + dVal;
   }
 
   gen14() {
@@ -1066,7 +1127,9 @@ export class CreaComponent implements OnInit {
     aPG.rifugio = this.rifugio!.value;
     aPG.zona = this.zona!.value;
 
-    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill  )
+    aPG.IDcronaca = this.cronacaPG;  
+
+    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.alleati, this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp)
       .subscribe(
         data => {
           //  OK!

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-	include ('db2.inc.php');  //MYSQLI //
+	require_once __DIR__ . '/db2.inc.php';  //MYSQLI //
 
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);
@@ -57,11 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$rifugio = mysqli_real_escape_string( $db, $request -> aPG -> rifugio);
 	$zona = mysqli_real_escape_string( $db,  $request -> aPG -> zona);
 
+	$idcronaca = $request -> aPG -> IDcronaca;
+
 /************************************/
 
 	$bg = $request -> bg ;
 
 	$contatti = $request -> cont ;
+
+	$alleati = $request -> alleati ;
+
 
 	$discipline = $request -> discipline ;
 
@@ -73,27 +78,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	$skill = $request -> skill ;
 
-	$influenze = $request -> influenze ;
+	$skillother = $request -> skillother ;
+
+	$pregio = $request -> new_p ;
+
+	$difetto = $request -> new_d ;
+	$bp = $request -> bp ;
 
 
 
-//echo $generazione, "<br>";
-
-	$MySql = "SELECT * from generazione where generazione = $generazione";
-
-//echo $MySql, "<br>";
-	$Result = mysqli_query($db, $MySql);
-	$res = mysqli_fetch_array($Result);
-	$bp1 = $res['bloodpmin'];
-
-	$MySql = "SELECT * from statuscama where idstatus = $idstatus";
-
-//echo $MySql, "<br>";
-	$Result = mysqli_query($db, $MySql);
-	$res = mysqli_fetch_array($Result);
-	$bp2 = $res['addbp'];
-
-	$bp = $bp1 + $bp2;
 
 
 	$MySql = "INSERT INTO personaggio
@@ -104,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   	idstatus, idsentiero, valsentiero,
   	fama1, fama2, fama3, xp, xpspesi, nomeplayer,
 		rifugio, zona,
-		bloodp
+		bloodp , IDcronaca
 	)
 	VALUES
 	(
@@ -114,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     	$idstatus, $idsentiero, $valsentiero ,
     	0, 0, 0 ,0, 0 , '$nomeplayer' ,
 			'$rifugio' , '$zona' ,
-			$bp
+			$bp , $idcronaca
 	)";
 
 
@@ -144,19 +137,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	/*******************************************/
 
-	foreach ($influenze as $xx ) {
-
-		if ( $xx -> livello != 0 ) {
-
-			$idinfluenza = $xx -> idinfluenza;
-			$livello = $xx -> livello;
-
-			$MySql = "INSERT INTO influenze ( idinfluenza, idutente, livello ) VALUES ( $idinfluenza, $idutente, $livello )";
+	foreach ($alleati as $cc ) {
+		$livello = $cc -> livello;
+		$nomealleato = mysqli_real_escape_string( $db, $cc -> nomealleato);
+		if ( $livello != 0) {
+			$MySql = "INSERT INTO alleati (  idutente, livello, nomealleato ) VALUES (  $idutente, $livello, '$nomealleato' )";
 
 //echo $MySql, "<br>";
 			mysqli_query($db, $MySql);
 			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
-
 		}
 	}
 
@@ -269,6 +258,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	}
 
 	foreach ($skill as $aa ) {
+		$livello = $aa -> livello;
+		$idskill = $aa -> idskill;
+		$subskill = $aa -> subskill;
+		$subskill2 = $aa -> subskill2;
+
+		if ( $livello != 0) {
+			$MySql = "INSERT INTO skill (  idutente, livello, idskill ) VALUES (  $idutente, $livello, $idskill )";
+
+//echo $MySql, "<br>";
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+
+
+			if ( $subskill == 0 ) {
+
+				foreach ($subskill2 as $ss2 ) {
+					$liv2 = $ss2 -> livello;
+					$id2= $ss2 -> idskill;
+					$MySql = "INSERT INTO skill (  idutente, livello, idskill ) VALUES (  $idutente, $liv2, $id2 )";
+					mysqli_query($db, $MySql);
+					if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+
+				}
+			}
+		}
+
+
+
+	}
+
+	/*******************************************/
+
+	foreach ($skillother as $aa ) {
 		$livello = $aa -> livello;
 		$idskill = $aa -> idskill;
 

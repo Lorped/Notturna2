@@ -289,7 +289,7 @@
       </mat-card>
       <mat-card >
         <mat-card-content class="justified">
-          Distribuite i punti Background a vostra disposizione. Il Rifugio ha automaticamente un valore di uno (ma nel corso della cronaca potrete perderlo). In caso sceglieste il background Contatti vi sarà chiesto di dettagliarlo e (in caso voleste avere più di un contatto) di distribuire tra quelli indicati i punti di tale Background.
+          Distribuite i punti Background a vostra disposizione. Il Rifugio ha automaticamente un valore di uno (ma nel corso della cronaca potrete perderlo). In caso sceglieste i background Contatti o Alleati vi sarà chiesto di dettagliarli e (in caso voleste avere più di un contatto/alleato) di distribuire tra quelli indicati i punti di tale Background.
           Analogamente distribuite i punti Influenza a vostra disposizione.
         </mat-card-content>
       </mat-card>
@@ -613,7 +613,7 @@
                     @for (i of 5 | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello }"></i>
                     }
-                    <button class="btn  btn-xs" (click)="addsk4(sk.idskill)" [disabled]="sk.livello>=4||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
+                    <button class="btn  btn-xs" (click)="addsk4(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
                   </div>
                 </mat-grid-tile>
               }
@@ -673,15 +673,47 @@
           </mat-card>
         </mat-step >
 
-        <mat-step  errorMessage="Distribuzione non corretta" [completed]=freeOK [hasError]="(!freeOK )">
+        <mat-step  errorMessage="Distribuzione non corretta" [completed]="(valorePregioDifetto<=0)&&focusOK&&cronacaOK" [hasError]="(!focusOK && valorePregioDifetto>0)">
           <ng-template matStepLabel>Focus, Pregi/Difetti ecc...</ng-template>
           <mat-card>
             <mat-card-content>
-              Focalizzazione: rappresenta un’elevata maestria in una determinata Disciplina, Via Taumaturgica o Via Necromantica. La scelta deve ricadere su una sola Disciplina o Via e rimane fissa. 
+              <div style="margin-bottom: 1rem; padding: 0.75rem;">
+                Alla creazione è possibile scegliere al massimo un Pregio e un Difetto. I punti del Pregio scelto devono essere interamente compensati da un Difetto di pari importanza.
+              </div>
+              <div>
+                      <mat-form-field style="margin-right: 10px">
+                        <mat-label>Pregio </mat-label>
+                        <mat-select [(value)]="new_p" (selectionChange)="onPregioChange($event.value)">
+                          @for (tt of listapregi; track tt) {
+                            <mat-option [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+
+
+                       <mat-form-field style="margin-left: 10px">
+                        <mat-label>Difetto </mat-label>
+                        <mat-select [(value)]="new_d" (selectionChange)="onDifettoChange($event.value)">
+                          @for (tt of listadifetti; track tt) {
+                            <mat-option [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                     
+                </div>          
+                
+
+
             </mat-card-content>
           </mat-card>
           <mat-card>
             <mat-card-content>
+
+              <div style="margin-bottom: 1rem; padding: 0.75rem;">
+                Focalizzazione: rappresenta un’elevata maestria in una determinata Disciplina, Via Taumaturgica o Via Necromantica. La scelta deve ricadere su una sola Disciplina o Via e rimane fissa.
+              </div>
+              <div>
+
               <mat-form-field appearance="fill">
                 <mat-label>Focus</mat-label>
                 <mat-select [value]="selectedFocusIndex" (selectionChange)="setFocusItem($event.value)">
@@ -690,6 +722,7 @@
                   }
                 </mat-select>
               </mat-form-field>
+              </div>
             </mat-card-content>
           </mat-card>
           <mat-card>
@@ -721,25 +754,35 @@
           <mat-card>
             <mat-card-content>
               <mat-label>Sentiero</mat-label>
-              <mat-select  [disabled]="statusPG!.value<3" [(value)]="sentieroPG">
+              <mat-select  [disabled]="statusPG!.value<2" [(value)]="sentieroPG">
                 @for (i of sentieri; track i) {
                   <mat-option [value]="i.idsentiero">{{i.sentiero}}</mat-option>
                 }
               </mat-select>
             </mat-card-content>
           </mat-card>
+          <mat-card >
+            <mat-card-content class="justified">
+              <div style="margin-bottom: 1rem; padding: 0.75rem;">
+                Cronaca di riferimento del vostro Personaggio
+              </div>
+              <mat-form-field appearance="fill">
+              <mat-select  [(value)]="cronacaPG" (selectionChange)="onCronacaChange($event.value)">
+                @for (i of listacronache; track i) {
+                  <mat-option [value]="i.idcronaca">{{i.descrizione}}</mat-option>
+                }
+              </mat-select>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
           <mat-card>
             <mat-card-content>
               <div>
-                <button mat-raised-button matStepperNext color="primary" [disabled]="!freeOK" >Prosegui</button>
+                <button mat-raised-button matStepperNext color="primary" [disabled]="(valorePregioDifetto>0)||!focusOK||!cronacaOK" >Prosegui</button>
               </div>
             </mat-card-content>
           </mat-card>
-          <mat-card >
-            <mat-card-content class="justified">
-              Potete aumentare la vostra Forza di Volontà oppure rafforzare il convincimento nella via dell'Umanità (o nel vostro Sentiero di Illuminazione). Per scegliere un Sentiero in fase di creazione del personaggio, dovete avere FdV pari almeno a 4. Si ricorda che scivolare verso la Bestia può portare alla perdita definitiva del vostro Personaggio.
-            </mat-card-content>
-          </mat-card>
+
         </mat-step >
         <mat-step>
           <ng-template matStepLabel>Salva</ng-template>

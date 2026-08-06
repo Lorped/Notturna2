@@ -50,6 +50,8 @@ export class Basicpg {
   public contanti = 0 ;
 
   public maxstat = 0 ; // from LEFT JOIN
+
+  public IDcronaca = 0 ;
 }
 
 @Injectable()
