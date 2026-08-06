@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama , Influenze} from '../global';
+import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama ,  Alleati} from '../global';
 
 export class listaspese {
   public data = '' ;
@@ -31,10 +31,12 @@ export class SchedaComponent implements OnInit {
 
   background: Array<Background> = [] ;
   contatti: Array<Contatti> = [];
-  influenze: Array<Influenze> = [];
+  alleati: Array<Alleati> = [];
   maxcontatti = 0;
+  maxalleati = 0;
 
   skills: Array<Skill> = [];
+  otherskill: Array<Skill> = [];
   attitudini: Array<Skill> = [];
 
   pregi: Array<Pregio> = [];
@@ -81,7 +83,7 @@ export class SchedaComponent implements OnInit {
         this.scheda['sete'] = Number(this.scheda['sete']);
         this.scheda['addsete'] = Number(this.scheda['addsete']);
         this.scheda['PScorrenti'] = Number(this.scheda['PScorrenti']);
-        this.psvuoti = this.scheda['sete'] + this.scheda['addsete'] - this.scheda['PScorrenti'];
+        this.psvuoti = this.scheda['maxps']  - this.scheda['PScorrenti'];
 
         this.scheda['fama1'] = Number(this.scheda['fama1']);
         this.scheda['fama2'] = Number(this.scheda['fama2']);
@@ -92,14 +94,19 @@ export class SchedaComponent implements OnInit {
         this.necromanzie = data.necromanzie ;
 
         this.skills = data.skill ;
+        this.otherskill = data.otherskill ;
         this.attitudini = data.attitudini ;
         this.background = data.background ;
         this.contatti = data.contatti;
-        this.influenze = data.influenze;
+        this.alleati = data.alleati;
 
         this.maxcontatti = 0;
         for ( let item of this.contatti) {
           this.maxcontatti += Number(item.livello);
+        }
+        this.maxalleati = 0;
+        for ( let item of this.contatti) {
+          this.maxalleati += Number(item.livello);
         }
 
         this.pregi = data.pregidifetti;

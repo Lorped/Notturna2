@@ -3,6 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {  Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, Influenze} from '../global';
 
+  interface ListaDisciplineVie  {
+    disc_vie: string; // D o V
+    id: number;
+    nome: string;
+    focus: number;
+  }
 
 
 @Injectable({
@@ -18,7 +24,7 @@ export class SchedaService {
 
   putregistra( aPG: Basicpg , bg: Array<Background> , cont: Array<Contatti> , alleati: Array<Alleati>,
     discipline: Array<Disciplina> , taumaturgie: Array<Taumaturgia> , necromanzie: Array<Necromanzia> ,
-    attitudini: Array<Skill> , skill: Array<Skill> , skillother: Array<Skill> , new_p: number , new_d: number , bp: number ) {
+    attitudini: Array<Skill> , skill: Array<Skill> , skillother: Array<Skill> , new_p: number , new_d: number , bp: number , focus: Array<ListaDisciplineVie>) {
 
     const idutente = sessionStorage.getItem('NotturnaUser');
 
@@ -37,7 +43,8 @@ export class SchedaService {
       skillother: skillother,
       new_p: new_p,
       new_d: new_d,
-      bp: bp
+      bp: bp,
+      focus: focus
       //influenze: influenze
     });
   }

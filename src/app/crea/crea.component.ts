@@ -166,8 +166,8 @@ export class CreaComponent implements OnInit {
   baseumanita = 6;          /* Punteggio base */
 
 
+  
 
-  freeOK = false;
 
   sentieroPG = '1';       /* umanità */
 
@@ -796,13 +796,13 @@ export class CreaComponent implements OnInit {
     }
     for ( let j = 0 ; j < this.necromanzie.length ; j++) {
       if (this.necromanzie[j].livello > 0  ) {
-        const disc: ListaDisciplineVie = { disc_vie: 'N', id: j-1, nome: this.listaNecro[j].nomenecro, focus: 0  };
+        const disc: ListaDisciplineVie = { disc_vie: 'N', id: this.necromanzie[j].idnecro, nome: this.listaNecro[j].nomenecro, focus: 0  };
         this.listaDisciplineVie.push(disc);
       }
     }
     for ( let j = 0 ; j < this.taumaturgie.length ; j++) {
       if (this.taumaturgie[j].livello > 0  ) {
-        const disc: ListaDisciplineVie = { disc_vie: 'T', id: j-1, nome: this.listaTaum[j].nometaum, focus: 0  };
+        const disc: ListaDisciplineVie = { disc_vie: 'T', id: this.taumaturgie[j].idtaum, nome: this.listaTaum[j].nometaum, focus: 0  };
         this.listaDisciplineVie.push(disc);
       }
     }
@@ -1025,7 +1025,7 @@ export class CreaComponent implements OnInit {
 
 // OTHERSKILL
   addsk4(sk: number){
-    console.log('addsk4: ' + sk);
+    //console.log('addsk4: ' + sk);
     for (let j = 0 ; j < this.skillother.length ; j++ ) {
       if ( this.skillother[j].idskill === sk) {
         this.skillother[j].livello++;
@@ -1035,7 +1035,7 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
   minsk4(sk: number){
-    console.log('minsk4: ' + sk);
+    //console.log('minsk4: ' + sk);
         for (let j = 0 ; j < this.skillother.length ; j++ ) {
       if ( this.skillother[j].idskill === sk) {
         this.skillother[j].livello--;
@@ -1129,7 +1129,8 @@ export class CreaComponent implements OnInit {
 
     aPG.IDcronaca = this.cronacaPG;  
 
-    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.alleati, this.discipline , this.taumaturgie , this.necromanzie , this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp)
+    this.schedaservice.putregistra( aPG , this.bg , this.cont , this.alleati, this.discipline , this.taumaturgie , this.necromanzie , 
+      this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp, this.listaDisciplineVie)
       .subscribe(
         data => {
           //  OK!

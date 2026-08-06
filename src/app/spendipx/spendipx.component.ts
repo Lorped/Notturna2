@@ -109,7 +109,7 @@ export class SpendipxComponent implements OnInit {
         this.scheda['fdv'] = Number(this.scheda['fdv']);
         this.scheda['fdvmax'] = Number(this.scheda['fdvmax']);
         this.scheda['bloodp'] = Number(this.scheda['bloodp']);
-        this.scheda['bloodpmax'] = Number(this.scheda['bloodpmax']);
+        //this.scheda['bloodpmax'] = Number(this.scheda['bloodpmax']);
 
         this.scheda['maxstat'] = Number(this.scheda['maxstat']);
 

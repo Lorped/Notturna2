@@ -649,7 +649,7 @@
                             @for (i of 5 | times ; track i; let ix = $index) {
                               <i class="fa fa-circle" [ngClass]="{'white': ix+1 > ssk.livello , 'dred': ix < ssk.livello }"></i>
                             }
-                          <button class="btn  btn-xs" (click)="addsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello>=sk.livello"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello>=sk.livello||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
                         </div>
                       </div>
                     }

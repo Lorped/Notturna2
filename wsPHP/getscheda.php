@@ -19,7 +19,78 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-  include ('db2.inc.php');  //MYSQLI //
+include_once __DIR__ . '/db2.inc.php';  //MYSQLI //
+
+//  ================================  //
+
+function controlla_fdv ( $idutente , $db ) {    //controllo-aggiorno fdv
+  $Mysql="SELECT fdv,fdvmax,lastfdv FROM personaggio WHERE idutente=$idutente";
+  $Result=mysqli_query ($db, $Mysql);
+  $res=mysqli_fetch_array($Result);
+
+  $fdv=$res['fdv'];
+  $fdvmax=$res['fdvmax'];
+  $lastfdv=$res['lastfdv'];
+
+  if ( $fdv == $fdvmax ) {  // tutto ok
+    $Mysql="UPDATE personaggio SET lastfdv=NOW()  WHERE idutente=$idutente";
+    $Result=mysqli_query ($db, $Mysql);
+  } else {
+    $base=strtotime("2017-01-01 18:00:00");
+    $qlastftv=strtotime($lastfdv);
+    $now=time();
+    $tramonti0=floor( ($qlastftv - $base)/( 24*60*60 )) ;
+    $tramonti1=floor(($now - $base) / ( 24*60*60 ) );
+    $difftramonti=$tramonti1-$tramonti0;
+    if ( $difftramonti > 0 ) {
+      $newfdv=$fdv+$difftramonti;
+      if ($newfdv > $fdvmax)  {$newfdv=$fdvmax ;}
+      $newlastfdv=$base + $tramonti1*( 24*60*60 )+1;
+      $newlastfdvstring=date("Y-m-d H:i:s",$newlastfdv );
+      $Mysql="UPDATE personaggio SET fdv = $newfdv , lastfdv = '$newlastfdvstring' WHERE idutente=$idutente";
+      mysqli_query($db, $Mysql);
+    } else {
+      // echo "<br>da quando ho controlato fdv non è passato un tramonto";
+    }
+  } // fine verifica se fdv < fdvmax
+} // fine controllo fdv
+
+function controlla_ps ( $idutente , $db) {  //inizio test su ps
+  $Mysql="SELECT PScorrenti, sete, addsete, lastps FROM personaggio
+    LEFT JOIN statuscama ON personaggio.idstatus = statuscama.idstatus
+    LEFT JOIN blood ON personaggio.bloodp = blood.bloodp
+    WHERE idutente=$idutente";
+  $Result=mysqli_query($db, $Mysql);
+  $res=mysqli_fetch_array($Result);
+
+  $PScorrenti=$res['PScorrenti'];
+  $setetot=$res['sete']+$res['addsete'];
+  $lastps=$res['lastps'];
+
+  if ( $PScorrenti == $setetot ) {  // tutto ok
+    //
+  } else {
+    $now=time();
+    $qlastps=strtotime($lastps);
+    $diff =  ($now - $qlastps) / (24*60*60);
+    if ( $diff > 1 ) {
+      $newlastps=date("Y-m-d H:i:s",$now );
+      $Mysql="UPDATE personaggio SET PScorrenti = $setetot , lastps = '$newlastps' WHERE idutente=$idutente";
+      mysqli_query($db, $Mysql);
+    }
+  }
+}  //fine test su ps
+
+function controlla_legami ($idutente, $db) {
+  $Mysql="DELETE FROM legami WHERE target = $idutente and livello = 1 and (DATE_ADD(dataultima, INTERVAL 60 DAY) < NOW())";
+  mysqli_query($db, $Mysql);
+  $Mysql="UPDATE legami SET livello=1 , dataultima=NOW() WHERE target = $idutente and livello = 2 and (DATE_ADD(dataultima, INTERVAL 150 DAY) < NOW())";
+  mysqli_query($db, $Mysql);
+  $Mysql="UPDATE legami SET livello=2 , dataultima=NOW() WHERE target = $idutente and livello = 3 and (DATE_ADD(dataultima, INTERVAL 300 DAY) < NOW())";
+  mysqli_query($db, $Mysql);
+}
+
+// ***********************************************//
 
   $idutente=$_GET['idutente'];
 
@@ -29,6 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$MM="DELETE FROM dadi WHERE DATE_ADD( Ora , INTERVAL 24 HOUR )<NOW()";
 	mysqli_query($db, $MM);
 
+  /*
   controlla_ps ( $idutente, $db) ;
   controlla_fdv ( $idutente, $db) ;
   controlla_legami ($idutente, $db) ;
@@ -150,40 +222,76 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     $contatti[] =  $res;
   }
 
+    /*** contatti **/
+
+  $alleati = [];
+  $MySql = "SELECT  *  FROM alleati
+        WHERE idutente = '$idutente'
+        ORDER BY livello DESC";
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
+    $alleati[] =  $res;
+  }
+
   /*** skill **/
 
   $skill = [];
   $MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia  FROM skill_main
     LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
-    WHERE tipologia = 0 ORDER BY nomeskill" ;
+    WHERE tipologia = 0 and skill_main.subskill = 0  ORDER BY nomeskill" ;
   $Result = mysqli_query($db, $MySql);
   while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
-    $skill[] =  $res;
+    $idskill = $res['idskill'];
+    $livello = $res['livello'];
+    $nomeskill = $res['nomeskill'];
+    $subskill = 0;
+    $tipologia = 0;
+
+    $subskill2 = [];
+    $MySql2= "SELECT skill_main.idskill, livello, nomeskill, tipologia  FROM skill_main
+    LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
+    WHERE tipologia = 0 and skill_main.subskill = '$idskill'  ORDER BY nomeskill";
+    $Result2 = mysqli_query($db, $MySql2);
+    while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ) {
+      $subskill2[] = $res2;
+    }
+
+    $skill[] = [
+		  'idskill' => $idskill,
+		  'nomeskill' => $nomeskill,
+		  'livello' => $livello,
+      'tipologia' => $tipologia,
+		  'subskill' => $subskill,
+		  'subskill2' => $subskill2
+	  ];
+    
   }
 
-	/*** skill **/
+/*** otherskill **/
+
+  $otherskill = [];
+  $MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia  FROM skill_main
+    LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
+    WHERE tipologia = 1 and skill_main.subskill = 0  ORDER BY nomeskill" ;
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
+    $otherskill[] = $res;
+  }
+
+
+	/*** attitudini **/
 
 	$attitudini = [];
 	$MySql = "SELECT skill_main.idskill, livello, nomeskill, tipologia FROM skill_main
 		LEFT JOIN skill ON skill_main.idskill = skill.idskill AND skill.idutente = '$idutente'
-		WHERE tipologia = 1 ORDER BY nomeskill" ;
+		WHERE tipologia = 2 ORDER BY nomeskill" ;
 	$Result = mysqli_query($db, $MySql);
 	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 		$attitudini[] =  $res;
 	}
 
 
-  	/*** influenze **/
-
-	$influenze = [];
-	$MySql = "SELECT  *  FROM influenze
-        LEFT JOIN influenze_main ON influenze_main.idinfluenza=influenze.idinfluenza
-        WHERE idutente = '$idutente'
-        ORDER BY influenze.idinfluenza";
-	$Result = mysqli_query($db, $MySql);
-	while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
-		$influenze[] =  $res;
-	}
+  
 
   /*** pregidifetti **/
 
@@ -233,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   }
 
 	$schivare = 0 ;
-  $Mysql="SELECT * FROM skill WHERE idskill = 28 and idutente=$idutente";
+  $Mysql="SELECT * FROM skill WHERE idskill = 47 and idutente=$idutente";
   $Result=mysqli_query($db, $Mysql);
   if ( $res=mysqli_fetch_array($Result)) {
     $schivare=$res['livello'];
@@ -283,10 +391,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     "background" => $background,
     "contatti" => $contatti,
     "skill" => $skill,
+    "otherskill" => $otherskill,
 		"attitudini" => $attitudini,
 		"rituali" => $rituali,
     "pregidifetti" => $pregidifetti,
-    "influenze" => $influenze,
+    "alleati" => $alleati,
   ];
 
 	header("HTTP/1.1 200 OK");
@@ -297,89 +406,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-//  ================================  //
 
-function controlla_fdv ( $idutente , $db ) {    //controllo-aggiorno fdv
-
-  $Mysql="SELECT fdv,fdvmax,lastfdv FROM personaggio WHERE idutente=$idutente";
-  $Result=mysqli_query ($db, $Mysql);
-  $res=mysqli_fetch_array($Result);
-
-  $fdv=$res['fdv'];
-  $fdvmax=$res['fdvmax'];
-  $lastfdv=$res['lastfdv'];
-
-  if ( $fdv == $fdvmax ) {  // tutto ok
-    $Mysql="UPDATE personaggio SET lastfdv=NOW()  WHERE idutente=$idutente";
-    $Result=mysqli_query ($db, $Mysql);
-
-  } else {
-    $base=strtotime("2017-01-01 18:00:00");
-    $qlastftv=strtotime($lastfdv);
-    $now=time();
-
-    $tramonti0=floor( ($qlastftv - $base)/( 24*60*60 )) ;
-    $tramonti1=floor(($now - $base) / ( 24*60*60 ) );
-
-    $difftramonti=$tramonti1-$tramonti0;
-
-    if ( $difftramonti > 0 ) {
-      $newfdv=$fdv+$difftramonti;
-      if ($newfdv > $fdvmax)  {$newfdv=$fdvmax ;}
-
-      $newlastfdv=$base + $tramonti1*( 24*60*60 )+1;
-
-      $newlastfdvstring=date("Y-m-d H:i:s",$newlastfdv );
-
-      $Mysql="UPDATE personaggio SET fdv = $newfdv , lastfdv = '$newlastfdvstring' WHERE idutente=$idutente";
-      $Result=mysqli_query ($db, $Mysql);
-
-    } else {
-      // echo "<br>da quando ho controlato fdv non è passato un tramonto";
-    }
-  } // fine verifica se fdv < fdvmax
-} // fine controllo fdv
-
-
-
-function controlla_ps ( $idutente , $db) {  //inizio test su ps
-
-  $Mysql="SELECT PScorrenti, sete, addsete, lastps FROM personaggio
-    LEFT JOIN statuscama ON personaggio.idstatus = statuscama.idstatus
-    LEFT JOIN blood ON personaggio.bloodp = blood.bloodp
-  WHERE idutente=$idutente";
-  $Result=mysqli_query ($db, $Mysql);
-  $res=mysqli_fetch_array($Result);
-
-  $PScorrenti=$res['PScorrenti'];
-  $setetot=$res['sete']+$res['addsete'];
-  $lastps=$res['lastps'];
-
-  if ( $PScorrenti == $setetot ) {  // tutto ok
-    //
-  } else {
-    $now=time();
-    $qlastps=strtotime($lastps);
-
-    $diff =  ($now - $qlastps) / (24*60*60);
-
-    if ( $diff > 1 ) {
-      $newlastps=date("Y-m-d H:i:s",$now );
-      $Mysql="UPDATE personaggio SET PScorrenti = $setetot , lastps = '$newlastps' WHERE idutente=$idutente";
-      $Result=mysqli_query ($db, $Mysql);
-    }
-  }
-}  //fine test su ps
-
-function controlla_legami ($idutente, $db) {
-  // legami
-  $Mysql="DELETE FROM legami WHERE target = $idutente and livello = 1 and (DATE_ADD(dataultima, INTERVAL 60 DAY) < NOW())";
-  $Result = mysqli_query($db, $Mysql);
-  $Mysql="UPDATE legami SET livello=1 , dataultima=NOW() WHERE target = $idutente and livello = 2 and (DATE_ADD(dataultima, INTERVAL 150 DAY) < NOW())";
-  $Result = mysqli_query($db, $Mysql);
-  $Mysql="UPDATE legami SET livello=2 , dataultima=NOW() WHERE target = $idutente and livello = 3 and (DATE_ADD(dataultima, INTERVAL 300 DAY) < NOW())";
-  $Result = mysqli_query($db, $Mysql);
-}
 
 
 ?>

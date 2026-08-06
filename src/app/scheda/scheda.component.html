@@ -52,7 +52,7 @@
               {{scheda.status}} [+{{scheda.attivazione}}]
             </div>
             <div class="column is-2 red">
-              Blood Potency:
+              Controllo del Sangue:
             </div>
             <div class="column is-1">
               {{scheda.bloodp}}
@@ -111,13 +111,13 @@
               {{rd}}
             </div>
             <div class="column is-1 red">
-              XP:
+              Eventi:
             </div>
             <div class="column is-1">
               {{scheda.xp}}
             </div>
             <div class="column is-1 red">
-              Spesi:
+              Progressione:
             </div>
             <div class="column is-1 alr">
               {{scheda.xpspesi}}
@@ -143,7 +143,7 @@
               Livelli di sete:
             </div>
             <div class="column is-1 alr">
-              {{scheda.PScorrenti}}/{{scheda.sete+scheda.addsete}}
+              {{scheda.PScorrenti}}/{{scheda.maxps}}
             </div>
 
           </div >
@@ -159,8 +159,8 @@
             <div class="column is-2 red">
               Rifugio:
             </div>
-            <div class="column is-2">
-              {{scheda.rifugio}}
+            <div class="column is-4">
+              {{scheda.rifugio}} / {{scheda.zona}}
             </div>
             <div class="column">
               &nbsp;
@@ -289,6 +289,9 @@
                 <div class="column is-4 nopadding">
                   <div class="columns">
                     <div class="column">
+                      @if(dd.disciplina.focus == 1 ){
+                        <i class="fa fa-star mymedicon white"></i>
+                      }
                       {{dd.disciplina.nomedisc}}
                     </div>
                     <div class="column">
@@ -315,6 +318,9 @@
                   <div class="column is-4 nopadding">
                     <div class="columns">
                       <div class="column">
+                        @if(dd.taumaturgia.focus == 1 ){
+                        <i class="fa fa-star mymedicon white"></i>
+                        }
                         {{dd.taumaturgia.nometaum}}
                       </div>
                       <div class="column">
@@ -342,6 +348,9 @@
                   <div class="column is-4 nopadding">
                     <div class="columns" >
                       <div class="column">
+                        @if(dd.necromanzia.focus == 1 ){
+                        <i class="fa fa-star mymedicon white"></i>
+                        }
                         {{dd.necromanzia.nomenecro}}
                       </div>
                       <div class="column">
@@ -476,13 +485,50 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-card>
+        <mat-card style="margin-bottom: 2em;">
           <mat-card-content>
 
             <div class="columns is-multiline" style="margin-left: 0px;" >
-              @for (dd of skills; track dd) {
+
+              @for (dd of otherskill; track dd) {
+                <div class="column is-4 nopadding">
+                  <div class="columns" style="margin-bottom: 0px;">
+                    <div class="column ">
+                        {{dd.nomeskill}}
+                    </div>
+                    <div class="column">
+                      @for (item of 5|times ; track item; let ix = $index) {
+                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                      }
+                    </div>
+                  </div>
+                </div>
+              } 
+              @for (s of (3 - (otherskill.length%3))|times ; track s) {
                 <div class="column is-4 nopadding">
                   <div class="columns">
+                    <div class="column ">
+                      &nbsp;
+                    </div>
+                    <div class="column">
+                      &nbsp;
+                    </div>
+                  </div>
+                </div>
+              }
+
+            </div>
+            
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-content>
+            <div class="columns is-multiline" style="margin-left: 0px;" >
+
+              @for (dd of skills; track dd) {
+                <div class="column is-4 nopadding">
+                  <div class="columns" style="margin-bottom: 0px;">
                     <div class="column">
                       {{dd.nomeskill}}
                     </div>
@@ -492,6 +538,19 @@
                       }
                     </div>
                   </div>
+                
+                  @for (ss of dd.subskill2; track ss){
+                    <div class="columns" style="margin-bottom: 0px;">
+                      <div class="column">
+                        -- {{ss.nomeskill}}
+                      </div>
+                      <div class="column">
+                        @for (item of 5|times ; track item; let ix = $index) {
+                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= ss.livello, 'dred': ix < ss.livello}"></i>
+                        }
+                      </div>
+                    </div> 
+                  }
                 </div>
               }
             </div>
@@ -504,7 +563,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Background e Influenze
+            Background
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -513,7 +572,7 @@
             <div class="columns is-multiline" style="margin-left: 0px;" >
               @for (dd of background; track dd) {
                 <div class="column is-4 nopadding">
-                  @if (dd.idback != 77 && dd.idback != 2) {
+                  @if (dd.idback != 77 && dd.idback!= 88 && dd.idback != 2) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}
@@ -552,6 +611,18 @@
                       </div>
                     </div>
                   }
+                  @if (dd.idback == 88) {
+                    <div class="columns">
+                      <div class="column">
+                        {{dd.nomeback}}
+                      </div>
+                      <div class="column">
+                        @for (item of maxalleati|times ; track item; let ix = $index) {
+                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                        }
+                      </div>
+                    </div>
+                  }
                 </div>
               }
             </div>
@@ -583,21 +654,21 @@
               </div>
             }
 
-            @if (influenze.length >0) {
+            @if (alleati.length >0) {
               <div class="columns" style="align-items: center;">
                 <div class="column"><hr></div>
-                <div class="column is-2" style="text-align: center;">Influenze</div>
+                <div class="column is-2" style="text-align: center;">Alleati</div>
                 <div class="column"><hr></div>
               </div>
             }
 
-            @if (influenze.length >0) {
+            @if (alleati.length >0) {
               <div class="columns is-multiline" style="margin-left: 0px;">
-                @for (dd of influenze; track dd) {
+                @for (dd of alleati; track dd) {
                   <div class="column is-4 nopadding">
                     <div class="columns">
                       <div class="column">
-                        {{dd.nomeinfluenza}}
+                        {{dd.nomealleato}}
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {

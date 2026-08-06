@@ -1,6 +1,9 @@
 <?php
 
 //http://stackoverflow.com/questions/18382740/cors-not-working-php
+
+use Dom\Mysql;
+
 if (isset($_SERVER['HTTP_ORIGIN'])) {
 	header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 	header('Access-Control-Allow-Credentials: true');
@@ -85,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$difetto = $request -> new_d ;
 	$bp = $request -> bp ;
 
+	$focus = $request -> focus ;
 
 
 
@@ -97,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   	idstatus, idsentiero, valsentiero,
   	fama1, fama2, fama3, xp, xpspesi, nomeplayer,
 		rifugio, zona,
-		bloodp , IDcronaca
+		bloodp , IDcronaca , PScorrenti
 	)
 	VALUES
 	(
@@ -107,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     	$idstatus, $idsentiero, $valsentiero ,
     	0, 0, 0 ,0, 0 , '$nomeplayer' ,
 			'$rifugio' , '$zona' ,
-			$bp , $idcronaca
+			$bp , $idcronaca , 12
 	)";
 
 
@@ -305,6 +309,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	/*******************************************/
 
+	if ($pregio != 0 ) {
+		$MySql = "INSERT INTO pregidifetti (idutente, idpregio, pxspesi) VALUES ($idutente, $pregio, 0 )";
+		mysqli_query($db, $MySql);
+		if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+	}
+	if ($difetto != 0 ) {
+		$MySql = "INSERT INTO pregidifetti (idutente, idpregio, pxspesi) VALUES ($idutente, $difetto,0 )";
+		mysqli_query($db, $MySql);
+		if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+	}
+
+	foreach ( $focus as $f) {
+		if ($f -> focus == 1){
+			$id= $f -> id;
+			if ( $f-> disc_vie == "D"){				
+				$MySql = "UPDATE discipline SET focus = 1 WHERE idutente = $idutente and iddisciplina = $id ";
+			} elseif ( $f->disc_vie == "T"){
+				$MySql = "UPDATE taumaturgie SET focus = 1 WHERE idutente = $idutente and idtaum = $id ";
+			} elseif ( $f->disc_vie == "T"){
+				$MySql = "UPDATE necromanzie SET focus = 1 WHERE idutente = $idutente and idnecro = $id ";
+			}
+			mysqli_query($db, $MySql);
+			if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+		}
+	}
 
 	$out = [];
 

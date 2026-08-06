@@ -529,13 +529,13 @@
                   </div>
                   <div class="columns">
                     <div class="column">
-                      Blood Potency {{  (scheda.bloodp < scheda.bloodpmax)  ? '('+4*(scheda.bloodp+1)+'px)' : '' }}
+                      Blood Potency {{  (scheda.bloodp )  ? '('+4*(scheda.bloodp+1)+'px)' : '' }}
                     </div>
                     <div class="column">
                       @for (item of 10|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda.bloodp, 'dred': ix < scheda.bloodp}"></i>
                       }
-                      @if (scheda.bloodp<scheda.bloodpmax ) {
+                      @if (scheda.bloodp<0 ) {
                         <button class="btn btn-xs" (click)="addbp()" [disabled]="xpdisponibili<4*(scheda.bloodp+1)"><i class="fa fa-plus"></i></button>
                       }
                     </div>

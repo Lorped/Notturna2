@@ -43,13 +43,13 @@ export class Basicpg {
   public zona = '';
 
   public bloodp = 0;
-  public bloodpmax = 0;  // from LEFT JOIN
-  public bloodpmin = 0;  // FROM LEFT JOIN
+
   public bane = 0 ;
   public urldt = '';
   public contanti = 0 ;
 
   public maxstat = 0 ; // from LEFT JOIN
+  public maxps = 0 ; // da LEFT JOIN
 
   public IDcronaca = 0 ;
 }
@@ -120,11 +120,13 @@ export class Disciplina {
   public nomedisc: string ;
   public livello: number ;
   public DiClan: string ;
+  public focus: number;
   constructor() {
     this.iddisciplina = 0;
     this.nomedisc = '';
     this.livello = 0;
     this.DiClan = '';
+    this.focus = 0;
   }
 }
 
@@ -180,11 +182,13 @@ export class Necromanzia {
   public nomenecro: string;
   public livello: number;
   public principale: number;
+  public focus: number;
   constructor( ) {
     this.idnecro = 0;
     this.nomenecro = '';
     this.livello = 0 ;
     this.principale = 1;
+    this.focus = 0;
   }
 }
 
@@ -195,11 +199,13 @@ export class Taumaturgia {
   public nometaum: string;
   public livello: number;
   public principale: number;
+  public focus: number;
   constructor( ) {
     this.idtaum = 0;
     this.nometaum = '';
     this.livello = 0 ;
     this.principale = 1;
+    this.focus = 0;
   }
 }
 
