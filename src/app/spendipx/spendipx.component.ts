@@ -146,6 +146,10 @@ export class SpendipxComponent implements OnInit {
 
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
 
+        if (this.maxdisc > this.scheda.maxdisc) {
+          this.maxdisc = this.scheda.maxdisc;
+        }
+
         if (this.maxdisc > 5) {
           this.maxpallini = this.maxdisc;
         } else {
@@ -598,7 +602,7 @@ export class SpendipxComponent implements OnInit {
 
     this.scheda.fdvmax ++;
     
-    this.scheda.xpspesi += 4 * this.scheda.fdvmax ;
+    this.scheda.xpspesi ++ ;
 
     this.schedaservice.addfdv(this.idutente)
     .subscribe( (data:any) => {

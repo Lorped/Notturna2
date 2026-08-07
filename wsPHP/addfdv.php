@@ -39,7 +39,7 @@ if ( isset($postdata) && $idutente != ""  ) {
   $res = mysqli_fetch_array ($Result);
   $fdvmax = $res['fdvmax'];
 
-  $spesapx = ($fdvmax + 1) * 4 ;
+  $spesapx = 1;
 
 
   $MySql = "UPDATE personaggio SET fdv = fdv + 1  , fdvmax = fdvmax + 1 , xpspesi = xpspesi + $spesapx
@@ -50,7 +50,7 @@ if ( isset($postdata) && $idutente != ""  ) {
   $Azione = 'Forza di Volonta a '.($fdvmax+1) ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, 1 , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
 

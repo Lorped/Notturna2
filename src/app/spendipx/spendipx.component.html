@@ -180,14 +180,14 @@
                     <div class="column is-4 nopadding">
                       <div class="columns">
                         <div class="column">
-                          {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello < 5 && dd.disciplina.livello < maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ? '' :'' ) }}
+                          {{dd.disciplina.nomedisc}} 
                         </div>
                         <div class="column">
                           @for (item of maxpallini|times ; track item; let ix = $index) {
                             <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
                           }
                           @if (dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ) {
-                            <button class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="numavanzamenti<1||avanzamento_limitato"><i class="fa fa-plus"></i></button>
+                            <button class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="numavanzamenti<1||avanzamento_limitato||dd.disciplina.livello>=maxdisc"><i class="fa fa-plus"></i></button>
                           }
                         </div>
                       </div>
@@ -466,7 +466,7 @@
                               <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
                             }
                             @if (dd.livello<5 && dd.livello < scheda.destrezza) {
-                              <button class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
+                              <button class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="numavanzamenti<1||dd.livello>=scheda.destrezza"><i class="fa fa-plus"></i></button>
                             }
                           </div>
                         </div>
