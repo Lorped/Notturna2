@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); // mysql//
+require_once __DIR__ . '/db2.inc.php'; // mysqli//
 
 
 $postdata = file_get_contents("php://input");
@@ -43,20 +43,20 @@ if ( isset($postdata) && $idutente != "" && $attributo != "" ) {
   $livello = $res['aa'];
   $newlivello = $res['aa'] + 1;
 
-  $spesapx = $newlivello * 2;
+  //$spesapx = $newlivello * 2;
 
   $MySql = "UPDATE personaggio SET $attributo = $livello + 1
     WHERE idutente = $idutente";
   $Result = mysqli_query($db, $MySql);
 
-  $MySql = "UPDATE personaggio SET xpspesi = xpspesi + $spesapx
+  $MySql = "UPDATE personaggio SET xpspesi = xpspesi + 1
     WHERE idutente = $idutente";
   $Result = mysqli_query($db, $MySql);
 
-  $Azione = $attributo . ' a ' . $newlivello ;
+  $Azione = ucfirst($attributo) . ' a ' . $newlivello ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, 1 , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
   
 

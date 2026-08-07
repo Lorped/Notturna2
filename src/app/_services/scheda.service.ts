@@ -246,11 +246,28 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcontatti.php'+'?idutente='+idutente );
   }
 
+  putalleati(idutente: number , idalleato: number, livello: number, au: string  ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putalleati.php',{
+      idutente: idutente,
+      idalleato: idalleato,
+      livello: livello,
+      au: au
+    });
+  }
+
   putcontatti(idutente: number , idcontatto: number, livello: number, au: string  ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putcontatti.php',{
       idutente: idutente,
       idcontatto: idcontatto,
       livello: livello,
+      au: au
+    });
+  }
+
+  newalleato(idutente: number , nomealleato: string, au: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/newalleato.php',{
+      idutente: idutente,
+      nomealleato: nomealleato,
       au: au
     });
   }

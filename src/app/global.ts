@@ -23,8 +23,7 @@ export class Basicpg {
   public idstatus = 0;
   public status = ''; // da LEFT JOIN
   public attivazione = 0  ; // da LEFT JOIN
-  public sete = 0  ; // da LEFT JOIN
-  public addsete = 0  ; // da LEFT JOIN
+  public maxps = 0  ; // da LEFT JOIN
   public PScorrenti = 0 ;
 
   public idsentiero = 0;
@@ -43,15 +42,16 @@ export class Basicpg {
   public zona = '';
 
   public bloodp = 0;
+  public maxdisc = 0 ; //da LEFT JOIN
 
   public bane = 0 ;
   public urldt = '';
   public contanti = 0 ;
 
   public maxstat = 0 ; // from LEFT JOIN
-  public maxps = 0 ; // da LEFT JOIN
 
   public IDcronaca = 0 ;
+  public Descrizione = ''; // da LEFT JOIN
 }
 
 @Injectable()

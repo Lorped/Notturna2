@@ -80,8 +80,8 @@ export class SchedaComponent implements OnInit {
 
         this.scheda['fdv'] = Number(this.scheda['fdv']);
 
-        this.scheda['sete'] = Number(this.scheda['sete']);
-        this.scheda['addsete'] = Number(this.scheda['addsete']);
+        //this.scheda['sete'] = Number(this.scheda['sete']);
+        //this.scheda['addsete'] = Number(this.scheda['addsete']);
         this.scheda['PScorrenti'] = Number(this.scheda['PScorrenti']);
         this.psvuoti = this.scheda['maxps']  - this.scheda['PScorrenti'];
 

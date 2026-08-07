@@ -30,27 +30,27 @@ if (!is_object($request)) {
 }
 
 $idutente = isset($request->idutente) ? $request->idutente : null;
-$nomecontatto = isset($request->nomecontatto) ? $request->nomecontatto : null;
+$nomealleato = isset($request->nomealleato) ? $request->nomealleato : null;
 $au = isset($request->au) ? $request->au : null;
 
-$nomecontatto = mysqli_real_escape_string ($db, $nomecontatto);
+$nomealleato = mysqli_real_escape_string ($db, $nomealleato);
 
 
-if ( !empty($postdata) && !empty($idutente) && !empty($nomecontatto)  ) {
+if ( !empty($postdata) && !empty($idutente) && !empty($nomealleato)  ) {
 
 
 
-  $MySql = "INSERT INTO contatti ( nomecontatto, idutente, livello )
-    VALUES ( '$nomecontatto', $idutente , 1 )";
+  $MySql = "INSERT INTO alleati ( nomealleato, idutente, livello )
+    VALUES ( '$nomealleato', $idutente , 1 )";
   $Result = mysqli_query($db, $MySql);
 
-  $MySql = "SELECT idcontatto from contatti where idcontatto = last_insert_id() ";
+  $MySql = "SELECT idalleato from alleati where idalleato = last_insert_id() ";
   $Result = mysqli_query($db, $MySql);
   $res = mysqli_fetch_array ($Result);
-  $idcontatto = $res ['idcontatto'];
+  $idalleato = $res ['idalleato'];
 
   $MySql = "SELECT * FROM background
-  WHERE idutente = $idutente AND idback = 77";
+  WHERE idutente = $idutente AND idback = 88";
   $Result = mysqli_query($db, $MySql);
 
   if (mysqli_errno($db)) {
@@ -60,7 +60,7 @@ if ( !empty($postdata) && !empty($idutente) && !empty($nomecontatto)  ) {
 
   if ( $res = mysqli_fetch_array ($Result) ) {
     $MySql = "UPDATE background SET livello = livello + 1
-     WHERE idutente = $idutente AND idback = 77";
+     WHERE idutente = $idutente AND idback = 88";
     $Result = mysqli_query($db, $MySql);
 
     if (mysqli_errno($db)) {
@@ -70,7 +70,7 @@ if ( !empty($postdata) && !empty($idutente) && !empty($nomecontatto)  ) {
 
   } else {
     $MySql = "INSERT INTO background (idback, idutente, livello )
-     VALUES ( 77, $idutente , 1)";
+     VALUES ( 88, $idutente , 1)";
     $Result = mysqli_query($db, $MySql);
 
     if (mysqli_errno($db)) {
@@ -83,7 +83,7 @@ if ( !empty($postdata) && !empty($idutente) && !empty($nomecontatto)  ) {
     WHERE idutente = $idutente";
   $Result = mysqli_query($db, $MySql);
 
-  $Azione = "Aggiunto contatto ".$nomecontatto;
+  $Azione = "Aggiunto alleato ".$nomealleato;
   if ( $au == 'A') {
     $Azione = 'ADMIN '.$Azione;
   }
@@ -98,7 +98,7 @@ if ( !empty($postdata) && !empty($idutente) && !empty($nomecontatto)  ) {
 
   header("HTTP/1.1 200 OK");
 
-  $out = "$idcontatto";
+  $out = "$idalleato";
   $out = json_encode ($out, JSON_UNESCAPED_UNICODE);
   echo $out;
 

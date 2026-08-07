@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
-import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Pregio, Rituale , Amalgama} from '../global';
+import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati, Pregio, Rituale , Amalgama} from '../global';
 
 
 
@@ -13,6 +13,17 @@ import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, 
     standalone: false
 })
 export class SpendipxComponent implements OnInit {
+
+  avanzamenti: number[] = [
+    3 , 7 , 10, 12 , 15, 
+    18, 20, 25, 28, 30, 
+    32 , 35 , 37, 39 
+  ];
+
+  numavanzamenti = 0;
+
+  avanzamento_speciale = false;
+  avanzamento_limitato = false;
 
   matriceMaxDisc: number[][] = [
     [ 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9, 10 ],
@@ -57,10 +68,6 @@ export class SpendipxComponent implements OnInit {
 
   statusPG = 1;
 
-  xpdisponibili = 0;
-  xpspendibili = 0;
-
-
   livellitaum: Array<number> = [ 0 , 0 , 0 ];
   livellinecro: Array<number> = [ 0 , 0 , 0 ];
 
@@ -77,8 +84,27 @@ export class SpendipxComponent implements OnInit {
   amalgame: Array<Amalgama> = [];
   idnewamalgama = '';
 
+
+    listabg: Array<Background> = [];
+    listaContatti: Array<Contatti> = [];
+    sommaContatti = 0;
+  
+    listaAlleati: Array<Alleati> = [];
+    sommaAlleati = 0;
+
+  
+    myContatto = new UntypedFormControl ( '', [
+      Validators.required,
+      Validators.pattern(/.*[^ ].*/),
+    ]);
+    myAlleato = new UntypedFormControl ( '', [
+      Validators.required,
+      Validators.pattern(/.*[^ ].*/),
+    ]);
+
   constructor( private schedaservice: SchedaService ) { }
 
+  /*
   addXPform = new UntypedFormGroup ({
     xptoadd: new UntypedFormControl('', [
       Validators.required,
@@ -86,6 +112,7 @@ export class SpendipxComponent implements OnInit {
       Validators.min(1),
     ]),
   });
+  */
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
@@ -112,7 +139,7 @@ export class SpendipxComponent implements OnInit {
         //this.scheda['bloodpmax'] = Number(this.scheda['bloodpmax']);
 
         this.scheda['maxstat'] = Number(this.scheda['maxstat']);
-
+        this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);
 
         this.statusPG = Number(this.scheda.idstatus);
 
@@ -175,6 +202,42 @@ export class SpendipxComponent implements OnInit {
           item.livello = Number(item.livello);
         }
 
+        this.schedaservice.getbg(this.idutente).subscribe(
+          (data: any) => {
+            this.listabg = data.background;
+
+            /* for ( let j=0 ; j< this.listabg.length ; j++) {
+              this.listabg[j].livello = Number (this.listabg[j].livello);
+            } */
+            for ( const item of this.listabg) {
+              item.livello = Number (item.livello);
+            }
+
+          }
+        );
+
+        this.schedaservice.getcontatti(this.idutente).subscribe(
+          (data: any) => {
+            this.listaContatti = data.contatti;
+            this.listaAlleati = data.alleati;
+
+            this.sommaContatti = 0;
+            this.sommaAlleati = 0;
+
+            for ( const item of this.listaContatti ) {
+              item.livello = Number (item.livello);
+              this.sommaContatti += item.livello;
+            }
+            for ( const item of this.listaAlleati ) {
+              item.livello = Number (item.livello);
+              this.sommaAlleati += item.livello;
+            }
+
+          }
+        );
+
+
+
 
         this.rituali = data.rituali;
 
@@ -235,6 +298,7 @@ export class SpendipxComponent implements OnInit {
     );
   }
 
+  /**
   addxp() {
 
     let newpx: number = Number (this.addXPform.get('xptoadd')!.value );
@@ -245,7 +309,7 @@ export class SpendipxComponent implements OnInit {
       data => {
         this.scheda.xp += newpx ;
         this.ricalcolo_xp(); 
-        /* */
+        
       }
     );
 
@@ -253,64 +317,50 @@ export class SpendipxComponent implements OnInit {
       xptoadd: ''});
 
   }
+  */
+
 
   addattr(attributo: string) {
     /* Do something */
     switch (attributo) {
       case 'forza':
-        this.scheda['forza'] ++;
-        this.xpdisponibili -= this.scheda['forza'] * 2;
-        this.scheda.xpspesi += this.scheda['forza'] * 2;
+        this.scheda['forza'] ++;        
         break;
       case 'destrezza':
         this.scheda['destrezza'] ++;
-        this.xpdisponibili -= this.scheda['destrezza'] * 2;
-        this.scheda.xpspesi += this.scheda['destrezza'] * 2;
         break;
       case 'attutimento':
         this.scheda['attutimento'] ++;
-        this.xpdisponibili -= this.scheda['attutimento'] * 2;
-        this.scheda.xpspesi += this.scheda['attutimento'] * 2;
         break;
       case 'carisma':
         this.scheda['carisma'] ++;
-        this.xpdisponibili -= this.scheda['carisma'] * 2;
-        this.scheda.xpspesi += this.scheda['carisma'] * 2;
         break;
       case 'persuasione':
         this.scheda['persuasione'] ++;
-        this.xpdisponibili -= this.scheda['persuasione'] * 2;
-        this.scheda.xpspesi += this.scheda['persuasione'] * 2;
         break;
       case 'saggezza':
         this.scheda['saggezza'] ++;
-        this.xpdisponibili -= this.scheda['saggezza'] * 2;
-        this.scheda.xpspesi += this.scheda['saggezza'] * 2;
         break;
       case 'percezione':
         this.scheda['percezione'] ++;
-        this.xpdisponibili -= this.scheda['percezione'] * 2;
-        this.scheda.xpspesi += this.scheda['percezione'] * 2;
         break;
       case 'intelligenza':
         this.scheda['intelligenza'] ++;
-        this.xpdisponibili -= this.scheda['intelligenza'] * 2;
-        this.scheda.xpspesi += this.scheda['intelligenza'] * 2;
         break;
       case 'prontezza':
         this.scheda['prontezza'] ++;
-        this.xpdisponibili -= this.scheda['prontezza'] * 2;
-        this.scheda.xpspesi += this.scheda['prontezza'] * 2;
         break;
       default:
         break;
     }
+    this.scheda.xpspesi ++;
     this.schedaservice.addattr(this.idutente, attributo)
     .subscribe(
       data => {
         this.ricalcolo_xp(); 
       }
     );
+    
   }
 
   adddisc( iddisciplina: number ) {
@@ -322,16 +372,15 @@ export class SpendipxComponent implements OnInit {
         this.discipline[j].disciplina.livello ++  ;
         diclan = this.discipline[j].disciplina.DiClan;
         if ( diclan == 'S') {
-          spesapx = this.discipline[j].disciplina.livello *2 ;
-          this.costonewdisc[j] = (this.discipline[j].disciplina.livello +1)*2 ;
+          spesapx = 1 ;
+          this.costonewdisc[j] = 1 ;
         } else {
-          spesapx = this.discipline[j].disciplina.livello *3 ;
-          this.costonewdisc[j] = (this.discipline[j].disciplina.livello +1)*3 ;
+          spesapx = 1 ;
+          this.costonewdisc[j] = 1 ;
         }
       }
     }
 
-    this.xpdisponibili -= spesapx;
     this.scheda.xpspesi += spesapx;
 
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
@@ -350,7 +399,7 @@ export class SpendipxComponent implements OnInit {
     for (let j = 0 ; j < this.taumaturgie.length ; j++) {
       if ( this.taumaturgie[j].taumaturgia.idtaum == idtaum ) {
         this.taumaturgie[j].taumaturgia.livello ++ ;
-        this.xpdisponibili -= ( this.taumaturgie[j].taumaturgia.livello * 2  );
+
 
         if (this.taumaturgie[j].taumaturgia.principale == 1 ) {
           for (let j = 0 ; j < this.discipline.length ; j++) {
@@ -373,7 +422,7 @@ export class SpendipxComponent implements OnInit {
   }
 
   newtaum( lvl: number ) {
-    this.xpdisponibili -= 2;
+    
     this.scheda.xpspesi += 2;
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
@@ -424,7 +473,7 @@ export class SpendipxComponent implements OnInit {
     for (let j = 0 ; j < this.necromanzie.length ; j++) {
       if ( this.necromanzie[j].necromanzia.idnecro == idnecro ) {
         this.necromanzie[j].necromanzia.livello ++ ;
-        this.xpdisponibili -= ( this.necromanzie[j].necromanzia.livello * 2  );
+        
         this.scheda.xpspesi += ( this.necromanzie[j].necromanzia.livello * 2  );
 
         if (this.necromanzie[j].necromanzia.principale == 1 ) {
@@ -447,7 +496,7 @@ export class SpendipxComponent implements OnInit {
   }
 
   newnecro( lvl: number ) {
-    this.xpdisponibili -= 2;
+    
     this.scheda.xpspesi += 2;
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
@@ -461,7 +510,7 @@ export class SpendipxComponent implements OnInit {
   }
 
   newdisc( ) {
-    this.xpdisponibili -= 5;
+    
     this.scheda.xpspesi += 5;
     this.schedaservice.newdisc(this.idutente, this.idnewdisc )
     .subscribe(
@@ -475,7 +524,7 @@ export class SpendipxComponent implements OnInit {
   }
 
   addrituale(lvl: number, necrotaum: string) {
-    this.xpdisponibili -= 2 * (lvl + 1);
+    
     this.scheda.xpspesi += 2 * (lvl + 1);
 
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
@@ -518,8 +567,8 @@ export class SpendipxComponent implements OnInit {
         if (this.skills[j].idskill == idskill ) {
           this.skills[j].livello ++ ;
 
-          this.xpdisponibili -= 2 * this.skills[j].livello ;
-          this.scheda.xpspesi += 2 * this.skills[j].livello ;
+          
+          this.scheda.xpspesi ++ ;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
@@ -532,7 +581,7 @@ export class SpendipxComponent implements OnInit {
         if (this.attitudini[j].idskill == idskill ) {
           this.attitudini[j].livello ++ ;
 
-          this.xpdisponibili -= 3 * this.attitudini[j].livello ;
+          
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
@@ -548,7 +597,7 @@ export class SpendipxComponent implements OnInit {
   addfdv(){
 
     this.scheda.fdvmax ++;
-    this.xpdisponibili -= 4 * this.scheda.fdvmax ;
+    
     this.scheda.xpspesi += 4 * this.scheda.fdvmax ;
 
     this.schedaservice.addfdv(this.idutente)
@@ -563,7 +612,7 @@ export class SpendipxComponent implements OnInit {
 
 
         this.scheda.bloodp ++;
-        this.xpdisponibili -= 4 * this.scheda.bloodp ;
+        
         this.scheda.xpspesi += 4 * this.scheda.bloodp ;
 
         this.schedaservice.addbp(this.idutente)
@@ -579,7 +628,7 @@ export class SpendipxComponent implements OnInit {
       this.schedaservice.addprimariataum(this.idutente, Number(this.idnewprimaria))
       .subscribe ( (data:any) => {
         this.tremeresenzataum = 0 ;
-        this.xpdisponibili -= 2 ;
+        
         this.scheda.xpspesi += 2 ;
         this.reload_full ();
         this.ricalcolo_xp();
@@ -592,7 +641,7 @@ export class SpendipxComponent implements OnInit {
       this.schedaservice.addprimarianecro(this.idutente, Number(this.idnewprimaria))
       .subscribe ( (data:any) => {
         this.giovannisenzanecro = 0 ;
-        this.xpdisponibili -= 2 ;
+        
         this.scheda.xpspesi += 2 ;
         this.reload_full ();
         this.ricalcolo_xp();
@@ -681,48 +730,118 @@ export class SpendipxComponent implements OnInit {
   }
 
 
+  newcontatto(){
+    let myNew = new Contatti();
+    myNew.nomecontatto = this.myContatto.value;
+    myNew.livello = 1 ;
+
+    this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto, 'U')
+    .subscribe(
+      (data: any) => {
+
+        myNew.idcontatto = data ;
+        this.listaContatti.push(myNew) ;
+        this.myContatto.reset();
+        this.sommaContatti ++ ;
+        this.scheda.xpspesi++ ;
+        this.reload_full();
+        this.ricalcolo_xp();
+      }
+    );
+  }
+
+  addcon(id: number){
+    for ( const item of this.listaContatti ) {
+      if ( item.idcontatto == id ) {
+        item.livello ++ ;
+        this.schedaservice.putcontatti(this.idutente, id, item.livello, 'U')
+        .subscribe(
+          (data) => {
+            this.sommaContatti ++ ;
+            this.scheda.xpspesi++ ;
+            this.reload_full();
+            this.ricalcolo_xp();
+          }
+        );
+      }
+    }
+  }
+  newAlleato(){
+    let myNew = new Alleati();
+    myNew.nomealleato = this.myAlleato.value;
+    myNew.livello = 1 ;
+
+    this.schedaservice.newalleato(this.idutente, myNew.nomealleato, 'U')
+    .subscribe(
+      (data: any) => {
+
+        myNew.idalleato = data ;
+        this.listaAlleati.push(myNew) ;
+        this.myAlleato.reset();
+        this.sommaAlleati ++ ;
+        this.scheda.xpspesi++ ;
+        this.reload_full();
+        this.ricalcolo_xp();
+      }
+    );
+  }
+
+  addall(id: number){
+    for ( const item of this.listaAlleati ) {
+      if ( item.idalleato == id ) {
+        item.livello ++ ;
+        this.schedaservice.putalleati(this.idutente, id, item.livello, 'U')
+        .subscribe(
+          (data) => {
+            this.sommaAlleati ++ ;
+            this.scheda.xpspesi++ ;
+            this.reload_full();
+            this.ricalcolo_xp();
+          }
+        );
+      }
+    }
+  }
+
+  addbg(id: number){
+    let newlivello = 0 ;
+
+    for ( const item of  this.listabg ){
+      if ( item.idback == id) {
+        item.livello ++ ;
+        newlivello = item.livello;
+
+        this.scheda.xpspesi++ ;
+        this.reload_full();
+        this.ricalcolo_xp();
+      }
+    }
+    this.schedaservice.putbg(this.idutente, id , newlivello , 'U' ).subscribe();
+  }
+
+
   ricalcolo_xp (){
 
-    // this.xpdisponibili = this.scheda.xp - this.scheda.xpspesi ;
+    this.scheda.xpspesi=1;
 
-    if ( this.scheda.xp > 113 ) {
-      this.xpspendibili = 86 + ( this.scheda.xp - 113)/2 ;  
-    } else if ( this.scheda.xp > 32 ) {
-      this.xpspendibili = 32 + ( this.scheda.xp - 32)/3*2;
-    } else {
-      this.xpspendibili = this.scheda.xp;
+    this.numavanzamenti = 0;
+    for (let j = this.scheda.xpspesi; j < this.avanzamenti.length ; j++){
+      if (this.scheda['xp'] >= this.avanzamenti[j]) {
+        this.numavanzamenti ++;
+      }
     }
 
-
-
-    this.xpdisponibili = this.xpspendibili - this.scheda.xpspesi ;
-        
-    // questo per arrotondare alla 2' cifra decimale
-    this.xpspendibili = Math.round(this.xpspendibili*100)/100;
-    this.xpdisponibili = Math.round(this.xpdisponibili*100)/100;
-
-    // console.log (this.statusPG);
-
-    switch (this.statusPG) {
-      case 5:
-        this.puntirigenera = Math.round(this.scheda.xp * 25/100 );
-        break;
-      case 4:
-        this.puntirigenera = Math.round(this.scheda.xp * 4/10 );
-        break;
-      case 3:
-        this.puntirigenera = Math.round(this.scheda.xp * 5/10 );
-        break;
-      case 2:
-          this.puntirigenera = Math.round(this.scheda.xp * 7/10 );
-          break;
-      default:
-        this.puntirigenera = Math.round(this.scheda.xp * 8 /10 );
-        console.log (this.puntirigenera);
-        break;
+    if (this.scheda.xpspesi == 0 && this.numavanzamenti>0) {
+      this.avanzamento_limitato = true;
+    }
+    if (this.scheda.xpspesi == 3 && this.numavanzamenti>0) {
+      this.avanzamento_speciale = true;
     }
 
-    this.prbonus = this.puntirigenera + Math.round(this.puntirigenera/5) ;
+    console.log("limitato ", this.avanzamento_limitato);
+    console.log("speciale ", this.avanzamento_speciale);
+
+    
 
   }
 

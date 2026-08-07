@@ -18,14 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-require_once __DIR__ . '/db2.inc.php'; //MYSQL //
+require_once __DIR__ . '/db2.inc.php'; // MYSQL //
 
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
 $idutente = $request -> idutente;
-$idback = $request -> idback;
+$idalleato = $request -> idalleato;
 $livello = $request -> livello;
 $au = $request -> au;
 
@@ -35,54 +35,33 @@ $au = $request -> au;
 //$postdata = 1;
 
 
-if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
+if ( isset($postdata) && $idutente != "" && $idalleato != "" && isset($livello) ) {
 
-  $MySql = "SELECT nomeback FROM background_main WHERE idback = $idback";
+  $MySql = "SELECT nomealleato FROM alleati WHERE idalleato = $idalleato";
   $Result = mysqli_query($db, $MySql);
   $res = mysqli_fetch_array ( $Result);
 
-  $nomeback = $res ['nomeback'];
+  $nomealleato = $res ['nomealleato'];
 
+
+  $Azione = '';
 
   if ( $livello == 0) {
-    $MySql = "DELETE FROM background
-      WHERE idback = $idback AND idutente = $idutente";
+    $MySql = "DELETE FROM alleati
+      WHERE idalleato = $idalleato";
     $Result = mysqli_query($db, $MySql);
 
 
-    $Azione = "Rimosso BG ".$nomeback;
+    $Azione = "Rimosso alleato ".$nomealleato;
   }
 
-  if ( $livello == 1 ) {
-    $MySql = "SELECT * FROM background
-      WHERE idback = $idback AND idutente = $idutente";
-    $Result = mysqli_query($db, $MySql);
-    if ( $res = mysqli_fetch_array($Result) ) {
 
-      $MySql2 = "UPDATE background SET livello = 1
-        WHERE idback = $idback and idutente = $idutente";
-      $Result2 = mysqli_query($db, $MySql2);
-
-    } else {
-
-      $MySql2 = "INSERT INTO background (idback, idutente, livello)
-        VALUES ( $idback, $idutente, 1)";
-      $Result2 = mysqli_query($db, $MySql2);
-
-
-
-    }
-
-    $Azione = "BG ".$nomeback.' a 1';
-
-  }
-
-  if ($livello != 0 && $livello != 1 ) {
-    $MySql = "UPDATE background SET livello = $livello
-      WHERE idback = $idback and idutente = $idutente";
+  if ($livello != 0  ) {
+    $MySql = "UPDATE alleati SET livello = $livello
+      WHERE idalleato = $idalleato";
     $Result = mysqli_query($db, $MySql);
 
-    $Azione = "BG ".$nomeback.' a '.$livello;
+    $Azione = "Alleato ".$nomealleato.' a '.$livello;
   }
 
   $MySql = "UPDATE personaggio SET xpspesi = xpspesi + 1
@@ -100,6 +79,36 @@ if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
   $Result = mysqli_query($db, $MySql);
 
 
+  $MySql = "SELECT sum(livello) as s FROM alleati
+  WHERE idutente = $idutente";
+  $Result = mysqli_query($db, $MySql);
+  $res = mysqli_fetch_array($Result);
+  $somma = $res['s'];
+
+  if ( $somma == 0 ) {
+    $MySql = "DELETE FROM background
+    WHERE idutente = $idutente AND idback = 88 ";
+    $Result = mysqli_query($db, $MySql);
+  }
+  if ( $somma != 0 AND $somma != 1 ) {
+    $MySql = "UPDATE background
+    SET livello = $somma
+    WHERE idutente = $idutente AND idback = 88 ";
+    $Result = mysqli_query($db, $MySql);
+  }
+  if (  $somma == 1 ) {
+    $MySql = "DELETE FROM background
+    WHERE idutente = $idutente AND idback = 88 ";
+    $Result = mysqli_query($db, $MySql);
+    $MySql = " INSERT INTO background (idback, idutente, livello)
+      VALUES (88, $idutente, 1 )";
+    $Result = mysqli_query($db, $MySql);
+  }
+
+
+
+
+
 
   if (mysqli_errno($db)) {
     header("HTTP/1.1 403 Forbidden");
@@ -109,7 +118,7 @@ if ( isset($postdata) && $idutente != "" && $idback != "" && isset($livello) ) {
 
       header("HTTP/1.1 200 OK");
 
-      $out = "OK";
+      $out = "OK"; 
       $out = json_encode ($out, JSON_UNESCAPED_UNICODE);
       echo $out;
 

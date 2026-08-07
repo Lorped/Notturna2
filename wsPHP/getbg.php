@@ -16,14 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php'); //MYSQL//
+require_once __DIR__  . '/db2.inc.php'; //MYSQL//
 
 $idutente = $_GET['idutente'];
 
 	$MySql = "SELECT background_main.idback, nomeback, livello
 	FROM background_main
 	LEFT JOIN background ON background_main.idback = background.idback AND idutente = $idutente
-	WHERE background_main.idback != 5 AND background_main.idback != 77";
+	WHERE background_main.idback != 5 AND background_main.idback != 77 AND background_main.idback != 88";
 
 	$Result = mysqli_query($db, $MySql);
 

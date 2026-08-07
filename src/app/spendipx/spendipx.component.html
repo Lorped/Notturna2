@@ -32,19 +32,14 @@
               <mat-card-content>
                 <div class="columns">
 
-                  <div class="column is-3">Punti totali (PXT) <br>  Punti spendibili (PXS) <br> &nbsp; <br> Punti Rigenerazione</div>
-                  <div class="column is-1">{{scheda.xp}} <br> {{xpspendibili}} <br> &nbsp; <br> {{prbonus}}</div>
-                  <div class="column is-3">Punti spesi <br> Punti Disponibili</div>
-                  <div class="column is-1">{{scheda.xpspesi}} <br> {{xpdisponibili}}</div>
-                  <div class="column is-3">
-                    <form [formGroup]="addXPform" (ngSubmit)="addxp()" #formDir="ngForm">
-                      <mat-form-field appearance="fill" style="size: 100%; display: block;">
-                        <input matInput formControlName="xptoadd" placeholder="XP" type="text" pattern="\d*">
-                      </mat-form-field>
-                      <button  mat-raised-button class="large" color="primary" [disabled]="!formDir.form.valid" style="width: 100%;">Aggiungi</button>
-                    </form>
-                  </div>
-                  <div class="column is-1">&nbsp;</div>
+                  <div class="column is-2">Eventi</div>
+                  <div class="column is-2">{{scheda.xp}} </div>
+                  <div class="column is-2">Avanzamenti effettuati </div>
+                  <div class="column is-2">{{scheda.xpspesi}}</div>
+                  <div class="column is-2">Avanzamenti disponibili</div>
+                  <div class="column is-2">{{numavanzamenti}}</div>
+
+
 
                 </div>
               </mat-card-content>
@@ -63,106 +58,106 @@
                 <mat-card-content>
                   <div class="columns">
                     <div class="column">
-                      Forza {{ (scheda['forza']< maxattributi ? '('+(1+scheda['forza'])*2+'px)' :'') }}
+                      Forza 
                     </div>
                     <div class="column">
                       @for (item of maxattributi|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
                       }
                       @if (scheda['forza']<maxattributi) {
-                        <button  class="btn  btn-xs" (click)="addattr('forza')" [disabled]="xpdisponibili<(1+scheda['forza'])*2"><i class="fa fa-plus"></i></button>
+                        <button  class="btn  btn-xs" (click)="addattr('forza')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                       }
                     </div>
                     <div class="column">
-                      Carisma {{ (scheda['carisma']< maxattributi ? '('+(1+scheda['carisma'])*2+'px)' :'') }}
+                      Carisma 
                     </div>
                     <div class="column">
                       @for (item of maxattributi|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
                       }
                       @if (scheda['carisma']<maxattributi) {
-                        <button class="btn  btn-xs" (click)="addattr('carisma')" [disabled]="xpdisponibili<(1+scheda['carisma'])*2"><i class="fa fa-plus"></i></button>
+                        <button class="btn  btn-xs" (click)="addattr('carisma')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                       }
                       </div>          <mat-card></mat-card>
                       <div class="column">
-                        Percezione {{ (scheda['percezione']< maxattributi ? '('+(1+scheda['percezione'])*2+'px)' :'') }}
+                        Percezione 
                       </div>
                       <div class="column">
                         @for (item of maxattributi|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
                         }
                         @if (scheda['percezione']<maxattributi) {
-                          <button class="btn  btn-xs" (click)="addattr('percezione')" [disabled]="xpdisponibili<(1+scheda['percezione'])*2"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addattr('percezione')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                         }
                       </div>
                     </div>
                     <div class="columns">
                       <div class="column">
-                        Destrezza {{ (scheda['destrezza']< maxattributi ? '('+(1+scheda['destrezza'])*2+'px)' :'') }}
+                        Destrezza 
                       </div>
                       <div class="column">
                         @for (item of maxattributi|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
                         }
                         @if (scheda['destrezza']<maxattributi) {
-                          <button class="btn  btn-xs" (click)="addattr('destrezza')" [disabled]="xpdisponibili<(1+scheda['destrezza'])*2"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addattr('destrezza')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                         }
                       </div>
                       <div class="column">
-                        Persuasione {{ (scheda['persuasione']< maxattributi ? '('+(1+scheda['persuasione'])*2+'px)' :'') }}
+                        Persuasione 
                       </div>
                       <div class="column">
                         @for (item of maxattributi|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
                         }
                         @if (scheda['persuasione']<maxattributi) {
-                          <button class="btn  btn-xs" (click)="addattr('persuasione')" [disabled]="xpdisponibili<(1+scheda['persuasione'])*2"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addattr('persuasione')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                         }
                       </div>
                       <div class="column">
-                        Intelligenza {{ (scheda['intelligenza']< maxattributi ? '('+(1+scheda['intelligenza'])*2+'px)' :'') }}
+                        Intelligenza 
                       </div>
                       <div class="column">
                         @for (item of maxattributi|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
                         }
                         @if (scheda['intelligenza']<maxattributi) {
-                          <button class="btn  btn-xs" (click)="addattr('intelligenza')" [disabled]="xpdisponibili<(1+scheda['intelligenza'])*2"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addattr('intelligenza')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                         }
                       </div>
                     </div>
                     <div class="columns">
                       <div class="column">
-                        Attutimento {{ (scheda['attutimento']< maxattributi ? '('+(1+scheda['attutimento'])*2+'px)' :'') }}
+                        Attutimento 
                       </div>
                       <div class="column">
                         @for (item of maxattributi|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
                         }
                         @if (scheda['attutimento']<maxattributi) {
-                          <button class="btn  btn-xs" (click)="addattr('attutimento')" [disabled]="xpdisponibili<(1+scheda['attutimento'])*2"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addattr('attutimento')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                         }
                       </div>
                       <div class="column">
-                        Saggezza {{ (scheda['saggezza']< maxattributi? '('+(1+scheda['saggezza'])*2+'px)' :'') }}
+                        Saggezza 
                       </div>
                       <div class="column">
                         @for (item of maxattributi|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
                         }
                         @if (scheda['saggezza']<maxattributi) {
-                          <button class="btn  btn-xs" (click)="addattr('saggezza')" [disabled]="xpdisponibili<(1+scheda['saggezza'])*2"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addattr('saggezza')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                         }
                       </div>
                       <div class="column">
-                        Prontezza  {{ (scheda['prontezza']< maxattributi ? '('+(1+scheda['prontezza'])*2+'px)' :'') }}
+                        Prontezza  
                       </div>
                       <div class="column">
                         @for (item of maxattributi|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
                         }
                         @if (scheda['prontezza']<maxattributi) {
-                          <button class="btn  btn-xs" (click)="addattr('prontezza')" [disabled]="xpdisponibili<(1+scheda['prontezza'])*2"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addattr('prontezza')" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                         }
                       </div>
                     </div>
@@ -185,22 +180,24 @@
                     <div class="column is-4 nopadding">
                       <div class="columns">
                         <div class="column">
-                          {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello < 5 && dd.disciplina.livello < maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ? '(' + costonewdisc[ii] + 'px)' :'' ) }}
+                          {{dd.disciplina.nomedisc}} {{ (dd.disciplina.livello < 5 && dd.disciplina.livello < maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ? '' :'' ) }}
                         </div>
                         <div class="column">
                           @for (item of maxpallini|times ; track item; let ix = $index) {
                             <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
                           }
                           @if (dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ) {
-                            <button class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="xpdisponibili<costonewdisc[ii]"><i class="fa fa-plus"></i></button>
+                            <button class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="numavanzamenti<1||avanzamento_limitato"><i class="fa fa-plus"></i></button>
                           }
                         </div>
                       </div>
                     </div>
                   }
 
+                  <!----   LA NUOVA DISCIPLINA LA METTIAMO NEI PANNELLI MASTER -->
+                  <!------
                   <div class="column is-4 nopadding" >
-                    Acquisisci altre Discipline (5px)
+                    Acquisisci altre Discipline
                     <mat-form-field>
                       <mat-label>Nuova Disciplina</mat-label>
                       <mat-select [(value)]="idnewdisc">
@@ -209,12 +206,13 @@
                         }
                       </mat-select>
                     </mat-form-field>
-                    <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc==''||xpdisponibili<5" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
+                    <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
                   </div>
+                  ---->
 
                   @if (tremeresenzataum == 1) {
                     <div class="column is-4 nopadding">
-                      Acquisisci Via Primaria (2px)<br>
+                      Acquisisci Via Primaria <br>
                       <mat-form-field>
                         <mat-label>Via Primaria</mat-label>
                         <mat-select [(value)]="idnewprimaria">
@@ -223,12 +221,12 @@
                           }
                         </mat-select>
                       </mat-form-field>
-                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||xpdisponibili<2" style="width: 66%;" (click)="scegliprimaria()">Aggiungi</button>
+                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="scegliprimaria()">Aggiungi</button>
                     </div>
                   }
                   @if (giovannisenzanecro == 1) {
                     <div class="column is-4 nopadding">
-                      Acquisisci Via Primaria (2px)<br>
+                      Acquisisci Via Primaria <br>
                       <mat-form-field>
                         <mat-label>Via Primaria</mat-label>
                         <mat-select [(value)]="idnewprimaria">
@@ -237,10 +235,12 @@
                           }
                         </mat-select>
                       </mat-form-field>
-                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||xpdisponibili<2" style="width: 66%;" (click)="scegliprimarianecro()">Aggiungi</button>
+                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="scegliprimarianecro()">Aggiungi</button>
                     </div>
                   }
 
+                <!--------- AMALGAME  -->
+                <!--
                   @if (statusPG>2) {
                     <div class="column is-4 nopadding">
                       Apprendi Amalgame
@@ -255,6 +255,7 @@
                       <button  mat-raised-button class="large" color="primary" [disabled]="idnewamalgama==''" style="width: 66%;" (click)="newamalgama()">Aggiungi</button>
                     </div>
                   }
+                -->
 
                 </div>
 
@@ -274,14 +275,14 @@
                       <div class="column is-4 nopadding">
                         <div class="columns">
                           <div class="column">
-                            {{dd.taumaturgia.nometaum}} {{ (dd.taumaturgia.livello<5 && dd.taumaturgia.livello < maxdisc && ( ii == 0 || (ii!=0 &&livellitaum[ii-1]>livellitaum[ii]+1) || (ii!=0 && livellitaum[ii-1]==5) )  ? '(' + (dd.taumaturgia.livello+1)*2 + 'px)' :'' ) }}
+                            {{dd.taumaturgia.nometaum}} {{ (dd.taumaturgia.livello<5 && dd.taumaturgia.livello < maxdisc && ( ii == 0 || (ii!=0 &&livellitaum[ii-1]>livellitaum[ii]+1) || (ii!=0 && livellitaum[ii-1]==5) )  ? '' :'' ) }}
                           </div>
                           <div class="column">
                             @for (item of 5|times ; track item; let ix = $index) {
                               <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
                             }
                             @if (dd.taumaturgia.livello<5 && dd.taumaturgia.livello < maxdisc && ( ii== 0 || (ii != 0 && livellitaum[ii-1]>livellitaum[ii]+1) || (ii!=0 && livellitaum[ii-1]==5))) {
-                              <button class="btn  btn-xs" (click)="addtaum(dd.taumaturgia.idtaum)" [disabled]="xpdisponibili<(dd.taumaturgia.livello+1)*2"><i class="fa fa-plus"></i></button>
+                              <button class="btn  btn-xs" (click)="addtaum(dd.taumaturgia.idtaum)" [disabled]="numavanzamenti<1||avanzamento_limitato"><i class="fa fa-plus"></i></button>
                             }
                           </div>
                         </div>
@@ -298,7 +299,7 @@
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 66%;" (click)="newtaum(2)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="newtaum(2)">Aggiungi</button>
                       </div>
                     }
                     @if (livellitaum[2]==0 && livellitaum[1]>1) {
@@ -312,7 +313,7 @@
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||xpdisponibili<2" style="width: 66%;" (click)="newtaum(3)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="newtaum(3)">Aggiungi</button>
                       </div>
                     }
                   </div>
@@ -332,14 +333,14 @@
                       <div class="column is-4 nopadding">
                         <div class="columns">
                           <div class="column">
-                            {{dd.necromanzia.nomenecro}} {{ (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii == 0 || (ii!=0 &&livellinecro[ii-1]>livellinecro[ii]+1) || (ii!=0 && livellinecro[ii-1]==5) )  ? '(' + (dd.necromanzia.livello+1)*2 + 'px)' :'' ) }}
+                            {{dd.necromanzia.nomenecro}} {{ (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii == 0 || (ii!=0 &&livellinecro[ii-1]>livellinecro[ii]+1) || (ii!=0 && livellinecro[ii-1]==5) )  ? '' :'' ) }}
                           </div>
                           <div class="column">
                             @for (item of 5|times ; track item; let ix = $index) {
                               <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
                             }
                             @if (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii== 0 || (ii != 0 && livellinecro[ii-1]>livellinecro[ii]+1) || (ii!=0 && livellinecro[ii-1]==5))) {
-                              <button class="btn  btn-xs" (click)="addnecro(dd.necromanzia.idnecro)" [disabled]="xpdisponibili<(dd.necromanzia.livello+1)*2"><i class="fa fa-plus"></i></button>
+                              <button class="btn  btn-xs" (click)="addnecro(dd.necromanzia.idnecro)" [disabled]="numavanzamenti<1||avanzamento_limitato"><i class="fa fa-plus"></i></button>
                             }
                           </div>
                         </div>
@@ -356,7 +357,7 @@
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 66%;" (click)="newnecro(2)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="newnecro(2)">Aggiungi</button>
                       </div>
                     }
                     @if (livellinecro[2]==0 && livellinecro[1]>1) {
@@ -370,7 +371,7 @@
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||xpdisponibili<2" style="width: 66%;" (click)="newnecro(3)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="newnecro(3)">Aggiungi</button>
                       </div>
                     }
                   </div>
@@ -409,7 +410,7 @@
                               }
                             </mat-select>
                           </mat-form-field>
-                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<2*(ix+1)" style="width: 66%;" (click)="addrituale(ix,'t')">Aggiungi</button>
+                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||numavanzamenti<1||avanzamento_limitato" style="width: 66%;" (click)="addrituale(ix,'t')">Aggiungi</button>
                         </div>
                       }
                     </div>
@@ -432,7 +433,7 @@
                               }
                             </mat-select>
                           </mat-form-field>
-                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||xpdisponibili<(rituali.length==0?0:(ix+1)*2)" style="width: 66%;" (click)="addrituale(ix,'n')">Aggiungi</button>
+                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||numavanzamenti<(rituali.length==0?0:1)||(rituali.length>0&&avanzamento_limitato)" style="width: 66%;" (click)="addrituale(ix,'n')">Aggiungi</button>
                         </div>
                       }
                     </div>
@@ -458,14 +459,14 @@
                       <div class="column is-4 nopadding">
                         <div class="columns">
                           <div class="column ">
-                            {{dd.nomeskill}}  {{ (dd.livello<5 && dd.livello < scheda.destrezza ) ? '(' +  3 * (dd.livello+1) + 'px)' : '' }}
+                            {{dd.nomeskill}}  
                           </div>
                           <div class="column">
                             @for (item of 5|times ; track item; let ix = $index) {
                               <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
                             }
                             @if (dd.livello<5 && dd.livello < scheda.destrezza) {
-                              <button class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="xpdisponibili<3*(dd.livello+1)"><i class="fa fa-plus"></i></button>
+                              <button class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                             }
                           </div>
                         </div>
@@ -484,14 +485,14 @@
                       <div class="column is-4 nopadding">
                         <div class="columns">
                           <div class="column">
-                            {{dd.nomeskill}}  {{  (dd.livello<5)  ? '('+2*(dd.livello+1)+'px)' : '' }}
+                            {{dd.nomeskill}}  
                           </div>
                           <div class="column">
                             @for (item of 5|times ; track item; let ix = $index) {
                               <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
                             }
                             @if (dd.livello<5 ) {
-                              <button class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="xpdisponibili<2*(dd.livello+1)"><i class="fa fa-plus"></i></button>
+                              <button class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
                             }
                           </div>
                         </div>
@@ -504,11 +505,128 @@
 
             </mat-expansion-panel>
 
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Background, Contatti e Alleati
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+
+                @for (tt of listabg; track tt) {
+                  <div class="columns">
+                    <div class="column is-2"></div>
+                    <div class="column is-4">
+                      {{ tt.nomeback}}
+                    </div>
+                    <div class="column ">
+                      @for (item of 5|times ; track item; let ix = $index) {
+                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                      }
+                      <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4||numavanzamenti<1"><i class="fa fa-plus"></i></button>
+                    </div>
+                  </div>
+                }
+
+                <div class="columns">
+                  <div class="column">&nbsp;</div>
+                  <div class="column"><hr></div>
+                  <div class="column">&nbsp;</div>
+                </div>
+
+                <div class="columns">
+
+                  <div class="column is-6">
+                    Contatti:
+                  </div>
+                  <div class="column ">
+                    {{sommaContatti}} / 20
+                  </div>
+                </div>
+
+                @for (tt of listaContatti; track tt) {
+                  <div class="columns">
+                    <div class="column is-2"></div>
+                    <div class="column is-4">
+                      {{ tt.nomecontatto}}
+                    </div>
+                    <div class="column ">                      
+                      @for (item of 5|times ; track item; let ix = $index) {
+                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                      }
+                      <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommaContatti==20||numavanzamenti<1"><i class="fa fa-plus"></i></button>
+                    </div>
+                  </div>
+                }
+                <div class="columns">
+                  <div class="column">&nbsp;</div>
+                  <div class="column"><hr></div>
+                  <div class="column">&nbsp;</div>
+                </div>
+
+                <div class="columns">
+
+                  <div class="column is-6">
+                    Alleati:
+                  </div>
+                  <div class="column ">
+                    {{sommaAlleati}} / 20
+                  </div>
+                </div>
+
+                @for (tt of listaAlleati; track tt) {
+                  <div class="columns">
+                    <div class="column is-2"></div>
+                    <div class="column is-4">
+                      {{ tt.nomealleato}}
+                    </div>
+                    <div class="column ">                      
+                      @for (item of 5|times ; track item; let ix = $index) {
+                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                      }
+                      <button class="btn  btn-xs" (click)="addall(tt.idalleato)" [disabled]="tt.livello>4 ||sommaAlleati==20||numavanzamenti<1"><i class="fa fa-plus"></i></button>
+                    </div>
+                  </div>
+                }
+
+                <div class="columns ">
+
+
+                  <div class="column is-6">
+                    <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                      <input matInput [formControl]="myContatto" placeholder="Nuovo contatto" type="text" >
+                    </mat-form-field>
+                    @if (myContatto.hasError('pattern')) {
+                      <mat-error>Non sono permessi solo "blank"</mat-error>
+                    }
+                  </div>
+                  <div class="column is-6">
+                    <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                      <input matInput [formControl]="myAlleato" placeholder="Nuovo alleato" type="text" >
+                    </mat-form-field>
+                    @if (myAlleato.hasError('pattern')) {
+                      <mat-error>Non sono permessi solo "blank"</mat-error>
+                    }
+                  </div>
+                </div>
+                <div class="columns ">
+                  <div class="column is-6 ">
+                    <button  mat-raised-button class="large" (click)="newcontatto()" color="primary" [disabled]="myContatto.hasError('pattern')||myContatto.hasError('required') " style="width: 100%;">Aggiungi Contatto</button>
+                  </div>
+                  <div class="column is-6 ">
+                    <button  mat-raised-button class="large" (click)="newAlleato()" color="primary" [disabled]="myAlleato.hasError('pattern')||myAlleato.hasError('required') " style="width: 100%;">Aggiungi Alleato</button>
+                  </div>
+                </div>
+
+              </mat-expansion-panel>
+
+
+
 
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  Incrementa Forza di Volonta e Blood Potency
+                  Incrementa Forza di Volonta
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
@@ -516,27 +634,14 @@
                 <div class="column nopadding">
                   <div class="columns">
                     <div class="column">
-                      Forza di Volontà {{  (scheda.fdvmax<10)  ? '('+4*(scheda.fdvmax+1)+'px)' : '' }}
+                      Forza di Volontà 
                     </div>
                     <div class="column">
                       @for (item of 10|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda.fdvmax, 'dred': ix < scheda.fdvmax}"></i>
                       }
                       @if (scheda.fdvmax<10 ) {
-                        <button class="btn btn-xs" (click)="addfdv()" [disabled]="xpdisponibili<4*(scheda.fdvmax+1)"><i class="fa fa-plus"></i></button>
-                      }
-                    </div>
-                  </div>
-                  <div class="columns">
-                    <div class="column">
-                      Blood Potency {{  (scheda.bloodp )  ? '('+4*(scheda.bloodp+1)+'px)' : '' }}
-                    </div>
-                    <div class="column">
-                      @for (item of 10|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda.bloodp, 'dred': ix < scheda.bloodp}"></i>
-                      }
-                      @if (scheda.bloodp<0 ) {
-                        <button class="btn btn-xs" (click)="addbp()" [disabled]="xpdisponibili<4*(scheda.bloodp+1)"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-xs" (click)="addfdv()" [disabled]="numavanzamenti<1||avanzamento_limitato"><i class="fa fa-plus"></i></button>
                       }
                     </div>
                   </div>

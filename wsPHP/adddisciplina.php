@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MYSQL  //
+require_once __DIR__ . '/db2.inc.php';  //MYSQL  //
 
 
 $postdata = file_get_contents("php://input");
@@ -45,9 +45,9 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
   $nomedisc = $res['nomedisc'];
 
   if ( $DiClan == 'S') {
-    $spesapx = ($livello + 1 )* 2;
+    $spesapx = 1;
   } else {
-    $spesapx = ($livello + 1 )* 3;
+    $spesapx = 1 ;
   }
 
   $MySql = "UPDATE discipline SET livello = livello + 1
@@ -61,7 +61,7 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
   $Azione = $nomedisc.' a '.($livello+1); ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, 1 , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
 
