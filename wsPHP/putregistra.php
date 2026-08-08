@@ -327,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 				$MySql = "UPDATE discipline SET focus = 1 WHERE idutente = $idutente and iddisciplina = $id ";
 			} elseif ( $f->disc_vie == "T"){
 				$MySql = "UPDATE taumaturgie SET focus = 1 WHERE idutente = $idutente and idtaum = $id ";
-			} elseif ( $f->disc_vie == "T"){
+			} elseif ( $f->disc_vie == "N"){
 				$MySql = "UPDATE necromanzie SET focus = 1 WHERE idutente = $idutente and idnecro = $id ";
 			}
 			mysqli_query($db, $MySql);

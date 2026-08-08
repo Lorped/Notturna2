@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MYSQLI //
+require_once __DIR__ . '/db2.inc.php'; //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -46,7 +46,7 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
     $nomerituale = $res['nomerituale'];
     $livello = $res['livello'];
 
-    $spesapx =  $livello * 2 ;
+    $spesapx =  1 ;
 
     $MySql = "INSERT INTO rituali_t (idrituale , idutente)
       VALUES ($idrituale , $idutente)";
@@ -61,7 +61,7 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
     $nomerituale = $res['nomerituale'];
     $livello = $res['livello'];
 
-    $spesapx =  $livello * 2 ;
+    $spesapx =  1 ;
 
     /** check a costo zero **/
     $MySql = "SELECT count(*) as c FROM rituali_n WHERE idutente=$idutente";
@@ -87,7 +87,7 @@ if ( isset($postdata) && $idutente != "" && $idrituale != "" && $necrotaum != ""
 
   $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, $spesapx , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
 

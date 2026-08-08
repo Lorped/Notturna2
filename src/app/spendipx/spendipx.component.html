@@ -25,7 +25,7 @@
           <mat-card>
             <mat-card-header>
               <mat-card-title>
-                Punti esperienza
+                Avanzamento del Personaggio
               </mat-card-title>
             </mat-card-header>
             <hr>
@@ -275,7 +275,7 @@
                       <div class="column is-4 nopadding">
                         <div class="columns">
                           <div class="column">
-                            {{dd.taumaturgia.nometaum}} {{ (dd.taumaturgia.livello<5 && dd.taumaturgia.livello < maxdisc && ( ii == 0 || (ii!=0 &&livellitaum[ii-1]>livellitaum[ii]+1) || (ii!=0 && livellitaum[ii-1]==5) )  ? '' :'' ) }}
+                            {{dd.taumaturgia.nometaum}} 
                           </div>
                           <div class="column">
                             @for (item of 5|times ; track item; let ix = $index) {
@@ -290,7 +290,7 @@
                     }
                     @if (livellitaum[1]==0 && livellitaum[0]>1) {
                       <div class="column is-4 nopadding">
-                        Scegli Via Secondaria (2px)
+                        Scegli Via Secondaria 
                         <mat-form-field>
                           <mat-label>Via Secondaria</mat-label>
                           <mat-select [(value)]="idnewtaum">
@@ -304,7 +304,7 @@
                     }
                     @if (livellitaum[2]==0 && livellitaum[1]>1) {
                       <div class="column is-4 nopadding">
-                        Scegli Via Terziaria (2px)
+                        Scegli Via Terziaria 
                         <mat-form-field>
                           <mat-label>Via Terziaria</mat-label>
                           <mat-select [(value)]="idnewtaum">
@@ -348,7 +348,7 @@
                     }
                     @if (livellinecro[1]==0 && livellinecro[0]>1) {
                       <div class="column is-4 nopadding">
-                        Scegli Via Secondaria (2px)
+                        Scegli Via Secondaria
                         <mat-form-field>
                           <mat-label>Via Secondaria</mat-label>
                           <mat-select [(value)]="idnewnecro">
@@ -362,7 +362,7 @@
                     }
                     @if (livellinecro[2]==0 && livellinecro[1]>1) {
                       <div class="column is-4 nopadding">
-                        Scegli Via Terziaria (2px)
+                        Scegli Via Terziaria
                         <mat-form-field>
                           <mat-label>Via Terziaria</mat-label>
                           <mat-select [(value)]="idnewnecro">
@@ -401,7 +401,7 @@
                     <div class="column is-4 nopadding">
                       @if (maxrituali >= ix) {
                         <div class="column nopadding">
-                          Scegli Rituale di {{ix+1}}. Livello ({{(ix+1)*2}}px)
+                          Scegli Rituale di {{ix+1}}. Livello 
                           <mat-form-field>
                             <mat-label>Rituale</mat-label>
                             <mat-select [(value)]="idnewrituale[ix]">
@@ -424,7 +424,7 @@
                     <div class="column is-4 nopadding">
                       @if (maxrituali >= ix) {
                         <div class="column nopadding">
-                          Scegli Rituale di {{ix+1}}. Livello ({{ (rituali.length==0?0:(ix+1)*2)   }}px)
+                          Scegli Rituale di {{ix+1}}. Livello 
                           <mat-form-field>
                             <mat-label>Rituale</mat-label>
                             <mat-select [(value)]="idnewrituale[ix]">
@@ -481,9 +481,35 @@
                 <mat-card-content>
 
                   <div class="columns is-multiline" style="margin-left: 0px;" >
-                    @for (dd of skills; track dd) {
+                    @for (dd of otherskill; track dd) {
                       <div class="column is-4 nopadding">
                         <div class="columns">
+                          <div class="column ">
+                            {{dd.nomeskill}}  
+                          </div>
+                          <div class="column">
+                            @for (item of 5|times ; track item; let ix = $index) {
+                              <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                            }
+                            @if (dd.livello<5 ) {
+                              <button class="btn btn-xs" (click)="addskill(dd.idskill, dd.tipologia)" [disabled]="numavanzamenti<1"><i class="fa fa-plus"></i></button>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+
+                </mat-card-content>
+              </mat-card>              
+
+              <mat-card>
+                <mat-card-content>
+
+                  <div class="columns is-multiline" style="margin-left: 0px;" >
+                    @for (dd of skills; track dd) {
+                      <div class="column is-4 nopadding">
+                        <div class="columns" style="margin-bottom: 0px;">
                           <div class="column">
                             {{dd.nomeskill}}  
                           </div>
@@ -496,6 +522,24 @@
                             }
                           </div>
                         </div>
+
+                        @for (ss of dd.subskill2; track ss){
+                          <div class="columns" style="margin-bottom: 0px;">
+                            <div class="column">
+                              -- {{ss.nomeskill}}
+                            </div>
+                            <div class="column">
+                              @for (item of 5|times ; track item; let ix = $index) {
+                                <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= ss.livello, 'dred': ix < ss.livello}"></i>
+                              }
+                              @if (ss.livello<5 ) {
+                                <button class="btn btn-xs" (click)="addsubskill(ss.idskill, dd.idskill)" [disabled]="numavanzamenti<1 || ss.livello>=dd.livello"><i class="fa fa-plus"></i></button>
+                              }
+                            </div>
+                          </div> 
+                        }
+
+
                       </div>
                     }
                   </div>

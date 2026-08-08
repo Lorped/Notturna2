@@ -223,7 +223,7 @@ function controlla_legami ($idutente, $db) {
     $contatti[] =  $res;
   }
 
-    /*** contatti **/
+    /*** alleati **/
 
   $alleati = [];
   $MySql = "SELECT  *  FROM alleati

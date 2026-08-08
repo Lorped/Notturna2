@@ -49,6 +49,7 @@ export class SpendipxComponent implements OnInit {
   necromanzie: Array<FullNecromanzia> = [] ;
   taumaturgie: Array<FullTaumaturgia> = [] ;
   skills: Array<Skill> = [];
+  otherskill: Array<Skill> = [];
   attitudini: Array<Skill> = [];
 
   rituali: Array<Rituale> = [];
@@ -150,6 +151,8 @@ export class SpendipxComponent implements OnInit {
           this.maxdisc = this.scheda.maxdisc;
         }
 
+        console.log("maxdisc ",this.maxdisc);
+
         if (this.maxdisc > 5) {
           this.maxpallini = this.maxdisc;
         } else {
@@ -198,6 +201,7 @@ export class SpendipxComponent implements OnInit {
 
 
         this.skills = data.skill ;
+        this.otherskill = data.otherskill ;
         this.attitudini = data.attitudini ;
         for (let item of  this.skills ) {
           item.livello = Number(item.livello);
@@ -255,10 +259,6 @@ export class SpendipxComponent implements OnInit {
         this.scheda.xp = Number(this.scheda.xp);
         this.scheda.xpspesi = Number(this.scheda.xpspesi);
 
-        // NUOVO CALCOLO XP //
-
-        this.ricalcolo_xp();  
-
         // *********************
 
         this.schedaservice.getnecrotaum(this.idutente)
@@ -298,6 +298,10 @@ export class SpendipxComponent implements OnInit {
 
           }
         );
+
+        // NUOVO CALCOLO XP //
+        this.ricalcolo_xp();  
+
       }
     );
   }
@@ -367,13 +371,13 @@ export class SpendipxComponent implements OnInit {
     
   }
 
-  adddisc( iddisciplina: number ) {
-    let spesapx = 0 ;
-    let diclan = '';
-
+  
+  adddisc( iddisciplina: number ) { 
     for ( let j = 0 ; j< this.discipline.length; j++) {
       if ( this.discipline[j].disciplina.iddisciplina == iddisciplina) {
         this.discipline[j].disciplina.livello ++  ;
+        
+        /* NON INTERESSA SE DI CLAN O NO
         diclan = this.discipline[j].disciplina.DiClan;
         if ( diclan == 'S') {
           spesapx = 1 ;
@@ -382,28 +386,28 @@ export class SpendipxComponent implements OnInit {
           spesapx = 1 ;
           this.costonewdisc[j] = 1 ;
         }
+        */
+
       }
     }
-
-    this.scheda.xpspesi += spesapx;
+    
+    this.scheda.xpspesi ++;
 
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
     .subscribe(
-      data => {
-        
+      data => {        
         this.reload_full();
         this.ricalcolo_xp(); 
       }
     );
 
-
   }
+  
 
   addtaum( idtaum: number ) {
     for (let j = 0 ; j < this.taumaturgie.length ; j++) {
       if ( this.taumaturgie[j].taumaturgia.idtaum == idtaum ) {
         this.taumaturgie[j].taumaturgia.livello ++ ;
-
 
         if (this.taumaturgie[j].taumaturgia.principale == 1 ) {
           for (let j = 0 ; j < this.discipline.length ; j++) {
@@ -427,7 +431,7 @@ export class SpendipxComponent implements OnInit {
 
   newtaum( lvl: number ) {
     
-    this.scheda.xpspesi += 2;
+    this.scheda.xpspesi ++;
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
       data => {
@@ -478,7 +482,7 @@ export class SpendipxComponent implements OnInit {
       if ( this.necromanzie[j].necromanzia.idnecro == idnecro ) {
         this.necromanzie[j].necromanzia.livello ++ ;
         
-        this.scheda.xpspesi += ( this.necromanzie[j].necromanzia.livello * 2  );
+        this.scheda.xpspesi ++;
 
         if (this.necromanzie[j].necromanzia.principale == 1 ) {
           for (let j = 0 ; j < this.discipline.length ; j++) {
@@ -501,7 +505,7 @@ export class SpendipxComponent implements OnInit {
 
   newnecro( lvl: number ) {
     
-    this.scheda.xpspesi += 2;
+    this.scheda.xpspesi ++;
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
       data => {
@@ -513,9 +517,10 @@ export class SpendipxComponent implements OnInit {
     );
   }
 
+  /*
   newdisc( ) {
     
-    this.scheda.xpspesi += 5;
+    this.scheda.xpspesi ++;
     this.schedaservice.newdisc(this.idutente, this.idnewdisc )
     .subscribe(
       data => {
@@ -526,10 +531,11 @@ export class SpendipxComponent implements OnInit {
       }
     );
   }
+  */
 
   addrituale(lvl: number, necrotaum: string) {
     
-    this.scheda.xpspesi += 2 * (lvl + 1);
+    this.scheda.xpspesi ++;
 
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
     .subscribe(
@@ -565,27 +571,63 @@ export class SpendipxComponent implements OnInit {
     );
   }
 
+  addsubskill (idskill: number, xid: number){
+
+    for (let j = 0 ; j < this.skills.length ; j++) {
+      if (this.skills[j].idskill == xid ) {      
+        for (let k = 0 ; k < this.skills[j].subskill2.length ; k++) {
+          if (this.skills[j].subskill2[k].idskill == idskill ) {
+            
+            this.skills[j].subskill2[k].livello++;
+            this.scheda.xpspesi ++ ;
+            
+            this.schedaservice.addskill(this.idutente, idskill, 0)
+              .subscribe( (data:any) => {
+              this.reload_full();
+              this.ricalcolo_xp();
+            });
+          }
+        }
+
+      }
+    }
+  }
+
   addskill (idskill: number, tipologia: number) {
-    if (tipologia == 0 ) {
+    if (tipologia == 0  ) {
       for (let j = 0 ; j < this.skills.length ; j++) {
         if (this.skills[j].idskill == idskill ) {
-          this.skills[j].livello ++ ;
-
           
+          this.skills[j].livello ++ ;         
           this.scheda.xpspesi ++ ;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
-            /* */
+            this.reload_full();
+            this.ricalcolo_xp();
           });
         }
       }
-    } else {
+    } else if (tipologia == 2 ) {
       for (let j = 0 ; j < this.attitudini.length ; j++) {
         if (this.attitudini[j].idskill == idskill ) {
-          this.attitudini[j].livello ++ ;
-
           
+          this.attitudini[j].livello ++ ;
+          this.scheda.xpspesi ++ ;
+
+          this.schedaservice.addskill(this.idutente, idskill, tipologia)
+          .subscribe( (data:any) => {
+            this.reload_full();
+            this.ricalcolo_xp();
+          });
+        }
+      }
+    } else if (tipologia == 1) {
+      for (let j = 0 ; j < this.otherskill.length ; j++) {
+        if (this.otherskill[j].idskill == idskill ) {
+          
+          this.otherskill[j].livello ++ ;
+          this.scheda.xpspesi ++ ;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
@@ -600,8 +642,7 @@ export class SpendipxComponent implements OnInit {
 
   addfdv(){
 
-    this.scheda.fdvmax ++;
-    
+    this.scheda.fdvmax ++;  
     this.scheda.xpspesi ++ ;
 
     this.schedaservice.addfdv(this.idutente)
@@ -614,10 +655,8 @@ export class SpendipxComponent implements OnInit {
 
   addbp (){
 
-
-        this.scheda.bloodp ++;
-        
-        this.scheda.xpspesi += 4 * this.scheda.bloodp ;
+        this.scheda.bloodp ++;    
+        this.scheda.xpspesi ++ ;
 
         this.schedaservice.addbp(this.idutente)
         .subscribe( (data:any) => {
@@ -680,15 +719,34 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.getscheda(this.idutente)
     .subscribe (
       (data: any) => {
+
+        this.scheda = data.user;
+
+        this.scheda['maxstat'] = Number(this.scheda['maxstat']);
+        this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);
+
+        this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
+
+        if (this.maxdisc > this.scheda.maxdisc) {
+          this.maxdisc = this.scheda.maxdisc;
+        }
+
+        console.log("maxdisc ",this.maxdisc);
+
+        if (this.maxdisc > 5) {
+          this.maxpallini = this.maxdisc;
+        } else {
+          this.maxpallini = 5;
+        }
+
+        this.maxattributi = this.scheda['maxstat'];
+
+
+
         this.discipline = data.discipline ;
         for (let j=0 ; j < this.discipline.length ; j++ ) {
           this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
           this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-          if ( this.discipline[j].disciplina.DiClan == "S" ) {
-            this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
-          } else {
-            this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
-          }
         }
 
         this.taumaturgie = data.taumaturgie ;
@@ -712,6 +770,7 @@ export class SpendipxComponent implements OnInit {
           }
         );
 
+        /*
         this.schedaservice.listamalgame(this.idutente)
         .subscribe(
           (data: any) => {
@@ -719,15 +778,13 @@ export class SpendipxComponent implements OnInit {
             this.amalgame.forEach(element => {
               element.costo = Number (element.costo);
               element.checkdisc = Number (element.checkdisc);
-              /*
-              if (element.costo > this.xpdisponibili) {
-                element.checkdisc = 0;
-              }
-              */
+              
              //console.log(element);
             });
           }
         );
+        */
+        
 
       }
     );
@@ -826,7 +883,8 @@ export class SpendipxComponent implements OnInit {
 
   ricalcolo_xp (){
 
-    this.scheda.xpspesi=1;
+    this.avanzamento_limitato = false;
+    this.avanzamento_speciale = false;
 
     this.numavanzamenti = 0;
     for (let j = this.scheda.xpspesi; j < this.avanzamenti.length ; j++){
@@ -837,14 +895,13 @@ export class SpendipxComponent implements OnInit {
 
     if (this.scheda.xpspesi == 0 && this.numavanzamenti>0) {
       this.avanzamento_limitato = true;
+      console.log("limitato ", this.avanzamento_limitato);
     }
-    if (this.scheda.xpspesi == 3 && this.numavanzamenti>0) {
+    if ((this.scheda.xpspesi == 3 || this.scheda.xpspesi == 10 ) && this.numavanzamenti>0) {
       this.avanzamento_speciale = true;
+       console.log("speciale ", this.avanzamento_speciale);
+      this.addbp();
     }
-
-    console.log("limitato ", this.avanzamento_limitato);
-    console.log("speciale ", this.avanzamento_speciale);
-
     
 
   }

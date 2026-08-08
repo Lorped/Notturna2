@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MYSQL //
+require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
 
 $postdata = file_get_contents("php://input");
@@ -45,7 +45,7 @@ if ( isset($postdata) && $idutente != "" && $idtaum != "" ) {
   $nometaum = $res['nometaum'];
   $principale = $res['principale'];
 
-  $spesapx = $newlivello * 2;
+  $spesapx = 1;
 
   $MySql = "UPDATE taumaturgie SET livello = livello + 1
     WHERE idtaum = $idtaum AND idutente = $idutente";
@@ -59,7 +59,7 @@ if ( isset($postdata) && $idutente != "" && $idtaum != "" ) {
 
   $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, $spesapx , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
   if ( $principale == 1 ) {

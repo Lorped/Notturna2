@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php');  //MYSQL//
+require_once __DIR__  . '/db2.inc.php';  //MYSQL//
 
 
 $postdata = file_get_contents("php://input");
@@ -36,7 +36,7 @@ if ( isset($postdata) && $idutente != "" && $idnecro != "" ) {
 
 
 
-  $spesapx =  2;
+  $spesapx =  1;
 
   $MySql = "INSERT into necromanzie ( idnecro , livello, idutente , principale ) VALUES ( $idnecro , 1 ,  $idutente , 1 )";
   $Result = mysqli_query($db, $MySql);
@@ -56,7 +56,7 @@ if ( isset($postdata) && $idutente != "" && $idnecro != "" ) {
 
   $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, $spesapx , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
   $MySql = "UPDATE discipline SET livello = livello +1

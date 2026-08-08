@@ -20,7 +20,7 @@
         <mat-card>
           <mat-card-header>
             <mat-card-title>
-              Aggiorna Fama, Background, Status
+              Aggiorna Fama e Sentiero
             </mat-card-title>
             <mat-card-subtitle>
               NOTA: Ogni modifica in questa pagina deve essere concordata con la Narrazione.
@@ -71,7 +71,7 @@
                 </mat-card-content>
               </mat-card>
 
-
+            <!--
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
                   <mat-panel-title>
@@ -144,7 +144,8 @@
                 </div>
 
               </mat-expansion-panel>
-
+            -->
+            <!--
 
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -237,10 +238,12 @@
                   }
                 </mat-expansion-panel>
 
+              -->
+
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
-                      Forza di Volontà, Umanità/Sentiero e Generazione
+                      Umanità e Sentiero
                     </mat-panel-title>
                   </mat-expansion-panel-header>
 
@@ -269,6 +272,7 @@
                       }
                       <button class="btn  btn-xs" (click)="addsentiero()" [disabled]="valsentiero>9"><i class="fa fa-plus"></i></button>
                     </div>
+                    <!--
                     <div class="column is-2">
                       Forza di Volontà
                     </div>
@@ -279,7 +283,10 @@
                       }
                       <button class="btn  btn-xs" (click)="addfdv()" [disabled]="fdv>9"><i class="fa fa-plus"></i></button>
                     </div>
+                    -->
                   </div>
+
+                  <!--
                   <div class="columns">
                     <div class = "column">
                       Generazione attuale: {{generazione}}
@@ -288,6 +295,8 @@
                       <button  mat-raised-button class="large" (click)="riducigen()" color="primary"  [disabled]="generazione==4" style="width: 100%;">Diminuisci Generazione</button>
                     </div>
                   </div>
+                -->
+               
 
                 </mat-expansion-panel>
 

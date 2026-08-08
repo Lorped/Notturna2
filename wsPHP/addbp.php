@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MYSQLI//
+require_once __DIR__ .  '/db2.inc.php'; //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
@@ -39,7 +39,7 @@ if ( isset($postdata) && $idutente != ""  ) {
   $res = mysqli_fetch_array ($Result);
   $bloodp = $res['bloodp'];
 
-  $spesapx = ($bloodp + 1) * 4 ;
+  $spesapx = 1 ;
 
 
   $MySql = "UPDATE personaggio SET  bloodp = bloodp + 1 , xpspesi = xpspesi + $spesapx
@@ -47,10 +47,10 @@ if ( isset($postdata) && $idutente != ""  ) {
   $Result = mysqli_query($db, $MySql);
 
 
-  $Azione = 'Blood Potency a '.($bloodp+1) ;
+  $Azione = 'Controllo del Sangue a '.($bloodp+1) ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, 1 , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
 
