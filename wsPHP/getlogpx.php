@@ -16,11 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php'); // MYSQL //
+require_once __DIR__ . '/db2.inc.php'; // MYSQL //
 
 $idutente = $_GET['idutente'];
 
-	$MySql="SELECT * FROM logpx WHERE idutente=$idutente ORDER BY data DESC";
+	$MySql="SELECT * FROM logpx WHERE idutente=$idutente ORDER BY data asc, logpx_id asc";
 	$Result=mysqli_query($db, $MySql);
 
 	$logpx = [];

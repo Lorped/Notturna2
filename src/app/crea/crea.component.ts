@@ -796,13 +796,13 @@ export class CreaComponent implements OnInit {
     }
     for ( let j = 0 ; j < this.necromanzie.length ; j++) {
       if (this.necromanzie[j].livello > 0  ) {
-        const disc: ListaDisciplineVie = { disc_vie: 'N', id: this.necromanzie[j].idnecro, nome: this.listaNecro[j].nomenecro, focus: 0  };
+        const disc: ListaDisciplineVie = { disc_vie: 'N', id: Number(this.listaNecro[j].idnecro), nome: this.listaNecro[j].nomenecro, focus: 0  };
         this.listaDisciplineVie.push(disc);
       }
     }
     for ( let j = 0 ; j < this.taumaturgie.length ; j++) {
       if (this.taumaturgie[j].livello > 0  ) {
-        const disc: ListaDisciplineVie = { disc_vie: 'T', id: this.taumaturgie[j].idtaum, nome: this.listaTaum[j].nometaum, focus: 0  };
+        const disc: ListaDisciplineVie = { disc_vie: 'T', id: Number(this.listaTaum[j].idtaum), nome: this.listaTaum[j].nometaum, focus: 0  };
         this.listaDisciplineVie.push(disc);
       }
     }

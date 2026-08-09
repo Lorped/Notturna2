@@ -321,8 +321,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	}
 
 	foreach ( $focus as $f) {
-		if ($f -> focus == 1){
-			$id= $f -> id;
+
+		$isfocus = $f -> focus;
+		if ($isfocus == 1){
+			$id = $f -> id;
 			if ( $f-> disc_vie == "D"){				
 				$MySql = "UPDATE discipline SET focus = 1 WHERE idutente = $idutente and iddisciplina = $id ";
 			} elseif ( $f->disc_vie == "T"){
