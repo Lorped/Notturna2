@@ -12,6 +12,7 @@ export class MainComponent implements OnInit {
 
   idutente = 0 ;
   mybadge = '' ;
+  mybadge2 = '' ;
 
   constructor(private schedaservice: SchedaService) { }
 
@@ -24,6 +25,13 @@ export class MainComponent implements OnInit {
         this.mybadge = String(data);
       }
     );
+    this.schedaservice.checkavanzamenti(this.idutente).
+    subscribe (
+      data => {
+        this.mybadge2 = String(data);
+      }
+    );
+
   }
 
 }

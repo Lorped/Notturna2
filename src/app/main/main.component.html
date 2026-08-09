@@ -23,7 +23,7 @@
 
     <div class="column is-3">
       <a [routerLink]="['/spendipx']">
-        <mat-card class="movable">
+        <mat-card class="movable" [matBadge]="mybadge2" [matBadgeHidden]="mybadge2 == '0'" matBadgePosition="after"  matBadgeColor="warn">
           <mat-card-content class="all">
             <i class="fa fa-plus-square"></i> Esegui avanzamenti
           </mat-card-content>

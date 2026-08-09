@@ -12,6 +12,7 @@ export class SidexComponent implements OnInit {
 
   idutente = 0 ;
   mybadge = '' ;
+  mybadge2 = '' ;
   ingate = true ;
 
   constructor(private schedaservice: SchedaService) { }
@@ -27,6 +28,12 @@ export class SidexComponent implements OnInit {
     subscribe (
       data => {
         this.mybadge = String(data);
+      }
+    );
+    this.schedaservice.checkavanzamenti(this.idutente).
+    subscribe (
+      data => {
+        this.mybadge2 = String(data);
       }
     );
   }
