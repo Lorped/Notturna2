@@ -45,7 +45,7 @@ if ( isset($postdata) && $idutente != "" && $idnecro != "" ) {
   $nomenecro = $res['nomenecro'];
   $principale = $res['principale'];
 
-  $spesapx = $newlivello * 2;
+  $spesapx = 1;
 
   $MySql = "UPDATE necromanzie SET livello = livello + 1
     WHERE idnecro = $idnecro AND idutente = $idutente";
@@ -59,7 +59,7 @@ if ( isset($postdata) && $idutente != "" && $idnecro != "" ) {
 
   $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, -$spesapx , '$Azione' ) ";
+    VALUES ( $idutente, $spesapx , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
   if ( $principale == 1 ) {

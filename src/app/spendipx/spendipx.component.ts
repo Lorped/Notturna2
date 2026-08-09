@@ -132,6 +132,9 @@ export class SpendipxComponent implements OnInit {
         this.scheda['percezione'] = Number(this.scheda['percezione']);
 
         this.scheda.xp = Number (this.scheda.xp);
+        this.scheda.xpspesi = Number (this.scheda.xpspesi);
+
+
         this.scheda['fdv'] = Number(this.scheda['fdv']);
         this.scheda['fdvmax'] = Number(this.scheda['fdvmax']);
         this.scheda['bloodp'] = Number(this.scheda['bloodp']);
@@ -420,7 +423,6 @@ export class SpendipxComponent implements OnInit {
     .subscribe(
       data => {
         this.reload_full();
-        this.ricalcolo_xp(); 
       }
     );
   }
@@ -445,7 +447,6 @@ export class SpendipxComponent implements OnInit {
     .subscribe(
       data => {
         this.reload_full();
-        this.ricalcolo_xp(); 
       }
     );
   }
@@ -457,45 +458,8 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
       data => {
-        this.schedaservice.getscheda(this.idutente).
-        subscribe (
-          (data: any) => {
-            this.discipline = data.discipline ;
-            for (let j=0 ; j < this.discipline.length ; j++ ) {
-              this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
-              this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-              if ( this.discipline[j].disciplina.DiClan == "S" ) {
-                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
-              } else {
-                this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
-              }
-            }
-
-            this.taumaturgie = data.taumaturgie ;
-            this.necromanzie = data.necromanzie ;
-
-            for ( let j = 0 ; j < this.taumaturgie.length ; j++ ){
-              this.taumaturgie[j].taumaturgia.livello = Number (this.taumaturgie[j].taumaturgia.livello);
-              this.livellitaum [j] = Number ( this.taumaturgie[j].taumaturgia.livello );
-            }
-
-            for ( let j = 0 ; j < this.necromanzie.length ; j++ ){
-              this.necromanzie[j].necromanzia.livello = Number (this.necromanzie[j].necromanzia.livello);
-              this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
-            }
-
-            this.schedaservice.getnecrotaum(this.idutente)
-            .subscribe(
-              (data: any) => {
-                this.newtaumaturgie = data.taumaturgie;
-                this.newnecromanzie = data.necromanzie;
-                this.ricalcolo_xp(); 
-
-              }
-            );
-          }
-        );
-      }
+        this.reload_full ();
+      }   
     );
   }
 
@@ -508,10 +472,7 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
       data => {
-
         this.reload_full ();
-        this.ricalcolo_xp();
-
       }
     );
   }
@@ -562,7 +523,6 @@ export class SpendipxComponent implements OnInit {
                 this.rituali_t = data.rituali_t;
                 this.rituali_n = data.rituali_n;
                 this.reload_full();
-                this.ricalcolo_xp();
               }
             );
           }
@@ -663,10 +623,7 @@ export class SpendipxComponent implements OnInit {
         this.schedaservice.addbp(this.idutente)
         .subscribe( (data:any) => {
           this.reload_full();   //bp può portare a nuovi maxstat/maxdisc
-          console.log ("prima re-check xpspesi =" , this.scheda.xpspesi);
-          this.ricalcolo_xp();
         });
-
   }
 
   scegliprimaria(){
@@ -678,7 +635,6 @@ export class SpendipxComponent implements OnInit {
         this.scheda.xpspesi ++ ;
         this.numavanzamenti -- ;
         this.reload_full ();
-        this.ricalcolo_xp();
       });
 
   }
@@ -692,7 +648,6 @@ export class SpendipxComponent implements OnInit {
         this.scheda.xpspesi ++ ;
         this.numavanzamenti -- ;
         this.reload_full ();
-        this.ricalcolo_xp();
       });
 
   }
@@ -726,6 +681,10 @@ export class SpendipxComponent implements OnInit {
       (data: any) => {
 
         this.scheda = data.user;
+        this.scheda.xp = Number ( this.scheda.xp);
+        this.scheda.xpspesi = Number ( this.scheda.xpspesi);
+
+        //console.log ("reaload - xpsesi ", this.scheda.xpspesi);
 
         this.scheda['maxstat'] = Number(this.scheda['maxstat']);
         this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);
@@ -735,8 +694,6 @@ export class SpendipxComponent implements OnInit {
         if (this.maxdisc > this.scheda.maxdisc) {
           this.maxdisc = this.scheda.maxdisc;
         }
-
-        console.log("maxdisc ",this.maxdisc);
 
         if (this.maxdisc > 5) {
           this.maxpallini = this.maxdisc;
@@ -765,13 +722,7 @@ export class SpendipxComponent implements OnInit {
           this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
         }
 
-        this.schedaservice.getnecrotaum(this.idutente)
-        .subscribe(
-          (data: any) => {
-            this.newtaumaturgie = data.taumaturgie;
-            this.newnecromanzie = data.necromanzie;
-          }
-        );
+        this.ricalcolo_xp();
 
         /*
         this.schedaservice.listamalgame(this.idutente)
@@ -787,7 +738,6 @@ export class SpendipxComponent implements OnInit {
           }
         );
         */
-        
 
       }
     );
@@ -897,13 +847,20 @@ export class SpendipxComponent implements OnInit {
 
     this.avanzamento_limitato = false;
     this.avanzamento_speciale = false;
+    
+    //console.log("ricalcolo , xp", this.scheda.xp);
+    //console.log("ricalcolo , xpspesi", this.scheda.xpspesi);
+    
 
     this.numavanzamenti = 0;
     for (let j = this.scheda.xpspesi; j < this.avanzamenti.length ; j++){
-      if (this.scheda['xp'] >= this.avanzamenti[j]) {
+      if (this.scheda.xp >= this.avanzamenti[j]) {
         this.numavanzamenti ++;
       }
     }
+
+    //console.log("ricalcolo , avanzamenti", this.numavanzamenti);
+    
 
     if (this.scheda.xpspesi == 0 && this.numavanzamenti>0) {
       this.avanzamento_limitato = true;
@@ -912,7 +869,7 @@ export class SpendipxComponent implements OnInit {
     if ((this.scheda.xpspesi == 3 || this.scheda.xpspesi == 10 ) && this.numavanzamenti>0) {
       this.avanzamento_speciale = true;
        console.log("speciale ", this.avanzamento_speciale);
-       console.log ("xpspesi =" , this.scheda.xpspesi);
+       //console.log ("xpspesi =" , this.scheda.xpspesi);
       this.addbp();
     }
     
