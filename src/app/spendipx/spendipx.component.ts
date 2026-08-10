@@ -21,6 +21,7 @@ export class SpendipxComponent implements OnInit {
   ];
 
   numavanzamenti = 0;
+  lock = false ;
 
   avanzamento_speciale = false;
   avanzamento_limitato = false;
@@ -360,6 +361,7 @@ export class SpendipxComponent implements OnInit {
     }
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
+    this.lock = true;
     this.schedaservice.addattr(this.idutente, attributo)
     .subscribe(
       data => {
@@ -391,6 +393,7 @@ export class SpendipxComponent implements OnInit {
     
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
+    this.lock = true;
 
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
     .subscribe(
@@ -419,6 +422,7 @@ export class SpendipxComponent implements OnInit {
     }
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
+    this.lock = true;
     this.schedaservice.addtaum(this.idutente, idtaum)
     .subscribe(
       data => {
@@ -443,6 +447,7 @@ export class SpendipxComponent implements OnInit {
     }
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
+    this.lock = true;
     this.schedaservice.addnecro(this.idutente, idnecro)
     .subscribe(
       data => {
@@ -454,6 +459,7 @@ export class SpendipxComponent implements OnInit {
   newtaum( lvl: number ) {
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
+    this.lock = true;
 
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
@@ -468,6 +474,7 @@ export class SpendipxComponent implements OnInit {
   newnecro( lvl: number ) {
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
+    this.lock = true;
     
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
@@ -497,6 +504,7 @@ export class SpendipxComponent implements OnInit {
     
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
+    this.lock = true;
 
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
     .subscribe(
@@ -541,6 +549,7 @@ export class SpendipxComponent implements OnInit {
             this.skills[j].subskill2[k].livello++;
             this.scheda.xpspesi ++ ;
             this.numavanzamenti -- ;
+            this.lock = true;
             
             this.schedaservice.addskill(this.idutente, idskill, 0)
               .subscribe( (data:any) => {
@@ -562,6 +571,7 @@ export class SpendipxComponent implements OnInit {
           this.skills[j].livello ++ ;         
           this.scheda.xpspesi ++ ;
           this.numavanzamenti -- ;
+          this.lock = true;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
@@ -576,6 +586,7 @@ export class SpendipxComponent implements OnInit {
           this.attitudini[j].livello ++ ;
           this.scheda.xpspesi ++ ;
           this.numavanzamenti -- ;
+          this.lock = true;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
@@ -590,6 +601,7 @@ export class SpendipxComponent implements OnInit {
           this.otherskill[j].livello ++ ;
           this.scheda.xpspesi ++ ;
           this.numavanzamenti -- ;
+          this.lock = true;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
           .subscribe( (data:any) => {
@@ -606,6 +618,7 @@ export class SpendipxComponent implements OnInit {
     this.scheda.fdvmax ++;  
     this.scheda.xpspesi ++ ;
     this.numavanzamenti -- ;
+    this.lock = true;
 
     this.schedaservice.addfdv(this.idutente)
     .subscribe( (data:any) => {
@@ -634,6 +647,7 @@ export class SpendipxComponent implements OnInit {
         
         this.scheda.xpspesi ++ ;
         this.numavanzamenti -- ;
+        this.lock = true;
         this.reload_full ();
       });
 
@@ -647,6 +661,7 @@ export class SpendipxComponent implements OnInit {
         
         this.scheda.xpspesi ++ ;
         this.numavanzamenti -- ;
+        this.lock = true;
         this.reload_full ();
       });
 
@@ -749,6 +764,11 @@ export class SpendipxComponent implements OnInit {
     myNew.nomecontatto = this.myContatto.value;
     myNew.livello = 1 ;
 
+    this.scheda.xpspesi ++ ;
+    this.numavanzamenti --;
+    this.lock = true;
+
+
     this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto, 'U')
     .subscribe(
       (data: any) => {
@@ -757,8 +777,6 @@ export class SpendipxComponent implements OnInit {
         this.listaContatti.push(myNew) ;
         this.myContatto.reset();
         this.sommaContatti ++ ;
-        this.scheda.xpspesi ++ ;
-        this.numavanzamenti --;
         //this.reload_full();
         this.ricalcolo_xp();
       }
@@ -769,12 +787,15 @@ export class SpendipxComponent implements OnInit {
     for ( const item of this.listaContatti ) {
       if ( item.idcontatto == id ) {
         item.livello ++ ;
+
+        this.scheda.xpspesi ++ ;
+        this.numavanzamenti --;
+        this.lock = true;
+
         this.schedaservice.putcontatti(this.idutente, id, item.livello, 'U')
         .subscribe(
           (data) => {
             this.sommaContatti ++ ;
-            this.scheda.xpspesi ++ ;
-            this.numavanzamenti --;
             //this.reload_full();
             this.ricalcolo_xp();
           }
@@ -787,6 +808,10 @@ export class SpendipxComponent implements OnInit {
     myNew.nomealleato = this.myAlleato.value;
     myNew.livello = 1 ;
 
+    this.scheda.xpspesi ++ ;
+    this.numavanzamenti --;
+    this.lock = true;
+
     this.schedaservice.newalleato(this.idutente, myNew.nomealleato, 'U')
     .subscribe(
       (data: any) => {
@@ -795,8 +820,7 @@ export class SpendipxComponent implements OnInit {
         this.listaAlleati.push(myNew) ;
         this.myAlleato.reset();
         this.sommaAlleati ++ ;
-        this.scheda.xpspesi ++ ;
-        this.numavanzamenti --;
+
         //this.reload_full();
         this.ricalcolo_xp();
       }
@@ -807,12 +831,13 @@ export class SpendipxComponent implements OnInit {
     for ( const item of this.listaAlleati ) {
       if ( item.idalleato == id ) {
         item.livello ++ ;
+        this.scheda.xpspesi ++ ;
+        this.numavanzamenti --;
+        this.lock = true;
         this.schedaservice.putalleati(this.idutente, id, item.livello, 'U')
         .subscribe(
           (data) => {
             this.sommaAlleati ++ ;
-            this.scheda.xpspesi ++ ;
-            this.numavanzamenti --;
             //this.reload_full();
             this.ricalcolo_xp();
           }
@@ -830,6 +855,7 @@ export class SpendipxComponent implements OnInit {
   
         this.scheda.xpspesi ++ ;
         this.numavanzamenti --;
+        this.lock = true;
         
         newlivello = item.livello;
         this.schedaservice.putbg(this.idutente, id , newlivello , 'U' ).subscribe(
@@ -865,12 +891,15 @@ export class SpendipxComponent implements OnInit {
     if (this.scheda.xpspesi == 0 && this.numavanzamenti>0) {
       this.avanzamento_limitato = true;
       console.log("limitato ", this.avanzamento_limitato);
+      this.lock = false;
     }
     if ((this.scheda.xpspesi == 3 || this.scheda.xpspesi == 10 ) && this.numavanzamenti>0) {
       this.avanzamento_speciale = true;
        console.log("speciale ", this.avanzamento_speciale);
        //console.log ("xpspesi =" , this.scheda.xpspesi);
       this.addbp();
+    } else {
+      this.lock = false ;
     }
     
 

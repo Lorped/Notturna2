@@ -788,6 +788,8 @@ export class CreaComponent implements OnInit {
 
     this.listaDisciplineVie = [];
 
+    
+
     for ( let j = 0 ; j < 3 ; j++) {
       if (this.discipline[j].livello > 0 && this.discipline[j].iddisciplina != 98 && this.discipline[j].iddisciplina != 99 ) {
         const disc: ListaDisciplineVie = { disc_vie: 'D', id: this.discipline[j].iddisciplina, nome: this.discipline[j].nomedisc, focus: 0  };
@@ -806,6 +808,28 @@ export class CreaComponent implements OnInit {
         this.listaDisciplineVie.push(disc);
       }
     }
+
+    if (this.clanPG!.value == 20) {
+
+        //console.log ("listaDisciplineVie ", this.listaDisciplineVie );
+        //console.log ("disciplinevili ", this.disciplinevili );
+
+
+      this.listaDisciplineVie.forEach(element => {
+        
+        //console.log ("element ", element );
+
+
+        const trova = this.disciplinevili.find ( (d) => d.iddisciplina == element.id);
+
+        //console.log ("trova ", trova );
+        element.nome = trova?.nomedisc||'';
+        //console.log ("element ", element );
+
+
+      });
+    }
+
 
 
 
