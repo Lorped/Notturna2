@@ -16,14 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php'); // MYSQLI//
+require_once __DIR__ . '/db2.inc.php'; // MYSQLI//
 
 $idutente = $_GET['idutente'];
 
 
-	$MySql = "SELECT personaggio.idstatus , status , fdvmax, bloodp, bloodpmax , sete , attivazione, personaggio.generazione , addbp, fdvbase, bgbase FROM personaggio
+	$MySql = "SELECT personaggio.idstatus , status ,  attivazione, bgbase, generazione FROM personaggio
 		LEFT JOIN statuscama on statuscama.idstatus = personaggio.idstatus
-		LEFT JOIN generazione on generazione.generazione = personaggio.generazione
 			WHERE  idutente = $idutente ";
 	$Result = mysqli_query($db, $MySql);
 	$res = mysqli_fetch_array ($Result,MYSQLI_ASSOC);

@@ -72,7 +72,7 @@
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                    Background e Contatti
+                    Background, Contatti e Alleati
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
@@ -154,40 +154,53 @@
 
                 </div>
 
-              </mat-expansion-panel>
-
-
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    Influenze
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-
-
                 <div class="columns">
                   <div class="column">&nbsp;</div>
-                  <div class="column"><hr> </div>
-                  <div class="column is-2" style="text-align: center;">{{sommaInfluenze}} / {{maxinfluenze}} </div>
-                  <div class="column"><hr> </div>
+                  <div class="column"><hr></div>
                   <div class="column">&nbsp;</div>
                 </div>
 
-                @for (tt of listainfluenze; track tt) {
+              <div class="columns">
+
+                  <div class="column is-6">
+                    Alleati:
+                  </div>
+                  <div class="column ">
+                    {{sommaalleati}} / 20
+                  </div>
+                </div>
+
+                @for (tt of listaAlleati; track tt) {
                   <div class="columns">
-                    <div class="column is-6">
-                      {{ tt.nomeinfluenza}}
+                    <div class="column ">
+                      {{ tt.nomealleato}}
                     </div>
                     <div class="column ">
-                      <button  class="btn  btn-xs" (click)="mininf(tt.idinfluenza)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
+                      <button  class="btn  btn-xs" (click)="minall(tt.idalleato)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                       @for (item of 5|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
                       }
-                      <button class="btn  btn-xs" (click)="addinf(tt.idinfluenza)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
+                      <button class="btn  btn-xs" (click)="addall(tt.idalleato)" [disabled]="tt.livello>4 ||sommaalleati==20"><i class="fa fa-plus"></i></button>
                     </div>
                   </div>
                 }
 
+                <div class="columns ">
+
+
+                  <div class="column is-6">
+                    <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                      <input matInput [formControl]="myAlleato" placeholder="Nuovo contatto" type="text" >
+                    </mat-form-field>
+                    @if (myAlleato.hasError('pattern')) {
+                      <mat-error>Non sono permessi solo "blank"</mat-error>
+                    }
+                  </div>
+                  <div class="column is-2 ">
+                    <button  mat-raised-button class="large" (click)="newalleato()" color="primary" [disabled]="myContatto.hasError('pattern')||myContatto.hasError('required') " style="width: 100%;">Aggiungi</button>
+                  </div>
+
+                </div>
               </mat-expansion-panel>
 
 
@@ -205,42 +218,22 @@
                       <div class="column ">A: {{status_new}} [+{{this.attivazione_new}}]</div>
                     </div>
                     <div class="columns">
-                      <div class="column is-2">Blood Potency: {{ bloodp_new  }} (+{{bloodp_new-bloodp_old}})</div>
-                      <div class="column is-1">FdV: {{ fdv_new }} (+{{fdv_new-fdv_old}})</div>
+                      <!-- <div class="column is-2">Blood Potency: {{ bloodp_new  }} (+{{bloodp_new-bloodp_old}})</div> -->
+                      <!-- <div class="column is-1">FdV: {{ fdv_new }} (+{{fdv_new-fdv_old}})</div> -->
                       <div class="column is-2">Punti BG addizionali: {{bgbase_new-bgbase_old}}</div>
-                      <div class="column is-3">Livelli sete addizionali: {{sete_new-sete_old}}</div>
+                      <!-- <div class="column is-3">Livelli sete addizionali: {{sete_new-sete_old}}</div> -->
                       <div class="column is-4">Punti competenza addizionali: {{conoscenze_new-conoscenze_old}}</div>
                     </div>
                     <hr>
                       <div class="columns is-multiline " style="margin-left: 0px;" >
-                        @for (dd of listaskill; track dd; let ski = $index) {
-                          <div class="column is-4 nopadding">
-                            <div class="columns ">
-                              <div class="column ">
-                                {{dd.nomeskill}}
-                              </div>
-                              <div class="column alc">
-                                @if (dd.livello<5) {
-                                  <button class="btn btn-xs" (click)="minsk(ski)" [disabled]="listanew[ski].livello == 0"><i class="fa fa-plus"></i></button>
-                                }
-                                @for (item of 5|times ; track item; let ix = $index) {
-                                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello+listanew[ski].livello, 'dred': ix < dd.livello+listanew[ski].livello}"></i>
-                                }
-                                @if (dd.livello+listanew[ski].livello<5) {
-                                  <button class="btn btn-xs" (click)="addsk(ski)" [disabled]="puntidisponibili==0"><i class="fa fa-plus"></i></button>
-                                }
-                              </div>
-                            </div>
-                          </div>
-                        }
                       </div>
                       <div class="columns">
-                        <div class="column">Distribuire i punti competenze disponibili e poi finalizzare il Passaggio di Status. Ricordarsi di aggiungere anche i punti BG addizionali.</div>
+                        <div class="column">Dopo aver effettuato il passaggio di status, ricordarsi di aggiungere anche i punti BG e Competenze addizionali.</div>
                       </div>
                       <div class="columns">
                         <div class="column is-4 ">&nbsp;</div>
                         <div class="column is-4 ">
-                          <button  mat-raised-button class="large" (click)="cambiastatus()" color="primary" [disabled]="puntidisponibili != 0" style="width: 100%;">Cambia Status</button>
+                          <button  mat-raised-button class="large" (click)="cambiastatus()" color="primary"  style="width: 100%;">Cambia Status</button>
                         </div>
                         <div class="column is-4 ">&nbsp;</div>
                       </div>

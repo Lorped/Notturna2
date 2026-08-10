@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
-import { Background, Contatti, Skill, Sentiero, Pregio , GlobalStatus, Influenze } from '../global';
+import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus } from '../global';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -22,13 +22,17 @@ export class AdminbgComponent implements OnInit {
 
   listabg: Array<Background> = [];
   listaContatti: Array<Contatti> = [];
+  listaAlleati: Array<Alleati> = [];
   sommacontatti = 0;
+  sommaalleati = 0;
 
-  listainfluenze: Array<Influenze> = [];
-    sommaInfluenze = 0;
-    maxinfluenze = 0;
+
 
   myContatto = new UntypedFormControl ( '', [
+    Validators.required,
+    Validators.pattern(/.*[^ ].*/),
+  ]);
+  myAlleato = new UntypedFormControl ( '', [
     Validators.required,
     Validators.pattern(/.*[^ ].*/),
   ]);
@@ -138,34 +142,23 @@ export class AdminbgComponent implements OnInit {
     this.schedaservice.getcontatti(this.idutente).subscribe(
       (data: any) => {
         this.listaContatti = data.contatti;
+        this.listaAlleati = data.alleati;
 
         this.sommacontatti = 0;
+        this.sommaalleati = 0;
         for ( const item of this.listaContatti ) {
           item.livello = Number (item.livello);
           this.sommacontatti += item.livello;
         }
-
-      }
-    );
-
-    this.schedaservice.getinfluenze(this.idutente).subscribe(
-      (data: any) => {
-        this.listainfluenze = data.influenze;
-        this.maxinfluenze = data.maxinfluenze;
-
-        /* for ( let j=0 ; j< this.listabg.length ; j++) {
-          this.listabg[j].livello = Number (this.listabg[j].livello);
-        } */
-
-        this.sommaInfluenze = 0;
-
-        for ( const item of this.listainfluenze) {
+        for ( const item of this.listaAlleati ) {
           item.livello = Number (item.livello);
-          this.sommaInfluenze += item.livello;
+          this.sommaalleati += item.livello;
         }
 
       }
     );
+
+
 
     this.schedaservice.getsentiero(this.idutente).subscribe(
       (data: any) => {
@@ -257,8 +250,6 @@ export class AdminbgComponent implements OnInit {
             for ( let j = 0 ; j < this.listaContatti.length; j++){
               if (this.listaContatti[j].livello == 0) {
                 this.listaContatti.splice(j, 1);
-                // console.log (j);
-                // console.log (this.listaContatti);
               }
             }
             this.sommacontatti -- ;
@@ -268,7 +259,6 @@ export class AdminbgComponent implements OnInit {
     }
   }
   addcon(id: number){
-
     for ( const item of this.listaContatti ) {
       if ( item.idcontatto == id ) {
         item.livello ++ ;
@@ -276,6 +266,39 @@ export class AdminbgComponent implements OnInit {
         .subscribe(
           (data) => {
             this.sommacontatti ++ ;
+          }
+        );
+      }
+    }
+  }
+
+  minall(id: number){
+    // console.log (this.listaContatti);
+    for ( let item of this.listaAlleati  ) {
+      if ( item.idalleato == id ) {
+        item.livello -- ;
+        this.schedaservice.putalleati(this.idutente, id , item.livello, 'A')
+        .subscribe(
+          (data) => {
+            for ( let j = 0 ; j < this.listaAlleati.length; j++){
+              if (this.listaAlleati[j].livello == 0) {
+                this.listaAlleati.splice(j, 1);
+              }
+            }
+            this.sommaalleati -- ;
+          }
+        );
+      }
+    }
+  }
+  addall(id: number){
+    for ( const item of this.listaAlleati ) {
+      if ( item.idalleato == id ) {
+        item.livello ++ ;
+        this.schedaservice.putalleati(this.idutente, id, item.livello , 'A')
+        .subscribe(
+          (data) => {
+            this.sommaalleati ++ ;
           }
         );
       }
@@ -295,6 +318,22 @@ export class AdminbgComponent implements OnInit {
         this.listaContatti.push(myNew) ;
         this.myContatto.reset();
         this.sommacontatti ++ ;
+      }
+    );
+  }
+  newalleato(){
+    let myNew = new Alleati();
+    myNew.nomealleato = this.myAlleato.value;
+    myNew.livello = 1 ;
+
+    this.schedaservice.newalleato(this.idutente, myNew.nomealleato, 'A')
+    .subscribe(
+      (data: any) => {
+
+        myNew.idalleato = data ;
+        this.listaAlleati.push(myNew) ;
+        this.myAlleato.reset();
+        this.sommaalleati ++ ;
       }
     );
   }
@@ -324,12 +363,12 @@ export class AdminbgComponent implements OnInit {
 
         this.idstatus_old = Number(data.val_old.idstatus);
         this.status_old = data.val_old.status;
-        this.fdv_old = Number(data.val_old.fdvmax);
-        this.bloodp_old = Number(data.val_old.bloodp);
-        this.sete_old = Number(data.val_old.sete);
+        //this.fdv_old = Number(data.val_old.fdvmax);
+        //this.bloodp_old = Number(data.val_old.bloodp);
+        //this.sete_old = Number(data.val_old.sete);
         this.attivazione_old = Number(data.val_old.attivazione);
-        this.addbp_old = Number(data.val_old.addbp);
-        this.fdvbase_old = Number(data.val_old.fdvbase);
+        //this.addbp_old = Number(data.val_old.addbp);
+        //this.fdvbase_old = Number(data.val_old.fdvbase);
         this.bgbase_old = Number(data.val_old.bgbase);
 
         this.bloodpmax = Number(data.val_old.bloodpmax);
@@ -339,9 +378,6 @@ export class AdminbgComponent implements OnInit {
           this.idstatus_new = Number(data.val_new.idstatus);
           this.status_new = data.val_new.status;
           this.attivazione_new = Number(data.val_new.attivazione);
-          this.sete_new = Number(data.val_new.sete);
-          this.addbp_new = Number(data.val_new.addbp);
-          this.fdvbase_new = Number(data.val_new.fdvbase);
           this.bgbase_new = Number(data.val_new.bgbase);
 
           let mygen = this.generazione;
@@ -351,17 +387,7 @@ export class AdminbgComponent implements OnInit {
           this.conoscenze_old = this.matriceNumSkill [ this.idstatus_old] [14 - mygen ];
           this.conoscenze_new = this.matriceNumSkill [ this.idstatus_new] [14 - mygen ];
 
-          this.puntidisponibili = this.conoscenze_new - this.conoscenze_old;
 
-          this.bloodp_new = this.bloodp_old - this.addbp_old + this.addbp_new ;
-          if ( this.bloodp_new  > this.bloodpmax ) {
-            this.bloodp_new  = this.bloodpmax ;
-          }
-
-          this.fdv_new = this.fdv_old - this.fdvbase_old + this.fdvbase_new ;
-          if ( this.fdv_new  > 10 ) {
-            this.fdv_new  = 10 ;
-          }
         }
 
       }
@@ -370,9 +396,7 @@ export class AdminbgComponent implements OnInit {
     this.schedaservice.getskill(this.idutente).subscribe(
       (data: any) => {
         this.listaskill = data.skill;
-        /*for (let j=0 ; j< this.listaskill.length ; j++) {
-          this.listaskill[j].livello = Number (this.listaskill[j].livello);
-        } */
+  
         for (let item of  this.listaskill) {
           item.livello = Number (item.livello);
         }
@@ -534,34 +558,6 @@ export class AdminbgComponent implements OnInit {
     );
   }
 
-    mininf(id: number){
-    
-
-    let newlivello = 0 ;
-
-    for ( let item of this.listainfluenze ){
-      if ( item.idinfluenza == id){
-        item.livello -- ;
-        this.sommaInfluenze -- ;
-        newlivello = item.livello;
-      }
-    }
-    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'A' ).subscribe();
-
-  }
-  addinf(id: number){
-    let newlivello = 0 ;
-
-    for ( let item of this.listainfluenze ){
-      if ( item.idinfluenza == id){
-        item.livello ++;
-        this.sommaInfluenze ++;
-        newlivello = item.livello;
-      }
-    }
-    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'A' ).subscribe();
-
-
-  }
+  
 
 }
