@@ -136,7 +136,7 @@
 
           <mat-card>
             <mat-card-content>
-              Punti background da assegnare: {{maxBG - sommaBG}}
+              Punti background da assegnare: {{maxBG - sommaBG + bonusbg}}
             </mat-card-content>
           </mat-card>
 
@@ -152,7 +152,7 @@
                     @for (i of b.MaxIniziale | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
                     }
-                    <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG||(is14 && b.idback==5)"><i class="fa fa-plus"></i></button>
+                    <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG+bonusbg||(is14 && b.idback==5)"><i class="fa fa-plus"></i></button>
                   <!--  </div> -->
                 </div>
               </mat-card-content>
@@ -323,7 +323,7 @@
 
       <mat-card>
         <div>
-          <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK " >Prosegui</button>
+          <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK ||((lds==23||lds==7)&&(sommaAlleati+sommaCont<2))" >Prosegui</button>
         </div>
       </mat-card>
       <mat-card >

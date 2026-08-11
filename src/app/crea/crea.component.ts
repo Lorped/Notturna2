@@ -31,6 +31,11 @@ import { Router } from '@angular/router';
 
 export class CreaComponent implements OnInit {
 
+  bonusbg = 0 ;    //bonus bg da lds
+  mingregge = 0;
+  minseguaci = 0;
+  bgldsOK =false ;
+
 
   ldsOK = false ;
   listalds: Array<Lds> = [ 
@@ -416,7 +421,8 @@ export class CreaComponent implements OnInit {
 
   checkbg () {
     let ok = false;
-    if ( (this.sommaBG === this.maxBG) && ((this.sommaCont === this.maxCont) || this.maxCont === 0 )) {
+
+    if ( (this.sommaBG === this.maxBG+this.bonusbg) && ((this.sommaCont === this.maxCont) || this.maxCont === 0 )) {
       ok = true;
     }
     if (this.maxCont > 0) {
@@ -725,8 +731,13 @@ export class CreaComponent implements OnInit {
 
 
     this.lds=0;
+    this.bonusbg = 0 ;
     this.myLDS = this.listalds.filter((unit) => unit.idclan == this.clanPG?.value);
     this.ldsOK=false;
+      const cc = this.bg.find( x =>  x.idback == 11);
+      if (cc) { cc.MinIniziale = 0 ; }
+      const cc1 = this.bg.find( x =>  x.idback == 3);
+      if (cc1) { cc1.MinIniziale = 0 ;}
 
 
   }
@@ -930,6 +941,61 @@ export class CreaComponent implements OnInit {
     console.log ( "lds ", this.lds);
 
     this.ldsOK = true;
+    this.bonusbg=0;
+    console.log ( "bonusbg ", this.bonusbg);
+
+
+      const cc = this.bg.find( (x) =>  x.idback == 11);
+      if (cc) { cc.MinIniziale = 0 ;}
+      const cc1 = this.bg.find( (x) =>  x.idback == 3);
+      if (cc1) { cc1.MinIniziale = 0 ;}
+      const cc2 = this.bg.find( (x) =>  x.idback == 6);
+      if (cc2) { cc2.MinIniziale = 0 ;}
+      const cc3 = this.bg.find( (x) =>  x.idback == 2);
+      if (cc3) { cc3.MinIniziale = 0 ;}
+      this.bg.forEach(element => {
+        element.livello = element.MinIniziale;
+      });
+      this.cont.forEach(element => {
+        element.livello=0;
+        element.nomecontatto='';
+      });
+      this.sommaCont = 0;
+      this.maxCont = 0 ;
+       this.alleati.forEach(element => {
+        element.livello=0;
+        element.nomealleato='';
+      });
+      this.sommaAlleati = 0;
+      this.maxAlleati = 0 ;
+      this.sommaBG=0;
+
+
+    if ( this.lds== 13 || this.lds == 23 ||  this.lds==7|| this.lds==28){
+      this.bonusbg=2;
+      console.log("bonusbg ", this.bonusbg);
+    }
+    if ( this.lds== 19||this.lds==26 ){
+      this.bonusbg=-2;
+      console.log("bonusbg ", this.bonusbg);
+    }
+    if (this.lds==30) {
+      const cc = this.bg.find( (x) =>  x.idback == 11);
+      if (cc) { cc.MinIniziale = 1 ; cc.livello = 1;}
+      const cc1 = this.bg.find( (x) =>  x.idback == 3);
+      if (cc1) { cc1.MinIniziale = 1 ; cc1.livello =1 ;}
+    } 
+    if (this.lds==19||this.lds == 26) {
+      const cc = this.bg.find( (x) =>  x.idback == 6);
+      if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
+    } 
+        if (this.lds == 28) {
+      const cc = this.bg.find( (x) =>  x.idback == 2);
+      if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
+    } 
+
+  
+
   }
 
 
@@ -1257,5 +1323,8 @@ export class CreaComponent implements OnInit {
     }
   }
   */
+
+
+
 
 }
