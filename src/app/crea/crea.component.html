@@ -92,6 +92,45 @@
           </form>
         </mat-step>
 
+
+<mat-step  errorMessage="Scelta obbigatoria" [completed]= "ldsOK || clanPG?.value == 20 "  >
+  <ng-template matStepLabel>Linea di Sangue</ng-template>
+            <mat-card>
+            <mat-card-content>
+              Scelta linea di sangue
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card style="width: 75%;">
+              <mat-form-field>
+                <mat-label>Linea di Sangue</mat-label>
+                <mat-select [value]="lds" (selectionChange)="setLDSItem($event.value)" [disabled]="clanPG?.value == 20">
+                  @for (item of myLDS; track item; let idx = $index) {
+                    <mat-option [value]="item.idlds">{{item.nomelds}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              
+              @if ( lds !=0 ) {
+                <b>Fondatore:</b> {{ listalds[lds-1].fondatorelds}} <br>
+                <b>Mentore:</b> {{ listalds[lds-1].mentorelds}} <br>
+                <b>Pregio :</b> {{ listalds[lds-1].pregiolds}} <br>
+                <b>Difetto :</b> {{ listalds[lds-1].difettolds}} <br>
+              }
+      
+            
+          </mat-card>
+
+          <mat-card>
+            <div>
+              <button mat-raised-button matStepperNext color="primary" [disabled]="!ldsOK && clanPG?.value!=20" >Prosegui</button>
+            </div>
+        </mat-card>
+</mat-step>
+
+
+
+
         <mat-step errorMessage="Distribuzione non corretta" [completed]= "bgOK " [hasError]="(!bgOK && sommaBG!=0) " >
           <ng-template matStepLabel>Background</ng-template>
 

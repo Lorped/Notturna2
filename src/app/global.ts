@@ -8,6 +8,8 @@ export class Basicpg {
   public nomepg = '';
   public idclan = 0;
   public nomeclan = ''; // from LEFT JOIN
+  public idlds = 0 ;
+  public nomelds = ''; // fron left join
   public generazione = 0;
   public forza = 0;
   public destrezza = 0;
@@ -52,6 +54,17 @@ export class Basicpg {
 
   public IDcronaca = 0 ;
   public Descrizione = ''; // da LEFT JOIN
+}
+
+@Injectable()
+export class Lds {
+  public idlds = 0 ;
+  public idclan = 0;
+  public nomelds = '';
+  public fondatorelds = '';
+  public mentorelds = '';
+  public pregiolds = '';
+  public difettolds = '';
 }
 
 @Injectable()
@@ -220,6 +233,7 @@ export class FullTaumaturgia {
   public taumaturgia = new Taumaturgia() ;
   public taums: Array<Taums> = [];
 }
+
 
 @Injectable()
 export class Influenze {

@@ -21,7 +21,7 @@ require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
 
 $clan = [];
-$MySql = "SELECT idclan, nomeclan FROM clan ORDER BY nomeclan";
+$MySql = "SELECT idclan, nomeclan FROM clan where PNG = 0 ORDER BY nomeclan";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$clan[] = $res;
@@ -112,14 +112,14 @@ while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$disciplinevili[] =$res;
 }
 
-/*
-$influenze = [];
-$MySql = "SELECT *, 0 as livello, 5 as MaxIniziale , 0 as MinIniziale FROM influenze_main ";
+$listalds = [];
+$MySql = "SELECT * FROM lineedisangue  ";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
-	$influenze[] =$res;
+	$listalds[] =$res;
 }
-*/
+
+
 
 $out = [
   "clan" => $clan ,
@@ -131,8 +131,8 @@ $out = [
   "taumaturgie" => $taumaturgie,
   "necromanzie" => $necromanzie,
 	"background" => $background,
-	//"influenze" => $influenze,
-	"disciplinevili" => $disciplinevili
+	"disciplinevili" => $disciplinevili,
+	"listalds" => $listalds
 ];
 
 header("HTTP/1.1 200 OK");

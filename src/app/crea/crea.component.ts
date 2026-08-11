@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
-import { Cronaca, Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Pregio} from '../global';
+import { Lds, Cronaca, Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Pregio} from '../global';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
@@ -30,6 +30,16 @@ import { Router } from '@angular/router';
 
 
 export class CreaComponent implements OnInit {
+
+
+  ldsOK = false ;
+  listalds: Array<Lds> = [ 
+    {idlds:0, idclan:0, nomelds: '', fondatorelds: '', mentorelds: '', pregiolds: '', difettolds: '' }
+  ];
+  myLDS: Array<Lds> = [ 
+    {idlds:0, idclan:0, nomelds: '', fondatorelds: '', mentorelds: '', pregiolds: '', difettolds: '' }
+  ];
+  lds = 0;
 
   cronacaPG = 1;   /* 1 = Lazio , 2 = xxx */
   listacronache: Array<Cronaca> = [];
@@ -202,6 +212,9 @@ export class CreaComponent implements OnInit {
         this.attitudini = data.attitudini;
 
         this.sentieri = data.sentieri;
+
+        this.listalds = data.listalds;
+        this.lds = 0;
 
 
         for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
@@ -710,6 +723,12 @@ export class CreaComponent implements OnInit {
     this.discOK = false;
 
 
+
+    this.lds=0;
+    this.myLDS = this.listalds.filter((unit) => unit.idclan == this.clanPG?.value);
+    this.ldsOK=false;
+
+
   }
 
   mindisc(dd: number) {
@@ -904,6 +923,15 @@ export class CreaComponent implements OnInit {
     });
     this.focusOK = true;
   }
+
+  setLDSItem(index: number) {
+    this.lds = index;
+
+    console.log ( "lds ", this.lds);
+
+    this.ldsOK = true;
+  }
+
 
  onCronacaChange(val: number) {
     this.cronacaPG = val;
