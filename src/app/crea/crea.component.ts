@@ -61,7 +61,7 @@ export class CreaComponent implements OnInit {
   listaDisciplineVie: ListaDisciplineVie[] = [];
   selectedFocusIndex = -1;
 
-  isLinear = true;  // FALSE SOLO PER TEST !!!!!
+  isLinear = false;  // FALSE SOLO PER TEST !!!!!
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
@@ -969,6 +969,7 @@ export class CreaComponent implements OnInit {
       this.sommaAlleati = 0;
       this.maxAlleati = 0 ;
       this.sommaBG=0;
+      this.restediscipline();
 
 
     if ( this.lds== 13 || this.lds == 23 ||  this.lds==7|| this.lds==28){
@@ -993,6 +994,47 @@ export class CreaComponent implements OnInit {
       const cc = this.bg.find( (x) =>  x.idback == 2);
       if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
     } 
+
+    if (this.lds == 3 ){
+      this.discipline[1].iddisciplina = 12;          // Robustezza
+      this.discipline[1].nomedisc = "Robustezza";
+    }
+    if (this.lds == 12 ){
+      this.discipline[2].iddisciplina = 3;          // Auspex
+      this.discipline[2].nomedisc = "Auspex";
+    }
+    if (this.lds == 14 ){
+      this.discipline[0].iddisciplina = 8;          // Oscurazione
+      this.discipline[0].nomedisc = "Oscurazione";
+    }
+    if (this.lds == 15 ){
+      this.discipline[2].iddisciplina = 21;          // Dur-An-Ki
+      this.discipline[2].nomedisc = "Dur-An-Ki";
+    }
+    if (this.lds == 16 ){
+      this.discipline[1].iddisciplina = 6;          // Dominazione
+      this.discipline[1].nomedisc = "Dominazione";
+    }
+    if (this.lds == 18 ){
+      this.discipline[0].iddisciplina = 2;          // Ascendente
+      this.discipline[0].nomedisc = "Ascendente";
+    }
+    if (this.lds == 22 ){
+      this.discipline[1].iddisciplina = 23;          // Misticismo Abissale
+      this.discipline[1].nomedisc = "Misticismo Abissale";
+    }
+    if (this.lds == 26 ){
+      this.discipline[0].iddisciplina = 21;          // Dur-An-Ki
+      this.discipline[0].nomedisc = "Dur-An-Ki";
+    }
+    if (this.lds == 32 ){
+      this.discipline[0].iddisciplina = 3;          // Auspex
+      this.discipline[0].nomedisc = "Auspex";
+    }
+    if (this.lds == 33 ){
+      this.discipline[0].iddisciplina = 22;          // Anku
+      this.discipline[0].nomedisc = "Anku";
+    }
 
   
 
@@ -1324,6 +1366,162 @@ export class CreaComponent implements OnInit {
   }
   */
 
+  restediscipline(){
+    switch (this.clanPG!.value) {
+      case '1':   //  Toreador
+        this.discipline[0].iddisciplina = 2;          // Ascendente
+        this.discipline[1].iddisciplina = 3;          // Auspex
+        this.discipline[2].iddisciplina = 15;         // Velocità
+        this.discipline[0].nomedisc = 'Ascendente';
+        this.discipline[1].nomedisc = 'Auspex';
+        this.discipline[2].nomedisc = 'Velocità';
+      break;
+      case '2':   //  Ventrue
+        this.discipline[0].iddisciplina = 2;          // Ascendente
+        this.discipline[1].iddisciplina = 6;          // Dominazione
+        this.discipline[2].iddisciplina = 12;         // Robustezza
+        this.discipline[0].nomedisc = 'Ascendente';
+        this.discipline[1].nomedisc = 'Dominazione';
+        this.discipline[2].nomedisc = 'Robustezza';
+      break;
+      case '3':		// Nosferatu
+        this.discipline[0].iddisciplina = 1;          // Animalità
+        this.discipline[1].iddisciplina = 8;          // Oscurazione
+        this.discipline[2].iddisciplina = 17;         // Potenza
+        this.discipline[0].nomedisc = 'Animalità';
+        this.discipline[1].nomedisc = 'Oscurazione';
+        this.discipline[2].nomedisc = 'Potenza';
+      break;
+      case '4':		// Brujah
+        this.discipline[0].iddisciplina = 2;          // Ascendente
+        this.discipline[1].iddisciplina = 17;         // Potenza
+        this.discipline[2].iddisciplina = 15;         // Velocità
+        this.discipline[0].nomedisc = 'Ascendente';
+        this.discipline[1].nomedisc = 'Potenza';
+        this.discipline[2].nomedisc = 'Velocità';
+      break;
+      case '5':		// Gangrel
+        this.discipline[0].iddisciplina = 1;          // Animalità
+        this.discipline[1].iddisciplina = 10;         // Proteide
+        this.discipline[2].iddisciplina = 12;         // Robustezza
+        this.discipline[0].nomedisc = 'Animalità';
+        this.discipline[1].nomedisc = 'Proteide';
+        this.discipline[2].nomedisc = 'Robustezza';
+      break;
+      case '6':		// Malkavian
+        this.discipline[0].iddisciplina = 3;          // Auspex
+        this.discipline[1].iddisciplina = 5;          // Demenza
+        this.discipline[2].iddisciplina = 8;          // Oscurazione
+        this.discipline[0].nomedisc = 'Auspex';
+        this.discipline[1].nomedisc = 'Demenza';
+        this.discipline[2].nomedisc = 'Oscurazione';
+      break;
+      case '7':		// Tremere
+        this.discipline[0].iddisciplina = 3;          // Auspex
+        this.discipline[1].iddisciplina = 6;          // Dominazione
+        this.discipline[2].iddisciplina = 98;         // Taumaturgia
+        this.discipline[0].nomedisc = 'Auspex';
+        this.discipline[1].nomedisc = 'Dominazione';
+        this.discipline[2].nomedisc = 'Taumaturgia';
+      break;
+      case '8':		// Lasombra
+        this.discipline[0].iddisciplina = 6;          // Dominazione
+        this.discipline[1].iddisciplina = 17;         // Potenza
+        this.discipline[2].iddisciplina = 9;          // Ottenebramento
+        this.discipline[0].nomedisc = 'Dominazione';
+        this.discipline[1].nomedisc = 'Potenza';
+        this.discipline[2].nomedisc = 'Ottenebramento';
+      break;
+      case '9':		// Tzimisce
+        this.discipline[0].iddisciplina = 1;          // Animalità
+        this.discipline[1].iddisciplina = 3;          // Auspex
+        this.discipline[2].iddisciplina = 16;         // Vicissitudine
+        this.discipline[0].nomedisc = 'Animalità';
+        this.discipline[1].nomedisc = 'Auspex';
+        this.discipline[2].nomedisc = 'Vicissitudine';
+      break;
+      case '10':	// Assamiti
+        this.discipline[0].iddisciplina = 8;          // Oscurazione
+        this.discipline[1].iddisciplina = 11;         // Quietus
+        this.discipline[2].iddisciplina = 15;         // Velocità
+        this.discipline[0].nomedisc = 'Oscurazione';
+        this.discipline[1].nomedisc = 'Quietus';
+        this.discipline[2].nomedisc = 'Velocità';
+      break;
+      case '11':	// Giovanni
+        this.discipline[0].iddisciplina = 6;          // Dominazione
+        this.discipline[1].iddisciplina = 99;         // Necromanzia
+        this.discipline[2].iddisciplina = 17;         // Potenza
+        this.discipline[0].nomedisc = 'Dominazione';
+        this.discipline[1].nomedisc = 'Necromanzia';
+        this.discipline[2].nomedisc = 'Potenza';
+      break;
+      case '12':	// Ravnos
+        this.discipline[0].iddisciplina = 1;          // Animalità
+        this.discipline[1].iddisciplina = 4;          // Chimerismo
+        this.discipline[2].iddisciplina = 12;         // Robustezza
+        this.discipline[0].nomedisc = 'Animalità';
+        this.discipline[1].nomedisc = 'Chimerismo';
+        this.discipline[2].nomedisc = 'Robustezza';
+      break;
+      case '13':	// Setiti
+        this.discipline[0].iddisciplina = 2;          // Ascendente
+        this.discipline[1].iddisciplina = 8;          // Oscurazione
+        this.discipline[2].iddisciplina = 13;         // Serpentis
+        this.discipline[0].nomedisc = 'Ascendente';
+        this.discipline[1].nomedisc = 'Oscurazione';
+        this.discipline[2].nomedisc = 'Serpentis';
+      break;
+      case '14':	// Cappadoci
+        this.discipline[0].iddisciplina = 3;          // Auspex
+        this.discipline[1].iddisciplina = 99;         // Necromanzia
+        this.discipline[2].iddisciplina = 12;         // Robustezza
+        this.discipline[0].nomedisc = 'Auspex';
+        this.discipline[1].nomedisc = 'Necromanzia';
+        this.discipline[2].nomedisc = 'Robustezza';
+      break;
+      case '15':	// Baali
+        this.discipline[0].iddisciplina = 2;          // Ascendente
+        this.discipline[1].iddisciplina = 19;         // Daimonion
+        this.discipline[2].iddisciplina = 8;          // Oscurazione
+        this.discipline[0].nomedisc = 'Ascendente';
+        this.discipline[1].nomedisc = 'Daimonion';
+        this.discipline[2].nomedisc = 'Oscurazione';
+      break;
+      case '20':	// Vili
+        this.discipline[0].iddisciplina = 0;
+        this.discipline[1].iddisciplina = 0;
+        this.discipline[2].iddisciplina = 0;
+        this.discipline[0].nomedisc = '';
+        this.discipline[1].nomedisc = '';
+        this.discipline[2].nomedisc = '';
+      break;
+      case '21':   //  City Gangrel
+        this.discipline[0].iddisciplina = 8;          // Oscurazione  
+        this.discipline[1].iddisciplina = 10;         // Proteide      
+        this.discipline[2].iddisciplina = 15;         // Velocità
+        this.discipline[0].nomedisc = 'Oscurazione';
+        this.discipline[1].nomedisc = 'Proteide';
+        this.discipline[2].nomedisc = 'Velocità';
+      break;
+    }
+
+    // RESET Discipline pr evitare problemi
+
+    for ( let j = 0; j < 3 ; j++) {
+      this.discipline[j].livello = 0;
+
+      this.taumaturgie[j].livello = 0;
+      this.taumaturgie[j].idtaum = 0;
+
+      this.necromanzie[j].livello = 0;
+      this.necromanzie[j].idnecro = 0;
+    }
+    this.sommaDisc = 0 ;
+    this.discOK = false;
+
+
+  }
 
 
 
