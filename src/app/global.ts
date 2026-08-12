@@ -134,12 +134,14 @@ export class Disciplina {
   public livello: number ;
   public DiClan: string ;
   public focus: number;
+  public iniziale: number;
   constructor() {
     this.iddisciplina = 0;
     this.nomedisc = '';
     this.livello = 0;
     this.DiClan = '';
     this.focus = 0;
+    this.iniziale = 0;
   }
 }
 

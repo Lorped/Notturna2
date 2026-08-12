@@ -980,6 +980,11 @@ export class CreaComponent implements OnInit {
       this.attributi[0].Livello = 1;
       this.attributi[3].Iniziale = 1;
       this.attributi[3].Livello = 1;
+      this.discipline.forEach(element => {
+        element.iniziale = 0 ;
+        element.livello = 0;
+      });
+
 
 
     if ( this.lds== 13 || this.lds == 23 ||  this.lds==7|| this.lds==28){
@@ -1055,6 +1060,22 @@ export class CreaComponent implements OnInit {
       this.attributi[3].Livello = 2;
     }
   
+    if (this.lds == 9 ){
+      this.discipline[1].iniziale = 1;    // OSCURAZIONE - NOSFE          
+      this.discipline[1].livello = 1;
+    }
+    if (this.lds == 17 ){
+      this.discipline[0].iniziale = 1;    // auspex - MALK          
+      this.discipline[0].livello = 1;
+    }
+    if (this.lds == 24 ){
+      this.discipline[2].iniziale = 1;    // vicissitudine - TZIM          
+      this.discipline[2].livello = 1;
+    }
+    if (this.lds == 31 ){
+      this.discipline[1].iniziale = 1;    // chmierismo - RAVNOS          
+      this.discipline[1].livello = 1;
+    }
 
   }
 

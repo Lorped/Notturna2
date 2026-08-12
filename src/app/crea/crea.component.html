@@ -397,10 +397,10 @@
                     {{dd.nomedisc}}</div>
                   <div class="half mr">
                     @if (dd.iddisciplina!=99 && dd.iddisciplina!=98) {
-                      <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<1"><i class="fa fa-minus"></i></button>
+                      <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<=dd.iniziale"><i class="fa fa-minus"></i></button>
                     }
                     @for (i of 5 | times ; track i; let ix = $index) {
-                      <i class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello }"></i>
+                      <i class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello, 'xred': ix<dd.iniziale}"></i>
                     }
                     @if (dd.iddisciplina!=99 && dd.iddisciplina!=98) {
                       <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc"><i class="fa fa-plus"></i></button>
