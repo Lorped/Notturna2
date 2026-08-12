@@ -28,6 +28,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 .dred {
   color: #b00000 ;
 }
+.xred {
+  color: #910000;
+}
 .red {
   /*color: #f22613 ;*/
   color: #f00000 ;

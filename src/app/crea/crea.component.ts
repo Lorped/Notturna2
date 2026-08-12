@@ -116,8 +116,8 @@ export class CreaComponent implements OnInit {
   attr2 = 2;
   maxAttr = 11;           /* 5+4+2 = 11  somam della distribuzione  */
   sommaAttr = 0;
-  attrCorrente = [ 3 , 3 , 3 ];
-  attrCorrenteSort = [ 3 , 3 , 3 ];
+  attrCorrente = [ 0 , 0 , 0 ];
+  attrCorrenteSort = [ 0 , 0 , 0 ];
   attrOK = false;
 
 
@@ -238,15 +238,15 @@ export class CreaComponent implements OnInit {
       this.alleati[j] = new Alleati();
     }
 
-    this.attributi[0] = new Attributo ( 0, 'Forza'        , 'F' , 1 );
-    this.attributi[1] = new Attributo ( 1, 'Carisma'      , 'S' , 1 );
-    this.attributi[2] = new Attributo ( 2, 'Percezione'   , 'M' , 1 );
-    this.attributi[3] = new Attributo ( 3, 'Destrezza'    , 'F' , 1 );
-    this.attributi[4] = new Attributo ( 4, 'Persuasione'  , 'S' , 1 );
-    this.attributi[5] = new Attributo ( 5, 'Intelligenza' , 'M' , 1 );
-    this.attributi[6] = new Attributo ( 6, 'Attutimento'  , 'F' , 1 );
-    this.attributi[7] = new Attributo ( 7, 'Saggezza'     , 'S' , 1 );
-    this.attributi[8] = new Attributo ( 8, 'Prontezza'    , 'M' , 1 );
+    this.attributi[0] = new Attributo ( 0, 'Forza'        , 'F' , 1 ,1);
+    this.attributi[1] = new Attributo ( 1, 'Carisma'      , 'S' , 1 , 1);
+    this.attributi[2] = new Attributo ( 2, 'Percezione'   , 'M' , 1 ,1);
+    this.attributi[3] = new Attributo ( 3, 'Destrezza'    , 'F' , 1 ,1);
+    this.attributi[4] = new Attributo ( 4, 'Persuasione'  , 'S' , 1 ,1);
+    this.attributi[5] = new Attributo ( 5, 'Intelligenza' , 'M' , 1 ,1);
+    this.attributi[6] = new Attributo ( 6, 'Attutimento'  , 'F' , 1 ,1);
+    this.attributi[7] = new Attributo ( 7, 'Saggezza'     , 'S' , 1 ,1);
+    this.attributi[8] = new Attributo ( 8, 'Prontezza'    , 'M' , 1 ,1);
 
     this.discipline[0] = new Disciplina();
     this.discipline[1] = new Disciplina();
@@ -533,9 +533,12 @@ export class CreaComponent implements OnInit {
   minattr(id: number) {
     this.attributi[id].Livello--;
 
-    this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello + this.attributi[6].Livello;
-    this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello + this.attributi[7].Livello;
-    this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello + this.attributi[8].Livello;
+    this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello  + this.attributi[6].Livello 
+                        - this.attributi[0].Iniziale - this.attributi[3].Iniziale - this.attributi[6].Iniziale;
+    this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello  + this.attributi[7].Livello
+                        - this.attributi[1].Iniziale - this.attributi[4].Iniziale - this.attributi[7].Iniziale;
+    this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello  + this.attributi[8].Livello
+                        - this.attributi[2].Iniziale - this.attributi[5].Iniziale - this.attributi[8].Iniziale;
 
     this.attrCorrenteSort = this.attrCorrente.slice().sort((n1,n2) => n1 - n2);
 
@@ -546,9 +549,12 @@ export class CreaComponent implements OnInit {
   addattr(id: number) {
     this.attributi[id].Livello++;
 
-    this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello + this.attributi[6].Livello;
-    this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello + this.attributi[7].Livello;
-    this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello + this.attributi[8].Livello;
+        this.attrCorrente[0] = this.attributi[0].Livello + this.attributi[3].Livello  + this.attributi[6].Livello 
+                        - this.attributi[0].Iniziale - this.attributi[3].Iniziale - this.attributi[6].Iniziale;
+    this.attrCorrente[1] = this.attributi[1].Livello + this.attributi[4].Livello  + this.attributi[7].Livello
+                        - this.attributi[1].Iniziale - this.attributi[4].Iniziale - this.attributi[7].Iniziale;
+    this.attrCorrente[2] = this.attributi[2].Livello + this.attributi[5].Livello  + this.attributi[8].Livello
+                        - this.attributi[2].Iniziale - this.attributi[5].Iniziale - this.attributi[8].Iniziale;
 
     this.attrCorrenteSort = this.attrCorrente.slice().sort((n1,n2) => n1 - n2);
 
@@ -559,9 +565,9 @@ export class CreaComponent implements OnInit {
 
   checkattr() {
     this.attrOK = false;
-    if ( this.attr2 + 3 == this.attrCorrenteSort[0] &&
-         this.attr1 + 3 == this.attrCorrenteSort[1] &&
-         this.attr0 + 3 == this.attrCorrenteSort[2] ) {
+    if ( this.attr2  == this.attrCorrenteSort[0] &&
+         this.attr1  == this.attrCorrenteSort[1] &&
+         this.attr0  == this.attrCorrenteSort[2] ) {
       this.attrOK = true;
     }
 
@@ -969,7 +975,11 @@ export class CreaComponent implements OnInit {
       this.sommaAlleati = 0;
       this.maxAlleati = 0 ;
       this.sommaBG=0;
-      this.restediscipline();
+      this.resetdiscipline();
+      this.attributi[0].Iniziale = 1;
+      this.attributi[0].Livello = 1;
+      this.attributi[3].Iniziale = 1;
+      this.attributi[3].Livello = 1;
 
 
     if ( this.lds== 13 || this.lds == 23 ||  this.lds==7|| this.lds==28){
@@ -1036,6 +1046,14 @@ export class CreaComponent implements OnInit {
       this.discipline[0].nomedisc = "Anku";
     }
 
+     if (this.lds == 4 ){
+      this.attributi[0].Iniziale = 2;          // Forza
+      this.attributi[0].Livello = 2;
+    }
+    if (this.lds == 8 ){
+      this.attributi[3].Iniziale = 2;          // Destrezza
+      this.attributi[3].Livello = 2;
+    }
   
 
   }
@@ -1366,7 +1384,7 @@ export class CreaComponent implements OnInit {
   }
   */
 
-  restediscipline(){
+  resetdiscipline(){
     switch (this.clanPG!.value) {
       case '1':   //  Toreador
         this.discipline[0].iddisciplina = 2;          // Ascendente

@@ -339,7 +339,7 @@
 
       <mat-card>
         <mat-card-content>
-          Distribuzione Richiesta: [ {{attr0+3}} , {{attr1+3}} , {{attr2+3}} ]
+          Distribuzione Richiesta: [ {{attr0}} , {{attr1}} , {{attr2}} ]
           <br>
             Distribuzione Attuale: [ {{attrCorrenteSort[2]}} , {{attrCorrenteSort[1]}} , {{attrCorrenteSort[0]}} ]
           </mat-card-content>
@@ -354,9 +354,9 @@
               <mat-grid-tile>
                 <div class="half all ml ">{{attr.NomeAttributo}}</div>
                 <div class="half mr ">
-                  <button  class="btn  btn-xs" (click)="minattr(attr.IDattributo)" [disabled]="attr.Livello<2"><i class="fa fa-minus"></i></button>
+                  <button  class="btn  btn-xs" (click)="minattr(attr.IDattributo)" [disabled]="attr.Livello<=attr.Iniziale"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > attr.Livello , 'dred': ix < attr.Livello }"></i>
+                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > attr.Livello , 'dred': ix < attr.Livello , 'xred': ix < attr.Iniziale}"></i>
                   }
                   <button class="btn  btn-xs" (click)="addattr(attr.IDattributo)" [disabled]="attr.Livello>4||sommaAttr>=maxAttr"><i class="fa fa-plus"></i></button>
                 </div>

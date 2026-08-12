@@ -295,11 +295,13 @@ export class Attributo {
   public NomeAttributo: string;
   public Tipologia: string;
   public Livello: number;
-  constructor ( id: number, n: string, t: string, l: number) {
+  public Iniziale: number;
+  constructor ( id: number, n: string, t: string, l: number, i:number) {
     this.IDattributo = id ;
     this.NomeAttributo = n;
     this.Tipologia = t;
     this.Livello = l;
+    this.Iniziale = 1;
   }
 
 }
