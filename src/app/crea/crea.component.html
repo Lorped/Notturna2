@@ -637,7 +637,7 @@
           </mat-card>
           <mat-card>
             <mat-card-content>
-              Conoscenze -- Punti da distribuire: {{ numSkill - sommaSkill }}
+              Conoscenze -- Punti da distribuire: {{ numSkill - sommaSkill + bonusskill }}
             </mat-card-content>
           </mat-card>
 
@@ -652,7 +652,7 @@
                     @for (i of 5 | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello }"></i>
                     }
-                    <button class="btn  btn-xs" (click)="addsk4(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
+                    <button class="btn  btn-xs" (click)="addsk4(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill+bonusskill"><i class="fa fa-plus"></i></button>
                   </div>
                 </mat-grid-tile>
               }
@@ -672,11 +672,11 @@
                       <div style="display:flex; width:100%">
                         <div class="half all ml ">{{sk.nomeskill}}</div>
                         <div class="half mr ">
-                        <button  class="btn  btn-xs" (click)="minsk(sk.idskill)" [disabled]="sk.livello<1"><i class="fa fa-minus"></i></button>
+                        <button  class="btn  btn-xs" (click)="minsk(sk.idskill)" [disabled]="sk.livello<=sk.iniziale"><i class="fa fa-minus"></i></button>
                           @for (i of 5 | times ; track i; let ix = $index) {
-                            <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello }"></i>
+                            <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello,'xred': ix<sk.iniziale }"></i>
                           }
-                          <button class="btn  btn-xs" (click)="addsk(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addsk(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill+bonusskill"><i class="fa fa-plus"></i></button>
                         </div>
                       </div>
                   
@@ -688,7 +688,7 @@
                             @for (i of 5 | times ; track i; let ix = $index) {
                               <i class="fa fa-circle" [ngClass]="{'white': ix+1 > ssk.livello , 'dred': ix < ssk.livello }"></i>
                             }
-                          <button class="btn  btn-xs" (click)="addsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello>=sk.livello||sommaSkill>=numSkill"><i class="fa fa-plus"></i></button>
+                          <button class="btn  btn-xs" (click)="addsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello>=sk.livello||sommaSkill>=numSkill+bonusskill"><i class="fa fa-plus"></i></button>
                         </div>
                       </div>
                     }
@@ -701,7 +701,7 @@
           <mat-card>
             <mat-card-content>
               <div>
-                <button mat-raised-button matStepperNext color="primary" [disabled]="!skillOK||!attitudiniOK" >Prosegui</button>
+                <button mat-raised-button matStepperNext color="primary" [disabled]="!skillOK||!attitudiniOK||(lds==1&&(skill[0].livello<2&&skill[4].livello<2&&skill[5].livello<2))||(lds==2&&(skill[1].livello<2&&skill[2].livello<2))" >Prosegui</button>
               </div>
             </mat-card-content>
           </mat-card>

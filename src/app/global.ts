@@ -169,6 +169,7 @@ export class Skill {
   public subskill = 0;
   public livello = 0;
   public tipologia = 0;
+  public iniziale = 0 ;
   public subskill2: Array<SubSkill> = [];
 }
 

@@ -32,6 +32,7 @@ import { Router } from '@angular/router';
 export class CreaComponent implements OnInit {
 
   bonusbg = 0 ;    //bonus bg da lds
+  bonusskill = 0 ;    //bonus skill da lds
   mingregge = 0;
   minseguaci = 0;
   bgldsOK =false ;
@@ -211,6 +212,10 @@ export class CreaComponent implements OnInit {
         this.listaNecro = data.necromanzie;
         this.disciplinevili = data.disciplinevili;
         this.skill = data.skill;
+        this.skill.forEach(element => {
+            element.iniziale = 0 ;
+        });
+        console.log(this.skill);
 
         //console.log('skill: ' + JSON.stringify(this.skill));
         this.skillother = data.skillother;
@@ -738,6 +743,7 @@ export class CreaComponent implements OnInit {
 
     this.lds=0;
     this.bonusbg = 0 ;
+    this.bonusskill = 0 ;
     this.myLDS = this.listalds.filter((unit) => unit.idclan == this.clanPG?.value);
     this.ldsOK=false;
       const cc = this.bg.find( x =>  x.idback == 11);
@@ -984,30 +990,43 @@ export class CreaComponent implements OnInit {
         element.iniziale = 0 ;
         element.livello = 0;
       });
+      this.skill.forEach(element => {
+        element.iniziale = 0 ;
+        element.livello = 0;
+        element.subskill2.forEach(xx => {
+          xx.livello = 0 ;
+        });
+      });
+    this.bonusskill = 0 ;
+    console.log("bonusskill ", this.bonusskill);
 
 
-
-    if ( this.lds== 13 || this.lds == 23 ||  this.lds==7|| this.lds==28){
+    if ( this.lds== 13 || this.lds == 23 ||  this.lds==7){
       this.bonusbg=2;
       console.log("bonusbg ", this.bonusbg);
     }
-    if ( this.lds== 19||this.lds==26 ){
-      this.bonusbg=-2;
-      console.log("bonusbg ", this.bonusbg);
-    }
+
     if (this.lds==30) {
-      const cc = this.bg.find( (x) =>  x.idback == 11);
+      const cc = this.bg.find( (x) =>  x.idback == 11);  //gregge
       if (cc) { cc.MinIniziale = 1 ; cc.livello = 1;}
-      const cc1 = this.bg.find( (x) =>  x.idback == 3);
+      const cc1 = this.bg.find( (x) =>  x.idback == 3);   //seguaci
       if (cc1) { cc1.MinIniziale = 1 ; cc1.livello =1 ;}
     } 
     if (this.lds==19||this.lds == 26) {
-      const cc = this.bg.find( (x) =>  x.idback == 6);
+      this.bonusbg=-2;
+      console.log("bonusbg ", this.bonusbg);
+      const cc = this.bg.find( (x) =>  x.idback == 6);  //mentore
       if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
     } 
-        if (this.lds == 28) {
-      const cc = this.bg.find( (x) =>  x.idback == 2);
+    
+    if (this.lds == 28) {
+      const cc = this.bg.find( (x) =>  x.idback == 2);  //risorse
       if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
+    } 
+
+    if (this.lds == 11) {
+      const cc = this.bg.find( (x) =>  x.idback == 2);  //risorse
+      if (cc) { cc.MinIniziale = 1 ; cc.livello = 1;}
     } 
 
     if (this.lds == 3 ){
@@ -1076,7 +1095,45 @@ export class CreaComponent implements OnInit {
       this.discipline[1].iniziale = 1;    // chmierismo - RAVNOS          
       this.discipline[1].livello = 1;
     }
-
+    if (this.lds == 6 ){
+        const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
+        cc!.iniziale = 1 ;
+        cc!.livello = 1 ;
+        const cc1 = this.skill.find( x => x.idskill == 1)     // accad          
+        cc1!.iniziale = 1 ;
+        cc1!.livello = 1 ;
+      }
+    if (this.lds == 10 ){
+      const cc = this.skill.find( x => x.idskill == 19)     // militari          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+    }
+    if (this.lds == 11 ){
+      const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+    }
+    if (this.lds == 29 ){
+      const cc = this.skill.find( x => x.idskill == 25)     // criminalita          
+      cc!.iniziale = 2 ;
+      cc!.livello = 2 ;
+    }
+    if (this.lds == 34 ){
+      const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+      const cc1 = this.skill.find( x => x.idskill == 25)     // criminalita          
+      cc1!.iniziale = 1 ;
+      cc1!.livello = 1 ;
+    }
+    if (this.lds == 19 ){
+      const cc = this.skill.find( x => x.idskill == 13)     // occulto          
+      cc!.iniziale = 2 ;
+      cc!.livello = 2 ;
+    }
+    if ( this.lds == 1 || this.lds == 2){
+      this.bonusskill = 2 ;
+    }
   }
 
 
@@ -1250,7 +1307,7 @@ export class CreaComponent implements OnInit {
     this.skillOK = false;
     this.attitudiniOK = false;
 
-    if ( this.sommaSkill == this.numSkill) this.skillOK = true;
+    if ( this.sommaSkill == this.numSkill+this.bonusskill) this.skillOK = true;
     if ( this.sommaAttitudini == this.numAttitudini) this.attitudiniOK = true;
     for ( let j = 0 ; j < this.attitudini.length ; j++ ) {
       if (this.attitudini[j].livello > this.maxAttitudini) this.attitudiniOK = false;
