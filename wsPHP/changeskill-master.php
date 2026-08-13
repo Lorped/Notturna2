@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); // mysql//
+require_once __DIR__ .'/db2.inc.php'; // mysql//
 
 
 $postdata = file_get_contents("php://input");
@@ -54,6 +54,19 @@ if ( isset($postdata) && $idutente != "" && $skill != "" ) {
       VALUES ( $idutente, $skill, 1)";
     $Result = mysqli_query($db, $MySql);
   }
+
+  //check dur-an-ki
+  if ( $skill == 18 ){   // stregoneria-rituali
+  
+    $MySql = "SELECT * from discipline WHERE iddisciplina = 21 and idutente = $idutente";
+    $Result = mysqli_query($db, $MySql);
+    $res = mysqli_fetch_array($Result);
+    if ( $res) {
+      $MySql = "UPDATE discipline set livello = $newlivello WHERE iddisciplina = 21 and idutente = $idutente";
+      $Result = mysqli_query($db, $MySql);
+    }
+  }
+
 
 
   $MySql = "SELECT nomeskill FROM skill_main

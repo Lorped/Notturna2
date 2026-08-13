@@ -189,6 +189,32 @@ export class PersonaggioComponent implements OnInit {
     );
   } 
 
+ // OTHER SKILL
+  
+  rdos (idskill: number) {
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
+      (data:any) => {
+        const skill = this.otherskill.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello--;
+          // console.log ( "riduco", skill.nomeskill);
+        }
+      }
+    );
+  }
+  ados (idskill: number) {
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
+      (data:any) => {
+        const skill = this.otherskill.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello++;
+          // console.log ( "aumento", skill.nomeskill);
+        }
+      }
+    );
+  }
+
+
   // SKILL
   
   rds (idskill: number) {
@@ -203,6 +229,52 @@ export class PersonaggioComponent implements OnInit {
     );
   }
   ads (idskill: number) {
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
+      (data:any) => {
+        const skill = this.skills.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello++;
+          // console.log ( "aumento", skill.nomeskill);
+        }
+      }
+    );
+  }
+
+   // sub SKILL
+
+  rdss (idskill: number, xidskill: number) {
+    for (let j = 0 ; j < this.skills.length ; j++) {
+      if (this.skills[j].idskill==xidskill){
+        for (let k = 0; k < this.skills[j].subskill2.length; k++){
+          if ( this.skills[j].subskill2[k].idskill == idskill){
+            this.skills[j].subskill2[k].livello -- ;
+          }
+        }
+      }
+    }
+
+    this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
+      (data:any) => {
+        const skill = this.skills.find (s => s.idskill === idskill);
+        if (skill) {
+          skill.livello--;
+          // console.log ( "riduco", skill.nomeskill);
+        }
+      }
+    );
+  }
+
+  adss (idskill: number, xidskill: Number) {
+    for (let j = 0 ; j < this.skills.length ; j++) {
+      if (this.skills[j].idskill==xidskill){
+        for (let k = 0; k < this.skills[j].subskill2.length; k++){
+          if ( this.skills[j].subskill2[k].idskill == idskill){
+            this.skills[j].subskill2[k].livello ++ ;
+          }
+        }
+      }
+    }
+
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
       (data:any) => {
         const skill = this.skills.find (s => s.idskill === idskill);

@@ -186,7 +186,7 @@
                           @for (item of maxpallini|times ; track item; let ix = $index) {
                             <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
                           }
-                          @if (dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 ) {
+                          @if (dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 &&  dd.disciplina.iddisciplina != 21 ) {
                             <button class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="numavanzamenti<1||lock||avanzamento_limitato||dd.disciplina.livello>=maxdisc"><i class="fa fa-plus"></i></button>
                           }
                         </div>

@@ -529,11 +529,11 @@
                         {{dd.nomeskill}}
                     </div>
                     <div class="column">
-                      <button  class="btn  btn-xs" (click)="rds(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
+                      <button  class="btn  btn-xs" (click)="rdos(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
                       @for (item of 5|times ; track item; let ix = $index) {                        
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
                       }
-                      <button  class="btn  btn-xs" (click)="ads(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
+                      <button  class="btn  btn-xs" (click)="ados(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
                     </div>
                   </div>
                 </div>
@@ -581,11 +581,11 @@
                         -- {{ss.nomeskill}}
                       </div>
                       <div class="column">
-                        <button  class="btn  btn-xs" (click)="rds(ss.idskill)" [disabled]="ss.livello < 1"><i class="fa fa-minus"></i></button>
+                        <button  class="btn  btn-xs" (click)="rdss(ss.idskill, dd.idskill)" [disabled]="ss.livello < 1"><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= ss.livello, 'dred': ix < ss.livello}"></i>
                         }
-                        <button  class="btn  btn-xs" (click)="ads(ss.idskill)" [disabled]="ss.livello > 4"><i class="fa fa-plus"></i></button>
+                        <button  class="btn  btn-xs" (click)="adss(ss.idskill, dd.idskill)" [disabled]="ss.livello > 4 ||ss.livello>=dd.livello"><i class="fa fa-plus"></i></button>
                       </div>
                     </div> 
                   }
