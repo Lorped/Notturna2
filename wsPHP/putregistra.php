@@ -91,6 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$focus = $request -> focus ;
 
 
+	$idlds = $request -> lineadisangue;
+
+	$fama2 = 0;
+	if ($idlds == 28)
+	{
+		$fama2 = 1 ;
+	}
 
 
 	$MySql = "INSERT INTO personaggio
@@ -101,7 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   	idstatus, idsentiero, valsentiero,
   	fama1, fama2, fama3, xp, xpspesi, nomeplayer,
 		rifugio, zona,
-		bloodp , IDcronaca , PScorrenti
+		bloodp , IDcronaca , PScorrenti,
+		idlds
 	)
 	VALUES
 	(
@@ -109,9 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     	$forza, $destrezza, $attutimento, $carisma, $persuasione, $saggezza, $percezione, $prontezza, $intelligenza,
     	$fdv, $fdv,
     	$idstatus, $idsentiero, $valsentiero ,
-    	0, 0, 0 ,0, 0 , '$nomeplayer' ,
+    	0, $fama2, 0 ,0, 0 , '$nomeplayer' ,
 			'$rifugio' , '$zona' ,
-			$bp , $idcronaca , 12
+			$bp , $idcronaca , 12,
+			$idlds
 	)";
 
 

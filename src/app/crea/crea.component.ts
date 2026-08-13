@@ -31,8 +31,15 @@ import { Router } from '@angular/router';
 
 export class CreaComponent implements OnInit {
 
+  SOMMAACC = 0;
+  SOMMACRI = 0 ;
+  SOMMAETI = 0;
+  SOMMAOCC = 0;
+  SOMMASCI = 0;
+
   bonusbg = 0 ;    //bonus bg da lds
   bonusskill = 0 ;    //bonus skill da lds
+  bonusbp = 0 ;    //bonus skill da lds
   mingregge = 0;
   minseguaci = 0;
   bgldsOK =false ;
@@ -215,7 +222,7 @@ export class CreaComponent implements OnInit {
         this.skill.forEach(element => {
             element.iniziale = 0 ;
         });
-        console.log(this.skill);
+        //console.log(this.skill);
 
         //console.log('skill: ' + JSON.stringify(this.skill));
         this.skillother = data.skillother;
@@ -359,7 +366,7 @@ export class CreaComponent implements OnInit {
     }
     if ( bg == 88 ) {     /* alleati */
       this.maxAlleati++;
-      console.log('maxAlleati: ' + this.maxAlleati);
+      //console.log('maxAlleati: ' + this.maxAlleati);
     }
 
     this.checkbg () ;
@@ -576,7 +583,7 @@ export class CreaComponent implements OnInit {
       this.attrOK = true;
     }
 
-    console.log ("saggezza: " + this.attributi[7].Livello + " prontezza: " + this.attributi[8].Livello);
+    //console.log ("saggezza: " + this.attributi[7].Livello + " prontezza: " + this.attributi[8].Livello);
     this.baseFDVmax = Math.ceil((this.attributi[7].Livello + this.attributi[8].Livello)/2);
 
     this.maxAttitudini = this.attributi[3].Livello;  /* DESTREZZA */
@@ -744,6 +751,7 @@ export class CreaComponent implements OnInit {
     this.lds=0;
     this.bonusbg = 0 ;
     this.bonusskill = 0 ;
+    this.bonusbp = 0;
     this.myLDS = this.listalds.filter((unit) => unit.idclan == this.clanPG?.value);
     this.ldsOK=false;
       const cc = this.bg.find( x =>  x.idback == 11);
@@ -784,6 +792,9 @@ export class CreaComponent implements OnInit {
 
     if ( this.statusPG!.value > 1 ) {
       this.bp=4;
+    }
+    if ( this.statusPG!.value > 3 ) {
+      this.bp=6;
     }
 
     switch( this.bp){
@@ -858,16 +869,11 @@ export class CreaComponent implements OnInit {
 
 
       this.listaDisciplineVie.forEach(element => {
-        
         //console.log ("element ", element );
-
-
         const trova = this.disciplinevili.find ( (d) => d.iddisciplina == element.id);
-
         //console.log ("trova ", trova );
         element.nome = trova?.nomedisc||'';
         //console.log ("element ", element );
-
 
       });
     }
@@ -950,12 +956,14 @@ export class CreaComponent implements OnInit {
   setLDSItem(index: number) {
     this.lds = index;
 
-    console.log ( "lds ", this.lds);
+    //console.log ( "lds ", this.lds);
 
     this.ldsOK = true;
     this.bonusbg=0;
-    console.log ( "bonusbg ", this.bonusbg);
-
+    this.bonusbp=0;
+    this.bonusskill = 0 ;
+    //console.log ( "bonusbg ", this.bonusbg);
+    //console.log("bonusskill ", this.bonusskill);
 
       const cc = this.bg.find( (x) =>  x.idback == 11);
       if (cc) { cc.MinIniziale = 0 ;}
@@ -997,13 +1005,16 @@ export class CreaComponent implements OnInit {
           xx.livello = 0 ;
         });
       });
-    this.bonusskill = 0 ;
-    console.log("bonusskill ", this.bonusskill);
+    
 
+    if ( this.lds== 21 ){
+      this.bonusbp=1;
+      //console.log("bonusbg ", this.bonusbg);
+    }
 
     if ( this.lds== 13 || this.lds == 23 ||  this.lds==7){
       this.bonusbg=2;
-      console.log("bonusbg ", this.bonusbg);
+      //console.log("bonusbg ", this.bonusbg);
     }
 
     if (this.lds==30) {
@@ -1014,7 +1025,7 @@ export class CreaComponent implements OnInit {
     } 
     if (this.lds==19||this.lds == 26) {
       this.bonusbg=-2;
-      console.log("bonusbg ", this.bonusbg);
+      //console.log("bonusbg ", this.bonusbg);
       const cc = this.bg.find( (x) =>  x.idback == 6);  //mentore
       if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
     } 
@@ -1070,7 +1081,7 @@ export class CreaComponent implements OnInit {
       this.discipline[0].nomedisc = "Anku";
     }
 
-     if (this.lds == 4 ){
+    if (this.lds == 4 ){
       this.attributi[0].Iniziale = 2;          // Forza
       this.attributi[0].Livello = 2;
     }
@@ -1130,6 +1141,11 @@ export class CreaComponent implements OnInit {
       const cc = this.skill.find( x => x.idskill == 13)     // occulto          
       cc!.iniziale = 2 ;
       cc!.livello = 2 ;
+    }
+    if (this.lds == 4 ){
+      const cc = this.skill.find( x => x.idskill == 19)     // militari          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
     }
     if ( this.lds == 1 || this.lds == 2){
       this.bonusskill = 2 ;
@@ -1312,6 +1328,40 @@ export class CreaComponent implements OnInit {
     for ( let j = 0 ; j < this.attitudini.length ; j++ ) {
       if (this.attitudini[j].livello > this.maxAttitudini) this.attitudiniOK = false;
     }
+
+    this.SOMMAACC =0;
+    this.SOMMAACC = this.skill[0].livello;
+    this.skill[0].subskill2.forEach(element => {
+      this.SOMMAACC += element.livello;
+    });
+    this.SOMMACRI = 0;
+    this.SOMMACRI = this.skill[1].livello;
+    this.skill[1].subskill2.forEach(element => {
+      this.SOMMACRI += element.livello;
+    });
+    this.SOMMAETI = 0;
+    this.SOMMAETI = this.skill[2].livello;
+    this.skill[2].subskill2.forEach(element => {
+      this.SOMMAETI += element.livello;
+    });
+    this.SOMMAOCC =0;
+    this.SOMMAOCC = this.skill[4].livello;
+    this.skill[4].subskill2.forEach(element => {
+      this.SOMMAOCC += element.livello;
+    });
+    this.SOMMASCI =0;
+    this.SOMMASCI = this.skill[4].livello;
+    this.skill[5].subskill2.forEach(element => {
+      this.SOMMASCI += element.livello;
+    });
+
+    console.log("lds" , this.lds);
+    console.log("ACC ", this.SOMMAACC);
+    console.log("CRI ", this.SOMMACRI);
+    console.log("ETI", this.SOMMAETI);
+    console.log("OCC ", this.SOMMAOCC);
+    console.log("SCI ", this.SOMMASCI);
+    console.log ("lim ", this.numSkill/3);
   }
 
 
@@ -1386,7 +1436,7 @@ export class CreaComponent implements OnInit {
     aPG.IDcronaca = this.cronacaPG;  
 
     this.schedaservice.putregistra( aPG , this.bg , this.cont , this.alleati, this.discipline , this.taumaturgie , this.necromanzie , 
-      this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp, this.listaDisciplineVie)
+      this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp+this.bonusbp, this.listaDisciplineVie, this.lds)
       .subscribe(
         data => {
           //  OK!

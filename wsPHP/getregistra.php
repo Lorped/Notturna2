@@ -85,7 +85,7 @@ while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 }
 
 $taumaturgie = [];
-$MySql = "SELECT * FROM taumaturgie_main ";
+$MySql = "SELECT * FROM taumaturgie_main WHERE clanesclusivo != 99";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$taumaturgie[] =$res;
