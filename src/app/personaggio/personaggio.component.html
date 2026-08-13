@@ -106,13 +106,13 @@
               {{rd}}
             </div>
             <div class="column is-1 red">
-              XP:
+              Eventi:
             </div>
             <div class="column is-1">
               {{scheda.xp}}
             </div>
             <div class="column is-1 red">
-              Spesi:
+              Progressione:
             </div>
             <div class="column is-1 alr">
               {{scheda.xpspesi}}
@@ -154,13 +154,21 @@
             <div class="column is-2 red">
               Rifugio:
             </div>
-            <div class="column is-2">
-              {{scheda.rifugio}}
+            <div class="column is-4">
+              {{scheda.rifugio}} / {{scheda.zona}}
             </div>
             <div class="column">
               &nbsp;
             </div>
           </div >
+          <div class="columns">
+            <div class="column is-3 red">
+              Linea di Sangue:
+            </div>
+            <div class="column is-3">
+              {{scheda.nomelds}}
+            </div>
+          </div>
 
         </mat-card-content>
       </mat-card>
@@ -513,9 +521,48 @@
           <mat-card-content>
 
             <div class="columns is-multiline" style="margin-left: 0px;" >
-              @for (dd of skills; track dd) {
+
+              @for (dd of otherskill; track dd) {
+                <div class="column is-4 nopadding">
+                  <div class="columns" style="margin-bottom: 0px;">
+                    <div class="column ">
+                        {{dd.nomeskill}}
+                    </div>
+                    <div class="column">
+                      <button  class="btn  btn-xs" (click)="rds(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
+                      @for (item of 5|times ; track item; let ix = $index) {                        
+                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                      }
+                      <button  class="btn  btn-xs" (click)="ads(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              }
+              @for (s of (3 - (otherskill.length%3))|times ; track s) {
                 <div class="column is-4 nopadding">
                   <div class="columns">
+                    <div class="column ">
+                      &nbsp;
+                    </div>
+                    <div class="column">
+                      &nbsp;
+                    </div>
+                  </div>
+                </div>
+              } 
+            </div>
+            
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-content>
+            <div class="columns is-multiline" style="margin-left: 0px;" >
+
+
+              @for (dd of skills; track dd) {
+                <div class="column is-4 nopadding">
+                  <div class="columns" style="margin-bottom: 0px;">
                     <div class="column">
                       {{dd.nomeskill}}
                     </div>
@@ -527,6 +574,23 @@
                       <button  class="btn  btn-xs" (click)="ads(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
                     </div>
                   </div>
+
+                  @for (ss of dd.subskill2; track ss){
+                    <div class="columns" style="margin-bottom: 0px;">
+                      <div class="column">
+                        -- {{ss.nomeskill}}
+                      </div>
+                      <div class="column">
+                        <button  class="btn  btn-xs" (click)="rds(ss.idskill)" [disabled]="ss.livello < 1"><i class="fa fa-minus"></i></button>
+                        @for (item of 5|times ; track item; let ix = $index) {
+                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= ss.livello, 'dred': ix < ss.livello}"></i>
+                        }
+                        <button  class="btn  btn-xs" (click)="ads(ss.idskill)" [disabled]="ss.livello > 4"><i class="fa fa-plus"></i></button>
+                      </div>
+                    </div> 
+                  }
+
+
                 </div>
               }
             </div>
@@ -538,7 +602,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Background e Influenze
+            Background, Contatti e Alleati
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -617,21 +681,21 @@
               </div>
             }
 
-            @if (influenze.length >0) {
+            @if (alleati.length >0) {
               <div class="columns" style="align-items: center;">
                 <div class="column"><hr></div>
-                <div class="column is-2" style="text-align: center;">Influenze</div>
+                <div class="column is-2" style="text-align: center;">Alleati</div>
                 <div class="column"><hr></div>
               </div>
             }
 
-            @if (influenze.length >0) {
+            @if (alleati.length >0) {
               <div class="columns is-multiline" style="margin-left: 0px;">
-                @for (dd of influenze; track dd) {
+                @for (dd of alleati; track dd) {
                   <div class="column is-4 nopadding">
                     <div class="columns">
                       <div class="column">
-                        {{dd.nomeinfluenza}}
+                        {{dd.nomealleato}}
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
@@ -659,6 +723,22 @@
 
         <mat-card>
           <mat-card-content>
+              <div class="columns">
+                <div class="column is-2">
+                  <b>Pregio di Sangue:</b>
+                </div>
+                <div class="column is-10">
+                  {{scheda.pregiolds}}
+                </div>
+              </div>
+                <div class="columns">
+                <div class="column is-2">
+                  <b>Difetto di Sangue:</b>
+                </div>
+                <div class="column is-10">
+                  {{scheda.difettolds}}
+                </div>
+              </div>
             <div class="columns is-multiline" style="margin-left: 0px;" >
               @for (dd of pregi; track dd) {
                 <div class="column is-4 nopadding">
