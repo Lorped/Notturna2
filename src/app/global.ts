@@ -54,6 +54,9 @@ export class Basicpg {
 
   public IDcronaca = 0 ;
   public Descrizione = ''; // da LEFT JOIN
+
+  public pregiolds = '';
+  public difettolds = '';
 }
 
 @Injectable()

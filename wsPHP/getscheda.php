@@ -115,6 +115,7 @@ function controlla_legami ($idutente, $db) {
     LEFT JOIN generazione ON personaggio.generazione=generazione.generazione
     LEFT JOIN blood ON personaggio.bloodp=blood.bloodp
     LEFT JOIN cronaca ON personaggio.IDCronaca=cronaca.IDcronaca
+    LEFT JOIN lineedisangue on personaggio.idlds=lineedisangue.idlds
     WHERE idutente = '$idutente' ";
 
   $Result = mysqli_query($db, $MySql);

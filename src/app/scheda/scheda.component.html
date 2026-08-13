@@ -166,6 +166,14 @@
               &nbsp;
             </div>
           </div >
+          <div class="columns">
+            <div class="column is-3 red">
+              Linea di Sangue:
+            </div>
+            <div class="column is-3">
+              {{scheda.nomelds}}
+            </div>
+          </div>
 
         </mat-card-content>
       </mat-card>
@@ -784,6 +792,22 @@
 
           <mat-card>
             <mat-card-content>
+              <div class="columns">
+                <div class="column is-2">
+                  <b>Pregio di Sangue:</b>
+                </div>
+                <div class="column is-10">
+                  {{scheda.pregiolds}}
+                </div>
+              </div>
+                <div class="columns">
+                <div class="column is-2">
+                  <b>Difetto di Sangue:</b>
+                </div>
+                <div class="column is-10">
+                  {{scheda.difettolds}}
+                </div>
+              </div>
               <div class="columns is-multiline" style="margin-left: 0px;" >
                 @for (dd of pregi; track dd) {
                   <div class="column is-4 nopadding">

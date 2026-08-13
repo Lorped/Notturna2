@@ -69,7 +69,7 @@ export class CreaComponent implements OnInit {
   listaDisciplineVie: ListaDisciplineVie[] = [];
   selectedFocusIndex = -1;
 
-  isLinear = false;  // FALSE SOLO PER TEST !!!!!
+  isLinear = true;  // FALSE SOLO PER TEST !!!!!
 
   clan: Array<Clan> = [];
   status: Array<Status> = [];
