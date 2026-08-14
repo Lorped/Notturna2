@@ -396,13 +396,13 @@
                   <div class="half all ml">
                     {{dd.nomedisc}}</div>
                   <div class="half mr">
-                    @if (dd.iddisciplina!=99 && dd.iddisciplina!=98 && dd.iddisciplina != 21) {
+                    @if (dd.iddisciplina!=99 && dd.iddisciplina!=98 && dd.iddisciplina != 21 &&dd.iddisciplina !=23) {
                       <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<=dd.iniziale"><i class="fa fa-minus"></i></button>
                     }
                     @for (i of 5 | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello, 'xred': ix<dd.iniziale}"></i>
                     }
-                    @if (dd.iddisciplina!=99 && dd.iddisciplina!=98 && dd.iddisciplina != 21) {
+                    @if (dd.iddisciplina!=99 && dd.iddisciplina!=98 && dd.iddisciplina != 21 &&dd.iddisciplina !=23) {
                       <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc"><i class="fa fa-plus"></i></button>
                     }
                   </div>
@@ -607,7 +607,7 @@
             Distribuite i livelli a vostra disposizione per le vostre discipline, tenendo presenti i limiti dovuti ad anzianità (Generazione) e Status. Una disciplina non sviluppata (ossia a zero) rimarrà come vostra Disciplina di Clan per gli sviluppi futuri.<br>
             Tremere e  Giovanni  non sviluppano direttamente Taumaturgia o Necromanzia, ma scelgono la loro Via Primaria (ed eventualmente qualla Secondaria e Terziaria) assegnando a questa i livelli. Ricordate che la via Primaria deve avere un livello maggiore della Secondaria ecc. Una Via lasciata a zero non verrà segnata (in pratica, se lasciata la Via Secondaria a zero, dovrete rifare la scelta quando la svilupperete la prima volta).
             <br>I Vili possono scegliere fino a tre Discipline tra quelle indicate. Qualsiasi disciplina non presa, o con un livello zero, sarà considerata non conosciuta.
-            <br>La disciplina Dur-An-Ki segui il punteggio di Occulto/"Stregoneria e Rituali" e non viene sviluppata direttamente.
+            <br>Le discipline Dur-An-Ki e Misticismo Abissale seguono il punteggio di Occulto/"Stregoneria e Rituali" (e Ottenebramento per il Misticismo) e non vengono sviluppate direttamente.
             </mat-card-content>
           </mat-card>
         </mat-step >

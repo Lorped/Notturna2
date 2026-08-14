@@ -55,18 +55,6 @@ if ( isset($postdata) && $idutente != "" && $skill != "" ) {
     $Result = mysqli_query($db, $MySql);
   }
 
-  //check dur-an-ki
-  if ( $skill == 18 ){   // stregoneria-rituali
-  
-    $MySql = "SELECT * from discipline WHERE iddisciplina = 21 and idutente = $idutente";
-    $Result = mysqli_query($db, $MySql);
-    $res = mysqli_fetch_array($Result);
-    if ( $res) {
-      $MySql = "UPDATE discipline set livello = $newlivello WHERE iddisciplina = 21 and idutente = $idutente";
-      $Result = mysqli_query($db, $MySql);
-    }
-  }
-
 
 
   $MySql = "SELECT nomeskill FROM skill_main

@@ -346,6 +346,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 		}
 	}
 
+
+
+	//check dur-an-ki
+
+	foreach ($discipline as $adisciplina ) {
+		$iddisciplina = $adisciplina -> iddisciplina;
+		if ($iddisciplina == 21 ) { // dur-an-ki
+
+			$mysql = "SELECT livello from skill where idskill = 18 and idutente =$idutente";
+			$result = mysqli_query($db, $mysql);
+			if ( $res= mysqli_fetch_array($result)){
+				$livello = $res['livello'];
+
+				if ($livello > 3) { $livello = 3;}  // ROZZO MA IN CREZIONE non può crescere
+
+				$mysql2 = "UPDATE discipline set livello = $livello WHERE iddisciplina = 21 and idutente = $idutente";
+				mysqli_query ($db, $mysql2);
+			}
+		}
+	}
+
+	//check misticismo
+
+	foreach ($discipline as $adisciplina ) {
+		$iddisciplina = $adisciplina -> iddisciplina;
+		if ($iddisciplina == 23 ) { // misticismo abissale
+
+			$mysql = "SELECT livello from skill where idskill = 18 and idutente =$idutente";
+			$result = mysqli_query($db, $mysql);
+			if ( $res= mysqli_fetch_array($result)){
+				$livello0 = $res['livello'];
+
+				$mysql1 = "SELECT livello from discipline where iddisciplina = 9 and idutente =$idutente";
+				$result1 = mysqli_query($db, $mysql1);
+				if ( $res1= mysqli_fetch_array($result1)){
+					$livello1 = $res1['livello'];
+
+					$livello = min ( $livello0 , $livello1, 3); // ROZZO MA IN CREZIONE non può crescere
+
+					$mysql2 = "UPDATE discipline set livello = $livello WHERE iddisciplina = 23 and idutente = $idutente";
+					mysqli_query ($db, $mysql2);
+
+				}
+
+			}
+		}
+	}
+
 	$out = [];
 
 	header("HTTP/1.1 200 OK");
