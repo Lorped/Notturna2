@@ -397,7 +397,8 @@ export class SpendipxComponent implements OnInit {
 
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
     .subscribe(
-      data => {        
+      data => {       
+        this.check_discipline_strane();
         //this.reload_full();
         this.ricalcolo_xp(); 
       }
@@ -553,6 +554,10 @@ export class SpendipxComponent implements OnInit {
             
             this.schedaservice.addskill(this.idutente, idskill, 0)
               .subscribe( (data:any) => {
+
+                if (idskill == 18 ) {  // stregoneria-rituali
+                  this.check_discipline_strane();
+                }
               //this.reload_full();
               this.ricalcolo_xp();
             });
@@ -636,6 +641,7 @@ export class SpendipxComponent implements OnInit {
         this.schedaservice.addbp(this.idutente)
         .subscribe( (data:any) => {
           this.reload_full();   //bp può portare a nuovi maxstat/maxdisc
+
         });
   }
 
@@ -737,6 +743,7 @@ export class SpendipxComponent implements OnInit {
           this.livellinecro [j] = Number ( this.necromanzie[j].necromanzia.livello );
         }
 
+        this.check_discipline_strane();
         this.ricalcolo_xp();
 
         /*
@@ -901,8 +908,46 @@ export class SpendipxComponent implements OnInit {
     } else {
       this.lock = false ;
     }
-    
 
+  }
+
+
+  check_discipline_strane() {
+    let valrituali = 0 ;
+    let valduranki = 0;
+    let valmisticismo = 0 ;
+    let valottenebra = 0 ;
+    const duranki = this.discipline.find(xx => xx.disciplina.iddisciplina == 21);
+    if (duranki) {
+      valduranki = duranki.disciplina.livello;
+      const occ = this.skills.find( yy => yy.idskill == 13);
+      if (occ) {
+        const rituali = occ.subskill2.find( zz => zz.idskill == 18 )
+        valrituali = rituali!.livello;
+
+        if (valduranki < this.maxdisc){
+          duranki.disciplina.livello ++;
+          this.schedaservice.changedisc_master(this.idutente, 21, 1).subscribe();
+        }
+
+      }
+    }
+    const misticismo = this.discipline.find(xx => xx.disciplina.iddisciplina == 23);
+    if (misticismo) {
+      valmisticismo = misticismo.disciplina.livello;
+      const occ = this.skills.find( yy => yy.idskill == 13);
+      if (occ) {
+        const rituali = occ.subskill2.find( zz => zz.idskill == 18 )
+        valrituali = rituali!.livello;
+        const ottenebra = this.discipline.find(hh => hh.disciplina.iddisciplina == 9);
+        valottenebra = ottenebra!.disciplina.livello;
+
+        if ( Math.min(valrituali,valottenebra)>valmisticismo &&  valmisticismo< this.maxdisc ) {
+          misticismo.disciplina.livello ++;
+          this.schedaservice.changedisc_master(this.idutente, 23, 1).subscribe();
+        }
+      }    
+    }
   }
 
 }

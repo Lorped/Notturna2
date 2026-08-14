@@ -57,17 +57,6 @@ if ( isset($postdata) && $idutente != "" && $idskill != "" ) {
 
 
 
-    //check dur-an-ki
-  if ( $idskill == 18 ){   // stregoneria-rituali
-  
-    $MySql = "SELECT * from discipline WHERE iddisciplina = 21 and idutente = $idutente";
-    $Result = mysqli_query($db, $MySql);
-    $res = mysqli_fetch_array($Result);
-    if ( $res) {
-      $MySql = "UPDATE discipline set livello = livello +1  WHERE iddisciplina = 21 and idutente = $idutente";
-      $Result = mysqli_query($db, $MySql);
-    }
-  }
 
 
   if ( $tipologia == 0 ) {
