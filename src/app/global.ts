@@ -121,6 +121,9 @@ export class Pregio {
   public valore = 0;
   public classe = '';
   public pxspesi = 0 ;
+  public parattr = '';
+  public parvalore = 0;
+  public disabled = false;
 }
 
 @Injectable()

@@ -557,6 +557,7 @@ export class CreaComponent implements OnInit {
     this.sommaAttr--;
 
     this.checkattr();
+    this.checkpregi();
   }
   addattr(id: number) {
     this.attributi[id].Livello++;
@@ -573,6 +574,7 @@ export class CreaComponent implements OnInit {
     this.sommaAttr++;
 
     this.checkattr();
+    this.checkpregi();
   }
 
   checkattr() {
@@ -844,7 +846,7 @@ export class CreaComponent implements OnInit {
     
 
     for ( let j = 0 ; j < 3 ; j++) {
-      if (this.discipline[j].livello > 0 && this.discipline[j].iddisciplina != 98 && this.discipline[j].iddisciplina != 99 ) {
+      if (this.discipline[j].livello >= 0 && this.discipline[j].iddisciplina != 98 && this.discipline[j].iddisciplina != 99 ) {
         const disc: ListaDisciplineVie = { disc_vie: 'D', id: this.discipline[j].iddisciplina, nome: this.discipline[j].nomedisc, focus: 0  };
         this.listaDisciplineVie.push(disc);
       }
@@ -1181,6 +1183,7 @@ export class CreaComponent implements OnInit {
       if (d) { dVal = Number(d.valore) || 0; }
     }
     this.valorePregioDifetto = pVal + dVal;
+    //console.log("delta ", this.valorePregioDifetto);
   }
 
   gen14() {
@@ -1355,13 +1358,13 @@ export class CreaComponent implements OnInit {
       this.SOMMASCI += element.livello;
     });
 
-    console.log("lds" , this.lds);
-    console.log("ACC ", this.SOMMAACC);
-    console.log("CRI ", this.SOMMACRI);
-    console.log("ETI", this.SOMMAETI);
-    console.log("OCC ", this.SOMMAOCC);
-    console.log("SCI ", this.SOMMASCI);
-    console.log ("lim ", this.numSkill/3);
+    //console.log("lds" , this.lds);
+    //console.log("ACC ", this.SOMMAACC);
+    //console.log("CRI ", this.SOMMACRI);
+    //console.log("ETI", this.SOMMAETI);
+    //console.log("OCC ", this.SOMMAOCC);
+    //console.log("SCI ", this.SOMMASCI);
+    //console.log ("lim ", this.numSkill/3);
   }
 
 
@@ -1669,6 +1672,70 @@ export class CreaComponent implements OnInit {
 
   }
 
+  checkpregi(){
+
+    this.listapregi.forEach(element => {
+      element.disabled = false;
+      //console.log ("P parattr", element.parattr);
+      switch ( element.parattr) {
+        case 'Saggezza' :
+          if (this.attributi[7].Livello < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+        case 'Percezione' :
+          if (this.attributi[2].Livello < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+        case 'FdV' :
+          if (Math.ceil((this.attributi[7].Livello + this.attributi[8].Livello)/2) < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+        case 'Carisma' :
+          if (this.attributi[1].Livello  < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+        case 'X' :
+          if (this.attributi[0].Livello  < element.parvalore || this.attributi[3].Livello<element.parvalore){
+            element.disabled = true;
+          }
+          break;
+      }
+    });
+    this.listadifetti.forEach(element => {
+      element.disabled = false;
+      //console.log ("D parattr", element.parattr);
+      switch ( element.parattr) {
+        case 'Saggezza' :
+          if (this.attributi[7].Livello < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+        case 'Percezione' :
+          if (this.attributi[2].Livello < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+        case 'FdV' :
+          if (Math.ceil((this.attributi[7].Livello + this.attributi[8].Livello)/2) < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+        case 'Carisma' :
+          if (this.attributi[1].Livello  < element.parvalore){
+            element.disabled = true;
+          }
+          break;
+      }
+    });
+
+      //console.log ( "pregi" , this.listapregi);
+      //console.log ( "dif" , this.listadifetti);
+
+  }
 
 
 }

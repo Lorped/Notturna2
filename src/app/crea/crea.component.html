@@ -725,23 +725,29 @@
                         <mat-label>Pregio </mat-label>
                         <mat-select [(value)]="new_p" (selectionChange)="onPregioChange($event.value)">
                           @for (tt of listapregi; track tt) {
-                            <mat-option [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                            <mat-option [value]="tt.idpregio" [disabled]="tt.disabled">{{tt.nomepregio}} ({{tt.valore}})</mat-option>
                           }
                         </mat-select>
                       </mat-form-field>
+
 
 
                        <mat-form-field style="margin-left: 10px">
                         <mat-label>Difetto </mat-label>
                         <mat-select [(value)]="new_d" (selectionChange)="onDifettoChange($event.value)">
                           @for (tt of listadifetti; track tt) {
-                            <mat-option [value]="tt.idpregio" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
+                            <mat-option [value]="tt.idpregio" [disabled]="tt.disabled" >{{tt.nomepregio}} ({{tt.valore}})</mat-option>
                           }
                         </mat-select>
+                        
                       </mat-form-field>
                      
                 </div>          
-                
+                <div>
+                  @if (valorePregioDifetto >0) {
+                      <mat-error>Pregio di valore maggiore del difetto</mat-error>
+                  }
+                </div>                
 
 
             </mat-card-content>
