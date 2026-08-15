@@ -710,11 +710,13 @@ export class SpendipxComponent implements OnInit {
         this.scheda['maxstat'] = Number(this.scheda['maxstat']);
         this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);
 
+        /****
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
 
         if (this.maxdisc > this.scheda.maxdisc) {
           this.maxdisc = this.scheda.maxdisc;
         }
+        **/
 
         if (this.maxdisc > 5) {
           this.maxpallini = this.maxdisc;

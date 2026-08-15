@@ -109,18 +109,6 @@ export class DocsComponent implements OnInit {
 
         }
 
-        if ( this.idclan == '7') {
-          this.linkT = 'https://drive.google.com/file/d/0BwbyMyT-GT-URWlmTUtjNUhfc0E/view';
-          this.disT = false;
-        }
-        if ( this.idclan == '14' || this.idclan == '11') {
-          this.linkN = 'https://drive.google.com/file/d/0BwbyMyT-GT-UX3VNX1U4T21pejA/view';
-          this.disN = false;
-        }
-        if ( this.idclan == '2' ) {
-          this.linkV = 'https://drive.google.com/file/d/0BwbyMyT-GT-UNE1DVEZsT3l2S1E/view';
-          this.disV = false;
-        }
       }
     );
 
