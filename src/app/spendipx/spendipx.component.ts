@@ -35,6 +35,12 @@ export class SpendipxComponent implements OnInit {
     [ 5, 5, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10 ]
   ];
 
+  // matrice max discipline post creazione
+
+  matriceMaxDisc2: number[] = [
+      5, 5, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10 
+  ];
+
   maxdisc = 0 ;
   maxpallini = 5 ; //numero pallini disciplina visibili
   maxattributi = 5 ; //numero max attributi fisici/mentali/sociali
@@ -142,18 +148,18 @@ export class SpendipxComponent implements OnInit {
         //this.scheda['bloodpmax'] = Number(this.scheda['bloodpmax']);
 
         this.scheda['maxstat'] = Number(this.scheda['maxstat']);
-        this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);
+        this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);  //conta la bloodpotency
 
         this.statusPG = Number(this.scheda.idstatus);
 
 
-        this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
+        this.maxdisc = this.matriceMaxDisc2  [14 - this.scheda['generazione']];
 
         if (this.maxdisc > this.scheda.maxdisc) {
           this.maxdisc = this.scheda.maxdisc;
         }
 
-        //console.log("maxdisc ",this.maxdisc);
+        console.log("maxdisc ",this.maxdisc);
 
         if (this.maxdisc > 5) {
           this.maxpallini = this.maxdisc;

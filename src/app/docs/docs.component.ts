@@ -17,10 +17,11 @@ export class DocsComponent implements OnInit {
   linkN = '/docs/#';
   linkV = '/docs/#';
 
-  disC = true;
-  disT = true;
-  disN = true;
-  disV = true;
+  disC = false ;
+
+  trem = false;
+  giova = false;
+
 
 
   constructor( private schedaservice: SchedaService ) { }
@@ -65,6 +66,8 @@ export class DocsComponent implements OnInit {
           case '7':		// Tremere
             this.link = 'https://drive.google.com/file/d/0BwbyMyT-GT-US3d3OEpnbV9Ccjg/view';
             this.disC = false;
+
+            this.trem = true;
           break;
 
           case '8':		// Lasombra
@@ -85,6 +88,7 @@ export class DocsComponent implements OnInit {
           case '11':	// Giovanni
             this.link = 'https://drive.google.com/file/d/0BwbyMyT-GT-UYTVUZFlNeEo2N0k/view';
             this.disC = false;
+            this.giova = true;
           break;
 
           case '12':	// Ravnos
