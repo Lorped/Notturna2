@@ -33,6 +33,14 @@
         </mat-card>
       </a>
 
+      <a routerLink="/logpxadm/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+        <mat-card class="movable">
+          <mat-card-content class="all">
+            <i class="fa fa-list-ul"></i> Verifica Avanzamenti e Modifiche Extra
+          </mat-card-content>
+        </mat-card>
+      </a>
+
       <a routerLink="/eventi" >
         <mat-card class="movable">
           <mat-card-content class="all">

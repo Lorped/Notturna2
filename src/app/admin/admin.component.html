@@ -80,7 +80,13 @@
       </div>
 
       <div class="column is-3">
-        <!-- FILLER -->
+        <a routerLink="/logpxadm/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+          <mat-card class="movable">
+            <mat-card-content class="all">
+              <i class="fa fa-list-ul"></i> Verifica Avanzamenti e Modifiche Extra
+            </mat-card-content>
+          </mat-card>
+        </a>
       </div>
 
 

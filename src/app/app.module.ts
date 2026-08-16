@@ -76,6 +76,7 @@ import { ChatComponent } from './chat/chat.component';
 import { RubricaComponent } from './rubrica/rubrica.component';
 import { EventiComponent } from './eventi/eventi.component';
 import { RisorseComponent } from './risorse/risorse.component';
+import { LogpxadmComponent } from './logpxadm/logpxadm.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -106,7 +107,8 @@ import { RisorseComponent } from './risorse/risorse.component';
         ChatComponent,
         RubricaComponent,
         EventiComponent,
-        RisorseComponent
+        RisorseComponent,
+        LogpxadmComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

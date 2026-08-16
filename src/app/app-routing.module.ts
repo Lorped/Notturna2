@@ -24,6 +24,7 @@ import { ChatComponent } from "./chat/chat.component";
 import { RubricaComponent } from "./rubrica/rubrica.component";
 import { EventiComponent } from './eventi/eventi.component';
 import { RisorseComponent } from './risorse/risorse.component';
+import { LogpxadmComponent } from './logpxadm/logpxadm.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'rubrica', component: RubricaComponent },
   { path: 'eventi', component: EventiComponent },
   { path: 'risorse/:id', component: RisorseComponent },
+  { path: 'logpxadm/:id', component: LogpxadmComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
