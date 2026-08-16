@@ -18,21 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-require_once __DIR__ . '/db2.inc.php'; //MYSQLI//
+require_once __DIR__ . '/db2.inc.php';  //MYSQLI//
 
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
+$nomeoggetto = $request -> nomeoggetto;
+$descrizione = $request -> descrizione;
 $idoggetto = $request -> idoggetto;
-$tipocond = $request -> tipocond;
-$tabcond = $request -> tabcond;
-$valcond = $request -> valcond;
-$descrX = $request -> descrX;
-$risp = $request -> risp;
 
 
-$descrX = mysqli_real_escape_string($db, $descrX);
+$nomeoggetto = mysqli_real_escape_string($db, $nomeoggetto);
+$descrizione = mysqli_real_escape_string($db, $descrizione);
+
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
@@ -41,29 +40,17 @@ $descrX = mysqli_real_escape_string($db, $descrX);
 
 if ( isset($postdata) && $idoggetto != ""  ) {
 
-  if ($risp == 'x'){
-    $MySql = "INSERT INTO cond_oggetti
-    (idoggetto, tipocond, tabcond, valcond, descrX)
-    VALUES
-    ($idoggetto, '$tipocond', $tabcond, $valcond, '$descrX') ";
-  } else {
-    $MySql = "INSERT INTO cond_oggetti
-    (idoggetto, tipocond, tabcond, valcond, descrX, risp)
-    VALUES
-    ($idoggetto, '$tipocond', $tabcond, $valcond, '$descrX', '$risp') ";
-  }
-  $Result = mysqli_query($db, $MySql);
+  $MySql = "UPDATE oggetti
+  SET nomeoggetto = '$nomeoggetto', descrizione = '$descrizione'
+  WHERE IDoggetto = $idoggetto";
 
-
-  $MySql = "SELECT idcondizione from cond_oggetti where idcondizione = last_insert_id() ";
   $Result = mysqli_query($db, $MySql);
-  $res = mysqli_fetch_array ($Result);
 
   //die($MySql);
 
   header("HTTP/1.1 200 OK");
 
-  $out = $res['idcondizione'];
+  $out = "OK";
   $out = json_encode ($out, JSON_UNESCAPED_UNICODE);
   echo $out;
 

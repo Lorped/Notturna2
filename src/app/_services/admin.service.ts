@@ -47,6 +47,14 @@ export class AdminService {
     });
   }
 
+  cambiaogg(idoggetto: number, nomeoggetto: string, descrizione: string) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changeogg.php',{
+      idoggetto: idoggetto,
+      nomeoggetto: nomeoggetto,
+      descrizione: descrizione
+    });
+  } 
+
   getcondizioni() {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcondizioni.php' );
   }

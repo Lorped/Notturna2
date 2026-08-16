@@ -394,6 +394,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 		}
 	}
 
+	$mysqlx = "select idutente from segreteria where idutente = $idutente";
+	$resultx = mysqli_query($db, $mysqlx);
+	if (mysqli_num_rows($resultx) == 0) {
+		$Mysql = "INSERT INTO segreteria (idutente, eventi, eventodata, saldo) VALUES
+			($idutente, 0, '0000-00-00', 0) ";
+		mysqli_query($db, $Mysql);
+	}
+
 	$out = [];
 
 	header("HTTP/1.1 200 OK");

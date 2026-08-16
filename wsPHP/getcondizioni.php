@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-  include ('db2.inc.php'); //MYSQL//
+  require_once __DIR__ . '/db2.inc.php'; //MYSQL//
 
 
 	$attributi = [];
@@ -40,10 +40,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   /*** skill **/
 
   $skill = [];
-  $MySql = "SELECT idskill, nomeskill  FROM skill_main ORDER BY nomeskill" ;
+  $MySql = "SELECT idskill, nomeskill  FROM skill_main 
+  	WHERE (tipologia=0 ) and subskill=0 ORDER BY nomeskill" ;
   $Result = mysqli_query($db, $MySql);
   while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
-    $skill[] =  $res;
+	$xidskill = $res['idskill'];
+	$xnomeskill = $res['nomeskill'];
+
+	$subskill2 = [];
+	
+	$Mysql2 = "SELECT idskill, nomeskill  FROM skill_main
+	where subskill = $xidskill ORDER BY nomeskill" ;
+	$Result2 = mysqli_query($db, $Mysql2);
+	while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ) {	
+		$subskill2[] =  $res2;
+	}
+	$skill[] = [
+		'idskill' => $xidskill,
+		'nomeskill' => $xnomeskill,
+		'subskill2' => $subskill2
+	];	
   }
 
 	/*** discipline **/

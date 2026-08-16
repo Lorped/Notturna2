@@ -21,14 +21,14 @@
         <mat-card>
           <mat-card-title>
             <mat-card-header>
-              <span style="font-size: 1.5em;">Eventi</span>
+              <span style="font-size: 1.2em;">Eventi</span>
             </mat-card-header>
 
 
           </mat-card-title>
           <mat-card-subtitle>
             <mat-card-header>
-              <span style="font-size: 1.2em;">Filtra per Cronaca &nbsp;</span>
+              <span style="font-size: 1.1em;">Filtra per Cronaca &nbsp;</span>
                 
             <mat-chip-listbox aria-label="Cronache"></mat-chip-listbox>
             @for (item of listacronache; track $index) { 
@@ -78,7 +78,7 @@
               </div>
               <div class="column bigger is-1">
                 <button type="button" class="sort-btn" (click)="sortBy('xp')">
-                  <span class="sort-label">PX</span>
+                  <span class="sort-label">Ev.PX</span>
                   <span class="sort-icon" *ngIf="currentSortColumn === 'xp'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
                 </button>
               </div>

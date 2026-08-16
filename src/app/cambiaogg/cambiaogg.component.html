@@ -59,20 +59,22 @@
               {{item.oggetto.barcode}}
             </div>
             <div class="column is-2">
-              {{item.oggetto.nomeoggetto}}
+              <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                <input matInput [(ngModel)]="item.oggetto.nomeoggetto" placeholder="Nome Oggetto" type="text">
+              </mat-form-field>
             </div>
-            <div class="column is-3">
-              {{item.oggetto.descrizione}}
+            <div class="column is-4">
+              <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                <textarea matInput [(ngModel)]="item.oggetto.descrizione" placeholder="Descrizione" type="text"></textarea>
+              <!-- {{item.oggetto.descrizione}} -->
+              </mat-form-field>
             </div>
             <div class="column is-1">
               {{item.oggetto.fissomobile}}
             </div>
-            <div class="column is-1">
-              &nbsp;
-            </div>
-            <div class="column is-1">
-              &nbsp;
-            </div>
+              <div class="column is-1">
+                <button  mat-raised-button color="warn" (click)="aggiornaogg(item.oggetto.idoggetto)" [disabled]="!oggettoModificato()">Aggiorna</button>
+              </div>
           </div>
           @for (cond of item.condizioni; track cond) {
             <div class="columns">
@@ -202,8 +204,8 @@
             </div>
             <div class="column is-2">
               <mat-form-field appearance="fill" style="size: 75%; display: block; ">
-                <mat-label>Scegli Skill</mat-label>
-                <mat-select   [(value)]="tabcondS" >
+                <mat-label>Skill Generico</mat-label>
+                <mat-select   [(value)]="tabcondS" (selectionChange)="aggiornasubskill()">
                   @for (i of skill; track i) {
                     <mat-option [value]="i.idskill">{{i.nomeskill}}</mat-option>
                   }
@@ -236,6 +238,51 @@
               <button  mat-raised-button color="primary" (click)="addcond('S')" [disabled]=" !(valcondS.errors===null) || descrizioneS=='' || tabcondS=='' ">Aggiungi</button>
             </div>
           </div>
+
+          <div class="columns" >
+            <div class="column is-1">
+              &nbsp;
+            </div>
+            <div class="column is-2">
+              <mat-form-field appearance="fill" style="size: 75%; display: block; ">
+                <mat-label>Skill Specifico</mat-label>
+                <mat-select   [(value)]="tabcondSS" >
+                  @for (i of subskill; track i) {
+                    <mat-option [value]="i.idskill">{{i.nomeskill}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              @if (subskill.length==0) {
+                <span class="red">Seleziona prima uno skill generico</span>
+              } 
+            </div>
+            <div class="column is-1">
+              <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                <input matInput [formControl]="valcondSS" placeholder="Min." type="text" pattern="\d*">
+              </mat-form-field>
+            </div>
+            <div class="column is-1">
+              @if (item.oggetto.ifdomanda==1) {
+                <mat-radio-group [(ngModel)]="quandoSS" >
+                  @for (tipo of quando; track tipo) {
+                    <mat-radio-button  class="example-radio-button"  [value]="tipo.id">
+                      {{tipo.nome}}
+                    </mat-radio-button>
+                  }
+                </mat-radio-group>
+              }
+            </div>
+            <div class="column is-5">
+              <mat-form-field appearance="fill" class="full">
+                <mat-label>Descrizione</mat-label>
+                <textarea matInput [(ngModel)]="descrizioneSS"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="column is-2">
+              <button  mat-raised-button color="primary" (click)="addcond('SS')" [disabled]=" !(valcondSS.errors===null) || descrizioneSS=='' || tabcondSS=='' ">Aggiungi</button>
+            </div>
+          </div>
+
 
 
 

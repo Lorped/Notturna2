@@ -53,6 +53,7 @@ require_once __DIR__ . '/db2.inc.php';  //MYSQLI //
 					$cond = $Atabcond[$res2['tabcond']];
 					break;
 				case 'S':
+				case 'SS':
 					$ids=$res2['tabcond'];
 					$Mysqlx = "SELECT nomeskill FROM skill_main WHERE idskill = $ids";
 					$Resultx = mysqli_query($db, $Mysqlx);

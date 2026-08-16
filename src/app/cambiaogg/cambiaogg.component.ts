@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
-import { Oggetto, Condizione, FullOggetto, Unpaired} from '../global';
+import { Oggetto, Condizione, FullOggetto, Unpaired, Skill, SubSkill} from '../global';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -28,26 +28,37 @@ export class CambiaoggComponent implements OnInit {
     Validators.max(10),
     Validators.min(1)
   ]);
+  valcondSS = new UntypedFormControl('', [
+    Validators.required,
+    Validators.max(10),
+    Validators.min(1)
+  ]);
 
 
   item = new FullOggetto();
 
   attributi: Array<any> = [];
-  skill: Array<any> = [];
+  skill: Array<Skill> = [];
   poteri: Array<any> = [];
   discipline: Array<any> = [];
 
+  subskill: Array<SubSkill> = [];
+
   tabcondA = '';
   tabcondS = '';
+  tabcondSS = '';
   tabcondP = '';
   tabcondD = '';
 
   descrizioneA = '';
   descrizioneS = '';
+  descrizioneSS = '';
   descrizioneP = '';
   descrizioneD = '';
 
   idoggetto = 0;
+  nomeoggettoIniziale = '';
+  descrizioneIniziale = '';
 
   domanda = '';
   rispSi = '';
@@ -55,6 +66,7 @@ export class CambiaoggComponent implements OnInit {
 
   quandoA = 'x';
   quandoS = 'x';
+  quandoSS = 'x';
   quandoD = 'x';
   quandoP = 'x';
   quando: { id: string, nome: string }[] = [
@@ -73,6 +85,8 @@ export class CambiaoggComponent implements OnInit {
 
     this.idoggetto = Number ( this.route.snapshot.paramMap.get('id') );
     this.item =  window.history.state.obj ;
+    this.nomeoggettoIniziale = this.item.oggetto.nomeoggetto;
+    this.descrizioneIniziale = this.item.oggetto.descrizione;
 
     this.adminservice.getcondizioni().subscribe(
       (data: any) => {
@@ -143,6 +157,18 @@ export class CambiaoggComponent implements OnInit {
         }
         risp = this.quandoS;
         break;
+      case 'SS':
+        tipocond = 'SS';
+        vc = this.valcondSS.value;
+        tc = this.tabcondSS;
+        desc = this.descrizioneSS;
+        for ( let aa of this.subskill) {
+          if ( aa.idskill == Number(tc) ){
+            mytipocond = aa.nomeskill;
+          }
+        }
+        risp = this.quandoSS;
+        break;
       case 'P':
         tipocond = 'P';
         vc = '1';
@@ -161,7 +187,7 @@ export class CambiaoggComponent implements OnInit {
         tc = this.tabcondD;
         desc = this.descrizioneD;
         for ( let aa of this.discipline) {
-          if ( aa.iddisc == tc){
+          if ( aa.iddisciplina == tc){
             mytipocond = aa.nomedisc;
           }
         }
@@ -179,6 +205,9 @@ export class CambiaoggComponent implements OnInit {
         mycond.valcond = Number(vc);
         mycond.descrX = desc;
         mycond.risp = risp;
+
+        console.log("aggiunta condizione: ", mycond);
+
         if ( risp == 'x') {
           mycond.risp = '';
           this.item.condizioni.push( mycond );
@@ -192,16 +221,21 @@ export class CambiaoggComponent implements OnInit {
 
     this.tabcondA = '';
     this.tabcondS = '';
+    this.tabcondSS = '';
     this.tabcondP = '';
     this.tabcondD = '';
 
     this.descrizioneA = '';
     this.descrizioneS = '';
-    this.descrizioneP = '';
+    this.descrizioneS = '';
+    this.descrizioneSS = '';
     this.descrizioneD = '';
     this.valcondA.setValue('');
     this.valcondS.setValue('');
+    this.valcondSS.setValue('');
     this.valcondD.setValue('');
+
+    this.subskill = [];
   }
 
   adddomanda(){
@@ -274,6 +308,31 @@ export class CambiaoggComponent implements OnInit {
         } 
       );
     
+  }
+
+  aggiornaogg(idoggetto: number){
+    this.adminservice.cambiaogg(idoggetto, this.item.oggetto.nomeoggetto, this.item.oggetto.descrizione).subscribe(
+      (data) => {
+         this.nomeoggettoIniziale = this.item.oggetto.nomeoggetto;
+         this.descrizioneIniziale = this.item.oggetto.descrizione;
+         console.log("aggiornato oggetto");
+      }
+    );
+    
+
+  }
+
+  oggettoModificato(): boolean {
+    return this.item.oggetto.nomeoggetto !== this.nomeoggettoIniziale
+      || this.item.oggetto.descrizione !== this.descrizioneIniziale;
+  }
+  aggiornasubskill() {
+    console.log("skill", this.skill);
+    console.log("tabcondS", this.tabcondS);
+    const selectedSkill = this.skill.find(skill => skill.idskill == Number(this.tabcondS));
+    console.log("selectedSkill: ", selectedSkill);
+    this.subskill = selectedSkill ? selectedSkill.subskill2 : [];  
+    console.log("subskill: ", this.subskill);
   }
 
 }

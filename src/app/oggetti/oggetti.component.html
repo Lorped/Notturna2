@@ -21,7 +21,7 @@
       <mat-card>
         <mat-card-content>
 
-          <div class="column" style="font-size: 1.5em; font-weight: 500;">
+          <div class="column" style="font-size: 1.2em; font-weight: 500;">
             Gestione oggetti - Gestione completa per " {{globalstatus.cronacadescrizione}} "
           </div>
 
@@ -73,14 +73,11 @@
             <div class="column is-2 bold">
               Nome Oggetto
             </div>
-            <div class="column is-3 bold">
+            <div class="column is-4 bold">
               Descrizione
             </div>
             <div class="column is-1 bold">
               Tipo
-            </div>
-            <div class="column is-1 bold">
-              &nbsp;
             </div>
             <div class="column is-1 bold">
               &nbsp;
@@ -97,16 +94,13 @@
                     {{item.oggetto.barcode}}
                   </div>
                   <div class="column is-2">
-                    {{item.oggetto.nomeoggetto}}
+                    <button mat-raised-button color="accent" [disabled]="!puoGestireOggetto(item)" (click)="modifica(item.oggetto.idoggetto, item)">{{item.oggetto.nomeoggetto}}</button>                   
                   </div>
-                  <div class="column is-3">
+                  <div class="column is-4">
                     {{item.oggetto.descrizione}}
                   </div>
                   <div class="column is-1">
                     {{item.oggetto.fissomobile}}
-                  </div>
-                  <div class="column is-1">
-                    <button mat-raised-button color="accent" [disabled]="!puoGestireOggetto(item)" (click)="modifica(item.oggetto.idoggetto, item)">Modifica</button>
                   </div>
                   <div class="column is-1">
                     <button mat-raised-button color="warn" [disabled]="!puoGestireOggetto(item)" (click)="cancellaoggetto(item.oggetto.idoggetto)">Cancella</button>

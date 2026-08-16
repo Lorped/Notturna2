@@ -14,6 +14,7 @@ html, body {
   margin: 0;
   width: 100%;
   min-height: 100vh;
+  font-size: 90%;
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #121212;}
 

@@ -10,8 +10,8 @@ i {
     margin-right: 0.3em;
 }
 
-mat-card-content {
-  font-size: 1.1em;
+mat-card mat-card-content {
+  font-size: 0.9em !important;
 }
 
 .limited {
@@ -49,3 +49,4 @@ mat-card-content {
   text-align: left;
   width: 100%;
 }
+
