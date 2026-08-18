@@ -402,6 +402,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 		mysqli_query($db, $Mysql);
 	}
 
+
+
+	foreach ($bg as $back){
+		if ($back->idback ==  6){ //mentore
+
+			$mysql = "Select * from lineedisangue where idlds = $idlds ";
+			$result = mysqli_query($db, $mysql);
+			$res = mysqli_fetch_array($result);
+			$nomementore = $res['mentorelds'];
+
+			$mysql2 = "INSERT INTO rubrica (owner, contatto, cell, home, note) VALUES ($idutente, '$nomementore', '1', '0', 'Mentore')";
+			mysqli_query($db, $mysql2);
+
+		}
+
+	}
+
 	$out = [];
 
 	header("HTTP/1.1 200 OK");
