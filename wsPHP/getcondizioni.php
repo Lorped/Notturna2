@@ -62,6 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	];	
   }
 
+  $otherskill = [];
+  $MySql = "SELECT idskill, nomeskill  FROM skill_main 
+  	WHERE (tipologia=1 ) ORDER BY nomeskill" ;
+  $Result = mysqli_query($db, $MySql);
+  while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
+	$otherskill[] =  $res;
+  }
+
 	/*** discipline **/
 
 	$discipline = [];
@@ -83,10 +91,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
   $output = [
-		"attributi" => $attributi,
-    "skill" => $skill,
-		"discipline" => $discipline,
-		"poteri" => $poteri
+	"attributi" => $attributi,
+   	"skill" => $skill,
+	"otherskill" => $otherskill,
+	"discipline" => $discipline,
+	"poteri" => $poteri
   ];
 
 	header("HTTP/1.1 200 OK");
