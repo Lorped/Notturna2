@@ -39,7 +39,7 @@ export class CreaComponent implements OnInit {
 
   bonusbg = 0 ;    //bonus bg da lds
   bonusskill = 0 ;    //bonus skill da lds
-  bonusbp = 0 ;    //bonus skill da lds
+
   mingregge = 0;
   minseguaci = 0;
   bgldsOK =false ;
@@ -753,7 +753,7 @@ export class CreaComponent implements OnInit {
     this.lds=0;
     this.bonusbg = 0 ;
     this.bonusskill = 0 ;
-    this.bonusbp = 0;
+
     this.myLDS = this.listalds.filter((unit) => unit.idclan == this.clanPG?.value);
     this.ldsOK=false;
       const cc = this.bg.find( x =>  x.idback == 11);
@@ -962,7 +962,7 @@ export class CreaComponent implements OnInit {
 
     this.ldsOK = true;
     this.bonusbg=0;
-    this.bonusbp=0;
+  
     this.bonusskill = 0 ;
     //console.log ( "bonusbg ", this.bonusbg);
     //console.log("bonusskill ", this.bonusskill);
@@ -1009,10 +1009,7 @@ export class CreaComponent implements OnInit {
       });
     
 
-    if ( this.lds== 21 ){
-      this.bonusbp=1;
-      //console.log("bonusbg ", this.bonusbg);
-    }
+  
 
     if ( this.lds== 13 || this.lds == 23 ||  this.lds==7){
       this.bonusbg=2;
@@ -1439,7 +1436,7 @@ export class CreaComponent implements OnInit {
     aPG.IDcronaca = this.cronacaPG;  
 
     this.schedaservice.putregistra( aPG , this.bg , this.cont , this.alleati, this.discipline , this.taumaturgie , this.necromanzie , 
-      this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp+this.bonusbp, this.listaDisciplineVie, this.lds)
+      this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp, this.listaDisciplineVie, this.lds)
       .subscribe(
         data => {
           //  OK!

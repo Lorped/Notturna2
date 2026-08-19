@@ -289,9 +289,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 				foreach ($subskill2 as $ss2 ) {
 					$liv2 = $ss2 -> livello;
 					$id2= $ss2 -> idskill;
-					$MySql = "INSERT INTO skill (  idutente, livello, idskill ) VALUES (  $idutente, $liv2, $id2 )";
-					mysqli_query($db, $MySql);
-					if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+					if ( $liv2 != 0) {
+						$MySql = "INSERT INTO skill (  idutente, livello, idskill ) VALUES (  $idutente, $liv2, $id2 )";
+						mysqli_query($db, $MySql);
+						if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
+					}
 
 				}
 			}
