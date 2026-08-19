@@ -284,6 +284,47 @@
           </div>
 
 
+          <div class="columns" >
+            <div class="column is-1">
+              &nbsp;
+            </div>
+            <div class="column is-2">
+              <mat-form-field appearance="fill" style="size: 75%; display: block; ">
+                <mat-label>Altri skill</mat-label>
+                <mat-select   [(value)]="tabcondX" >
+                  @for (i of otherskill; track i) {
+                    <mat-option [value]="i.idskill">{{i.nomeskill}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="column is-1">
+              <mat-form-field appearance="fill" style="size: 100%; display: block;">
+                <input matInput [formControl]="valcondX" placeholder="Min." type="text" pattern="\d*">
+              </mat-form-field>
+            </div>
+            <div class="column is-1">
+              @if (item.oggetto.ifdomanda==1) {
+                <mat-radio-group [(ngModel)]="quandoX" >
+                  @for (tipo of quando; track tipo) {
+                    <mat-radio-button  class="example-radio-button"  [value]="tipo.id">
+                      {{tipo.nome}}
+                    </mat-radio-button>
+                  }
+                </mat-radio-group>
+              }
+            </div>
+            <div class="column is-5">
+              <mat-form-field appearance="fill" class="full">
+                <mat-label>Descrizione</mat-label>
+                <textarea matInput [(ngModel)]="descrizioneX"></textarea>
+              </mat-form-field>
+            </div>
+            <div class="column is-2">
+              <button  mat-raised-button color="primary" (click)="addcond('X')" [disabled]=" !(valcondX.errors===null) || descrizioneX=='' || tabcondX=='' ">Aggiungi</button>
+            </div>
+          </div>
+
 
 
           <div class="columns" >

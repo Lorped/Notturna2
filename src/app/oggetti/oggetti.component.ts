@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
-import { Oggetto, Condizione, FullOggetto, GlobalStatus} from '../global';
+import { Oggetto, Condizione, FullOggetto, GlobalStatus, Cronaca} from '../global';
 import { Router, NavigationExtras } from '@angular/router';
 /* import { FormControl, FormGroup, Validators } from '@angular/forms'; */
 
@@ -19,7 +19,11 @@ export class OggettiComponent implements OnInit {
   nomeoggetto = '';
   descrizione = '';
 
+  listacronache: Array<Cronaca> = [];
+  selectedCronache: number[] = [];
+
   listaoggetti: Array<FullOggetto> = [];
+  displayedOggetti: Array<FullOggetto> = [];
   listafissomobile: { id: string, nome: string }[] = [
     {id: 'F', nome: 'Fisso'} ,
     {id: 'M', nome: 'Mobile'} ,
@@ -33,6 +37,12 @@ export class OggettiComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.adminservice.getlistcronache().subscribe(
+      (data: any) => {
+        this.listacronache = data;
+      }
+    );
+
     this.adminservice.listoggetti().subscribe(
       (data: any) => {
         this.listaoggetti = data.oggetti;
@@ -40,6 +50,7 @@ export class OggettiComponent implements OnInit {
 
 
         this.sortListaOggetti();
+        this.applyFiltro();
         // console.log(this.listaoggetti);
       }
     );
@@ -55,6 +66,28 @@ export class OggettiComponent implements OnInit {
     });
   }
 
+  filterByCronaca(idcronaca: number): void {
+    idcronaca = Number(idcronaca);
+    const index = this.selectedCronache.indexOf(idcronaca);
+
+    if (index >= 0) {
+      this.selectedCronache.splice(index, 1);
+    } else {
+      this.selectedCronache.push(idcronaca);
+    }
+
+    this.applyFiltro();
+  }
+
+  private applyFiltro(): void {
+    if (!this.selectedCronache.length) {
+      this.displayedOggetti = [...this.listaoggetti];
+      return;
+    }
+
+    this.displayedOggetti = this.listaoggetti.filter(item => this.selectedCronache.includes(Number(item.oggetto.IDcronaca ?? 0)));
+  }
+
   puoGestireOggetto(item: FullOggetto): boolean {
     return Number(item?.oggetto?.IDcronaca ?? 0) === Number(this.globalstatus?.cronacaprincipale ?? 0);
   }
@@ -67,6 +100,7 @@ export class OggettiComponent implements OnInit {
             this.listaoggetti.splice(j,1);
           }
         }
+        this.applyFiltro();
       }
     );
   }
@@ -78,6 +112,7 @@ export class OggettiComponent implements OnInit {
           (data: any) => {
             this.listaoggetti = data.oggetti;
             this.sortListaOggetti();
+            this.applyFiltro();
             this.nomeoggetto = '';
             this.descrizione = '';
             this.fissomobile = 'F';

@@ -33,12 +33,18 @@ export class CambiaoggComponent implements OnInit {
     Validators.max(10),
     Validators.min(1)
   ]);
+  valcondX = new UntypedFormControl('', [
+    Validators.required,
+    Validators.max(10),
+    Validators.min(1)
+  ]);
 
 
   item = new FullOggetto();
 
   attributi: Array<any> = [];
   skill: Array<Skill> = [];
+  otherskill: Array<Skill> = [];
   poteri: Array<any> = [];
   discipline: Array<any> = [];
 
@@ -47,12 +53,14 @@ export class CambiaoggComponent implements OnInit {
   tabcondA = '';
   tabcondS = '';
   tabcondSS = '';
+  tabcondX = '';
   tabcondP = '';
   tabcondD = '';
 
   descrizioneA = '';
   descrizioneS = '';
   descrizioneSS = '';
+  descrizioneX  = ''; //altri skill
   descrizioneP = '';
   descrizioneD = '';
 
@@ -67,6 +75,7 @@ export class CambiaoggComponent implements OnInit {
   quandoA = 'x';
   quandoS = 'x';
   quandoSS = 'x';
+  quandoX = 'x';
   quandoD = 'x';
   quandoP = 'x';
   quando: { id: string, nome: string }[] = [
@@ -91,6 +100,7 @@ export class CambiaoggComponent implements OnInit {
     this.adminservice.getcondizioni().subscribe(
       (data: any) => {
         this.skill = data.skill;
+        this.otherskill = data.otherskill;
         this.poteri = data.poteri;
         this.attributi = data.attributi;
         this.discipline = data.discipline;
@@ -144,6 +154,18 @@ export class CambiaoggComponent implements OnInit {
           }
         }
         risp = this.quandoA;
+        break;
+      case 'X':
+        tipocond = 'S';     /* <==============   E' sempre uno skill */
+        vc = this.valcondX.value;
+        tc = this.tabcondX;
+        desc = this.descrizioneX;
+        for ( let aa of this.otherskill) {
+          if ( aa.idskill == Number(tc) ){
+            mytipocond = aa.nomeskill;
+          }
+        }
+        risp = this.quandoX;
         break;
       case 'S':
         tipocond = 'S';
@@ -222,6 +244,7 @@ export class CambiaoggComponent implements OnInit {
     this.tabcondA = '';
     this.tabcondS = '';
     this.tabcondSS = '';
+    this.tabcondX = '';
     this.tabcondP = '';
     this.tabcondD = '';
 
@@ -229,11 +252,14 @@ export class CambiaoggComponent implements OnInit {
     this.descrizioneS = '';
     this.descrizioneS = '';
     this.descrizioneSS = '';
+    this.descrizioneX = '';
+    this.descrizioneP = '';
     this.descrizioneD = '';
     this.valcondA.setValue('');
     this.valcondS.setValue('');
     this.valcondSS.setValue('');
     this.valcondD.setValue('');
+    this.valcondX.setValue('');
 
     this.subskill = [];
   }
