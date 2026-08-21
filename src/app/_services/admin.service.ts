@@ -59,14 +59,15 @@ export class AdminService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcondizioni.php' );
   }
 
-  addcondizione(idoggetto: number, tipocond: string, tabcond: number, valcond: number, descrX: string, risp: string) {
+  addcondizione(idoggetto: number, tipocond: string, tabcond: number, valcond: number, descrX: string, risp: string, subskill: number) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addcondizione.php',{
       idoggetto: idoggetto,
       tipocond: tipocond,
       tabcond: tabcond,
       valcond: valcond,
       descrX: descrX,
-      risp: risp
+      risp: risp,
+      subskill: subskill
     });
   }
 

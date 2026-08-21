@@ -30,6 +30,7 @@ $tabcond = $request -> tabcond;
 $valcond = $request -> valcond;
 $descrX = $request -> descrX;
 $risp = $request -> risp;
+$subskill = $request -> subskill;
 
 
 $descrX = mysqli_real_escape_string($db, $descrX);
@@ -43,9 +44,9 @@ if ( isset($postdata) && $idoggetto != ""  ) {
 
   if ($risp == 'x'){
     $MySql = "INSERT INTO cond_oggetti
-    (idoggetto, tipocond, tabcond, valcond, descrX)
+    (idoggetto, tipocond, tabcond, valcond, descrX, subskill)
     VALUES
-    ($idoggetto, '$tipocond', $tabcond, $valcond, '$descrX') ";
+    ($idoggetto, '$tipocond', $tabcond, $valcond, '$descrX', $subskill) ";
   } else {
     $MySql = "INSERT INTO cond_oggetti
     (idoggetto, tipocond, tabcond, valcond, descrX, risp)

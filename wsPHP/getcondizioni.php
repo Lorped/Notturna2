@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 	$subskill2 = [];
 	
-	$Mysql2 = "SELECT idskill, nomeskill  FROM skill_main
+	$Mysql2 = "SELECT idskill, nomeskill  , subskill FROM skill_main
 	where subskill = $xidskill ORDER BY nomeskill" ;
 	$Result2 = mysqli_query($db, $Mysql2);
 	while ( $res2 = mysqli_fetch_array($Result2,MYSQLI_ASSOC)   ) {	

@@ -141,6 +141,7 @@ export class CambiaoggComponent implements OnInit {
     let desc = '';
     let mytipocond = '';
     let risp = '';
+    let mysubskill = 0;
 
     switch (tipo) {
       case 'A':
@@ -156,7 +157,7 @@ export class CambiaoggComponent implements OnInit {
         risp = this.quandoA;
         break;
       case 'X':
-        tipocond = 'S';     /* <==============   E' sempre uno skill */
+        tipocond = 'X';     
         vc = this.valcondX.value;
         tc = this.tabcondX;
         desc = this.descrizioneX;
@@ -187,6 +188,7 @@ export class CambiaoggComponent implements OnInit {
         for ( let aa of this.subskill) {
           if ( aa.idskill == Number(tc) ){
             mytipocond = aa.nomeskill;
+            mysubskill = aa.subskill;
           }
         }
         risp = this.quandoSS;
@@ -217,7 +219,9 @@ export class CambiaoggComponent implements OnInit {
         break;
     }
 
-    this.adminservice.addcondizione(this.idoggetto, tipocond, Number(tc) , Number(vc) , desc , risp).subscribe(
+    //console.log( "prima di adminservice.addcondizione: ", tipocond, tc, vc, desc, risp, mysubskill);
+
+    this.adminservice.addcondizione(this.idoggetto, tipocond, Number(tc) , Number(vc) , desc , risp, mysubskill).subscribe(
       (data: any) => {
         let mycond = new Condizione();
         mycond.idcondizione = data;
@@ -353,12 +357,12 @@ export class CambiaoggComponent implements OnInit {
       || this.item.oggetto.descrizione !== this.descrizioneIniziale;
   }
   aggiornasubskill() {
-    console.log("skill", this.skill);
-    console.log("tabcondS", this.tabcondS);
+    //console.log("skill", this.skill);
+    //console.log("tabcondS", this.tabcondS);
     const selectedSkill = this.skill.find(skill => skill.idskill == Number(this.tabcondS));
-    console.log("selectedSkill: ", selectedSkill);
+    //console.log("selectedSkill: ", selectedSkill);
     this.subskill = selectedSkill ? selectedSkill.subskill2 : [];  
-    console.log("subskill: ", this.subskill);
+    //console.log("subskill: ", this.subskill);
   }
 
 }
