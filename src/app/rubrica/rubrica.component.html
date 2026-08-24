@@ -30,10 +30,7 @@
                 Nome Contatto
               </div>
               <div class="column bigger is-1">
-                Cell.
-              </div>
-              <div class="column bigger is-1">
-                Email
+                Cell/Email/TG...
               </div>
               <div class="column bigger is-1">
                 Rifugio
@@ -57,9 +54,7 @@
                 <div class="column is-1">
                   <button  class="btn  btn-xs" (click)="togglecell(item.idrubrica)" > <i class="fa fa-phone" [ngClass]="{'gray': item.cell==0 , 'red': item.cell==1}" > </i> </button>
                 </div>
-                <div class="column is-1">
-                  <button  class="btn  btn-xs"  (click)="toggleemail(item.idrubrica)" > <i class="fa fa-laptop" [ngClass]="{'gray': item.email==0 , 'red': item.email==1}" > </i></button>
-                </div>
+
                 <div class="column is-1">
                   <button  class="btn  btn-xs" (click)="togglehome(item.idrubrica)" > <i class="fa fa-home"  [ngClass]="{'gray': item.home==0 , 'red': item.home==1}" > </i></button>
                 </div>
@@ -70,7 +65,7 @@
                   <!-- <button   (click)="edit(item.idrubrica)" >Edit</button> -->
                 </div>
                 <div class="column is-1">
-                  <button  class="btn  btn-xs" (click)="del(item.idrubrica)" >Canc</button>
+                  <button  mat-raised-button class="full" color="primary" (click)="del(item.idrubrica)" >Canc</button>
                 </div>
               </div>
             }

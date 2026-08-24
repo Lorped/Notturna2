@@ -16,14 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php'); //MYSQLI//
+require_once __DIR__ . '/db2.inc.php'; //MYSQLI//
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $idutente = $request -> idutente;
 $contatto = mysqli_real_escape_string($db, $request -> contatto);
-$email = $request -> email;
 $cell = $request -> cell;
+
 $home = $request -> home;
 $note = mysqli_real_escape_string($db, $request -> note);
 
@@ -32,13 +32,13 @@ if ( isset($postdata) && $idutente != "" && $contatto != "" ) {
 
 
 
-	if ($email == "") $email = 0;
+	
 	if ($cell == "") $cell = 0;
 	if ($home == "") $home = 0;
 
 
 
-	$MySql = "INSERT INTO rubrica ( owner , contatto, cell, email, home, note ) VALUES ( $idutente, '$contatto', $cell, $email, $home,'$note')  ";
+	$MySql = "INSERT INTO rubrica ( owner , contatto, cell,  home, note ) VALUES ( $idutente, '$contatto', $cell,  $home,'$note')  ";
 	$Result = mysqli_query($db, $MySql);
 	if (mysqli_errno($db))  die ( mysqli_errno($db).": ".mysqli_error($db)."+". $MySql );
 
