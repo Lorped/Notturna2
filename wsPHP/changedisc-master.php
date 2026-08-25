@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); // mysql//
+require_once __DIR__ . '/db2.inc.php'; // mysql//
 
 
 $postdata = file_get_contents("php://input");
@@ -54,7 +54,7 @@ if ( isset($postdata) && $idutente != "" && $disciplina != "" ) {
   $Result = mysqli_query($db, $MySql);
 
 
-  $Azione = "MASTER - " . $nomedisc . ' a ' . $newlivello ;
+  $Azione = "ADMIN - " . $nomedisc . ' a ' . $newlivello ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";

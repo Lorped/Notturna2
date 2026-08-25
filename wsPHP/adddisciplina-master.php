@@ -43,7 +43,7 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
   $res = mysqli_fetch_array ($Result);
   $nomedisc = $res['nomedisc'];
 
-  $Azione = "MASTER aggiunta " . $nomedisc.' a 0 ';
+  $Azione = "ADMIN aggiunta " . $nomedisc.' a 0 ';
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";

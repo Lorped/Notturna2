@@ -66,14 +66,15 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
     WHERE idutente = $idutente";
   $Result = mysqli_query($db, $MySql);
 
-
+  $costo = 1;
   if ( $au == 'A') {
     $Azione = 'ADMIN '.$Azione;
+    $costo=0;
   }
 
   $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, 1 , '$Azione' ) ";
+    VALUES ( $idutente, $costo , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
 

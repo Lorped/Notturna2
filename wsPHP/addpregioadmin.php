@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MSQLI//
+require_once __DIR__ . '/db2.inc.php'; //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");

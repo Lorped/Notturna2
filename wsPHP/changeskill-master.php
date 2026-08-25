@@ -64,7 +64,7 @@ if ( isset($postdata) && $idutente != "" && $skill != "" ) {
   $nomeskill = $res['nomeskill'];
 
 
-  $Azione = "MASTER - " . $nomeskill . ' a ' . $newlivello ;
+  $Azione = "ADMIN - " . $nomeskill . ' a ' . $newlivello ;
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 0 , '$Azione' ) ";

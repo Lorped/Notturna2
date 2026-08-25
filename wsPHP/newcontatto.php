@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MYSQLI //
+require_once __DIR__ . '/db2.inc.php'; //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -84,13 +84,15 @@ if ( !empty($postdata) && !empty($idutente) && !empty($nomecontatto)  ) {
   $Result = mysqli_query($db, $MySql);
 
   $Azione = "Aggiunto contatto ".$nomecontatto;
+  $costo=1;
   if ( $au == 'A') {
     $Azione = 'ADMIN '.$Azione;
+    $costo=0;
   }
 
   $Azione = mysqli_real_escape_string($db, $Azione);
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
-    VALUES ( $idutente, 1 , '$Azione' ) ";
+    VALUES ( $idutente, $costo , '$Azione' ) ";
   $Result = mysqli_query($db, $MySql);
 
 
