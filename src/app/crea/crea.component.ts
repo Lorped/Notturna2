@@ -853,16 +853,23 @@ export class CreaComponent implements OnInit {
     }
     for ( let j = 0 ; j < this.necromanzie.length ; j++) {
       if (this.necromanzie[j].livello > 0  ) {
-        const disc: ListaDisciplineVie = { disc_vie: 'N', id: Number(this.listaNecro[j].idnecro), nome: this.listaNecro[j].nomenecro, focus: 0  };
-        this.listaDisciplineVie.push(disc);
+        const anecro = this.listaNecro.find ( (d) => d.idnecro == this.necromanzie[j].idnecro);
+        if (anecro) {
+          const disc: ListaDisciplineVie = { disc_vie: 'N', id: Number(anecro.idnecro), nome: anecro.nomenecro, focus: 0  };
+          this.listaDisciplineVie.push(disc);
+        }
       }
     }
     for ( let j = 0 ; j < this.taumaturgie.length ; j++) {
       if (this.taumaturgie[j].livello > 0  ) {
-        const disc: ListaDisciplineVie = { disc_vie: 'T', id: Number(this.listaTaum[j].idtaum), nome: this.listaTaum[j].nometaum, focus: 0  };
-        this.listaDisciplineVie.push(disc);
+        const adisc = this.listaTaum.find ( (d) => d.idtaum == this.taumaturgie[j].idtaum);
+        if (adisc) {
+          const disc: ListaDisciplineVie = { disc_vie: 'T', id: Number(adisc.idtaum), nome: adisc.nometaum, focus: 0  };
+          this.listaDisciplineVie.push(disc);
+        }
       }
     }
+    console.log ("listaDisciplineVie dopo taum", this.listaDisciplineVie );
 
     if (this.clanPG!.value == 20) {
 
