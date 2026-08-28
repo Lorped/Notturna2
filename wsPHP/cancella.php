@@ -127,16 +127,17 @@ if ( isset($postdata) && $idutente != "" ) {
 	mysqli_query($db, $Mysql);
   	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
-	$Mysql = "DELETE FROM amalgame  WHERE idutente = $idutente";
-	mysqli_query($db, $Mysql);
-	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
-
 	$Mysql = "DELETE FROM alleati  WHERE idutente = $idutente";
 	mysqli_query($db, $Mysql);
 	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
+	$Mysql = "DELETE FROM segreteria  WHERE idutente = $idutente";
+	mysqli_query($db, $Mysql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
-
+	$Mysql = "DELETE FROM risorse  WHERE idutente = $idutente";
+	mysqli_query($db, $Mysql);
+	if (mysqli_errno($db)) die ( mysqli_errno($db).": ".mysqli_error($db) );
 
 
   header("HTTP/1.1 200 OK");
