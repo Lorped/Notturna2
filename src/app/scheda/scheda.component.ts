@@ -89,6 +89,8 @@ export class SchedaComponent implements OnInit {
         this.scheda['fama2'] = Number(this.scheda['fama2']);
         this.scheda['fama3'] = Number(this.scheda['fama3']);
 
+        this.scheda['bane'] = Number(this.scheda['bane']);
+
         this.discipline = data.discipline ;
         this.taumaturgie = data.taumaturgie ;
         this.necromanzie = data.necromanzie ;

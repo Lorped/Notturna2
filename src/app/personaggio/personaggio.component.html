@@ -47,7 +47,7 @@
               {{scheda.status}} [+{{scheda.attivazione}}]
             </div>
             <div class="column is-2 red">
-              Blood Potency:
+              Contr. del Sangue:
             </div>
             <div class="column is-1">
               {{scheda.bloodp}}
@@ -56,7 +56,7 @@
               Bane:
             </div>
             <div class="column alr">
-              +{{scheda.bane}}
+              @if (scheda.bane>0) {'+'}{{scheda.bane}}
             </div>
           </div>
 
