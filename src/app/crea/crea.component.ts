@@ -74,6 +74,7 @@ export class CreaComponent implements OnInit {
   clan: Array<Clan> = [];
   status: Array<Status> = [];
   bg: Array<Background> = [];
+  bg_original: Array<Background> = [];
 
   generazionePG = 13;     /* Generazione PG */
   puntiFerita = 8;
@@ -222,9 +223,7 @@ export class CreaComponent implements OnInit {
         this.skill.forEach(element => {
             element.iniziale = 0 ;
         });
-        //console.log(this.skill);
 
-        //console.log('skill: ' + JSON.stringify(this.skill));
         this.skillother = data.skillother;
         this.attitudini = data.attitudini;
 
@@ -233,11 +232,22 @@ export class CreaComponent implements OnInit {
         this.listalds = data.listalds;
         this.lds = 0;
 
+        
+        for (let j = 0 ; j < data.background.length ; j++) {    
+            this.bg_original[j] = new Background();
+            this.bg_original[j].idback = Number(data.background[j].idback);
+            this.bg_original[j].nomeback = data.background[j].nomeback;
+            this.bg_original[j].MinIniziale = Number (data.background[j].MinIniziale);
+            this.bg_original[j].MaxIniziale = Number (data.background[j].MaxIniziale);
+            this.bg_original[j].livello = Number(this.bg_original[j].MinIniziale);
+        }
 
+        this.bg = data.background;
         for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
-            this.bg[j].livello = this.bg[j].MinIniziale;
-            this.bg[j].MinIniziale = Number (data.background[j].MinIniziale);
-            this.bg[j].MaxIniziale = Number (data.background[j].MaxIniziale);
+            this.bg[j].idback = Number(this.bg[j].idback);
+            this.bg[j].MinIniziale = Number (this.bg[j].MinIniziale);
+            this.bg[j].MaxIniziale = Number (this.bg[j].MaxIniziale);
+            this.bg[j].livello = Number(this.bg[j].MinIniziale);
         }
       }
     );
@@ -251,7 +261,7 @@ export class CreaComponent implements OnInit {
     }
 
     this.attributi[0] = new Attributo ( 0, 'Forza'        , 'F' , 1 ,1);
-    this.attributi[1] = new Attributo ( 1, 'Carisma'      , 'S' , 1 , 1);
+    this.attributi[1] = new Attributo ( 1, 'Carisma'      , 'S' , 1 ,1);
     this.attributi[2] = new Attributo ( 2, 'Percezione'   , 'M' , 1 ,1);
     this.attributi[3] = new Attributo ( 3, 'Destrezza'    , 'F' , 1 ,1);
     this.attributi[4] = new Attributo ( 4, 'Persuasione'  , 'S' , 1 ,1);
@@ -312,6 +322,7 @@ export class CreaComponent implements OnInit {
   }
 
   changestatus() {
+    //console.log("changestatus: " + this.statusPG!.value);
     switch (this.statusPG!.value) {
       case '0':
         this.maxBG = 5;
@@ -344,9 +355,15 @@ export class CreaComponent implements OnInit {
 
     }
     this.changeMaxDisc();
+    this.resetdiscipline();
     this.changeNumSkill();
-    this.checkbg () ;
+    this.reset_skill();
+    this.resetbackground () ;
     this.fixattr();
+    //reset linea di sangue per forzare lo stepper a richiedere la selezione della linea di sangue
+    this.lds = 0;
+    this.ldsOK = false;
+
 
   }
 
@@ -366,7 +383,6 @@ export class CreaComponent implements OnInit {
     }
     if ( bg == 88 ) {     /* alleati */
       this.maxAlleati++;
-      //console.log('maxAlleati: ' + this.maxAlleati);
     }
 
     this.checkbg () ;
@@ -432,6 +448,7 @@ export class CreaComponent implements OnInit {
 
 
   checkbg () {
+    // console.log("checkbg");
     let ok = false;
 
     if ( (this.sommaBG === this.maxBG+this.bonusbg) && ((this.sommaCont === this.maxCont) || this.maxCont === 0 )) {
@@ -462,10 +479,11 @@ export class CreaComponent implements OnInit {
       }
     }
     this.bgOK = ok;
-    this.fixattr();
+    //this.fixattr();
   }
 
   changeGen(bggen: number) {
+    // console.log("changeGen: ");
     this.generazionePG = 13 - bggen;
 
     switch (this.generazionePG ) {
@@ -535,8 +553,12 @@ export class CreaComponent implements OnInit {
         break;
     }
     this.changeMaxDisc();
-    this.changeNumSkill();
-    this.checkattr();
+    this.resetdiscipline();
+    this.setdiscipline_lds();
+    this.reset_skill();
+    this.setskill_lds();
+    this.resetattr();
+    this.setaattr_lds();
 
 
 
@@ -585,7 +607,6 @@ export class CreaComponent implements OnInit {
       this.attrOK = true;
     }
 
-    //console.log ("saggezza: " + this.attributi[7].Livello + " prontezza: " + this.attributi[8].Livello);
     this.baseFDVmax = Math.ceil((this.attributi[7].Livello + this.attributi[8].Livello)/2);
 
     this.maxAttitudini = this.attributi[3].Livello;  /* DESTREZZA */
@@ -595,6 +616,7 @@ export class CreaComponent implements OnInit {
   }
 
   changeclan(){
+    // console.log("changeclan: " + this.clanPG!.value);
     switch (this.clanPG!.value) {
       case '1':   //  Toreador
         this.discipline[0].iddisciplina = 2;          // Ascendente
@@ -762,6 +784,15 @@ export class CreaComponent implements OnInit {
       if (cc1) { cc1.MinIniziale = 0 ;}
 
 
+    if ( this.clanPG!.value == 20 ) { //vili
+      //resetto bg e altro perchè non hanno lds
+      this.resetbackground();
+      this.reset_skill();
+      this.resetdiscipline();
+      this.resetattr();
+      
+    }
+
   }
 
   mindisc(dd: number) {
@@ -785,6 +816,7 @@ export class CreaComponent implements OnInit {
   }
 
   changeMaxDisc () {
+    //console.log ("changeMaxDisc");
     let indexGen = 14 - this.generazionePG;
     let indexStat = this.statusPG!.value;
 
@@ -836,17 +868,17 @@ export class CreaComponent implements OnInit {
       this.maxDisc = xmaxDisc;
     }
 
-    this.checkDisc();
+   
   }
 
   checkDisc() {
+    //console.log ("checkDisc");
 
     this.listaDisciplineVie = [];
 
-    
 
     for ( let j = 0 ; j < 3 ; j++) {
-      if (this.discipline[j].livello >= 0 && this.discipline[j].iddisciplina != 98 && this.discipline[j].iddisciplina != 99 ) {
+      if ( (this.discipline[j].livello > 0 || (this.clanPG!.value != 20 && this.discipline[j].livello >= 0) ) && this.discipline[j].iddisciplina != 98 && this.discipline[j].iddisciplina != 99  ) {
         const disc: ListaDisciplineVie = { disc_vie: 'D', id: this.discipline[j].iddisciplina, nome: this.discipline[j].nomedisc, focus: 0  };
         this.listaDisciplineVie.push(disc);
       }
@@ -869,29 +901,14 @@ export class CreaComponent implements OnInit {
         }
       }
     }
-    console.log ("listaDisciplineVie dopo taum", this.listaDisciplineVie );
 
     if (this.clanPG!.value == 20) {
 
-        //console.log ("listaDisciplineVie ", this.listaDisciplineVie );
-        //console.log ("disciplinevili ", this.disciplinevili );
-
-
       this.listaDisciplineVie.forEach(element => {
-        //console.log ("element ", element );
         const trova = this.disciplinevili.find ( (d) => d.iddisciplina == element.id);
-        //console.log ("trova ", trova );
         element.nome = trova?.nomedisc||'';
-        //console.log ("element ", element );
-
       });
     }
-
-
-
-
-
-
 
     this.discOK = false;
     if ( this.sommaDisc === this.numDisc ) {
@@ -965,197 +982,51 @@ export class CreaComponent implements OnInit {
   setLDSItem(index: number) {
     this.lds = index;
 
-    //console.log ( "lds ", this.lds);
-
     this.ldsOK = true;
     this.bonusbg=0;
-  
     this.bonusskill = 0 ;
-    //console.log ( "bonusbg ", this.bonusbg);
-    //console.log("bonusskill ", this.bonusskill);
 
-      const cc = this.bg.find( (x) =>  x.idback == 11);
-      if (cc) { cc.MinIniziale = 0 ;}
-      const cc1 = this.bg.find( (x) =>  x.idback == 3);
-      if (cc1) { cc1.MinIniziale = 0 ;}
-      const cc2 = this.bg.find( (x) =>  x.idback == 6);
-      if (cc2) { cc2.MinIniziale = 0 ;}
-      const cc3 = this.bg.find( (x) =>  x.idback == 2);
-      if (cc3) { cc3.MinIniziale = 0 ;}
-      this.bg.forEach(element => {
-        element.livello = element.MinIniziale;
-      });
-      this.cont.forEach(element => {
-        element.livello=0;
-        element.nomecontatto='';
-      });
-      this.sommaCont = 0;
-      this.maxCont = 0 ;
-       this.alleati.forEach(element => {
-        element.livello=0;
-        element.nomealleato='';
-      });
-      this.sommaAlleati = 0;
-      this.maxAlleati = 0 ;
-      this.sommaBG=0;
-      this.resetdiscipline();
-      this.attributi[0].Iniziale = 1;
-      this.attributi[0].Livello = 1;
-      this.attributi[3].Iniziale = 1;
-      this.attributi[3].Livello = 1;
-      this.discipline.forEach(element => {
-        element.iniziale = 0 ;
-        element.livello = 0;
-      });
-      this.skill.forEach(element => {
-        element.iniziale = 0 ;
-        element.livello = 0;
-        element.subskill2.forEach(xx => {
-          xx.livello = 0 ;
-        });
-      });
-    
+    this.resetbackground();
 
+    this.cont.forEach(element => {
+      element.livello=0;
+      element.nomecontatto='';
+    });
+    this.sommaCont = 0;
+    this.maxCont = 0 ;
+    this.alleati.forEach(element => {
+      element.livello=0;
+      element.nomealleato='';
+    });
+    this.sommaAlleati = 0;
+    this.maxAlleati = 0 ;
+    this.sommaBG=0;
+
+
+    this.resetdiscipline();
+
+    this.attributi[0].Iniziale = 1;
+    this.attributi[0].Livello = 1;
+    this.attributi[3].Iniziale = 1;
+    this.attributi[3].Livello = 1;
+    this.discipline.forEach(element => {
+      element.iniziale = 0 ;
+      element.livello = 0;
+    });
+    this.skill.forEach(element => {
+      element.iniziale = 0 ;
+      element.livello = 0;
+      element.subskill2.forEach(xx => {
+        xx.livello = 0 ;
+      });
+    });
   
 
-    if ( this.lds== 13 || this.lds == 23 ||  this.lds==7){
-      this.bonusbg=2;
-      //console.log("bonusbg ", this.bonusbg);
-    }
+    this.setbg_lds();
+    this.setdiscipline_lds();
+    this.setaattr_lds();
+    this.setskill_lds();
 
-    if (this.lds==30) {
-      const cc = this.bg.find( (x) =>  x.idback == 11);  //gregge
-      if (cc) { cc.MinIniziale = 1 ; cc.livello = 1;}
-      const cc1 = this.bg.find( (x) =>  x.idback == 3);   //seguaci
-      if (cc1) { cc1.MinIniziale = 1 ; cc1.livello =1 ;}
-    } 
-    if (this.lds==19||this.lds == 26) {
-      this.bonusbg=-2;
-      //console.log("bonusbg ", this.bonusbg);
-      const cc = this.bg.find( (x) =>  x.idback == 6);  //mentore
-      if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
-    } 
-    
-    if (this.lds == 28) {
-      const cc = this.bg.find( (x) =>  x.idback == 2);  //risorse
-      if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
-    } 
-
-    if (this.lds == 11) {
-      const cc = this.bg.find( (x) =>  x.idback == 2);  //risorse
-      if (cc) { cc.MinIniziale = 1 ; cc.livello = 1;}
-    } 
-
-    if (this.lds == 3 ){
-      this.discipline[1].iddisciplina = 12;          // Robustezza
-      this.discipline[1].nomedisc = "Robustezza";
-    }
-    if (this.lds == 12 ){
-      this.discipline[2].iddisciplina = 3;          // Auspex
-      this.discipline[2].nomedisc = "Auspex";
-    }
-    if (this.lds == 14 ){
-      this.discipline[0].iddisciplina = 8;          // Oscurazione
-      this.discipline[0].nomedisc = "Oscurazione";
-    }
-    if (this.lds == 15 ){
-      this.discipline[2].iddisciplina = 21;          // Dur-An-Ki
-      this.discipline[2].nomedisc = "Dur-An-Ki";
-    }
-    if (this.lds == 16 ){
-      this.discipline[1].iddisciplina = 6;          // Dominazione
-      this.discipline[1].nomedisc = "Dominazione";
-    }
-    if (this.lds == 18 ){
-      this.discipline[0].iddisciplina = 2;          // Ascendente
-      this.discipline[0].nomedisc = "Ascendente";
-    }
-    if (this.lds == 22 ){
-      this.discipline[1].iddisciplina = 23;          // Misticismo Abissale
-      this.discipline[1].nomedisc = "Misticismo Abissale";
-    }
-    if (this.lds == 26 ){
-      this.discipline[0].iddisciplina = 21;          // Dur-An-Ki
-      this.discipline[0].nomedisc = "Dur-An-Ki";
-    }
-    if (this.lds == 32 ){
-      this.discipline[0].iddisciplina = 3;          // Auspex
-      this.discipline[0].nomedisc = "Auspex";
-    }
-    if (this.lds == 33 ){
-      this.discipline[0].iddisciplina = 22;          // Anku
-      this.discipline[0].nomedisc = "Anku";
-    }
-
-    if (this.lds == 4 ){
-      this.attributi[0].Iniziale = 2;          // Forza
-      this.attributi[0].Livello = 2;
-    }
-    if (this.lds == 8 ){
-      this.attributi[3].Iniziale = 2;          // Destrezza
-      this.attributi[3].Livello = 2;
-    }
-  
-    if (this.lds == 9 ){
-      this.discipline[1].iniziale = 1;    // OSCURAZIONE - NOSFE          
-      this.discipline[1].livello = 1;
-    }
-    if (this.lds == 17 ){
-      this.discipline[0].iniziale = 1;    // auspex - MALK          
-      this.discipline[0].livello = 1;
-    }
-    if (this.lds == 24 ){
-      this.discipline[2].iniziale = 1;    // vicissitudine - TZIM          
-      this.discipline[2].livello = 1;
-    }
-    if (this.lds == 31 ){
-      this.discipline[1].iniziale = 1;    // chmierismo - RAVNOS          
-      this.discipline[1].livello = 1;
-    }
-    if (this.lds == 6 ){
-        const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
-        cc!.iniziale = 1 ;
-        cc!.livello = 1 ;
-        const cc1 = this.skill.find( x => x.idskill == 1)     // accad          
-        cc1!.iniziale = 1 ;
-        cc1!.livello = 1 ;
-      }
-    if (this.lds == 10 ){
-      const cc = this.skill.find( x => x.idskill == 19)     // militari          
-      cc!.iniziale = 1 ;
-      cc!.livello = 1 ;
-    }
-    if (this.lds == 11 ){
-      const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
-      cc!.iniziale = 1 ;
-      cc!.livello = 1 ;
-    }
-    if (this.lds == 29 ){
-      const cc = this.skill.find( x => x.idskill == 25)     // criminalita          
-      cc!.iniziale = 2 ;
-      cc!.livello = 2 ;
-    }
-    if (this.lds == 34 ){
-      const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
-      cc!.iniziale = 1 ;
-      cc!.livello = 1 ;
-      const cc1 = this.skill.find( x => x.idskill == 25)     // criminalita          
-      cc1!.iniziale = 1 ;
-      cc1!.livello = 1 ;
-    }
-    if (this.lds == 19 ){
-      const cc = this.skill.find( x => x.idskill == 13)     // occulto          
-      cc!.iniziale = 2 ;
-      cc!.livello = 2 ;
-    }
-    if (this.lds == 4 ){
-      const cc = this.skill.find( x => x.idskill == 19)     // militari          
-      cc!.iniziale = 1 ;
-      cc!.livello = 1 ;
-    }
-    if ( this.lds == 1 || this.lds == 2){
-      this.bonusskill = 2 ;
-    }
   }
 
 
@@ -1187,7 +1058,6 @@ export class CreaComponent implements OnInit {
       if (d) { dVal = Number(d.valore) || 0; }
     }
     this.valorePregioDifetto = pVal + dVal;
-    //console.log("delta ", this.valorePregioDifetto);
   }
 
   gen14() {
@@ -1272,7 +1142,6 @@ export class CreaComponent implements OnInit {
 // SUBSKILL
 
   addsk3(sk: number, ssk: number){
-    //console.log('addsk3: ' + sk + ' - ' + ssk);
     for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
@@ -1287,7 +1156,6 @@ export class CreaComponent implements OnInit {
     }
   }
   minsk3(sk: number, ssk: number){
-    //console.log('minsk3: ' + sk + ' - ' + ssk);
     for (let j = 0 ; j < this.skill.length ; j++ ) {
       if ( this.skill[j].idskill === sk) {
         for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
@@ -1304,7 +1172,6 @@ export class CreaComponent implements OnInit {
 
 // OTHERSKILL
   addsk4(sk: number){
-    //console.log('addsk4: ' + sk);
     for (let j = 0 ; j < this.skillother.length ; j++ ) {
       if ( this.skillother[j].idskill === sk) {
         this.skillother[j].livello++;
@@ -1314,7 +1181,6 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
   minsk4(sk: number){
-    //console.log('minsk4: ' + sk);
         for (let j = 0 ; j < this.skillother.length ; j++ ) {
       if ( this.skillother[j].idskill === sk) {
         this.skillother[j].livello--;
@@ -1327,6 +1193,7 @@ export class CreaComponent implements OnInit {
 
 
   checkSkill() {
+    //console.log("checkSkill");
     this.skillOK = false;
     this.attitudiniOK = false;
 
@@ -1362,23 +1229,16 @@ export class CreaComponent implements OnInit {
       this.SOMMASCI += element.livello;
     });
 
-    //console.log("lds" , this.lds);
-    //console.log("ACC ", this.SOMMAACC);
-    //console.log("CRI ", this.SOMMACRI);
-    //console.log("ETI", this.SOMMAETI);
-    //console.log("OCC ", this.SOMMAOCC);
-    //console.log("SCI ", this.SOMMASCI);
-    //console.log ("lim ", this.numSkill/3);
   }
 
 
   changeNumSkill() {
+    //console.log ("changeNumSkill");
     let indexGen = 14 - this.generazionePG;
     let indexStat = this.statusPG!.value;
 
     this.numSkill = this.matriceNumSkill [indexStat][indexGen];
 
-    this.checkSkill();
   }
 
   /*
@@ -1461,8 +1321,8 @@ export class CreaComponent implements OnInit {
 
   fixattr() {
     //console.log('fixattr');
+
     this.changeNumSkill();
-    //console.log('old NS', this.numSkill);
     this.numAttitudini = 4;
     if ( this.generazionePG == 10 ) {
       this.numAttitudini = 5;
@@ -1472,16 +1332,13 @@ export class CreaComponent implements OnInit {
       this.numAttitudini = 8;
     }
     if ( this.attributi[3].Livello == 1 ) {
-      //console.log('dex 1 ');
       if (this.generazionePG == 9){
         this.numAttitudini = 6;
         this.numSkill = this.numSkill + 1;       
-        //console.log('new NS', this.numSkill);
       }
       if (this.generazionePG == 8){
         this.numAttitudini = 6;
         this.numSkill = this.numSkill + 2;       
-        //console.log('new NS', this.numSkill);
       }
 
     }
@@ -1680,7 +1537,6 @@ export class CreaComponent implements OnInit {
 
     this.listapregi.forEach(element => {
       element.disabled = false;
-      //console.log ("P parattr", element.parattr);
       switch ( element.parattr) {
         case 'Saggezza' :
           if (this.attributi[7].Livello < element.parvalore){
@@ -1711,7 +1567,6 @@ export class CreaComponent implements OnInit {
     });
     this.listadifetti.forEach(element => {
       element.disabled = false;
-      //console.log ("D parattr", element.parattr);
       switch ( element.parattr) {
         case 'Saggezza' :
           if (this.attributi[7].Livello < element.parvalore){
@@ -1736,10 +1591,236 @@ export class CreaComponent implements OnInit {
       }
     });
 
-      //console.log ( "pregi" , this.listapregi);
-      //console.log ( "dif" , this.listadifetti);
 
   }
 
+  resetbackground() {
+    // non cambio MaxBG perché dipende dallo status
+    //console.log("resetbackground");
+    for (let j = 0; j < this.bg.length; j++ ) {
+      this.bg[j].MaxIniziale = this.bg_original[j].MaxIniziale;
+      this.bg[j].livello = this.bg_original[j].livello;
+      this.bg[j].MinIniziale = this.bg_original[j].MinIniziale;
+      this.bg[j].idback = this.bg_original[j].idback;
+      this.bg[j].nomeback = this.bg_original[j].nomeback;
+    }
+    this.sommaBG = 0 ;
+    this.bgOK = false;
+    this.changeGen(0);
+  }
+
+  resetlivellodiscipline() {
+    //console.log("resetlivellodiscipline");
+    for (let j = 0; j < this.discipline.length; j++ ) {
+      this.discipline[j].iniziale = 0;
+      this.discipline[j].livello = 0;
+      this.discipline[j].focus = 0;
+    }
+    for (let j = 0; j < this.taumaturgie.length; j++ ) {
+      this.taumaturgie[j].livello = 0;
+      this.taumaturgie[j].idtaum = 0;
+      this.taumaturgie[j].focus = 0;
+      this.taumaturgie[j].principale = 0;
+    }
+    for (let j = 0; j < this.necromanzie.length; j++ ) {
+      this.necromanzie[j].livello = 0;
+      this.necromanzie[j].idnecro = 0;
+      this.necromanzie[j].focus = 0;
+      this.necromanzie[j].principale = 0;
+    }
+    this.sommaDisc = 0 ;
+    this.discOK = false;
+  }
+
+  resetattr() {
+    //console.log("resetattr");
+    for (let j = 0; j < this.attributi.length; j++ ) {
+      this.attributi[j].Iniziale = 1;
+      this.attributi[j].Livello = this.attributi[j].Iniziale;
+    }
+    this.sommaAttr = 0 ;
+    this.attrCorrente = [ 0 , 0 , 0 ];
+    this.attrCorrenteSort = [ 0 , 0 , 0 ];
+    this.attrOK = false;
+  }
+
+
+  setbg_lds() {
+    //console.log("setbg_lds ", this.lds);
+    this.bonusbg=0;
+
+    if ( this.lds== 13 || this.lds == 23 ||  this.lds==7){
+      this.bonusbg=2;
+    }
+
+    if (this.lds==30) {
+      const cc = this.bg.find( (x) =>  x.idback == 11);  //gregge
+      if (cc) { cc.MinIniziale = 1 ; cc.livello = 1;}
+      const cc1 = this.bg.find( (x) =>  x.idback == 3);   //seguaci
+      if (cc1) { cc1.MinIniziale = 1 ; cc1.livello =1 ;}
+    } 
+    if (this.lds==19||this.lds == 26) {
+      this.bonusbg=-2;
+      const cc = this.bg.find( (x) =>  x.idback == 6);  //mentore
+      if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
+    } 
+    
+    if (this.lds == 28) {
+      const cc = this.bg.find( (x) =>  x.idback == 2);  //risorse
+      if (cc) { cc.MinIniziale = 2 ; cc.livello = 2;}
+    } 
+
+    if (this.lds == 11) {
+      const cc = this.bg.find( (x) =>  x.idback == 2);  //risorse
+      if (cc) { cc.MinIniziale = 1 ; cc.livello = 1;}
+    } 
+  }
+
+  setdiscipline_lds() {
+    //console.log("setdiscipline_lds ", this.lds);
+
+
+    if (this.lds == 3 ){
+      this.discipline[1].iddisciplina = 12;          // Robustezza
+      this.discipline[1].nomedisc = "Robustezza";
+    }
+    if (this.lds == 12 ){
+      this.discipline[2].iddisciplina = 3;          // Auspex
+      this.discipline[2].nomedisc = "Auspex";
+    }
+    if (this.lds == 14 ){
+      this.discipline[0].iddisciplina = 8;          // Oscurazione
+      this.discipline[0].nomedisc = "Oscurazione";
+    }
+    if (this.lds == 15 ){
+      this.discipline[2].iddisciplina = 21;          // Dur-An-Ki
+      this.discipline[2].nomedisc = "Dur-An-Ki";
+    }
+    if (this.lds == 16 ){
+      this.discipline[1].iddisciplina = 6;          // Dominazione
+      this.discipline[1].nomedisc = "Dominazione";
+    }
+    if (this.lds == 18 ){
+      this.discipline[0].iddisciplina = 2;          // Ascendente
+      this.discipline[0].nomedisc = "Ascendente";
+    }
+    if (this.lds == 22 ){
+      this.discipline[1].iddisciplina = 23;          // Misticismo Abissale
+      this.discipline[1].nomedisc = "Misticismo Abissale";
+    }
+    if (this.lds == 26 ){
+      this.discipline[0].iddisciplina = 21;          // Dur-An-Ki
+      this.discipline[0].nomedisc = "Dur-An-Ki";
+    }
+    if (this.lds == 32 ){
+      this.discipline[0].iddisciplina = 3;          // Auspex
+      this.discipline[0].nomedisc = "Auspex";
+    }
+    if (this.lds == 33 ){
+      this.discipline[0].iddisciplina = 22;          // Anku
+      this.discipline[0].nomedisc = "Anku";
+    }
+  
+    if (this.lds == 9 ){
+      this.discipline[1].iniziale = 1;    // OSCURAZIONE - NOSFE          
+      this.discipline[1].livello = 1;
+    }
+    if (this.lds == 17 ){
+      this.discipline[0].iniziale = 1;    // auspex - MALK          
+      this.discipline[0].livello = 1;
+    }
+    if (this.lds == 24 ){
+      this.discipline[2].iniziale = 1;    // vicissitudine - TZIM          
+      this.discipline[2].livello = 1;
+    }
+    if (this.lds == 31 ){
+      this.discipline[1].iniziale = 1;    // chmierismo - RAVNOS          
+      this.discipline[1].livello = 1;
+    }
+  }
+
+  setaattr_lds(){
+    // console.log("setaattr_lds ", this.lds);
+    if (this.lds == 4 ){
+      this.attributi[0].Iniziale = 2;          // Forza
+      this.attributi[0].Livello = 2;
+    }
+    if (this.lds == 8 ){
+      this.attributi[3].Iniziale = 2;          // Destrezza
+      this.attributi[3].Livello = 2;
+    }
+  }
+
+  setskill_lds() {
+    //console.log("setskill_lds ", this.lds);
+    this.bonusskill = 0;
+
+    if (this.lds == 6 ){
+      const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+      const cc1 = this.skill.find( x => x.idskill == 1)     // accad          
+      cc1!.iniziale = 1 ;
+      cc1!.livello = 1 ;
+    }
+    if (this.lds == 10 ){
+      const cc = this.skill.find( x => x.idskill == 19)     // militari          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+    }
+    if (this.lds == 11 ){
+      const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+    }
+    if (this.lds == 29 ){
+      const cc = this.skill.find( x => x.idskill == 25)     // criminalita          
+      cc!.iniziale = 2 ;
+      cc!.livello = 2 ;
+    }
+    if (this.lds == 34 ){
+      const cc = this.skill.find( x => x.idskill == 31)     // etichetta          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+      const cc1 = this.skill.find( x => x.idskill == 25)     // criminalita          
+      cc1!.iniziale = 1 ;
+      cc1!.livello = 1 ;
+    }
+    if (this.lds == 19 ){
+      const cc = this.skill.find( x => x.idskill == 13)     // occulto          
+      cc!.iniziale = 2 ;
+      cc!.livello = 2 ;
+    }
+    if (this.lds == 4 ){
+      const cc = this.skill.find( x => x.idskill == 19)     // militari          
+      cc!.iniziale = 1 ;
+      cc!.livello = 1 ;
+    }
+    if ( this.lds == 1 || this.lds == 2){
+      this.bonusskill = 2 ;
+    }    
+  }
+
+  reset_skill() {
+    //console.log("reset_skill");
+    for (let j = 0; j < this.skill.length; j++ ) {
+      this.skill[j].livello = 0;
+      for (let k = 0; k < this.skill[j].subskill2.length; k++ ) {
+        this.skill[j].subskill2[k].livello = 0;
+        this.skill[j].subskill2[k].max = this.skill[j].livello;
+      }
+    }
+    for (let j = 0; j < this.attitudini.length; j++ ) {
+      this.attitudini[j].livello = 0;
+    }
+    for (let j = 0; j < this.skillother.length; j++ ) {
+      this.skillother[j].livello = 0;
+    }
+    this.sommaSkill = 0 ;
+    this.sommaAttitudini = 0 ;
+    this.bonusskill = 0 ;
+    this.skillOK = false ;
+    this.attitudiniOK = false ;
+  }
 
 }
