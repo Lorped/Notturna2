@@ -56,18 +56,18 @@ function controlla_fdv ( $idutente , $db ) {    //controllo-aggiorno fdv
 } // fine controllo fdv
 
 function controlla_ps ( $idutente , $db) {  //inizio test su ps
-  $Mysql="SELECT PScorrenti, sete, addsete, lastps FROM personaggio
-    LEFT JOIN statuscama ON personaggio.idstatus = statuscama.idstatus
-    LEFT JOIN blood ON personaggio.bloodp = blood.bloodp
+  $Mysql="SELECT PScorrenti, maxps, lastps FROM personaggio
+    LEFT JOIN generazione ON personaggio.generazione = generazione.generazione
     WHERE idutente=$idutente";
   $Result=mysqli_query($db, $Mysql);
   $res=mysqli_fetch_array($Result);
 
   $PScorrenti=$res['PScorrenti'];
-  $setetot=$res['sete']+$res['addsete'];
+  $maxps=$res['maxps'];
+
   $lastps=$res['lastps'];
 
-  if ( $PScorrenti == $setetot ) {  // tutto ok
+  if ( $PScorrenti == $maxps ) {  // tutto ok
     //
   } else {
     $now=time();
@@ -75,7 +75,7 @@ function controlla_ps ( $idutente , $db) {  //inizio test su ps
     $diff =  ($now - $qlastps) / (24*60*60);
     if ( $diff > 1 ) {
       $newlastps=date("Y-m-d H:i:s",$now );
-      $Mysql="UPDATE personaggio SET PScorrenti = $setetot , lastps = '$newlastps' WHERE idutente=$idutente";
+      $Mysql="UPDATE personaggio SET PScorrenti = $maxps , lastps = '$newlastps' WHERE idutente=$idutente";
       mysqli_query($db, $Mysql);
     }
   }

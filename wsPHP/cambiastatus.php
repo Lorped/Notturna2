@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php');  //MYSQLI //
+require_once __DIR__ . '/db2.inc.php';  //MYSQLI //
 
 
 $postdata = file_get_contents("php://input");
@@ -62,7 +62,7 @@ if ( isset($postdata) && $idutente != "" ) {
     }
   }
 
-  $MySql = "SELECT personaggio.idstatus , status , fdvmax, bloodp, bloodpmax , sete , attivazione, personaggio.generazione , addbp, fdvbase, bgbase FROM personaggio
+  $MySql = "SELECT personaggio.idstatus , status , fdvmax, bloodp,   attivazione, personaggio.generazione ,   bgbase FROM personaggio
 		LEFT JOIN statuscama on statuscama.idstatus = personaggio.idstatus
 		LEFT JOIN generazione on generazione.generazione = personaggio.generazione
 			WHERE  idutente = $idutente ";
@@ -71,29 +71,22 @@ if ( isset($postdata) && $idutente != "" ) {
 
 	$oldstatus = $res['idstatus'];
   $oldfdv = $res['fdvmax'];
-  $oldfdvbase = $res['fdvbase'];
 
   $oldboodp = $res['bloodp'];
-  $bloodpmax = $res['bloodpmax'];
-  $oldaddbp = $res['addbp'];
-
-
+ 
 
 	$MySql = "SELECT * FROM statuscama  WHERE idstatus = $oldstatus + 1 ";
 	$Result = mysqli_query($db, $MySql);
 	$res = mysqli_fetch_array ($Result,MYSQLI_ASSOC);
 
-	$newfdvbase = $res['fdvbase'];
   $newstatus = $res['status'];
 
-  $newfdv = $oldfdv - $oldfdvbase + $newfdvbase;
+  $newfdv = $oldfdv +1;
   if ($newfdv > 10 ) { $newfdv = 10 ; }      /// UPDATE
 
 
-  $newaddbp = $res['addbp'];
-
-  $newbloodp = $oldboodp - $oldaddbp + $newaddbp;
-  if ($newbloodp > $bloodpmax ) { $newbloodp = $bloodpmax ; }      /// UPDATE
+  $newbloodp = $oldboodp +1;
+  if ($newbloodp > 10 ) { $newbloodp = 10 ; }      /// UPDATE
 
   $MySql = "UPDATE personaggio SET
     idstatus = idstatus + 1 ,

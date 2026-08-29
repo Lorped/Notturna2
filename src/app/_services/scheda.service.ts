@@ -435,8 +435,6 @@ export class SchedaService {
     });
   }
 
-    getinfluenze(idutente: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getinfluenze.php'+'?idutente='+idutente );
-  }
+
 
 }
