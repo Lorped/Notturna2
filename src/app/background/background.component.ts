@@ -94,56 +94,11 @@ export class BackgroundComponent implements OnInit {
       }
     );
 
-    this.schedaservice.getbg(this.idutente).subscribe(
-      (data: any) => {
-        this.listabg = data.background;
-        this.maxinfluenze = data.maxinfluenze;
+  
 
-        /* for ( let j=0 ; j< this.listabg.length ; j++) {
-          this.listabg[j].livello = Number (this.listabg[j].livello);
-        } */
-        for ( const item of this.listabg) {
-          item.livello = Number (item.livello);
-        }
 
-      }
-    );
 
-    this.schedaservice.getinfluenze(this.idutente).subscribe(
-      (data: any) => {
-        this.listainfluenze = data.influenze;
-        this.maxinfluenze = data.maxinfluenze;
-
-        /* for ( let j=0 ; j< this.listabg.length ; j++) {
-          this.listabg[j].livello = Number (this.listabg[j].livello);
-        } */
-
-        this.sommaInfluenze = 0;
-
-        for ( const item of this.listainfluenze) {
-          item.livello = Number (item.livello);
-          this.sommaInfluenze += item.livello;
-        }
-
-      }
-    );
-
-    this.schedaservice.getcontatti(this.idutente).subscribe(
-      (data: any) => {
-        this.listaContatti = data.contatti;
-
-        this.sommacontatti = 0;
-        /* for ( let j=0 ; j< this.listaContatti.length ; j++) {
-          this.listaContatti[j].livello = Number (this.listaContatti[j].livello);
-          this.sommacontatti += this.listaContatti[j].livello;
-        } */
-        for ( const item of this.listaContatti ) {
-          item.livello = Number (item.livello);
-          this.sommacontatti += item.livello;
-        }
-
-      }
-    );
+ 
 
     this.schedaservice.getsentiero(this.idutente).subscribe(
       (data: any) => {
@@ -155,7 +110,7 @@ export class BackgroundComponent implements OnInit {
       }
     );
 
-    this.caricavalori();
+
 
   }
 
@@ -192,208 +147,22 @@ export class BackgroundComponent implements OnInit {
     .subscribe();
   }
 
-  minbg(id: number){
-    let newlivello = 0 ;
-    /* for ( let j = 0 ; j < this.listabg.length ; j++ ){
-      if ( this.listabg[j].idback == id){
-        this.listabg[j].livello -- ;
-        newlivello = this.listabg[j].livello;
-      }
-    } */
-    for ( let item of this.listabg ){
-      if ( item.idback == id){
-        item.livello -- ;
-        newlivello = item.livello;
-      }
-    }
-    this.schedaservice.putbg(this.idutente, id, newlivello  , 'U' ).subscribe();
-  }
 
-  addbg(id: number){
-    let newlivello = 0 ;
-    /* for ( let j = 0 ; j < this.listabg.length ; j++ ){
-      if ( this.listabg[j].idback == id){
-        this.listabg[j].livello ++ ;
-        newlivello = this.listabg[j].livello;
-      }
-    } */
-    for ( const item of  this.listabg ){
-      if ( item.idback == id) {
-        item.livello ++ ;
-        newlivello = item.livello;
-      }
-    }
-    this.schedaservice.putbg(this.idutente, id , newlivello , 'U' ).subscribe();
-  }
 
-  mincon(id: number){
-    // console.log (this.listaContatti);
-    for ( let item of this.listaContatti  ) {
-      if ( item.idcontatto == id ) {
-        item.livello -- ;
-        this.schedaservice.putcontatti(this.idutente, id , item.livello, 'A')
-        .subscribe(
-          (data) => {
-            for ( let j = 0 ; j < this.listaContatti.length; j++){
-              if (this.listaContatti[j].livello == 0) {
-                this.listaContatti.splice(j, 1);
-                // console.log (j);
-                // console.log (this.listaContatti);
-              }
-            }
-            this.sommacontatti -- ;
-          }
-        );
-      }
-    }
-  }
-  addcon(id: number){
-    /* for ( let j=0 ; j< this.listaContatti.length ; j++) {
-      if ( this.listaContatti[j].idcontatto == id ) {
-        this.listaContatti[j].livello ++ ;
-        this.schedaservice.putcontatti(this.idutente, id, this.listaContatti[j].livello)
-        .subscribe(
-          (data) => {
-            this.sommacontatti ++ ;
-          }
-        );
-      }
-    } */
-    for ( const item of this.listaContatti ) {
-      if ( item.idcontatto == id ) {
-        item.livello ++ ;
-        this.schedaservice.putcontatti(this.idutente, id, item.livello, 'U')
-        .subscribe(
-          (data) => {
-            this.sommacontatti ++ ;
-          }
-        );
-      }
-    }
-  }
 
-  newcontatto(){
-    let myNew = new Contatti();
-    myNew.nomecontatto = this.myContatto.value;
-    myNew.livello = 1 ;
 
-    this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto, 'U')
-    .subscribe(
-      (data: any) => {
-
-        myNew.idcontatto = data ;
-        this.listaContatti.push(myNew) ;
-        this.myContatto.reset();
-        this.sommacontatti ++ ;
-      }
-    );
-  }
-
-  minsk(ix: number){
-    this.listanew[ix].livello -- ;
-    this.puntidisponibili ++;
-  }
-
-  addsk(ix: number) {
-    this.listanew[ix].livello ++ ;
-    this.puntidisponibili --;
-  }
 
   cambiastatus() {
     this.schedaservice.cambiastatus(this.idutente, this.listanew).subscribe(
       (data: any) => {
-         this.caricavalori ();
+        //done
       }
     );
   }
 
 
-  caricavalori() {
-    this.schedaservice.getpassaggiostatus(this.idutente).subscribe(
-      (data: any) => {
 
-        this.idstatus_old = Number(data.val_old.idstatus);
-        this.status_old = data.val_old.status;
-        this.fdv_old = Number(data.val_old.fdvmax);
-        this.bloodp_old = Number(data.val_old.bloodp);
-        this.sete_old = Number(data.val_old.sete);
-        this.attivazione_old = Number(data.val_old.attivazione);
-        this.addbp_old = Number(data.val_old.addbp);
-        this.fdvbase_old = Number(data.val_old.fdvbase);
-        this.bgbase_old = Number(data.val_old.bgbase);
 
-        this.bloodpmax = Number(data.val_old.bloodpmax);
-        this.generazione = Number(data.val_old.generazione);
-
-        if ( data.val_new ) {
-          this.idstatus_new = Number(data.val_new.idstatus);
-          this.status_new = data.val_new.status;
-          this.attivazione_new = Number(data.val_new.attivazione);
-          this.sete_new = Number(data.val_new.sete);
-          this.addbp_new = Number(data.val_new.addbp);
-          this.fdvbase_new = Number(data.val_new.fdvbase);
-          this.bgbase_new = Number(data.val_new.bgbase);
-
-          let mygen = this.generazione;
-          if (this.generazione <8) {
-            mygen = 8;
-          }
-          this.conoscenze_old = this.matriceNumSkill [ this.idstatus_old] [14 - mygen ];
-          this.conoscenze_new = this.matriceNumSkill [ this.idstatus_new] [14 - mygen ];
-
-          this.puntidisponibili = this.conoscenze_new - this.conoscenze_old;
-
-          this.bloodp_new = this.bloodp_old - this.addbp_old + this.addbp_new ;
-          if ( this.bloodp_new  > this.bloodpmax ) {
-            this.bloodp_new  = this.bloodpmax ;
-          }
-
-          this.fdv_new = this.fdv_old - this.fdvbase_old + this.fdvbase_new ;
-          if ( this.fdv_new  > 10 ) {
-            this.fdv_new  = 10 ;
-          }
-        }
-
-      }
-    );
-
-    this.schedaservice.getskill(this.idutente).subscribe(
-      (data: any) => {
-        this.listaskill = data.skill;
-        /*for (let j=0 ; j< this.listaskill.length ; j++) {
-          this.listaskill[j].livello = Number (this.listaskill[j].livello);
-        } */
-        for (let item of  this.listaskill) {
-          item.livello = Number (item.livello);
-        }
-        this.listanew.length = 0 ;
-        this.listaskill.forEach(val => this.listanew.push(Object.assign({}, val)));
-        /* for (let j=0 ; j< this.listanew.length ; j++) {
-          this.listanew[j].livello = 0;
-        } */
-        for (let item of  this.listanew) {
-          item.livello = 0;
-        }
-      }
-    );
-  }
-
-  minfdv(){
-    this.fdv--;
-    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1 , 'U').subscribe(
-      (data: any) => {
-        /* do stuff */
-      }
-    );
-  }
-  addfdv(){
-    this.fdv++;
-    this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1, 'U').subscribe(
-      (data: any) => {
-        /* do stuff */
-      }
-    );
-  }
   minsentiero(){
     this.valsentiero--;
     this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero , 'U').subscribe(
@@ -419,45 +188,9 @@ export class BackgroundComponent implements OnInit {
     );
   }
 
-  riducigen() {
-    this.generazione--;
-    this.schedaservice.putgen(this.idutente, this.generazione, 'U').subscribe(
-      (data: any) => {
-        this.caricavalori();  // cambiano gli skill per il passaggio status
-      }
-    );
-
-  }
+ 
 
 
-  mininf(id: number){
-    
-
-    let newlivello = 0 ;
-
-    for ( let item of this.listainfluenze ){
-      if ( item.idinfluenza == id){
-        item.livello -- ;
-        this.sommaInfluenze -- ;
-        newlivello = item.livello;
-      }
-    }
-    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'U' ).subscribe();
-
-  }
-  addinf(id: number){
-    let newlivello = 0 ;
-
-    for ( let item of this.listainfluenze ){
-      if ( item.idinfluenza == id){
-        item.livello ++;
-        this.sommaInfluenze ++;
-        newlivello = item.livello;
-      }
-    }
-    this.schedaservice.putinfluenze(this.idutente, id, newlivello  , 'U' ).subscribe();
-
-
-  }
+ 
 
 }
