@@ -121,6 +121,7 @@ function controlla_legami ($idutente, $db) {
   $Result = mysqli_query($db, $MySql);
   if ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
     $user = $res;
+    $bonuscdisc=$res['bonuscdisc'];
     } else {
     header("HTTP/1.1 404 Not Found");
       die();
@@ -340,6 +341,7 @@ function controlla_legami ($idutente, $db) {
   $Result=mysqli_query($db, $Mysql);
   if ( $res=mysqli_fetch_array($Result)) {
     $robustezza=$res['livello'];
+    $focus=$res['focus'];
   }
 
 	$schivare = 0 ;
@@ -355,6 +357,11 @@ function controlla_legami ($idutente, $db) {
   $Result=mysqli_query($db, $Mysql);
   if ( $res=mysqli_fetch_array($Result)) {
     $pf = $pf + $robustezza + 5 ;
+
+    if ( $focus == 1 ) {
+      $pf = $pf + $bonuscdisc ;  //robustezzza + bonus disciplina
+    }
+
   }
 
   $Mysql="SELECT * FROM poteri WHERE idpotere = 74 and idutente=$idutente";
@@ -363,18 +370,7 @@ function controlla_legami ($idutente, $db) {
     $pf = $pf + 5 ;   //Resilienza già +5
   }
 
-  // ferita permanente -3 PF
-  $Mysql="SELECT * FROM pregidifetti WHERE idpregio = 11 and idutente=$idutente";
-  $Result=mysqli_query($db, $Mysql);
-  if ( $res=mysqli_fetch_array($Result)) {
-    $pf=$pf-3;
-  }
-  // 9 vite +10 PF
-  $Mysql="SELECT * FROM pregidifetti WHERE idpregio = 126 and idutente=$idutente";
-  $Result=mysqli_query($db, $Mysql);
-  if ( $res=mysqli_fetch_array($Result)) {
-    $pf=$pf+10;
-  }
+
 
   /***********************/
 	$rp = 0;
