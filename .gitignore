@@ -50,3 +50,6 @@ Thumbs.db
 notturna-93b8f-firebase-adminsdk-lsd7l-b077c17d5a.json
 ## NEW
 notturna-93b8f-firebase-adminsdk-lsd7l-aaae60211e.json
+
+# Local database credentials
+wsPHP/db2.inc.php
