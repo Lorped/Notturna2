@@ -35,24 +35,11 @@ $au = $request -> au;
 
 if ( isset($postdata) && $idutente != "" ) {
 
-  $MySql = "SELECT bloodpmin from generazione
-    WHERE generazione = $generazione";
-  $Result = mysqli_query($db, $MySql);
-  $res = mysqli_fetch_array ($Result);
-  $bloodpmin = $res['bloodpmin'];
-
-  $MySql = "SELECT bloodp from personaggio
-    WHERE idutente = $idutente ";
-  $Result = mysqli_query($db, $MySql);
-  $res = mysqli_fetch_array ($Result);
-  $bloodp = $res['bloodp'];
-
-  if ( $bloodp < $bloodpmin ) {
-    $bloodp = $bloodpmin ;
-  }
 
 
-  $MySql = "UPDATE  personaggio SET generazione = '$generazione' , bloodp = $bloodp
+
+
+  $MySql = "UPDATE  personaggio SET generazione = '$generazione' , bloodp = bloodp -1
     WHERE idutente = $idutente ";
   $Result = mysqli_query($db, $MySql);
 
