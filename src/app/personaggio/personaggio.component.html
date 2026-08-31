@@ -297,7 +297,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Discipline
+            Discipline {{isTaumaturgo ? ' - Taumaturgia' : ''}}{{isNecromante ? ' - Necromanzia' : ''}}
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -326,7 +326,7 @@
               }
             </div>
 
-
+              <div style="margin-left: 0px; display: flex; flex-direction: row; flex-wrap: nowrap;" >
             <div class="column is-4 nopadding" >
               Aggiungi altre Discipline
               <mat-form-field>
@@ -339,6 +339,36 @@
               </mat-form-field>
               <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc=='' " style="width: 66%;" (click)="newdisc()">Aggiungi</button>
             </div>
+            @if (isNecromante) {
+            <div class="column is-4 nopadding" >
+              Aggiungi altre Vie
+              <mat-form-field>
+                <mat-label>Nuova Via</mat-label>
+                <mat-select [(value)]="idnewnecro">
+                  @for (tt of othernecro; track tt) {
+                    <mat-option [value]="tt.idnecro" >{{tt.nomenecro}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro=='' || necromanzie.length>=3" style="width: 66%;" (click)="newnecro(idnewnecro)">Aggiungi</button>
+            </div>
+            }
+            @if (isTaumaturgo) {
+            <div class="column is-4 nopadding" >
+              Aggiungi altre Vie
+              <mat-form-field>
+                <mat-label>Nuova Via</mat-label>
+                <mat-select [(value)]="idnewtaum">
+                  @for (tt of othertaum; track tt) {
+                    <mat-option [value]="tt.idtaum" >{{tt.nometaum}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum=='' || taumaturgie.length>=3" style="width: 66%;" (click)="newtaum(idnewtaum)">Aggiungi</button>
+            </div>
+            }
+            </div>
+
 
             @if (taumaturgie.length >0) {
               <div class="columns" style="align-items: center;">
@@ -458,6 +488,7 @@
                 </div>
               }
 
+              <!--
               @if (amalgame.length > 0) {
                 <div class="column is-3 nopadding">
                   <div class="columns" >
@@ -470,6 +501,7 @@
                   }
                 </div>
               }
+              -->
 
             </div>
           </mat-card-content>

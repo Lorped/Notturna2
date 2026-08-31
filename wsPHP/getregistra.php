@@ -92,7 +92,7 @@ while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 }
 
 $necromanzie= [];
-$MySql = "SELECT * FROM necromanzie_main ";
+$MySql = "SELECT * FROM necromanzie_main WHERE clanesclusivo != 99";
 $Result = mysqli_query($db, $MySql);
 while ( $res = mysqli_fetch_array($Result,MYSQLI_ASSOC)   ) {
 	$necromanzie[] =$res;

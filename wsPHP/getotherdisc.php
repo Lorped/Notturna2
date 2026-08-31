@@ -16,25 +16,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php'); //MYSQL //
+require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
 $idutente = $_GET['idutente'];
 
 	$MySql="SELECT * FROM discipline_main
-		WHERE iddisciplina NOT IN ( select iddisciplina from discipline where idutente=$idutente )
-		AND iddisciplina != 98 and iddisciplina != 99 ";
+		WHERE iddisciplina NOT IN ( select iddisciplina from discipline where idutente=$idutente )";
 	$Result=mysqli_query($db, $MySql);
 
 	$otherdisc = [];
 
 	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
-
 		$otherdisc [] = $res ;
 	}
 
+	$MySql="SELECT * FROM taumaturgie_main
+		WHERE idtaum NOT IN ( select idtaum from taumaturgie where idutente=$idutente ) and clanesclusivo !=99";
+	$Result=mysqli_query($db, $MySql);
+
+	$othertaum = [];
+
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
+		$othertaum [] = $res ;
+	}
+
+	$MySql="SELECT * FROM necromanzie_main
+		WHERE idnecro NOT IN ( select idnecro from necromanzie where idutente=$idutente ) and clanesclusivo !=99";
+	$Result=mysqli_query($db, $MySql);
+
+	$othernecro = [];
+
+	while ( $res=mysqli_fetch_array($Result,MYSQLI_ASSOC) ) {
+		$othernecro [] = $res ;
+	}
+
+
 
 	$out = [
-		'otherdisc' => $otherdisc
+		'otherdisc' => $otherdisc,
+		'othertaum' => $othertaum,
+		'othernecro' => $othernecro
 	];
 
 

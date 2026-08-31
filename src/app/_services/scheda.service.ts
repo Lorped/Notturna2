@@ -435,6 +435,11 @@ export class SchedaService {
     });
   }
 
-
-
+  addnecrotaum_master(idutente: number , necrotaum: string , iddisciplina: number ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addnecrotaum-master.php',{
+      idutente: idutente,
+      necrotaum: necrotaum,
+      iddisciplina: iddisciplina
+    });
+  }
 }

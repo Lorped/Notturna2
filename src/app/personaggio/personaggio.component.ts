@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
-import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale, Amalgama, Alleati } from '../global';
+import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale, Amalgama, Alleati } from '../global';
 
 
 @Component({
@@ -14,7 +14,11 @@ import { GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia
 export class PersonaggioComponent implements OnInit {
 
   otherdisc: Array<Disciplina> = [];
+  othernecro: Array<Necromanzia> = [];
+  othertaum: Array<Taumaturgia> = [];
   idnewdisc = '';
+  idnewnecro = '';
+  idnewtaum = '';
 
 
   scheda: Basicpg = new Basicpg();
@@ -40,7 +44,9 @@ export class PersonaggioComponent implements OnInit {
   pregi: Array<Pregio> = [];
   rituali: Array<Rituale> = [];
 
-  amalgame: Array<Amalgama> = [];
+  isTaumaturgo = false;
+  isNecromante = false;
+
 
   constructor( private globalstatus: GlobalStatus, private route: ActivatedRoute, private schedaservice: SchedaService ) { }
 
@@ -114,16 +120,28 @@ export class PersonaggioComponent implements OnInit {
         if (this.scheda.bio == '' || this.scheda.bio == null ) { this.scheda.bio = '- Non presente -';}
         if (this.scheda.note == '' || this.scheda.note == null ) { this.scheda.note = '- Nessuna -';}
 
+
+        const taum = this.discipline.find(t => t.disciplina.iddisciplina == 98);
+        if (taum) { this.isTaumaturgo = true; }
+
+        const necro = this.discipline.find(n => n.disciplina.iddisciplina == 99);
+        if (necro) { this.isNecromante = true; }
+
+        //console.log (this.scheda);
+
+        /*
         this.schedaservice.getamalgame(idutente).subscribe(
           (data: any) => {
             this.amalgame = data.amalgame;
             //console.log (this.amalgame);
           }
-        );
+        );*/
         this.schedaservice.getotherdisc(idutente)
         .subscribe(
           (data: any) => {
             this.otherdisc = data.otherdisc;
+            this.othernecro = data.othernecro;
+            this.othertaum = data.othertaum;
             // console.log (this.otherdisc);
           }
         );
@@ -326,6 +344,17 @@ export class PersonaggioComponent implements OnInit {
                 (data: any) => {
                   this.otherdisc = data.otherdisc;
                   // console.log (this.otherdisc);
+
+                  this.idnewdisc = '';
+
+                  this.isTaumaturgo = false;
+                  this.isNecromante = false;
+                  const taum = this.discipline.find(t => t.disciplina.iddisciplina == 98);
+                  if (taum) { this.isTaumaturgo = true; }
+                  const necro = this.discipline.find(n => n.disciplina.iddisciplina == 99);
+                  if (necro) { this.isNecromante = true; }
+
+
                 }
               );
               
@@ -360,11 +389,39 @@ export class PersonaggioComponent implements OnInit {
         this.schedaservice.getotherdisc(this.globalstatus.lastpg).subscribe(
           (data: any) => {
             this.otherdisc = data.otherdisc;
+
+            this.isTaumaturgo = false;
+            this.isNecromante = false;
+            const taum = this.discipline.find(t => t.disciplina.iddisciplina == 98);
+            if (taum) { this.isTaumaturgo = true; }
+            const necro = this.discipline.find(n => n.disciplina.iddisciplina == 99);
+            if (necro) { this.isNecromante = true; }
             // console.log (this.otherdisc);
           }
         );
       }
     );
+  }
+
+  newtaum(idtaum: string) {
+    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "T", Number(idtaum)).subscribe((res)=>{
+      const xx = new FullTaumaturgia();
+      xx.taumaturgia.idtaum = Number(idtaum);
+      xx.taumaturgia.nometaum = this.othertaum.find(t => t.idtaum == Number(idtaum))?.nometaum || '';
+      this.othertaum = this.othertaum.filter(t => t.idtaum !== Number(idtaum));
+      this.taumaturgie.push(xx);
+      this.idnewtaum = '';
+    });
+  }
+  newnecro(idnecro: string) {
+    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "N", Number(idnecro)).subscribe((res)=>{
+      const xx = new FullNecromanzia();
+      xx.necromanzia.idnecro = Number(idnecro);
+      xx.necromanzia.nomenecro = this.othernecro.find(n => n.idnecro == Number(idnecro))?.nomenecro || '';
+      this.othernecro = this.othernecro.filter(n => n.idnecro !== Number(idnecro));
+      this.necromanzie.push(xx);
+      this.idnewnecro = '';
+    });  
   }
 
 }
