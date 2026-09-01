@@ -35,17 +35,26 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
 
 
   if  ($necrotaum == 'N') {
-    $mysql = "SELECT count(*) as conta FROM necromanzie where idutente = $idutente";
+    $mysql = "SELECT principale FROM necromanzie where idutente = $idutente";
     $result = mysqli_query($db, $mysql);
-    $res = mysqli_fetch_array($result);
-    $conta = $res['conta'];
-    if ($conta >= 3) {
+    $principali = [];
+    while ($res = mysqli_fetch_array($result)) {
+      $principali[] = (int) $res['principale'];
+    }
+    if (count($principali) >= 3) {
       header("HTTP/1.1 403 Forbidden");
       die("Limite Necromanzie raggiunto");
     }
+    if (!in_array(1, $principali, true)) {
+      $principale = 1;
+    } elseif (!in_array(2, $principali, true)) {
+      $principale = 2;
+    } else {
+      $principale = 3;
+    }
 
     $MySql = "INSERT INTO necromanzie (idutente, idnecro, livello, principale, focus) VALUES
-      ($idutente, $iddisciplina, 0, $conta+1, 0)";
+      ($idutente, $iddisciplina, 0, $principale, 0)";
     mysqli_query($db, $MySql);
 
     $MySql = "SELECT * FROM necromanzie_main  
@@ -56,16 +65,25 @@ if ( isset($postdata) && $idutente != "" && $iddisciplina != "" ) {
 
   } else {
 
-    $mysql = "SELECT count(*) as conta FROM taumaturgie where idutente = $idutente";
+    $mysql = "SELECT principale FROM taumaturgie where idutente = $idutente";
     $result = mysqli_query($db, $mysql);
-    $res = mysqli_fetch_array($result);
-    $conta = $res['conta'];
-    if ($conta >= 3) {
+    $principali = [];
+    while ($res = mysqli_fetch_array($result)) {
+      $principali[] = (int) $res['principale'];
+    }
+    if (count($principali) >= 3) {
       header("HTTP/1.1 403 Forbidden");
       die("Limite Vie Taumaturgiche raggiunto");
     }
+    if (!in_array(1, $principali, true)) {
+      $principale = 1;
+    } elseif (!in_array(2, $principali, true)) {
+      $principale = 2;
+    } else {
+      $principale = 3;
+    }
     $MySql = "INSERT INTO taumaturgie (idutente, idtaum, livello, principale, focus) VALUES
-      ($idutente, $iddisciplina, 0, $conta+1, 0)";
+      ($idutente, $iddisciplina, 0, $principale, 0)";
       mysqli_query($db, $MySql);
 
     $MySql = "SELECT * FROM taumaturgie_main  

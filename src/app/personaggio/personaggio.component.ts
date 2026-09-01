@@ -408,7 +408,18 @@ export class PersonaggioComponent implements OnInit {
       const xx = new FullTaumaturgia();
       xx.taumaturgia.idtaum = Number(idtaum);
       xx.taumaturgia.nometaum = this.othertaum.find(t => t.idtaum == Number(idtaum))?.nometaum || '';
-      this.othertaum = this.othertaum.filter(t => t.idtaum !== Number(idtaum));
+      const prim = this.taumaturgie.find(t => t.taumaturgia.principale == 1);
+      if (prim) {
+        const sec = this.taumaturgie.find(t => t.taumaturgia.principale == 2);
+        if (sec) {
+          xx.taumaturgia.principale = 3;
+        } else {
+          xx.taumaturgia.principale = 2;
+        } 
+      } else {
+        xx.taumaturgia.principale = 1;
+      }
+      this.othertaum = this.othertaum.filter(t => Number(t.idtaum) !== Number(idtaum));
       this.taumaturgie.push(xx);
       this.idnewtaum = '';
     });
@@ -418,10 +429,166 @@ export class PersonaggioComponent implements OnInit {
       const xx = new FullNecromanzia();
       xx.necromanzia.idnecro = Number(idnecro);
       xx.necromanzia.nomenecro = this.othernecro.find(n => n.idnecro == Number(idnecro))?.nomenecro || '';
-      this.othernecro = this.othernecro.filter(n => n.idnecro !== Number(idnecro));
+      const prim = this.necromanzie.find(n => n.necromanzia.principale == 1);
+      if (prim) {
+        const sec = this.necromanzie.find(n => n.necromanzia.principale == 2);
+        xx.necromanzia.principale = sec ? 3 : 2;
+      } else {
+        xx.necromanzia.principale = 1;
+      }
+      this.othernecro = this.othernecro.filter(n => Number(n.idnecro) !== Number(idnecro));
       this.necromanzie.push(xx);
       this.idnewnecro = '';
     });  
+  }
+
+  cancellavia(iddisciplina: number, necrotaum: string) {
+    this.schedaservice.cancellavia_master(this.globalstatus.lastpg, necrotaum, iddisciplina).subscribe(() => {
+      if (necrotaum == 'T') {
+        const taum = this.taumaturgie.find(t => t.taumaturgia.idtaum === iddisciplina);
+        if (taum) {
+          this.taumaturgie = this.taumaturgie.filter(t => t !== taum);
+          this.othertaum.push(taum.taumaturgia);
+        }
+      } else {
+        const necro = this.necromanzie.find(n => n.necromanzia.idnecro === iddisciplina);
+        if (necro) {
+          this.necromanzie = this.necromanzie.filter(n => n !== necro);
+          this.othernecro.push(necro.necromanzia);
+        }
+      }
+    });
+  }
+
+  riducivia(idtaum: number) {
+    console.log("riducivia", idtaum);
+    const taum = this.taumaturgie.find(t => t.taumaturgia.idtaum === idtaum);
+    if (taum && taum.taumaturgia.livello > 0) {
+      this.schedaservice.changenecrotaum_master(this.globalstatus.lastpg, idtaum, -1,"T").subscribe((data:any) => {
+        taum.taumaturgia.livello--;
+        if (taum.taumaturgia.principale == 1){
+          this.discipline.find(d => d.disciplina.iddisciplina == 98)!.disciplina.livello = taum.taumaturgia.livello;
+          const sec = this.taumaturgie.find(t => t.taumaturgia.principale == 2);
+          if (sec) {
+            if (sec.taumaturgia.livello >= taum.taumaturgia.livello) {
+              sec.taumaturgia.livello --;
+              const ter = this.taumaturgie.find(t => t.taumaturgia.principale == 3);
+              if (ter) {
+                if (ter.taumaturgia.livello >= sec.taumaturgia.livello) {
+                  ter.taumaturgia.livello = sec.taumaturgia.livello - 1;
+                }
+              }
+            }
+          }
+        } else if (taum.taumaturgia.principale == 2){
+          const ter = this.taumaturgie.find(t => t.taumaturgia.principale == 3);
+          if (ter) {
+            if (ter.taumaturgia.livello >= taum.taumaturgia.livello) {
+              ter.taumaturgia.livello = taum.taumaturgia.livello - 1;
+            }
+          }
+        // console.log("riducivia", idtaum);
+        }
+      });
+    }
+  }
+
+  puoAumentareVia(taum: FullTaumaturgia): boolean {
+    const livelloSuccessivo = Number(taum.taumaturgia.livello) + 1;
+    if (livelloSuccessivo > 5) {
+      return false;
+    }
+    if (taum.taumaturgia.principale == 2) {
+      const primaria = this.taumaturgie.find(t => t.taumaturgia.principale == 1);
+      return !primaria || livelloSuccessivo < primaria.taumaturgia.livello ||
+        (livelloSuccessivo == primaria.taumaturgia.livello && primaria.taumaturgia.livello == 5);
+    }
+    if (taum.taumaturgia.principale == 3) {
+      const secondaria = this.taumaturgie.find(t => t.taumaturgia.principale == 2);
+      return !secondaria || livelloSuccessivo < secondaria.taumaturgia.livello ||
+        (livelloSuccessivo == secondaria.taumaturgia.livello && secondaria.taumaturgia.livello == 5);
+    }
+    return true;
+  }
+
+  aumentavia(idtaum: number) {
+    console.log("aumentavia", idtaum);
+    const taum = this.taumaturgie.find(t => t.taumaturgia.idtaum === idtaum);
+    if (taum && this.puoAumentareVia(taum)) {
+      this.schedaservice.changenecrotaum_master(this.globalstatus.lastpg, idtaum, 1,"T").subscribe(
+        (data:any) => {
+          taum.taumaturgia.livello++;
+          if (taum.taumaturgia.principale == 1){
+            const tt = this.discipline.find(d => d.disciplina.iddisciplina == 98);
+            if (tt) {
+              tt.disciplina.livello ++; 
+            }
+          }
+          // console.log("aumentavia", idtaum);
+        }
+      );
+    }
+  }
+
+  riducivianecro(idnecro: number) {
+    const necro = this.necromanzie.find(n => n.necromanzia.idnecro === idnecro);
+    if (necro && necro.necromanzia.livello > 0) {
+      this.schedaservice.changenecrotaum_master(this.globalstatus.lastpg, idnecro, -1, "N").subscribe(() => {
+        necro.necromanzia.livello--;
+        if (necro.necromanzia.principale == 1) {
+          const disciplina = this.discipline.find(d => d.disciplina.iddisciplina == 99);
+          if (disciplina) {
+            disciplina.disciplina.livello = necro.necromanzia.livello;
+          }
+          const secondaria = this.necromanzie.find(n => n.necromanzia.principale == 2);
+          if (secondaria && secondaria.necromanzia.livello >= necro.necromanzia.livello) {
+            secondaria.necromanzia.livello = Number(necro.necromanzia.livello) - 1;
+            const terziaria = this.necromanzie.find(n => n.necromanzia.principale == 3);
+            if (terziaria && terziaria.necromanzia.livello >= secondaria.necromanzia.livello) {
+              terziaria.necromanzia.livello = Number(secondaria.necromanzia.livello) - 1;
+            }
+          }
+        } else if (necro.necromanzia.principale == 2) {
+          const terziaria = this.necromanzie.find(n => n.necromanzia.principale == 3);
+          if (terziaria && terziaria.necromanzia.livello >= necro.necromanzia.livello) {
+            terziaria.necromanzia.livello = necro.necromanzia.livello - 1;
+          }
+        }
+      });
+    }
+  }
+
+  puoAumentareViaNecro(necro: FullNecromanzia): boolean {
+    const livelloSuccessivo = Number(necro.necromanzia.livello) + 1;
+    if (livelloSuccessivo > 5) {
+      return false;
+    }
+    if (necro.necromanzia.principale == 2) {
+      const primaria = this.necromanzie.find(n => n.necromanzia.principale == 1);
+      return !primaria || livelloSuccessivo < primaria.necromanzia.livello ||
+        (livelloSuccessivo == primaria.necromanzia.livello && primaria.necromanzia.livello == 5);
+    }
+    if (necro.necromanzia.principale == 3) {
+      const secondaria = this.necromanzie.find(n => n.necromanzia.principale == 2);
+      return !secondaria || livelloSuccessivo < secondaria.necromanzia.livello ||
+        (livelloSuccessivo == secondaria.necromanzia.livello && secondaria.necromanzia.livello == 5);
+    }
+    return true;
+  }
+
+  aumentavianecro(idnecro: number) {
+    const necro = this.necromanzie.find(n => n.necromanzia.idnecro === idnecro);
+    if (necro && this.puoAumentareViaNecro(necro)) {
+      this.schedaservice.changenecrotaum_master(this.globalstatus.lastpg, idnecro, 1, "N").subscribe(() => {
+        necro.necromanzia.livello++;
+        if (necro.necromanzia.principale == 1) {
+          const disciplina = this.discipline.find(d => d.disciplina.iddisciplina == 99);
+          if (disciplina) {
+            disciplina.disciplina.livello++;
+          }
+        }
+      });
+    }
   }
 
 }

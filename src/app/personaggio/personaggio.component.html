@@ -297,7 +297,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Discipline {{isTaumaturgo ? ' - Taumaturgia' : ''}}{{isNecromante ? ' - Necromanzia' : ''}}
+            Discipline {{isTaumaturgo ? ' - Taumaturgie' : ''}}{{isNecromante ? ' - Necromanzie' : ''}}
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -341,7 +341,7 @@
             </div>
             @if (isNecromante) {
             <div class="column is-4 nopadding" >
-              Aggiungi altre Vie
+              Aggiungi altre Vie Necromantiche
               <mat-form-field>
                 <mat-label>Nuova Via</mat-label>
                 <mat-select [(value)]="idnewnecro">
@@ -355,7 +355,7 @@
             }
             @if (isTaumaturgo) {
             <div class="column is-4 nopadding" >
-              Aggiungi altre Vie
+              Aggiungi altre Vie Taumaturgiche
               <mat-form-field>
                 <mat-label>Nuova Via</mat-label>
                 <mat-select [(value)]="idnewtaum">
@@ -385,11 +385,15 @@
                     <div class="columns">
                       <div class="column">
                         {{dd.taumaturgia.nometaum}}
+                        @if (dd.taumaturgia.principale == taumaturgie.length) {
+                          <button class="btn btn-xs" (click)="cancellavia(dd.taumaturgia.idtaum, 'T')">X</button>
+                        }
                       </div>
-                      <div class="column">
+                        <div class="column"><button class="btn  btn-xs" (click)="riducivia(dd.taumaturgia.idtaum)" [disabled]="dd.taumaturgia.livello<1 "><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
                         }
+                        <button class="btn  btn-xs" (click)="aumentavia(dd.taumaturgia.idtaum)" [disabled]="!puoAumentareVia(dd)"><i class="fa fa-plus"></i></button>
                       </div>
                     </div>
                   </div>
@@ -412,11 +416,16 @@
                     <div class="columns" >
                       <div class="column">
                         {{dd.necromanzia.nomenecro}}
+                        @if (dd.necromanzia.principale == necromanzie.length) {
+                          <button class="btn btn-xs" (click)="cancellavia(dd.necromanzia.idnecro, 'N')">X</button>
+                        }
                       </div>
                       <div class="column">
+                        <button class="btn btn-xs" (click)="riducivianecro(dd.necromanzia.idnecro)" [disabled]="dd.necromanzia.livello < 1"><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
                         }
+                        <button class="btn btn-xs" (click)="aumentavianecro(dd.necromanzia.idnecro)" [disabled]="!puoAumentareViaNecro(dd)"><i class="fa fa-plus"></i></button>
                       </div>
                     </div>
                   </div>

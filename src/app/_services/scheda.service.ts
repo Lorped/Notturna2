@@ -442,4 +442,21 @@ export class SchedaService {
       iddisciplina: iddisciplina
     });
   }
+
+  cancellavia_master(idutente: number, necrotaum: string, iddisciplina: number) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancellavia-master.php', {
+      idutente: idutente,
+      necrotaum: necrotaum,
+      iddisciplina: iddisciplina
+    });
+  }
+
+  changenecrotaum_master(idutente: number ,  iddisciplina: number , change: number , necrotaum: string ) {
+    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changenecrotaum-master.php',{
+      idutente: idutente,
+      necrotaum: necrotaum,
+      iddisciplina: iddisciplina,
+      change: change
+    });
+  }
 }
