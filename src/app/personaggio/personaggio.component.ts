@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
-import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale, Amalgama, Alleati } from '../global';
+import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale,  Alleati } from '../global';
 
 
 @Component({
@@ -129,13 +129,7 @@ export class PersonaggioComponent implements OnInit {
 
         //console.log (this.scheda);
 
-        /*
-        this.schedaservice.getamalgame(idutente).subscribe(
-          (data: any) => {
-            this.amalgame = data.amalgame;
-            //console.log (this.amalgame);
-          }
-        );*/
+
         this.schedaservice.getotherdisc(idutente)
         .subscribe(
           (data: any) => {

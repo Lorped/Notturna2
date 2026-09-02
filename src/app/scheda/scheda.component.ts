@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
-import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale, Amalgama ,  Alleati} from '../global';
+import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale,    Alleati} from '../global';
 
 export class listaspese {
   public data = '' ;
@@ -42,7 +42,7 @@ export class SchedaComponent implements OnInit {
   pregi: Array<Pregio> = [];
   rituali: Array<Rituale> = [];
 
-  amalgame: Array<Amalgama> = [];
+
 
   listaarray: Array <listaspese> = [];
 
@@ -122,12 +122,6 @@ export class SchedaComponent implements OnInit {
           }
         }
 
-        this.schedaservice.getamalgame(this.idutente).subscribe(
-          (data: any) => {
-            this.amalgame = data.amalgame;
-            //console.log (this.amalgame);
-          }
-        );
 
         this.schedaservice.getrisorse(this.idutente).subscribe(
           (data: any) => {

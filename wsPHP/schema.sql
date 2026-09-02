@@ -38,36 +38,6 @@ CREATE TABLE `alleati` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `amalgame`
---
-
-CREATE TABLE `amalgame` (
-  `idamalgama` int(11) NOT NULL,
-  `idutente` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `amalgame_main`
---
-
-CREATE TABLE `amalgame_main` (
-  `idamalgama` int(11) NOT NULL,
-  `nomeamalgama` char(30) COLLATE utf8_unicode_ci NOT NULL,
-  `idclan` int(11) NOT NULL,
-  `iddisc1` int(11) NOT NULL,
-  `lvldisc1` int(11) NOT NULL,
-  `iddisc2` int(11) NOT NULL,
-  `lvldisc2` int(11) NOT NULL,
-  `costo` int(11) NOT NULL,
-  `ps` int(11) NOT NULL,
-  `fdv` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `background`
 --
 
@@ -720,17 +690,6 @@ ALTER TABLE `alleati`
   ADD PRIMARY KEY (`idalleato`),
   ADD KEY `idutente` (`idutente`);
 
---
--- Indici per le tabelle `amalgame`
---
-ALTER TABLE `amalgame`
-  ADD UNIQUE KEY `idxamalgame` (`idamalgama`,`idutente`);
-
---
--- Indici per le tabelle `amalgame_main`
---
-ALTER TABLE `amalgame_main`
-  ADD PRIMARY KEY (`idamalgama`);
 
 --
 -- Indici per le tabelle `background`
@@ -1016,12 +975,6 @@ ALTER TABLE `utente`
 --
 ALTER TABLE `alleati`
   MODIFY `idalleato` int(11) NOT NULL auto_increment;
-
---
--- AUTO_INCREMENT per la tabella `amalgame_main`
---
-ALTER TABLE `amalgame_main`
-  MODIFY `idamalgama` int(11) NOT NULL auto_increment;
 
 --
 -- AUTO_INCREMENT per la tabella `background_main`

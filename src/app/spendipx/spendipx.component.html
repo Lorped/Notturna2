@@ -239,23 +239,7 @@
                     </div>
                   }
 
-                <!--------- AMALGAME  -->
-                <!--
-                  @if (statusPG>2) {
-                    <div class="column is-4 nopadding">
-                      Apprendi Amalgame
-                      <mat-form-field>
-                        <mat-label>Amalgama</mat-label>
-                        <mat-select [(value)]="idnewamalgama">
-                          @for (tt of amalgame; track tt) {
-                            <mat-option [value]="tt.idamalgama"  multiLineOption [disabled]="! (tt.checkdisc==1 && tt.costo < scheda.xp)">{{tt.nomeamalgama}} - {{tt.costo}} px - ( {{tt.disc1 }} . {{tt.lvldisc1}} + {{tt.disc2}}. {{tt.lvldisc2}} ) </mat-option>
-                          }
-                        </mat-select>
-                      </mat-form-field>
-                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewamalgama==''" style="width: 66%;" (click)="newamalgama()">Aggiungi</button>
-                    </div>
-                  }
-                -->
+
 
                 </div>
 

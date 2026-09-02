@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
-import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati, Pregio, Rituale , Amalgama} from '../global';
+import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati, Pregio, Rituale } from '../global';
 
 
 
@@ -89,8 +89,7 @@ export class SpendipxComponent implements OnInit {
   puntirigenera = 0 ;
   prbonus = 0;
 
-  amalgame: Array<Amalgama> = [];
-  idnewamalgama = '';
+
 
 
   listabg: Array<Background> = [];
@@ -285,24 +284,7 @@ export class SpendipxComponent implements OnInit {
           }
         );
 
-        /***************
-        this.schedaservice.listamalgame(this.idutente)
-        .subscribe(
-          (data: any) => {
-            this.amalgame = data.amalgame;
-            this.amalgame.forEach(element => {
-              element.costo = Number (element.costo);
-              element.checkdisc = Number (element.checkdisc);
-              
-              //if (element.costo > this.xpdisponibili) {
-              //  element.checkdisc = 0;
-              //}              
 
-            });
-
-          }
-        );
-        */
 
         this.scheda.xp = Number(this.scheda.xp);
         this.scheda.xpspesi = Number(this.scheda.xpspesi);
@@ -679,28 +661,7 @@ export class SpendipxComponent implements OnInit {
 
   }
 
-  /****
-  newamalgama(){
-   
-    const found = this.amalgame.find((xx)=> xx.idamalgama == Number(this.idnewamalgama));
 
-    if (found){
-      this.scheda.xp = this.scheda.xp - found.costo;
-    }
-    
-    this.ricalcolo_xp();
-
-    this.schedaservice.addamalgama(this.idutente, Number(this.idnewamalgama) )
-    .subscribe(
-      data => {
-
-        this.reload_full();
-        this.ricalcolo_xp();
-
-      }
-    );
-  }
-  ****/
 
   reload_full () {
     this.schedaservice.getscheda(this.idutente)
@@ -754,20 +715,7 @@ export class SpendipxComponent implements OnInit {
         this.check_discipline_strane();
         this.ricalcolo_xp();
 
-        /*
-        this.schedaservice.listamalgame(this.idutente)
-        .subscribe(
-          (data: any) => {
-            this.amalgame = data.amalgame;
-            this.amalgame.forEach(element => {
-              element.costo = Number (element.costo);
-              element.checkdisc = Number (element.checkdisc);
-              
-             //console.log(element);
-            });
-          }
-        );
-        */
+
 
       }
     );
