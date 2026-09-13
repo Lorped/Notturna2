@@ -407,7 +407,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 	foreach ($bg as $back){
-		if ($back->idback ==  6){ //mentore
+		if ($back->idback ==  6 and $back->livello > 0){ //mentore
 
 			$mysql = "Select * from lineedisangue where idlds = $idlds ";
 			$result = mysqli_query($db, $mysql);
