@@ -23,10 +23,10 @@
       <mat-form-field class="full-width-input">
         <input matInput formControlName="regemail" placeholder="Email" required>
       </mat-form-field>
-      @if (regemail?.hasError('email') && !regemail?.hasError('required')) {
+      @if (regemail && regemail.hasError('email') && !regemail.hasError('required')) {
         <mat-error>Inserire una email valida</mat-error>
       }
-      @if (regemail?.hasError('emailTaken')) {
+      @if (regemail && regemail.hasError('emailTaken')) {
         <mat-error>Email già presente</mat-error>
       }
 

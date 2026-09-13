@@ -32,10 +32,10 @@
                     <mat-form-field class="full-width-input">
                       <input matInput formControlName="newemail" placeholder="Nuova Email" required>
                     </mat-form-field>
-                    @if (newemail?.hasError('email') && !newemail?.hasError('required')) {
+                    @if (newemail && newemail.hasError('email') && !newemail.hasError('required')) {
                       <mat-error>Inserire una email valida</mat-error>
                     }
-                    @if (newemail?.hasError('emailTaken')) {
+                    @if (newemail && newemail.hasError('emailTaken')) {
                       <mat-error>Email già presente</mat-error>
                     }
                   </div>
