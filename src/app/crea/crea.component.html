@@ -491,7 +491,7 @@
                     <mat-label>Via Primaria</mat-label>
                     <mat-select [(value)]="necromanzie[0].idnecro">
                       @for (tt of listaNecro; track tt) {
-                        <mat-option [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG!.value<'2')">{{tt.nomenecro}}</mat-option>
+                        <mat-option [value]="tt.idnecro">{{tt.nomenecro}}</mat-option>
                       }
                     </mat-select>
                   </mat-form-field>
