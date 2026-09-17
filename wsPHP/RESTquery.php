@@ -47,7 +47,7 @@ if ( $idutente == "") {
 
 
 
-$MySql = "SELECT idutente, nomeplayer, nomepg, clan.nomeclan, personaggio.generazione, lineedisangue.nomelds, forza,
+$MySql = "SELECT idutente, nomeplayer, nomepg, clan.nomeclan, personaggio.generazione, lineedisangue.nomelds, forza, PScorrenti,
 	destrezza, attutimento, carisma, persuasione, saggezza, prontezza, intelligenza, fdv, fdvmax, statuscama.status , sentieri.sentiero , valsentiero, fama1, fama2, fama3, rifugio, zona, personaggio.bloodp, cronaca.Descrizione 
 	FROM personaggio
 	LEFT JOIN clan ON personaggio.idclan=clan.idclan
