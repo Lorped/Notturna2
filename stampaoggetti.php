@@ -1,26 +1,12 @@
-<?php
 
-	include 'db_start.inc.php';
-
-
-include('phpqrcode/qrlib.php');
-
-/***
-	if (!isset ($_SESSION['idutente'])) {
-		//die ("Errore, nessuna sessione attiva!");
-		session_write_close();
-		header("Location: index.php", true);
-	}
-*******/
-?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Notturna - Cronaca di Roma</title>
+	<title>ICUgest</title>
 	<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
-	<!-- <link href="w3.css" rel="stylesheet" > -->
+	<!-- <link href="w3.css" rel="stylesheet" >  -->
 	<style>
 		/*	table td {
 			border: 1px solid red;
@@ -87,7 +73,7 @@ include('phpqrcode/qrlib.php');
 			margin: 0;
 		}
 		.list {
-    		width: 198px;
+    		width: 320px;
     		/* height: 1061px; */
     		display: inline-block;
     		line-height: 1;
@@ -136,82 +122,78 @@ include('phpqrcode/qrlib.php');
 	<div class="list-align" style="display: block;" >
 
 <?php
-			$Mysql="SELECT * FROM oggetti order by idoggetto";
-			$Result=mysqli_query($db, $Mysql);
-			while ($res=mysqli_fetch_array( $Result)) {
-				if ($res['fissomobile']=="M") {
-					$colore='rosso';
+
+
+		require_once __DIR__ . '/../ionicPHP/db2.inc.php';
+
+
+		include('../phpqrcode2/lib/full/qrlib.php');
+
+
+
+		$Mysql="SELECT * FROM oggetti";
+		$Result=mysqli_query($db, $Mysql);
+		while ($res=mysqli_fetch_array($Result)) {
+
+
+			$text=(string)$res['barcode'];
+			$tt=$text;
+
+			$id=$res['idoggetto'];
+
+			//$tipo=$res['fissomobile'];
+
+			$tipo='mobile';
+
+			if ($res['fissomobile']=="M") {
+					$tipo='mobile';
 				} else if ($res['fissomobile']=="F" ){
-					$colore='blu';
+					$tipo='fisso';
 				} else if ($res['fissomobile']=="U" ){
-					$colore='verde';
+					$tipo='utente';
 				} else if ($res['fissomobile']=="C" ){
-					$colore='nero';
+					$tipo='celate';
 				} else if ($res['fissomobile']=="E" ){
-					$colore='esterno';
-				}
-				if ($res['fissomobile']!="E") {
-					$text=(string)$res['barcode'];
-					$tt=$text;
-				} else {
-					$tt=(string)$res['barcode'];
-					$text='https://www.facebook.com/NotturnaCronacadiRoma/#/'.(string)$res['barcode'];
-					$text='https://www.lucisaps.com/IlCastelloDellaFollia/#/'.(string)$res['barcode'];
+					$tipo='mobile';
 				}
 
-				$id=$res['idoggetto'];
 
-				$Mysql2="SELECT max(valcond) as m from cond_oggetti WHERE idoggetto=$id AND tipocond='D' AND tabcond=17";
-				$Result2=mysqli_query($db, $Mysql2);
-				$res2=mysqli_fetch_array($Result2);
-				$pot=$res2['m'];
-				$Mysql2="SELECT max(valcond) as m from cond_oggetti WHERE idoggetto=$id AND tipocond='D' AND tabcond=15";
-				$Result2=mysqli_query($db, $Mysql2);
-				$res2=mysqli_fetch_array($Result2);
-				$vel=$res2['m'];
-				$Mysql2="SELECT max(valcond) as m from cond_oggetti WHERE idoggetto=$id AND tipocond='D' AND tabcond=12";
-				$Result2=mysqli_query($db, $Mysql2);
-				$res2=mysqli_fetch_array($Result2);
-				$rob=$res2['m'];
+			$src ='./img/'.$tipo.'.png';
 
 
-				//QRcode::png($text);
-				$tempDir =  "/web/htdocs/www.roma-by-night.it/home/notturna/tmp/";
-				$filename=$tempDir."QR".$tt.".png";
+			//QRcode::png($text);
+			$tempDir =  "/web/htdocs/www.roma-by-night.it/home/notturna/tmp/";
+			$filename=$tempDir."QR".$tt.".png";
 
-				if ($res['fissomobile']=="E") {
-					QRcode::png($text, $filename, QR_ECLEVEL_H);
-				} else {
-					QRcode::png($text, $filename, QR_ECLEVEL_Q);
-				}
+			// QRcode::png($text, $filename, QR_ECLEVEL_H);
+
+			//QRcode::png($text, $filename, QR_ECLEVEL_Q);
+
+			$saveToFile = false;
+			$saveToFile=$tempDir."QR".$tt.".svg";
+    	$imageWidth = 90; // px
+			//$width      = false; // auto calculated
+    	$size       = false;
+    	$margin     = 1; 
+			QRcode::svg($text, 'id-of-svg', $saveToFile, QR_ECLEVEL_Q, $imageWidth, $size, $margin  );
+
+			$fileexternal = "https://www.roma-by-night.it/notturna/tmp/QR".$tt.".svg";
 
 ?>
 
-			<div class="list<?= $res['fissomobile']=='E'?'esterno':'' ?>">
-				<img src='img/cart_<?=$colore?>.png' class="bg-image" id="pg1">
+			<div class="list" style="border: 1px solid #000;">
 
-				<div class="list-inner<?= $res['fissomobile']=='E'?'esterno':'' ?>">
-				<span style="font-size: 6pt; ">CARTELLINO OGGETTO NUMERO <?= $res['idoggetto'] ?> </span><br> <img src='tmp/QR<?=$tt?>.png' >
+				<img src='<?=$src?>' class="bg-image" id="pg1">
 
-				<?php if ($pot!='') { ?>
-					<div style="font-size: 8pt;">POTENZA <?= $pot ?> </div>
-				<?php }
-				  if ($rob!='') { ?>
-					<div style="font-size: 8pt;">ROBUSTEZZA <?= $rob ?> </div>
-				<?php }
-				   if ($vel!='') { ?>
-					<div style="font-size: 8pt;">VELOCITA' <?= $vel ?> </div>
-				<?php }
-				   if ($res['fissomobile']=='C') { ?>
-					<div style="font-size: 8pt;">CELARE </div>
-				<?php } ?>
+				<div class="list-inner" style="padding-top: 10px;">
+				<!--  <span style="font-size: 6pt; margin-left: 120px;"> <?=$id?> </span><br> <img src='../tmp/QR<?=$tt?>.png' style="width: 80px;height: 80px;margin-left: 34px;padding-top: 2px;"> -->
+				<span style="font-size: 6pt; margin-left: 160px;">Cartellino <?=$id?> </span><br> <img src='<?=$fileexternal?>' style="margin-left: 130px;padding-top: 2px;">
+
 				</div>
 			</div>
 <?php
 			}
 ?>
-
-
 
 	</div>
 </body>
