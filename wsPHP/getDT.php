@@ -16,27 +16,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	exit(0);
 }
 
-include ('db2.inc.php'); //MYSQLI//
+require_once __DIR__.'/db2.inc.php'; //MYSQLI//
 
 $idutente = $_GET['idutente'];
 
 
 
-	$MySql = "SELECT bio, note,  notemaster FROM personaggio
+	$MySql = "SELECT IDcronaca, idclan FROM personaggio
 			WHERE  idutente = $idutente ";
 	$Result = mysqli_query($db, $MySql);
-
 	$res = mysqli_fetch_array ($Result);
 
-	$bio = $res['bio'];
-	$note = $res['note'];
-	$notemaster = $res['notemaster'];
+	$IDcronaca = $res['IDcronaca'];
+	$idclan = $res['idclan'];
+
+	$Mysql = "SELECT linkurl FROM obiettivi WHERE IDcronaca = $IDcronaca AND idclan = $idclan";
+	$Result = mysqli_query($db, $Mysql);
+	$res = mysqli_fetch_array ($Result);
+	$linkurl = $res['linkurl'];
 
 
 	$out = [
-		'bio' => $bio,
-		'note' => $note,
-		'notemaster' => $notemaster
+		'linkurl' => $linkurl
 	];
 
 

@@ -29,7 +29,6 @@ export class BioComponent implements OnInit {
       (data: any) => {
         this.bio.setValue( data.bio );
         this.annotazioni.setValue( data.note );
-        this.urlDT.setValue( data.urldt );
       }
     );
 
@@ -37,15 +36,13 @@ export class BioComponent implements OnInit {
 
   aggiornaBio() {
 
-    this.schedaservice.putbio ( this.idutente , this.bio.value , this.annotazioni.value , this.urlDT.value)
+    this.schedaservice.putbio ( this.idutente , this.bio.value , this.annotazioni.value )
     .subscribe(
       (data: any) => {
         this.bio!.markAsPristine();
         this.annotazioni!.markAsPristine();
-        this.urlDT.markAsPristine();
         this.bio!.markAsUntouched();
         this.annotazioni!.markAsUntouched();
-        this.urlDT.markAsUntouched();
       }
     );
 

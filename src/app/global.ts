@@ -47,7 +47,6 @@ export class Basicpg {
   public maxdisc = 0 ; //da LEFT JOIN
 
   public bane = 0 ;
-  public urldt = '';
   public contanti = 0 ;
 
   public maxstat = 0 ; // from LEFT JOIN

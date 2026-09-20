@@ -2,8 +2,8 @@
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 62.149.150.60:3306
--- Creato il: Ago 29, 2026 alle 21:05
+-- Host: 89.46.68.60:3306
+-- Creato il: Set 20, 2026 alle 01:31
 -- Versione del server: 5.0.96-community-log
 -- Versione PHP: 8.0.7
 
@@ -31,7 +31,7 @@ CREATE TABLE `alleati` (
   `idalleato` int(11) NOT NULL,
   `idutente` int(11) NOT NULL,
   `livello` int(11) NOT NULL,
-  `nomealleato` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
+  `nomealleato` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `tipologia` int(11) NOT NULL DEFAULT '77'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -124,7 +124,7 @@ CREATE TABLE `contatti` (
   `idcontatto` int(11) NOT NULL,
   `idutente` int(11) NOT NULL,
   `livello` int(11) NOT NULL,
-  `nomecontatto` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
+  `nomecontatto` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `tipologia` int(11) NOT NULL DEFAULT '7'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -340,8 +340,21 @@ CREATE TABLE `necromanzie2` (
 CREATE TABLE `necromanzie_main` (
   `idnecro` int(11) NOT NULL,
   `nomenecro` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `tipologia` int(11) NOT NULL DEFAULT '3'
+  `tipologia` int(11) NOT NULL DEFAULT '3',
+  `clanesclusivo` int(11) NOT NULL DEFAULT '11'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `obiettivi`
+--
+
+CREATE TABLE `obiettivi` (
+  `idclan` int(11) NOT NULL,
+  `IDcronaca` int(11) NOT NULL,
+  `linkurl` varchar(128) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -417,7 +430,6 @@ CREATE TABLE `personaggio` (
   `zona` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `notemaster` text COLLATE utf8_unicode_ci,
   `bloodp` int(11) NOT NULL,
-  `urldt` varchar(240) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nummaesta` int(11) NOT NULL,
   `lastmaesta` timestamp NOT NULL DEFAULT '1999-12-31 23:00:00',
   `contanti` int(11) NOT NULL DEFAULT '0',
@@ -482,6 +494,17 @@ CREATE TABLE `pregidifetti_main` (
   `classe` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
   `parattr` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `parvalore` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `prestampa`
+--
+
+CREATE TABLE `prestampa` (
+  `idoggetto` int(11) NOT NULL,
+  `quantita` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -690,7 +713,6 @@ ALTER TABLE `alleati`
   ADD PRIMARY KEY (`idalleato`),
   ADD KEY `idutente` (`idutente`);
 
-
 --
 -- Indici per le tabelle `background`
 --
@@ -827,6 +849,12 @@ ALTER TABLE `necromanzie2`
 --
 ALTER TABLE `necromanzie_main`
   ADD PRIMARY KEY (`idnecro`);
+
+--
+-- Indici per le tabelle `obiettivi`
+--
+ALTER TABLE `obiettivi`
+  ADD UNIQUE KEY `idclan` (`idclan`,`IDcronaca`);
 
 --
 -- Indici per le tabelle `oggetti`

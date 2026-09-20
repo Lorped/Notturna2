@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
-import { Oggetto, Condizione, FullOggetto, GlobalStatus, Cronaca} from '../global';
+import { FullOggetto, GlobalStatus, Cronaca} from '../global';
 import { Router, NavigationExtras } from '@angular/router';
 /* import { FormControl, FormGroup, Validators } from '@angular/forms'; */
 
@@ -123,7 +123,8 @@ export class OggettiComponent implements OnInit {
   }
 
   stampa(){
-    window.open( 'https://www.roma-by-night.it/notturna/stampaoggetti.php', '_blank');
+    this.router.navigate(['/prestampa']);
+    //window.open( 'https://www.roma-by-night.it/notturna/stampaoggetti.php', '_blank');
   }
 
   modifica(id: number, item: FullOggetto){

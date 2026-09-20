@@ -76,6 +76,7 @@ import { RubricaComponent } from './rubrica/rubrica.component';
 import { EventiComponent } from './eventi/eventi.component';
 import { RisorseComponent } from './risorse/risorse.component';
 import { LogpxadmComponent } from './logpxadm/logpxadm.component';
+import { PrestampaComponent } from './prestampa/prestampa.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -107,7 +108,8 @@ import { LogpxadmComponent } from './logpxadm/logpxadm.component';
         RubricaComponent,
         EventiComponent,
         RisorseComponent,
-        LogpxadmComponent
+        LogpxadmComponent,
+        PrestampaComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

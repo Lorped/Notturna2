@@ -1,0 +1,89 @@
+<div>
+  <p>
+    <mat-toolbar>
+      <button mat-icon-button class="example-icon" aria-label="menu" (click)="sidenav.toggle()" >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span style="font-family:delphian; font-size:1.2em;">NOTTURNA - YOUNG BLOOD</span>
+    </mat-toolbar>
+  </p>
+</div>
+
+<mat-sidenav-container>
+  <mat-sidenav class="sidenav" #sidenav mode="side"  >
+    <app-sideadm></app-sideadm>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+    <div class="container" style="width: 80%; margin-top: 1em;">
+
+      <mat-card>
+        <mat-card-title class="column" style="font-size: 1.2em; font-weight: 500;">
+            Selezione oggetti per la stampa
+        </mat-card-title>
+        <mat-card-content>
+
+          <div class="columns">
+            <div class="column">
+              <span style="font-size: 1.1em;">Filtra per Cronaca &nbsp;</span>
+
+              <mat-chip-listbox aria-label="Cronache"></mat-chip-listbox>
+              @for (item of listacronache; track $index) {
+
+                  <mat-chip-option (click)="filterByCronaca(item.idcronaca)" [selected]="selectedCronache.includes(+item.idcronaca)" style="margin-left: 5px; margin-bottom: 5px;">
+                    <mat-chip color="primary" selected>{{item.descrizione}}</mat-chip>
+                  </mat-chip-option>
+
+              }
+            </div>
+          </div>
+
+        <div class="columns">
+            <div class=column>
+              <button  mat-raised-button class="large" color="primary" [disabled]="!almenoUnoSelezionato || !selezionatiValidi" (click)="stampa()" style="width: 100%;">Stampa Oggetti</button>
+            </div>
+          </div>
+
+          
+
+          <div><hr></div>
+
+          <table class="prestampa-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th style="text-align: left; width: 10%">
+                  <mat-checkbox [checked]="tuttiSelezionati" (change)="toggleSelezionaTutti()"></mat-checkbox>
+                </th>
+                <th style="text-align: left; width: 10%">ID.</th>
+                <th style="text-align: left; width: 60%">Nome Oggetto</th>
+                <th style="text-align: left; width: 20%">Quantità</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (riga of displayedRighe; track riga) {
+                <tr>
+                  <td>
+                    <mat-checkbox [(ngModel)]="riga.selezionato" (change)="aggiornaTuttiSelezionati()"></mat-checkbox>
+                  </td>
+                  <td>{{riga.IDoggetto}}</td>
+                  <td>{{riga.nomeoggetto}}</td>
+                  <td>
+                    <mat-form-field appearance="fill" style="width: 80px;">
+                      <input matInput type="number" min="1" max="10" [disabled]="!riga.selezionato" [(ngModel)]="riga.quantita">
+                    </mat-form-field>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+
+          </mat-card-content>
+        </mat-card>
+
+
+
+      </div>
+
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>

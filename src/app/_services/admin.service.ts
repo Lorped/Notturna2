@@ -140,5 +140,8 @@ export class AdminService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getlistcronache.php' );
   }
 
+  prestampa(prestampa: any) {
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/prestampa.php', prestampa);
+  }
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {  Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, Influenze} from '../global';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
   interface ListaDisciplineVie  {
     disc_vie: string; // D o V
@@ -202,12 +203,11 @@ export class SchedaService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getbio.php'+'?idutente='+idutente );
   }
 
-  putbio(idutente: number , bio: string, note: string , urldt: string ) {
+  putbio(idutente: number , bio: string, note: string  ) {
     return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putbio.php',{
       idutente: idutente,
       bio: bio,
       note: note,
-      urldt: urldt
     });
   }
 
@@ -446,5 +446,9 @@ export class SchedaService {
       iddisciplina: iddisciplina,
       change: change
     });
+  }
+
+  getDT(idutente: number) {
+    return this.http.get<any>(`https://www.roma-by-night.it/Notturna2/wsPHP/getDT.php?idutente=${idutente}`);
   }
 }

@@ -18,46 +18,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); // MYSQLI //
+require_once __DIR__ . '/db2.inc.php'; //MYSQL //
 
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-$idutente = $request -> idutente;
-$bio = $request -> bio;
-$note = $request -> note;
 
-//$nome = "lorenzo";
-//$password = "";
-//$postdata = 1;
+$prestampa = $request ;
+
+$Mysql = "delete from prestampa";
+$Result = mysqli_query($db, $Mysql);
 
 
-if ( isset($postdata) && $idutente != "" ) {
-
-  $bio = mysqli_real_escape_string ($db, $bio);
-  $note = mysqli_real_escape_string ($db, $note);
 
 
-  $MySql = "UPDATE  personaggio SET bio = '$bio' ,  note = '$note'
-    WHERE idutente = $idutente ";
-  $Result = mysqli_query($db, $MySql);
+if ( isset($postdata) && !empty($prestampa) ) {
 
-  if (mysqli_errno($db)) {
-    header("HTTP/1.1 403 Forbidden");
-    die($MySql);
+  foreach ($prestampa as $pres) {
+    $idoggetto = $pres -> IDoggetto;
+    $quantita = $pres -> quantita;
 
-  } else {
-
-      header("HTTP/1.1 200 OK");
-
-      $out = "OK";
-      $out = json_encode ($out, JSON_UNESCAPED_UNICODE);
-      echo $out;
-
+    $MySql = "INSERT INTO prestampa (idoggetto, quantita)
+      VALUES ( $idoggetto, $quantita ) ";
+    $Result = mysqli_query($db, $MySql);
   }
 
+  
 
+
+  header("HTTP/1.1 200 OK");
+
+  $out = "OK";
+  $out = json_encode ($out, JSON_UNESCAPED_UNICODE);
+  echo $out;
 
 } else {
 	header("HTTP/1.1 401 Unauthorized");
