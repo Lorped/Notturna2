@@ -1224,7 +1224,7 @@ export class CreaComponent implements OnInit {
       this.SOMMAOCC += element.livello;
     });
     this.SOMMASCI =0;
-    this.SOMMASCI = this.skill[4].livello;
+    this.SOMMASCI = this.skill[5].livello;
     this.skill[5].subskill2.forEach(element => {
       this.SOMMASCI += element.livello;
     });
