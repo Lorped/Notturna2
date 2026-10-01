@@ -11,8 +11,8 @@ import { SchedaService } from '../_services/index';
 export class SidexComponent implements OnInit {
 
   idutente = 0 ;
-  mybadge = '' ;
-  mybadge2 = '' ;
+  mybadge = 0 ;
+  mybadge2 = 0 ;
   ingate = true ;
 
   constructor(private schedaservice: SchedaService) { }
@@ -27,13 +27,13 @@ export class SidexComponent implements OnInit {
     this.schedaservice.checkpoteri(this.idutente).
     subscribe (
       data => {
-        this.mybadge = String(data);
+        this.mybadge = data;
       }
     );
     this.schedaservice.checkavanzamenti(this.idutente).
     subscribe (
       data => {
-        this.mybadge2 = String(data);
+        this.mybadge2 = data;
       }
     );
   }

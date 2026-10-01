@@ -11,8 +11,8 @@ import { SchedaService } from '../_services/index';
 export class MainComponent implements OnInit {
 
   idutente = 0 ;
-  mybadge = '' ;
-  mybadge2 = '' ;
+  mybadge = 0 ;
+  mybadge2 = 0 ;
 
   constructor(private schedaservice: SchedaService) { }
 
@@ -20,15 +20,13 @@ export class MainComponent implements OnInit {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
 
     this.schedaservice.checkpoteri(this.idutente).
-    subscribe (
-      data => {
-        this.mybadge = String(data);
+    subscribe ( (data) => {
+        this.mybadge = Number(data);
       }
     );
     this.schedaservice.checkavanzamenti(this.idutente).
-    subscribe (
-      data => {
-        this.mybadge2 = String(data);
+    subscribe ( (data) => {
+        this.mybadge2 = Number(data);
       }
     );
 

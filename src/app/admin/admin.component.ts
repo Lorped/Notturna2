@@ -20,8 +20,8 @@ export class AdminComponent implements OnInit {
 
   listapg: Array<unPg> = [];
   listacronache: Array<Cronaca> = [];
-  selectedPG = '';
-  cronacaprincipale = '';
+  selectedPG = 0;
+  cronacaprincipale = 0;
 
 
   chanceMform = new UntypedFormGroup ({
@@ -43,10 +43,10 @@ export class AdminComponent implements OnInit {
 
     // console.log(this.globalstatus);
     if (this.globalstatus.lastpg != 0 ){
-      this.selectedPG = String( this.globalstatus.lastpg);
+      this.selectedPG =  this.globalstatus.lastpg;
     }
     if (this.globalstatus.cronacaprincipale != 0 ){
-      this.cronacaprincipale = String( this.globalstatus.cronacaprincipale);
+      this.cronacaprincipale =  this.globalstatus.cronacaprincipale;
     }
 
     this.adminservice.getlistcronache().subscribe(

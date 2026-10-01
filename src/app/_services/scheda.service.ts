@@ -57,10 +57,10 @@ export class SchedaService {
   }
 
   checkpoteri(idutente: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/checkpoteri.php'+'?idutente='+idutente );
+    return this.http.get<number>('https://www.roma-by-night.it/Notturna2/wsPHP/checkpoteri.php'+'?idutente='+idutente );
   }
   checkavanzamenti(idutente: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/checkavanzamenti.php'+'?idutente='+idutente );
+    return this.http.get<number>('https://www.roma-by-night.it/Notturna2/wsPHP/checkavanzamenti.php'+'?idutente='+idutente );
   }
 
   getpoteri(idutente: number) {

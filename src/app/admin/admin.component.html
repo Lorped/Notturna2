@@ -36,7 +36,7 @@
       </div>
 
       <div class="column is-3">
-        <a routerLink="/personaggio/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+        <a routerLink="/personaggio/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG===0}">
           <mat-card class="movable">
             <mat-card-content class="all">
               <i class="fa fa-user-circle"></i> Vedi la scheda
@@ -46,7 +46,7 @@
       </div>
 
       <div class="column is-3">
-        <a routerLink="/adminbg/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+        <a routerLink="/adminbg/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG===0}">
           <mat-card class="movable">
             <mat-card-content class="all">
               <i class="fa fa-plus-square"></i> Modifica Background
@@ -70,7 +70,7 @@
       </div>
 
       <div class="column is-3">
-        <a routerLink="/risorse/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+        <a routerLink="/risorse/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG===0}">
           <mat-card class="movable">
             <mat-card-content class="all">
               <i class="fa fa-money"></i> Gestisci Risorse
@@ -80,7 +80,7 @@
       </div>
 
       <div class="column is-3">
-        <a routerLink="/logpxadm/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG==''}">
+        <a routerLink="/logpxadm/{{selectedPG}}" [ngClass]="{'isdisabled': selectedPG===0}">
           <mat-card class="movable">
             <mat-card-content class="all">
               <i class="fa fa-list-ul"></i> Verifica Avanzamenti e Modifiche Extra

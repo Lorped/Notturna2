@@ -10,12 +10,12 @@ import {GlobalStatus} from '../global';
 })
 export class SideadmComponent implements OnInit {
 
-  selectedPG = '';
+  selectedPG = 0;
 
   constructor(private globalstatus: GlobalStatus) { }
 
   ngOnInit(): void {
-    this.selectedPG = String(this.globalstatus.lastpg);
+    this.selectedPG = this.globalstatus.lastpg;
   }
 
 }
