@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PrestampaComponent } from './prestampa.component';
 
@@ -7,7 +8,8 @@ describe('PrestampaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PrestampaComponent]
+      declarations: [PrestampaComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
 

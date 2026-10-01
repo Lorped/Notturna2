@@ -1,6 +1,9 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { AdminbgComponent } from './adminbg.component';
+import { TimesPipe } from '../times.pipe';
 
 describe('AdminbgComponent', () => {
   let component: AdminbgComponent;
@@ -8,7 +11,9 @@ describe('AdminbgComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminbgComponent ]
+      declarations: [ AdminbgComponent, TimesPipe ],
+      providers: [provideRouter([])],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

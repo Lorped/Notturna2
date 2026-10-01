@@ -4,14 +4,14 @@ import { GlobalStatus, Cronaca } from '../global';
 
 
 export interface FullEV {
-  idutente: string;
+  idutente: number;
   nomeplayer: string;
   nomepg: string;
   email: string;
   eventi: number;
   xp: number;
   eventodata: string;
-  saldo: boolean;
+  saldo: boolean | number;
   IDcronaca: number;
   Cronaca: string;
 }
@@ -50,7 +50,7 @@ export class EventiComponent implements OnInit {
       (data: any) => {
         this.fulleventi = data;
         this.fulleventi.forEach(element => {
-          element.saldo = ( element.saldo.toString() == "1" )
+          element.saldo = Number(element.saldo) === 1;
           element.eventi = Number(element.eventi);
           element.xp = Number(element.xp);
         });
@@ -135,13 +135,16 @@ export class EventiComponent implements OnInit {
     });
   }
 
-  checkpay (id:string) {
+  checkpay(id: number) {
     console.log ( "on-off ", id);
-    this.adminservice.cambiasaldo( Number(id) )
+    this.adminservice.cambiasaldo(id)
     .subscribe(
       (data:any) => {
         // console.log(data);
-        this.fulleventi.filter(obj => obj.idutente == id)[0].saldo = (data == "1") ;
+        const evento = this.fulleventi.find(obj => obj.idutente === id);
+        if (evento) {
+          evento.saldo = data === '1';
+        }
         //console.log (this.fulleventi.filter(obj => obj.idutente == id)[0] );
       }
     )

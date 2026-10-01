@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
 import { Lds, Cronaca, Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Pregio} from '../global';
-import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
 
@@ -54,7 +54,7 @@ export class CreaComponent implements OnInit {
   ];
   lds = 0;
 
-  cronacaPG = 1;   /* 1 = Lazio , 2 = xxx */
+  cronacaPG = 0;
   listacronache: Array<Cronaca> = [];
 
   focusOK= false;
@@ -321,9 +321,99 @@ export class CreaComponent implements OnInit {
       return this.creaForm.get('zona');
   }
 
+  onStepSelectionChange(event: StepperSelectionEvent) {
+    if (event.selectedIndex >= event.previouslySelectedIndex) {
+      return;
+    }
+
+    switch (event.selectedIndex) {
+      case 0:
+        this.lds = 0;
+        this.ldsOK = false;
+        this.bonusbg = 0;
+        this.bonusskill = 0;
+        this.resetbackground();
+        this.resetBackgroundDetails();
+        break;
+      case 1:
+        this.resetbackground();
+        this.resetBackgroundDetails();
+        this.setbg_lds();
+        break;
+      case 2:
+        this.resetattr();
+        this.setaattr_lds();
+        this.resetDisciplineChoices();
+        this.resetSkillChoices();
+        break;
+      case 3:
+        this.resetDisciplineChoices();
+        this.resetSkillChoices();
+        break;
+      case 4:
+        this.resetSkillChoices();
+        break;
+      case 5:
+        this.resetFinalChoices();
+        return;
+      default:
+        return;
+    }
+
+    this.resetFinalChoices();
+    this.checkattr();
+    this.checkDisc();
+    this.checkSkill();
+    this.checkpregi();
+  }
+
+  resetBackgroundDetails() {
+    this.cont.forEach(element => {
+      element.livello = 0;
+      element.nomecontatto = '';
+    });
+    this.sommaCont = 0;
+    this.maxCont = 0;
+    this.alleati.forEach(element => {
+      element.livello = 0;
+      element.nomealleato = '';
+    });
+    this.sommaAlleati = 0;
+    this.maxAlleati = 0;
+  }
+
+  resetDisciplineChoices() {
+    this.resetdiscipline();
+    this.setdiscipline_lds();
+  }
+
+  resetSkillChoices() {
+    this.reset_skill();
+    this.setskill_lds();
+  }
+
+  resetFinalChoices() {
+    this.new_p = 0;
+    this.new_d = 0;
+    this.valorePregioDifetto = 0;
+    this.selectedFocusIndex = -1;
+    this.focusOK = false;
+    this.cronacaOK = false;
+    this.cronacaPG = 0;
+    this.listaDisciplineVie.forEach(item => item.focus = 0);
+  }
+
+  isFinalCheckValid(): boolean {
+    return this.valorePregioDifetto <= 0 && this.focusOK &&
+      Number.isInteger(this.selectedFocusIndex) &&
+      this.selectedFocusIndex >= 0 &&
+      this.selectedFocusIndex < this.listaDisciplineVie.length &&
+      this.cronacaOK;
+  }
+
   changestatus() {
     //console.log("changestatus: " + this.statusPG!.value);
-    switch (this.statusPG!.value) {
+    switch (String(this.statusPG!.value)) {
       case '0':
         this.maxBG = 5;
         this.numDisc = 4;
@@ -617,7 +707,7 @@ export class CreaComponent implements OnInit {
 
   changeclan(){
     // console.log("changeclan: " + this.clanPG!.value);
-    switch (this.clanPG!.value) {
+    switch (String(this.clanPG!.value)) {
       case '1':   //  Toreador
         this.discipline[0].iddisciplina = 2;          // Ascendente
         this.discipline[1].iddisciplina = 3;          // Auspex
@@ -972,6 +1062,13 @@ export class CreaComponent implements OnInit {
   }
 
   setFocusItem(index: number) {
+    if (!Number.isInteger(index) || index < 0 || index >= this.listaDisciplineVie.length) {
+      this.selectedFocusIndex = -1;
+      this.listaDisciplineVie.forEach(item => item.focus = 0);
+      this.focusOK = false;
+      return;
+    }
+
     this.selectedFocusIndex = index;
     this.listaDisciplineVie.forEach((item, idx) => {
       item.focus = idx === index ? 1 : 0;
@@ -1032,7 +1129,8 @@ export class CreaComponent implements OnInit {
 
  onCronacaChange(val: number) {
     this.cronacaPG = val;
-    this.cronacaOK = true;
+    this.cronacaOK = Number.isInteger(val) &&
+      this.listacronache.some(cronaca => cronaca.idcronaca === val);
   }
 
 
@@ -1377,7 +1475,7 @@ export class CreaComponent implements OnInit {
   */
 
   resetdiscipline(){
-    switch (this.clanPG!.value) {
+    switch (String(this.clanPG!.value)) {
       case '1':   //  Toreador
         this.discipline[0].iddisciplina = 2;          // Ascendente
         this.discipline[1].iddisciplina = 3;          // Auspex
@@ -1519,6 +1617,7 @@ export class CreaComponent implements OnInit {
     // RESET Discipline pr evitare problemi
 
     for ( let j = 0; j < 3 ; j++) {
+      this.discipline[j].iniziale = 0;
       this.discipline[j].livello = 0;
 
       this.taumaturgie[j].livello = 0;
@@ -1606,7 +1705,7 @@ export class CreaComponent implements OnInit {
     }
     this.sommaBG = 0 ;
     this.bgOK = false;
-    this.changeGen(0);
+    this.changeGen(this.is14 ? -1 : 0);
   }
 
   resetlivellodiscipline() {
@@ -1804,6 +1903,7 @@ export class CreaComponent implements OnInit {
   reset_skill() {
     //console.log("reset_skill");
     for (let j = 0; j < this.skill.length; j++ ) {
+      this.skill[j].iniziale = 0;
       this.skill[j].livello = 0;
       for (let k = 0; k < this.skill[j].subskill2.length; k++ ) {
         this.skill[j].subskill2[k].livello = 0;

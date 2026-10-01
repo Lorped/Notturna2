@@ -16,11 +16,11 @@
   <mat-sidenav-content>
 
 
-    <mat-horizontal-stepper #stepper [linear]="isLinear">
+    <mat-horizontal-stepper #stepper [linear]="isLinear" (selectionChange)="onStepSelectionChange($event)">
 
       <mat-step [stepControl]="creaForm" errorMessage="Campi obbigatori">
         <ng-template matStepLabel>Dati del personaggio e Status iniziale</ng-template>
-        <form id="crea-form" [formGroup]="creaForm"  #formDir="ngForm">
+        <form id="crea-form" [formGroup]="creaForm">
 
           <mat-card >
             <mat-card-content>
@@ -76,7 +76,7 @@
               </mat-checkbox>
 
               <div>
-                <button mat-raised-button matStepperNext color="primary" [disabled]="!formDir.form.valid" >Prosegui</button>
+                <button mat-raised-button matStepperNext color="primary" [disabled]="!creaForm.valid" >Prosegui</button>
               </div>
             </mat-card-content>
 
@@ -712,7 +712,7 @@
           </mat-card>
         </mat-step >
 
-        <mat-step  errorMessage="Distribuzione non corretta" [completed]="(valorePregioDifetto<=0)&&focusOK&&cronacaOK" [hasError]="(!focusOK && valorePregioDifetto>0)">
+        <mat-step errorMessage="Controllare focus, cronaca, pregio e difetto" [completed]="isFinalCheckValid()" [hasError]="valorePregioDifetto > 0 || (focusOK && !cronacaOK)">
           <ng-template matStepLabel>Focus, Pregi/Difetti ecc...</ng-template>
           <mat-card>
             <mat-card-content>
@@ -812,6 +812,7 @@
                 Cronaca di riferimento del vostro Personaggio
               </div>
               <mat-form-field appearance="fill">
+              <mat-label>Cronaca di riferimento</mat-label>
               <mat-select  [(value)]="cronacaPG" (selectionChange)="onCronacaChange($event.value)">
                 @for (i of listacronache; track i) {
                   <mat-option [value]="i.idcronaca">{{i.descrizione}}</mat-option>
@@ -823,7 +824,7 @@
           <mat-card>
             <mat-card-content>
               <div>
-                <button mat-raised-button matStepperNext color="primary" [disabled]="(valorePregioDifetto>0)||!focusOK||!cronacaOK" >Prosegui</button>
+                <button mat-raised-button matStepperNext color="primary" [disabled]="!isFinalCheckValid()" >Prosegui</button>
               </div>
             </mat-card-content>
           </mat-card>

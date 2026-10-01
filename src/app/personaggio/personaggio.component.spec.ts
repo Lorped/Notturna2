@@ -1,6 +1,10 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { PersonaggioComponent } from './personaggio.component';
+import { TimesPipe } from '../times.pipe';
+import { NonecrotaumPipe } from '../nonecrotaum.pipe';
 
 describe('PersonaggioComponent', () => {
   let component: PersonaggioComponent;
@@ -8,7 +12,9 @@ describe('PersonaggioComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PersonaggioComponent ]
+      declarations: [ PersonaggioComponent, TimesPipe, NonecrotaumPipe ],
+      providers: [provideRouter([])],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

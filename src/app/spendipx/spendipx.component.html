@@ -669,7 +669,7 @@
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda.fdvmax, 'dred': ix < scheda.fdvmax}"></i>
                       }
                       @if (scheda.fdvmax<10 ) {
-                        <button class="btn btn-xs" (click)="addfdv()" [disabled]="numavanzamenti<1||lock||avanzamento_limitato"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-xs" (click)="addfdv()" [disabled]="numavanzamenti<1||lock"><i class="fa fa-plus"></i></button>
                       }
                     </div>
                   </div>

@@ -26,7 +26,7 @@
           <mat-card-content>
             <hr>
 
-              <form  [formGroup]="emailForm" #formDir="ngForm">
+              <form [formGroup]="emailForm">
                 <div class="columns">
                   <div class="column is-3">
                     <mat-form-field class="full-width-input">
@@ -40,13 +40,13 @@
                     }
                   </div>
                   <div class="column">
-                    <button  mat-raised-button class="large" color="primary" [disabled]="!formDir.form.valid" (click)="changeemail()">Cambia Email</button>
+                    <button mat-raised-button class="large" color="primary" [disabled]="!emailForm.valid" (click)="changeemail()">Cambia Email</button>
                   </div>
                 </div>
               </form>
 
 
-              <form  [formGroup]="pwdForm" #formDir2="ngForm">
+              <form [formGroup]="pwdForm">
                 <div class="columns">
                   <div class="column is-3">
                     <mat-form-field class="full-width-input">
@@ -60,7 +60,7 @@
                     }
                   </div>
                   <div class="column">
-                    <button  mat-raised-button class="large" color="primary" [disabled]="!formDir2.form.valid" (click)="changepwd()">Cambia Password</button>
+                    <button mat-raised-button class="large" color="primary" [disabled]="!pwdForm.valid" (click)="changepwd()">Cambia Password</button>
                   </div>
                 </div>
               </form>

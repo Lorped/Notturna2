@@ -151,7 +151,7 @@
 			} else if ($res['fissomobile']=="U" ){
 				$tipo='utente';
 			} else if ($res['fissomobile']=="C" ){
-				$tipo='celate';
+				$tipo='celare';
 			} else if ($res['fissomobile']=="E" ){
 				$tipo='mobile';
 			}

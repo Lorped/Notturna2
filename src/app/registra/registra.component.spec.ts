@@ -1,4 +1,6 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { RegistraComponent } from './registra.component';
 
@@ -8,7 +10,9 @@ describe('RegistraComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegistraComponent ]
+      declarations: [ RegistraComponent ],
+      imports: [ReactiveFormsModule],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

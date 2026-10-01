@@ -372,7 +372,7 @@ export class FullOggetto {
   public paired: Paired = new Paired() ;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GlobalStatus {
   Last = 0;
   lastpg = 0;

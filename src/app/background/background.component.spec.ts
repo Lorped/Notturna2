@@ -1,6 +1,8 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BackgroundComponent } from './background.component';
+import { TimesPipe } from '../times.pipe';
 
 describe('BackgroundComponent', () => {
   let component: BackgroundComponent;
@@ -8,7 +10,8 @@ describe('BackgroundComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ BackgroundComponent ]
+      declarations: [ BackgroundComponent, TimesPipe ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

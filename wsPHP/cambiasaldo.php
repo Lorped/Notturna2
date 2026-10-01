@@ -24,13 +24,14 @@ include ('db2.inc.php'); //MYSQL //
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-$idutente = $request -> idutente;
+$idutente = $request -> idutente ?? null;
 
 
 
 
 
-if ( isset($postdata) && $idutente != ""  ) {
+if ( isset($postdata) && is_numeric($idutente) && (int)$idutente > 0 ) {
+  $idutente = (int)$idutente;
 
 
   $MySql = "SELECT saldo FROM segreteria WHERE idutente = '$idutente' " ;
@@ -38,7 +39,7 @@ if ( isset($postdata) && $idutente != ""  ) {
 
   $res = mysqli_fetch_array($Result);
 
-  if ( $res['saldo'] == "0") {
+  if ( $res['saldo'] === 0) {
     $new = "1";
   } else {
     $new = "0";
