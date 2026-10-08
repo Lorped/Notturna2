@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GlobalStatus } from '../global';
+
+export interface RigaPrestampa {
+  IDoggetto: number;
+  IDcronaca: number;
+  nomeoggetto: string;
+  selezionato: boolean;
+  quantita: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor(private http: HttpClient, private globalstatus: GlobalStatus) { }
+  private http = inject(HttpClient);
+  private globalstatus = inject(GlobalStatus);
+
 
 
   getpersonaggio(idcronaca: number) {
@@ -22,8 +32,8 @@ export class AdminService {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getchance.php' );
   }
 
-  putchance(chance: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/putchance.php',{
+  putchance<T>(chance: number) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/putchance.php',{
       chance: chance
     });
   }
@@ -33,13 +43,13 @@ export class AdminService {
   }
 
   cancellaoggetto(idoggetto: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancellaoggetto.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cancellaoggetto.php',{
       idoggetto: idoggetto
     });
   }
 
-  addoggetto(nomeoggetto: string, descrizione: string, fissomobile: string) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addoggetto.php',{
+  addoggetto<T>(nomeoggetto: string, descrizione: string, fissomobile: string) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/addoggetto.php',{
       nomeoggetto: nomeoggetto,
       descrizione: descrizione,
       fissomobile: fissomobile,
@@ -48,19 +58,19 @@ export class AdminService {
   }
 
   cambiaogg(idoggetto: number, nomeoggetto: string, descrizione: string) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changeogg.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/changeogg.php',{
       idoggetto: idoggetto,
       nomeoggetto: nomeoggetto,
       descrizione: descrizione
     });
   } 
 
-  getcondizioni() {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getcondizioni.php' );
+  getcondizioni<T>() {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getcondizioni.php' );
   }
 
-  addcondizione(idoggetto: number, tipocond: string, tabcond: number, valcond: number, descrX: string, risp: string, subskill: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addcondizione.php',{
+  addcondizione<T>(idoggetto: number, tipocond: string, tabcond: number, valcond: number, descrX: string, risp: string, subskill: number) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/addcondizione.php',{
       idoggetto: idoggetto,
       tipocond: tipocond,
       tabcond: tabcond,
@@ -72,13 +82,13 @@ export class AdminService {
   }
 
   cancellacondizione(idcondizione: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancellacondizione.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cancellacondizione.php',{
       idcondizione: idcondizione
     });
   }
 
   adddomanda(idoggetto: number, domanda: string, r1: string, r2: string) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/adddomanda.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/adddomanda.php',{
       idoggetto: idoggetto,
       domanda: domanda,
       r1: r1,
@@ -87,60 +97,60 @@ export class AdminService {
   }
 
   cancdomanda(idoggetto: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancdomanda.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cancdomanda.php',{
       idoggetto: idoggetto
     });
   }
 
   cancpregio(idutente: number, idpregio: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancpregio.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cancpregio.php',{
       idutente: idutente,
       idpregio: idpregio
     });
   }
 
   addpregioadmin(idutente: number, idpregio: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpregioadmin.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/addpregioadmin.php',{
       idutente: idutente,
       idpregio: idpregio
     });
   }
 
-  getfulleventi() {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getfulleventi.php' );
+  getfulleventi<T>() {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getfulleventi.php' );
   }
 
   cambiasaldo(idutente: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cambiasaldo.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cambiasaldo.php',{
       idutente: idutente
     });
   }
 
   cancellapaired(idoggetto: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/cancellapaired.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cancellapaired.php',{
       idoggetto: idoggetto
     });
   }
 
-  getunpaired(idoggetto: number) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/getunpaired.php',{
+  getunpaired<T>(idoggetto: number) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getunpaired.php',{
       idoggetto: idoggetto
     });
   }
 
   addpaired(idoggetto1: number, idoggetto2: number, descrizionePaired: string) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addpaired.php',{
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/addpaired.php',{
       idoggetto1: idoggetto1,
       idoggetto2: idoggetto2,
       descrizionePaired: descrizionePaired
     });
   }
 
-  getlistcronache() {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getlistcronache.php' );
+  getlistcronache<T>() {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getlistcronache.php' );
   }
 
-  prestampa(prestampa: any) {
+  prestampa(prestampa: RigaPrestampa[]) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/prestampa.php', prestampa);
   }
 

@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import {  Rubricaitem } from '../global';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RubricaService {
 
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
-  getrubrica (idutente: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getrubrica.php'+'?idutente='+idutente );
+
+  getrubrica<T>(idutente: number) {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getrubrica.php'+'?idutente='+idutente );
   }
   delrubrica (idrubrica: number) {
     return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/delrubrica.php'+'?idrubrica='+idrubrica );
   }
-  addrubrica ( idutente: number , contatto: string , email:number , cell: number, home:number , note: string ) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/addrubrica.php', {
+  addrubrica<T> ( idutente: number , contatto: string , email:number , cell: number, home:number , note: string ) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/addrubrica.php', {
       idutente: idutente,
       contatto: contatto,
       email: email,
@@ -27,7 +27,7 @@ export class RubricaService {
     });
   }
   changerubrica ( idrubrica: number , contatto: string , cell: number, email:number ,  home:number , note: string ) {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/changerubrica.php', {
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/changerubrica.php', {
       idrubrica: idrubrica,
       contatto: contatto,
       email: email,

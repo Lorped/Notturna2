@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 
-	include ('./db2.inc.php'); //MYSQL//
+	require_once __DIR__ . '/db2.inc.php';  //MYSQLI//
 
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);

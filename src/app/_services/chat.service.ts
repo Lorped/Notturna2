@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GlobalStatus } from '../global';
 
@@ -28,7 +28,7 @@ export class Chatrow {
 
 export class MyChat {
   Statuschat = 0;
-  Listachat: Array<Chatrow> = [];
+  Listachat: Chatrow[] = [];
   Last = 0;
 }
 
@@ -38,15 +38,18 @@ export class MyChat {
 })
 export class ChatService {
 
-  constructor(private http: HttpClient, private globalstatus: GlobalStatus) { }
+  private http = inject(HttpClient);
+  private globalstatus = inject(GlobalStatus);
 
-  getchat() {
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/dadi.php', {
+  
+
+  getchat<T>() {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/dadi.php', {
       last: this.globalstatus.Last
     });
   }
   master2user(destinatario: string, testo:string){
-    return this.http.post<any>('https://www.roma-by-night.it/Notturna2/wsPHP/master2user.php', {
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/master2user.php', {
       destinatario: destinatario,
       testo: testo
     });

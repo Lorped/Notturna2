@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { AdminService } from '../_services/index';
+import { AdminService, RigaPrestampa } from '../_services/index';
 import { FullOggetto, Cronaca } from '../global';
 
-export interface RigaPrestampa {
-  IDoggetto: number;
-  IDcronaca: number;
-  nomeoggetto: string;
-  selezionato: boolean;
-  quantita: number;
-}
+
 
 @Component({
   selector: 'prestampa',
