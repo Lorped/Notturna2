@@ -1,8 +1,64 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
-import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus } from '../global';
-import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
+import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus} from '../global';
+import { UntypedFormControl, Validators } from '@angular/forms';
+import { GetSentiero } from '../_services/scheda.service';
+
+interface GetFama {
+  fama1: number;
+  fama2: number;
+  fama3: number;
+}
+
+interface ContattiAlleati {
+  contatti: Contatti[];
+  alleati: Alleati[];
+}
+
+
+
+interface GetPregioDifetto {
+  pregi: Pregio[];
+  difetti: Pregio[];
+}
+
+interface GetBG {
+  background: Background[];
+}
+
+interface val {
+  idstatus: number;
+  status: string;
+  attivazione: number;
+  bgbase: number;
+  generazione: number;
+}
+interface Passaggio {
+  val_old: val;
+  val_new: val;
+}
+interface GetSkill {
+  skills: Skill[];
+}
+
+interface PregioDifetto {
+  pregi_f: Pregio[];
+  pregi_m: Pregio[];
+  pregi_s: Pregio[];
+  pregi_x: Pregio[];
+  difetti_f: Pregio[];
+  difetti_m: Pregio[];
+  difetti_s: Pregio[];
+  difetti_x: Pregio[];
+}
+
+interface GetPregioDifetto {
+  pregi: Pregio[];
+  difetti: Pregio[];
+}
+
+
 
 @Component({
     selector: 'app-adminbg',
@@ -20,9 +76,9 @@ export class AdminbgComponent implements OnInit {
   fama2 = 0 ;
   fama3 = 0 ;
 
-  listabg: Array<Background> = [];
-  listaContatti: Array<Contatti> = [];
-  listaAlleati: Array<Alleati> = [];
+  listabg: Background[] = [];
+  listaContatti: Contatti[] = [];
+  listaAlleati: Alleati[] = [];
   sommacontatti = 0;
   sommaalleati = 0;
 
@@ -75,28 +131,28 @@ export class AdminbgComponent implements OnInit {
     [ 95, 95, 93, 90, 80, 70, 50 ]
   ];
 
-  listaskill: Array<Skill> = [];
-  listanew: Array<Skill> = [];
+  listaskill: Skill[] = [];
+  listanew: Skill[] = [];
 
-  listasentieri: Array<Sentiero> = [];
-  sentieroPG = '';
-  oldsentieroPG = '';
+  listasentieri: Sentiero[] = [];
+  sentieroPG = 0;
+  oldsentieroPG = 0;
   valsentiero = 0 ;
   fdv = 0;
 
   puntidisponibili = 0;
 
-  pregi: Array<Pregio> = [];
-  difetti: Array<Pregio> = [];
+  pregi: Pregio[] = [];
+  difetti: Pregio[] = [];
 
-  pregi_f: Array<Pregio> = [];
-  pregi_m: Array<Pregio> = [];
-  pregi_s: Array<Pregio> = [];
-  pregi_x: Array<Pregio> = [];
-  difetti_f: Array<Pregio> = [];
-  difetti_m: Array<Pregio> = [];
-  difetti_s: Array<Pregio> = [];
-  difetti_x: Array<Pregio> = [];
+  pregi_f: Pregio[] = [];
+  pregi_m: Pregio[] = [];
+  pregi_s: Pregio[] = [];
+  pregi_x: Pregio[] = [];
+  difetti_f: Pregio[] = [];
+  difetti_m: Pregio[] = [];
+  difetti_s: Pregio[] = [];
+  difetti_x: Pregio[] = [];
 
   new_d_f = '';
   new_d_m = '';
@@ -108,50 +164,42 @@ export class AdminbgComponent implements OnInit {
   new_p_s = '';
   new_p_x = '';
 
+  private globalstatus = inject(GlobalStatus);
+  private adminservice = inject(AdminService);
+  private schedaservice = inject(SchedaService);
+  private route = inject(ActivatedRoute);
 
-  constructor(private globalstatus: GlobalStatus, private adminservice: AdminService, private schedaservice: SchedaService, private route: ActivatedRoute) { }
+
 
   ngOnInit(): void {
     this.idutente = Number ( this.route.snapshot.paramMap.get('id') );
     this.globalstatus.lastpg = this.idutente;
 
-    this.adminservice.getnome(this.idutente).subscribe(
-      (data: any) => {
+    this.adminservice.getnome<string>(this.idutente).subscribe({
+      next: (data: string) => {
         this.nomepg = data;
       }
-    );
+    });
 
-    this.schedaservice.getfama(this.idutente).subscribe(
-      (data: any) => {
-        this.fama1 = Number (data.fama1);
-        this.fama2 = Number (data.fama2);
-        this.fama3 = Number (data.fama3);
-      }
-    );
+    this.schedaservice.getfama<GetFama>(this.idutente).subscribe();
 
-    this.schedaservice.getbg(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getbg<GetBG>(this.idutente).subscribe(
+      (data: GetBG) => {
         this.listabg = data.background;
-
-        for ( const item of this.listabg) {
-          item.livello = Number (item.livello);
-        }
       }
     );
 
-    this.schedaservice.getcontatti(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getcontatti<ContattiAlleati>(this.idutente).subscribe(
+      (data: ContattiAlleati) => {
         this.listaContatti = data.contatti;
         this.listaAlleati = data.alleati;
 
         this.sommacontatti = 0;
         this.sommaalleati = 0;
         for ( const item of this.listaContatti ) {
-          item.livello = Number (item.livello);
           this.sommacontatti += item.livello;
         }
         for ( const item of this.listaAlleati ) {
-          item.livello = Number (item.livello);
           this.sommaalleati += item.livello;
         }
 
@@ -160,11 +208,11 @@ export class AdminbgComponent implements OnInit {
 
 
 
-    this.schedaservice.getsentiero(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getsentiero<GetSentiero>(this.idutente).subscribe(
+      (data: GetSentiero) => {
         this.listasentieri = data.sentieri;
-        this.fdv = Number (data.fdvmax);
-        this.valsentiero = Number (data.valsentiero);
+        this.fdv = data.fdvmax;
+        this.valsentiero = data.valsentiero;
         this.sentieroPG = data.idsentiero;
         this.oldsentieroPG = data.idsentiero;
       }
@@ -173,8 +221,8 @@ export class AdminbgComponent implements OnInit {
     this.caricavalori();
     this.getliste();
 
-    this.schedaservice.getpregi(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getpregi<GetPregioDifetto>(this.idutente).subscribe(
+      (data: GetPregioDifetto) => {
         this.pregi = data.pregi ;
         this.difetti = data.difetti ;
       }
@@ -218,7 +266,7 @@ export class AdminbgComponent implements OnInit {
   minbg(id: number){
     let newlivello = 0 ;
 
-    for ( let item of this.listabg ){
+    for ( const item of this.listabg ){
       if ( item.idback == id){
         item.livello -- ;
         newlivello = item.livello;
@@ -241,12 +289,12 @@ export class AdminbgComponent implements OnInit {
 
   mincon(id: number){
     // console.log (this.listaContatti);
-    for ( let item of this.listaContatti  ) {
+    for ( const item of this.listaContatti  ) {
       if ( item.idcontatto == id ) {
         item.livello -- ;
         this.schedaservice.putcontatti(this.idutente, id , item.livello, 'A')
         .subscribe(
-          (data) => {
+          () => {
             for ( let j = 0 ; j < this.listaContatti.length; j++){
               if (this.listaContatti[j].livello == 0) {
                 this.listaContatti.splice(j, 1);
@@ -264,7 +312,7 @@ export class AdminbgComponent implements OnInit {
         item.livello ++ ;
         this.schedaservice.putcontatti(this.idutente, id, item.livello , 'A')
         .subscribe(
-          (data) => {
+          () => {
             this.sommacontatti ++ ;
           }
         );
@@ -274,12 +322,12 @@ export class AdminbgComponent implements OnInit {
 
   minall(id: number){
     // console.log (this.listaContatti);
-    for ( let item of this.listaAlleati  ) {
+    for ( const item of this.listaAlleati  ) {
       if ( item.idalleato == id ) {
         item.livello -- ;
         this.schedaservice.putalleati(this.idutente, id , item.livello, 'A')
         .subscribe(
-          (data) => {
+          () => {
             for ( let j = 0 ; j < this.listaAlleati.length; j++){
               if (this.listaAlleati[j].livello == 0) {
                 this.listaAlleati.splice(j, 1);
@@ -297,7 +345,7 @@ export class AdminbgComponent implements OnInit {
         item.livello ++ ;
         this.schedaservice.putalleati(this.idutente, id, item.livello , 'A')
         .subscribe(
-          (data) => {
+          () => {
             this.sommaalleati ++ ;
           }
         );
@@ -306,13 +354,13 @@ export class AdminbgComponent implements OnInit {
   }
 
   newcontatto(){
-    let myNew = new Contatti();
+    const myNew = new Contatti();
     myNew.nomecontatto = this.myContatto.value;
     myNew.livello = 1 ;
 
-    this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto, 'A')
+    this.schedaservice.newcontatto<number>(this.idutente, myNew.nomecontatto, 'A')
     .subscribe(
-      (data: any) => {
+      (data: number) => {
 
         myNew.idcontatto = data ;
         this.listaContatti.push(myNew) ;
@@ -322,13 +370,13 @@ export class AdminbgComponent implements OnInit {
     );
   }
   newalleato(){
-    let myNew = new Alleati();
+    const myNew = new Alleati();
     myNew.nomealleato = this.myAlleato.value;
     myNew.livello = 1 ;
 
-    this.schedaservice.newalleato(this.idutente, myNew.nomealleato, 'A')
+    this.schedaservice.newalleato<number>(this.idutente, myNew.nomealleato, 'A')
     .subscribe(
-      (data: any) => {
+      (data: number) => {
 
         myNew.idalleato = data ;
         this.listaAlleati.push(myNew) ;
@@ -350,7 +398,7 @@ export class AdminbgComponent implements OnInit {
 
   cambiastatus() {
     this.schedaservice.cambiastatus(this.idutente, this.listanew).subscribe(
-      (data: any) => {
+      () => {
          this.caricavalori ();
       }
     );
@@ -358,27 +406,21 @@ export class AdminbgComponent implements OnInit {
 
 
   caricavalori() {
-    this.schedaservice.getpassaggiostatus(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getpassaggiostatus<Passaggio>(this.idutente).subscribe(
+      (data: Passaggio) => {
 
-        this.idstatus_old = Number(data.val_old.idstatus);
+        this.idstatus_old = data.val_old.idstatus;
         this.status_old = data.val_old.status;
-        //this.fdv_old = Number(data.val_old.fdvmax);
-        //this.bloodp_old = Number(data.val_old.bloodp);
-        //this.sete_old = Number(data.val_old.sete);
-        this.attivazione_old = Number(data.val_old.attivazione);
-        //this.addbp_old = Number(data.val_old.addbp);
-        //this.fdvbase_old = Number(data.val_old.fdvbase);
-        this.bgbase_old = Number(data.val_old.bgbase);
+        this.attivazione_old = data.val_old.attivazione;
+        this.bgbase_old = data.val_old.bgbase;
 
-        this.bloodpmax = Number(data.val_old.bloodpmax);
-        this.generazione = Number(data.val_old.generazione);
+        this.generazione = data.val_old.generazione;
 
         if ( data.val_new ) {
-          this.idstatus_new = Number(data.val_new.idstatus);
+          this.idstatus_new = data.val_new.idstatus;
           this.status_new = data.val_new.status;
-          this.attivazione_new = Number(data.val_new.attivazione);
-          this.bgbase_new = Number(data.val_new.bgbase);
+          this.attivazione_new = data.val_new.attivazione;
+          this.bgbase_new = data.val_new.bgbase;
 
           let mygen = this.generazione;
           if (this.generazione <8) {
@@ -393,19 +435,13 @@ export class AdminbgComponent implements OnInit {
       }
     );
 
-    this.schedaservice.getskill(this.idutente).subscribe(
-      (data: any) => {
-        this.listaskill = data.skill;
-  
-        for (let item of  this.listaskill) {
-          item.livello = Number (item.livello);
-        }
+    this.schedaservice.getskill<GetSkill>(this.idutente).subscribe(
+      (data: GetSkill) => {
+        this.listaskill = data.skills; 
         this.listanew.length = 0 ;
         this.listaskill.forEach(val => this.listanew.push(Object.assign({}, val)));
-        /* for (let j=0 ; j< this.listanew.length ; j++) {
-          this.listanew[j].livello = 0;
-        } */
-        for (let item of  this.listanew) {
+
+        for (const item of  this.listanew) {
           item.livello = 0;
         }
       }
@@ -415,7 +451,7 @@ export class AdminbgComponent implements OnInit {
   minfdv(){
     this.fdv--;
     this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1 , 'A').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );
@@ -423,7 +459,7 @@ export class AdminbgComponent implements OnInit {
   addfdv(){
     this.fdv++;
     this.schedaservice.putfdvsentiero(this.idutente, this.fdv, -1, 'A').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );
@@ -431,7 +467,7 @@ export class AdminbgComponent implements OnInit {
   minsentiero(){
     this.valsentiero--;
     this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero , 'A').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );
@@ -439,7 +475,7 @@ export class AdminbgComponent implements OnInit {
   addsentiero(){
     this.valsentiero++;
     this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero , 'A').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );
@@ -447,7 +483,7 @@ export class AdminbgComponent implements OnInit {
   changesentiero(){
     this.oldsentieroPG = this.sentieroPG;
     this.schedaservice.newsentiero(this.idutente, this.sentieroPG , 'A').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );
@@ -456,16 +492,16 @@ export class AdminbgComponent implements OnInit {
   riducigen() {
     this.generazione--;
     this.schedaservice.putgen(this.idutente, this.generazione, 'A').subscribe(
-      (data: any) => {
+      () => {
         this.caricavalori();  // cambiano gli skill per il passaggio status
       }
     );
   }
 
   getliste() {
-    this.schedaservice.getpregidifetti(this.idutente)
+    this.schedaservice.getpregidifetti<PregioDifetto>(this.idutente)
     .subscribe(
-      (data: any) => {
+      (data: PregioDifetto) => {
         this.pregi_f = data.pregi_f ;
         this.pregi_m = data.pregi_m ;
         this.pregi_s = data.pregi_s ;
@@ -482,7 +518,7 @@ export class AdminbgComponent implements OnInit {
 
   cancpregio(idpregio: number){
     this.adminservice.cancpregio(this.idutente, idpregio).subscribe(
-      (data) => {
+      () => {
         for ( let j = 0 ; j < this.pregi.length; j++){
           if ( this.pregi[j].idpregio == idpregio) {
             this.pregi.splice(j,1);
@@ -531,7 +567,7 @@ export class AdminbgComponent implements OnInit {
 
     this.adminservice.addpregioadmin(this.idutente, Number(idpregio))
     .subscribe(
-      (data: any) => {
+      () => {
 
         this.new_d_f = '';
         this.new_d_m = '';
@@ -548,16 +584,17 @@ export class AdminbgComponent implements OnInit {
     );
   }
 
+  
 
   getpregi() {
-    this.schedaservice.getpregi(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getpregi<GetPregioDifetto>(this.idutente).subscribe(
+      (data: GetPregioDifetto) => {
         this.pregi = data.pregi ;
         this.difetti = data.difetti ;
       }
     );
   }
-
+  
   
 
 }

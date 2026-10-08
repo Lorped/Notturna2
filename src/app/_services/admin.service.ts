@@ -20,16 +20,16 @@ export class AdminService {
 
 
 
-  getpersonaggio(idcronaca: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpersonaggio.php'+'?idcronaca='+idcronaca  );
+  getpersonaggio<T = Record<string, unknown>>(idcronaca: number) {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getpersonaggio.php'+'?idcronaca='+idcronaca  );
   }
 
-  getnome(idutente: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getnome.php'+'?idutente='+idutente  );
+  getnome<T>(idutente: number) {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getnome.php'+'?idutente='+idutente  );
   }
 
-  getchance() {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getchance.php' );
+  getchance<T = string>() {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getchance.php');
   }
 
   putchance<T>(chance: number) {

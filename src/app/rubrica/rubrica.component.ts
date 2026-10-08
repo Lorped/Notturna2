@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RubricaService } from '../_services/index';
 import { Rubricaitem } from '../global';
-import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl,  Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-rubrica',
@@ -13,7 +13,7 @@ import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 export class RubricaComponent implements OnInit {
 
   idutente = 0 ;
-  myrubrica: Array<Rubricaitem> = [];
+  myrubrica: Rubricaitem[] = [];
   inedit = false ;
   toedit_nome  = '';
   toedit_note  = '';
@@ -38,11 +38,6 @@ export class RubricaComponent implements OnInit {
       (data: any)  => {
         this.myrubrica = data;
 
-        for (let i = 0 ; i < this.myrubrica.length ; i++) {
-          this.myrubrica[i].cell = Number (this.myrubrica[i].cell);
-          this.myrubrica[i].email = Number (this.myrubrica[i].email);
-          this.myrubrica[i].home = Number (this.myrubrica[i].home);
-        }
         // console.log(this.myrubrica);
       }
     );
@@ -112,7 +107,7 @@ export class RubricaComponent implements OnInit {
     let nomecontatto = this.newcontatto.value;
     let nomecontatto2 = this.newcontatto2.value;
 
-    this.rubricaservice.addrubrica(this.idutente , nomecontatto, 0, 0, 0 , nomecontatto2)
+    this.rubricaservice.addrubrica<Rubricaitem>(this.idutente , nomecontatto, 0, 0, 0 , nomecontatto2)
     .subscribe (
       (data: Rubricaitem) => {
         this.myrubrica.push(data);

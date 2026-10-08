@@ -1,16 +1,20 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 
 import { Chatrow, MyChat , ChatService , AdminService } from '../_services/index';
 import { GlobalStatus } from '../global';
 
-import { timer, Observable, Subscription } from 'rxjs';
+import { timer,  Subscription } from 'rxjs';
 
 
 export interface unPg {
   idutente: number;
   nomepg: string;
   tipo: string;
+}
+
+interface GetPersonaggio {
+  pg: unPg[];
 }
 
 @Component({
@@ -20,7 +24,7 @@ export interface unPg {
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
 
   statuschat = 0 ;
 
@@ -29,19 +33,23 @@ export class ChatComponent implements OnInit {
   mytimer = new  Subscription();
   statusText = '';
 
-  chat: Array<Chatrow> = [];
+  chat: Chatrow[] = [];
 
   msg =  new UntypedFormControl('', [] ) ;
   selectedPG = '';
-  listapg: Array<unPg> = [];
+  listapg: unPg[] = [];
+
+  private adminservice = inject(AdminService);
+  private globalstatus = inject(GlobalStatus);
+  private chatservice = inject(ChatService);
 
 
-  constructor( private adminservice: AdminService , private globalstatus: GlobalStatus, private chatservice: ChatService ) { }
+  
 
   ngOnInit(): void {
 
-    this.adminservice.getpersonaggio(this.globalstatus.cronacaprincipale).subscribe(
-      (data: any) => {
+    this.adminservice.getpersonaggio<GetPersonaggio>(this.globalstatus.cronacaprincipale).subscribe(
+      (data: GetPersonaggio) => {
         this.listapg = data.pg;
       }
     );
@@ -54,8 +62,8 @@ export class ChatComponent implements OnInit {
       // switchMap cancels the last request, if no response have been received since last tick
 
     ).subscribe(
-      (val) => {
-        this.chatservice.getchat().subscribe(
+      () => {
+        this.chatservice.getchat<MyChat>().subscribe(
           (data: MyChat) => {
             // console.log( "Mychat");
             // console.log(data);
@@ -82,13 +90,11 @@ export class ChatComponent implements OnInit {
       this.globalstatus.Last = 0;
     } else {
       // console.log(data.Listachat);
-      for ( let j = 0 ; j < data.Listachat.length ; j ++ ) {
-
-        if ( ! isNaN(Number(data.Listachat[j].Destinatario)) ) {
-          data.Listachat[j].Destinatario = '';
+      for (const row of data.Listachat) {
+        if (!isNaN(Number(row.Destinatario))) {
+          row.Destinatario = '';
         }
-        this.chat.splice(0, 0, data.Listachat[j]);
-
+        this.chat.splice(0, 0, row);
       }
       // console.log(this.chat);
 
@@ -97,12 +103,12 @@ export class ChatComponent implements OnInit {
 
   sendmsg() {
     this.chatservice.master2user(this.selectedPG, this.msg.value).subscribe(
-      (data: any) => {
+      () => {
         this.msg.setValue( '' );
         this.msg!.markAsPristine();
         this.msg!.markAsUntouched();
 
-        this.chatservice.getchat().subscribe(
+        this.chatservice.getchat<MyChat>().subscribe(
           (data: MyChat) => {
             this.dostuffwithdata(data);
           }
@@ -113,8 +119,8 @@ export class ChatComponent implements OnInit {
 
   alea(){
     this.chatservice.lanciadado().subscribe(
-      (data: any) => {
-        this.chatservice.getchat().subscribe(
+      () => {
+        this.chatservice.getchat<MyChat>().subscribe(
           (data: MyChat) => {
             this.dostuffwithdata(data);
           }

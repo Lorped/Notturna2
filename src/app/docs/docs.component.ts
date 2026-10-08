@@ -1,5 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SchedaService } from '../_services/index';
+
+interface BGClan {
+  linkurl: string;
+}
 
 @Component({
     selector: 'app-docs',
@@ -22,20 +26,20 @@ export class DocsComponent implements OnInit {
   trem = false;
   giova = false;
 
+  private schedaservice = inject(SchedaService);
 
 
-  constructor( private schedaservice: SchedaService ) { }
 
   ngOnInit(): void {
     const idutente = Number( sessionStorage.getItem('NotturnaUser') );
-    this.schedaservice.getDT(idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getBGClan<BGClan>(idutente).subscribe(
+      (data: BGClan) => {
         this.link = data.linkurl;
       }
     );
-    this.schedaservice.getclan(idutente).subscribe(
-      (data: any) => {
-        this.idclan = Number(data);
+    this.schedaservice.getclan<number>(idutente).subscribe(
+      (data: number) => {
+        this.idclan = data;
         this.trem = (this.idclan === 7);
         this.giova = (this.idclan === 11);
       }

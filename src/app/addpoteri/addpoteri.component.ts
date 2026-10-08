@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SchedaService } from '../_services/index';
+import { inject } from '@angular/core';
 import { FullDisciplina } from '../global';
+
 
 
 
@@ -14,16 +16,18 @@ import { FullDisciplina } from '../global';
 export class AddpoteriComponent implements OnInit {
 
   idutente = 0;
-  discipline: Array <FullDisciplina> = [];
-  newpotere: Array<string> = [] ;
+  discipline: FullDisciplina[] = [];
+  newpotere: string[] = [] ;
 
-  constructor( public schedaservice: SchedaService) { }
+  public schedaservice = inject(SchedaService);
+
+
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
-    this.schedaservice.getpoteri( this.idutente )
+    this.schedaservice.getpoteri<FullDisciplina[]>( this.idutente )
     .subscribe (
-      (data: any ) => {
+      (data: FullDisciplina[] ) => {
         this.discipline = data;
 
         for ( let j = 0 ; j < this.discipline.length ; j++ ){
@@ -36,11 +40,10 @@ export class AddpoteriComponent implements OnInit {
 
   addpotere(ix: number) {
     this.schedaservice.addpotere( this.idutente, this.newpotere[ix])
-    .subscribe(
-      data => {
-        this.schedaservice.getpoteri( this.idutente )
+    .subscribe( () => {
+        this.schedaservice.getpoteri<FullDisciplina[]>( this.idutente )
         .subscribe (
-          (data2: any ) => {
+          (data2: FullDisciplina[] ) => {
             this.discipline = data2;
             this.newpotere[ix] = '0';
           }

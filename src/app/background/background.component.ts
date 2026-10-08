@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SchedaService } from '../_services/index';
-import { Background, Contatti, Skill, Sentiero , Influenze} from '../global';
-import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
+import { Background, Contatti, Alleati, Skill, Sentiero } from '../global';
+import { UntypedFormControl, Validators } from '@angular/forms';
+import { GetSentiero } from '../_services/scheda.service';
 
 @Component({
     selector: 'app-background',
@@ -19,13 +20,13 @@ export class BackgroundComponent implements OnInit {
   fama3 = 0 ;
 
 
-  listabg: Array<Background> = [];
-  listaContatti: Array<Contatti> = [];
+  listabg: Background[] = [];
+  listaContatti: Contatti[] = [];
   sommacontatti = 0;
 
-  listainfluenze: Array<Influenze> = [];
-  sommaInfluenze = 0;
-  maxinfluenze = 0;
+  listaAlleati: Alleati[] = [];
+  sommaalleati = 0;
+  maxalleati = 0;
 
   myContatto = new UntypedFormControl ( '', [
     Validators.required,
@@ -70,29 +71,23 @@ export class BackgroundComponent implements OnInit {
     [ 95, 95, 93, 90, 80, 70, 50 ]
   ];
 
-  listaskill: Array<Skill> = [];
-  listanew: Array<Skill> = [];
+  listaskill: Skill[] = [];
+  listanew: Skill[] = [];
 
-  listasentieri: Array<Sentiero> = [];
-  sentieroPG = '';
-  oldsentieroPG = '';
+  listasentieri: Sentiero[] = [];
+  sentieroPG = 0;
+  oldsentieroPG = 0;
   valsentiero = 0 ;
   fdv = 0;
 
   puntidisponibili = 0;
 
-  constructor( private schedaservice: SchedaService) { }
+  private schedaservice = inject(SchedaService);
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
 
-    this.schedaservice.getfama(this.idutente).subscribe(
-      (data: any) => {
-        this.fama1 = Number (data.fama1);
-        this.fama2 = Number (data.fama2);
-        this.fama3 = Number (data.fama3);
-      }
-    );
+    this.schedaservice.getfama(this.idutente).subscribe();
 
   
 
@@ -100,11 +95,11 @@ export class BackgroundComponent implements OnInit {
 
  
 
-    this.schedaservice.getsentiero(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getsentiero <GetSentiero>(this.idutente).subscribe(
+      (data: GetSentiero) => {
         this.listasentieri = data.sentieri;
-        this.fdv = Number (data.fdvmax);
-        this.valsentiero = Number (data.valsentiero);
+        this.fdv = data.fdvmax;
+        this.valsentiero = data.valsentiero;
         this.sentieroPG = data.idsentiero;
         this.oldsentieroPG = data.idsentiero;
       }
@@ -150,23 +145,23 @@ export class BackgroundComponent implements OnInit {
 
 
 
-
+/*
 
   cambiastatus() {
     this.schedaservice.cambiastatus(this.idutente, this.listanew).subscribe(
-      (data: any) => {
+      () => {
         //done
       }
     );
   }
 
-
+*/
 
 
   minsentiero(){
     this.valsentiero--;
     this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero , 'U').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );
@@ -174,7 +169,7 @@ export class BackgroundComponent implements OnInit {
   addsentiero(){
     this.valsentiero++;
     this.schedaservice.putfdvsentiero(this.idutente, -1, this.valsentiero , 'U').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );
@@ -182,7 +177,7 @@ export class BackgroundComponent implements OnInit {
   changesentiero(){
     this.oldsentieroPG = this.sentieroPG;
     this.schedaservice.newsentiero(this.idutente, this.sentieroPG , 'U').subscribe(
-      (data: any) => {
+      () => {
         /* do stuff */
       }
     );

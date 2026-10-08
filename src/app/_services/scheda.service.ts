@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import {  Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg} from '../global';
+import { Sentiero, Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg} from '../global';
 
 
   interface ListaDisciplineVie  {
@@ -9,6 +9,13 @@ import {  Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, S
     id: number;
     nome: string;
     focus: number;
+  }
+
+  export interface GetSentiero {
+    sentieri: Sentiero[];
+    idsentiero: number;
+    valsentiero: number;
+    fdvmax: number;
   }
 
 
@@ -263,28 +270,28 @@ export class SchedaService {
     });
   }
 
-  newalleato(idutente: number , nomealleato: string, au: string ) {
-    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/newalleato.php',{
+  newalleato<T = number>(idutente: number , nomealleato: string, au: string ) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/newalleato.php',{
       idutente: idutente,
       nomealleato: nomealleato,
       au: au
     });
   }
 
-  newcontatto(idutente: number , nomecontatto: string, au: string ) {
-    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/newcontatto.php',{
+  newcontatto<T = number>(idutente: number , nomecontatto: string, au: string ) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/newcontatto.php',{
       idutente: idutente,
       nomecontatto: nomecontatto,
       au: au
     });
   }
 
-  getpassaggiostatus(idutente: number  ) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getpassaggiostatus.php'+'?idutente='+idutente );
+  getpassaggiostatus<T>(idutente: number  ) {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getpassaggiostatus.php'+'?idutente='+idutente );
   }
 
-  getskill(idutente: number) {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getskill.php'+'?idutente='+idutente );
+  getskill<T>(idutente: number) {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getskill.php'+'?idutente='+idutente );
   }
 
   cambiastatus(idutente: number , lista: Skill[] ) {
@@ -307,7 +314,7 @@ export class SchedaService {
     });
   }
 
-  newsentiero(idutente: number ,  idsentiero: string, au: string ) {
+  newsentiero(idutente: number ,  idsentiero: number | string, au: string ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/newsentiero.php',{
       idutente: idutente,
       idsentiero: idsentiero,
@@ -440,6 +447,10 @@ export class SchedaService {
       iddisciplina: iddisciplina,
       change: change
     });
+  }
+
+  getBGClan<T>(idutente: number) {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getDT.php?idutente=' + idutente);
   }
 
 

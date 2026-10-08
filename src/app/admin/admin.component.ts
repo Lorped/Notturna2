@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { GlobalStatus, Cronaca } from '../global';
@@ -18,8 +18,8 @@ export interface unPg {
 })
 export class AdminComponent implements OnInit {
 
-  listapg: Array<unPg> = [];
-  listacronache: Array<Cronaca> = [];
+  listapg: unPg[] = [];
+  listacronache: Cronaca[] = [];
   selectedPG = 0;
   cronacaprincipale = 0;
 
@@ -34,7 +34,10 @@ export class AdminComponent implements OnInit {
 
   actual = '0' ;
 
-  constructor(private globalstatus: GlobalStatus, private adminservice: AdminService) { }
+  private adminservice = inject(AdminService);
+  private globalstatus = inject(GlobalStatus);
+
+  
 
 
   ngOnInit(): void {
@@ -49,20 +52,20 @@ export class AdminComponent implements OnInit {
       this.cronacaprincipale =  this.globalstatus.cronacaprincipale;
     }
 
-    this.adminservice.getlistcronache().subscribe(
-      (data: any) => {
+    this.adminservice.getlistcronache<Cronaca[]>().subscribe(
+      (data: Cronaca[]) => {
         this.listacronache = data;
       }
     );
 
     this.aggiornaPersonaggi();
 
-    this.adminservice.getchance().subscribe(
-      (data: any) => {
+    this.adminservice.getchance<string>().subscribe({
+      next: (data: string) => {
         this.actual = data;
         /* this.chanceMform.patchValue({chance:  this.actual });  */
       }
-    );
+    });
 
   }
 
@@ -71,11 +74,11 @@ export class AdminComponent implements OnInit {
   }
 
   aggiornaPersonaggi(): void {
-    this.adminservice.getpersonaggio(Number(this.cronacaprincipale || 0)).subscribe(
-      (data: any) => {
+    this.adminservice.getpersonaggio<{ pg: unPg[] }>(Number(this.cronacaprincipale || 0)).subscribe({
+      next: (data) => {
         this.listapg = data.pg;
       }
-    );
+    });
   }
 
   aggiornaSelected(): void {
@@ -83,14 +86,14 @@ export class AdminComponent implements OnInit {
   }
 
   cambiachance(){
-    let newc = Number ( this.chanceMform.get('chance')!.value );
-    this.adminservice.putchance( newc ).subscribe(
-      (data: any) => {
-        this.actual = this.chanceMform.get('chance')!.value ;
+    const newc = Number(this.chanceMform.get('chance')!.value);
+    this.adminservice.putchance<string>(newc).subscribe({
+      next: () => {
+        this.actual = String(this.chanceMform.get('chance')!.value ?? '0');
         /*this.chanceMform.patchValue({chance:  this.actual }); */
         this.chanceMform.reset();
       }
-    );
+    });
   }
 
 }

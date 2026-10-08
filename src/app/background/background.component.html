@@ -258,7 +258,7 @@
                       </mat-form-field>
                     </div>
                     <div class = "column">
-                      <button  mat-raised-button class="large" (click)="changesentiero()" color="primary" [disabled]="sentieroPG==oldsentieroPG" style="width: 100%;">Modifica Sentiero</button>
+                      <button  mat-raised-button class="large" (click)="changesentiero()" color="primary" [disabled]="sentieroPG===oldsentieroPG" style="width: 100%;">Modifica Sentiero</button>
                     </div>
                   </div>
                   <div class="columns">
@@ -266,7 +266,7 @@
                       Valore Sentiero
                     </div>
                     <div class="column is-4 ">
-                      <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero==0"><i class="fa fa-minus"></i></button>
+                      <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero===0"><i class="fa fa-minus"></i></button>
                       @for (i of 10 | times ; track i; let ix = $index) {
                         <i class="fa fa-circle" [ngClass]="{'white': ix+1 > valsentiero , 'dred': ix < valsentiero}"></i>
                       }

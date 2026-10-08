@@ -252,14 +252,14 @@ export class Personaggio {
 
   public aPG: Basicpg;
 
-  public listaBackground: Array<Background> ;
-  public listaContatti: Array<Contatti> ;
-  public listaAlleati: Array<Alleati> ;
-  public listaDiscipline: Array<Disciplina> ;
-  public listaSkill: Array<Skill>;
-  public listaAbilita: Array<Abilita>;
+  public listaBackground: Background[] ;
+  public listaContatti: Contatti[] ;
+  public listaAlleati: Alleati[] ;
+  public listaDiscipline: Disciplina[] ;
+  public listaSkill: Skill[];
+  public listaAbilita: Abilita[];
 
-  public listalistaInfluenze: Array<Influenze>;
+  //public listalistaInfluenze: Array<Influenze>;
 
 
   constructor ( ) {
@@ -270,7 +270,7 @@ export class Personaggio {
     this.listaDiscipline = [];
     this.listaSkill = [];
     this.listaAbilita = [];
-    this.listalistaInfluenze = [];
+    //this.listalistaInfluenze = [];
   }
 
 }
@@ -360,8 +360,8 @@ export class Paired {
 @Injectable()
 export class FullOggetto {
   public oggetto = new Oggetto() ;
-  public condizioni: Array<Condizione> = [];
-  public condizioni2: Array<Condizione> = [];
+  public condizioni: Condizione[] = [];
+  public condizioni2: Condizione[] = [];
   public paired: Paired = new Paired() ;
 }
 
