@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 @Component({
@@ -14,7 +14,9 @@ export class MainComponent implements OnInit {
   mybadge = 0 ;
   mybadge2 = 0 ;
 
-  constructor(private schedaservice: SchedaService) { }
+  private schedaservice = inject(SchedaService);
+
+
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );

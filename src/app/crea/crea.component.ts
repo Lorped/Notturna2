@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
 import { Lds, Cronaca, Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Pregio} from '../global';
 import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
+import { PregioDifetto } from '../_services/scheda.service';
 
 
 
@@ -13,6 +14,21 @@ import { Router } from '@angular/router';
     nome: string;
     focus: number;
   }
+
+  interface GetRegistra {
+      clan: Clan[],
+      statuscama: Status[],
+      skill: Skill[],
+      skillother: Skill[],
+	    attitudini: Skill[],
+      sentieri: Sentiero[],
+      taumaturgie: Taumaturgia[],
+      necromanzie: Necromanzia[],
+	    background: Background[],
+	    disciplinevili: Disciplina[],
+	    listalds: Lds[]
+  }
+  
 
 
 
@@ -46,22 +62,22 @@ export class CreaComponent implements OnInit {
 
 
   ldsOK = false ;
-  listalds: Array<Lds> = [ 
+  listalds: Lds[] = [ 
     {idlds:0, idclan:0, nomelds: '', fondatorelds: '', mentorelds: '', pregiolds: '', difettolds: '' }
   ];
-  myLDS: Array<Lds> = [ 
+  myLDS: Lds[] = [ 
     {idlds:0, idclan:0, nomelds: '', fondatorelds: '', mentorelds: '', pregiolds: '', difettolds: '' }
   ];
   lds = 0;
 
   cronacaPG = 0;
-  listacronache: Array<Cronaca> = [];
+  listacronache: Cronaca[] = [];
 
   focusOK= false;
   cronacaOK = false;
 
-  listapregi: Array<Pregio> = [];
-  listadifetti: Array<Pregio> = [];
+  listapregi: Pregio[] = [];
+  listadifetti: Pregio[] = [];
   new_d = 0 ; //difetto
   new_p = 0 ; //pregio
   valorePregioDifetto = 0;
@@ -71,10 +87,10 @@ export class CreaComponent implements OnInit {
 
   isLinear = true;  // FALSE SOLO PER TEST !!!!!
 
-  clan: Array<Clan> = [];
-  status: Array<Status> = [];
-  bg: Array<Background> = [];
-  bg_original: Array<Background> = [];
+  clan: Clan[] = [];
+  status: Status[] = [];
+  bg: Background[] = [];
+  bg_original: Background[] = [];
 
   generazionePG = 13;     /* Generazione PG */
   puntiFerita = 8;
@@ -84,8 +100,8 @@ export class CreaComponent implements OnInit {
   sommaBG = 0;
   maxBG = 6;            /* Numer BG disponibili */
 
-  cont: Array<Contatti> = [];
-  alleati: Array<Alleati> = [];
+  cont: Contatti[] = [];
+  alleati: Alleati[] = [];
 
   sommaCont = 0 ;
   maxCont = 0 ;
@@ -118,7 +134,7 @@ export class CreaComponent implements OnInit {
   });
 
 
-  attributi: Array<Attributo> = [];
+  attributi: Attributo[] = [];
 
   attr0 = 5;              /* 5-4-2   e' la distrubuzione base  */
   attr1 = 4;
@@ -130,15 +146,15 @@ export class CreaComponent implements OnInit {
   attrOK = false;
 
 
-  discipline: Array<Disciplina> = [];
-  taumaturgie: Array<Taumaturgia> = [];
-  listaTaum: Array<Taumaturgia> = [];
+  discipline: Disciplina[] = [];
+  taumaturgie: Taumaturgia[] = [];
+  listaTaum: Taumaturgia[] = [];
 
-  necromanzie: Array<Necromanzia> = [];
-  listaNecro: Array<Necromanzia> = [];
+  necromanzie: Necromanzia[] = [];
+  listaNecro: Necromanzia[] = [];
 
 
-  disciplinevili: Array<Disciplina> = [];
+  disciplinevili: Disciplina[] = [];
 
   sommaDisc = 0 ;
   numDisc = 5 ;             /* punti disciplina  */
@@ -178,12 +194,12 @@ export class CreaComponent implements OnInit {
   numAttitudini = 4 ;           /* punti Attitudini  */
   maxAttitudini = 1;
 
-  skill: Array<Skill> = [];
-  skillother: Array<Skill> = [];
-  attitudini: Array<Skill> = [];
+  skill: Skill[] = [];
+  skillother: Skill[] = [];
+  attitudini: Skill[] = [];
 
 
-  sentieri: Array<Sentiero> = [];
+  sentieri: Sentiero[] = [];
   baseFDVmax = 2;           /* Calcolare */
 
 
@@ -196,10 +212,12 @@ export class CreaComponent implements OnInit {
   sentieroPG = '1';       /* umanità */
 
  
+  private schedaservice = inject(SchedaService);
+  private router = inject(Router);
+  private adminservice = inject(AdminService);
 
 
 
-  constructor(private schedaservice: SchedaService , private router: Router, private adminservice: AdminService) { }
 
 
   ngOnInit(): void {
@@ -208,9 +226,9 @@ export class CreaComponent implements OnInit {
       this.router.navigate(['/main']);
     }
 
-    this.schedaservice.getregistra()
+    this.schedaservice.getregistra<GetRegistra>()
     .subscribe(
-      (data: any) => {
+      (data: GetRegistra) => {
         this.clan = data.clan;
         this.status = data.statuscama;
         this.creaForm.patchValue({
@@ -235,19 +253,16 @@ export class CreaComponent implements OnInit {
         
         for (let j = 0 ; j < data.background.length ; j++) {    
             this.bg_original[j] = new Background();
-            this.bg_original[j].idback = Number(data.background[j].idback);
+            this.bg_original[j].idback = data.background[j].idback;
             this.bg_original[j].nomeback = data.background[j].nomeback;
-            this.bg_original[j].MinIniziale = Number (data.background[j].MinIniziale);
-            this.bg_original[j].MaxIniziale = Number (data.background[j].MaxIniziale);
-            this.bg_original[j].livello = Number(this.bg_original[j].MinIniziale);
+            this.bg_original[j].MinIniziale = data.background[j].MinIniziale;
+            this.bg_original[j].MaxIniziale = data.background[j].MaxIniziale;
+            this.bg_original[j].livello = this.bg_original[j].MinIniziale;
         }
 
         this.bg = data.background;
-        for (let j = 0 ; j < this.bg.length ; j++) {    // Rifugio minimo a 1
-            this.bg[j].idback = Number(this.bg[j].idback);
-            this.bg[j].MinIniziale = Number (this.bg[j].MinIniziale);
-            this.bg[j].MaxIniziale = Number (this.bg[j].MaxIniziale);
-            this.bg[j].livello = Number(this.bg[j].MinIniziale);
+        for (const background of this.bg) {    // Rifugio minimo a 1
+          background.livello = background.MinIniziale;
         }
       }
     );
@@ -283,17 +298,17 @@ export class CreaComponent implements OnInit {
     this.necromanzie[2] = new Necromanzia();
 
     // pregi 
-    this.schedaservice.getpregidifetti(-1)
+    this.schedaservice.getpregidifetti<PregioDifetto>(-1)
     .subscribe(
-      (data: any) => {
+      (data: PregioDifetto) => {
         this.listapregi = data.pregi_f.concat(data.pregi_m).concat(data.pregi_s).concat(data.pregi_x);
         this.listadifetti = data.difetti_f.concat(data.difetti_m).concat(data.difetti_s).concat(data.difetti_x);
         this.updateValoreSelections();
       }
     );
 
-    this.adminservice.getlistcronache().subscribe(
-      (data: any) => {
+    this.adminservice.getlistcronache<Cronaca[]>().subscribe(
+      (data: Cronaca[]) => {
         this.listacronache = data;
       }
     );
@@ -459,11 +474,11 @@ export class CreaComponent implements OnInit {
 
   addbg(bg: number){
     this.bgOK = false ;
-    for (let j = 0; j < this.bg.length; j++ ) {
-      if ( this.bg[j].idback === bg) {
-        this.bg[j].livello++;
+    for (const item of this.bg) {
+      if ( item.idback === bg) {
+        item.livello++;
         if ( bg == 5 ) {     /* generazione */
-          this.changeGen(this.bg[j].livello);
+          this.changeGen(item.livello);
         }
         this.sommaBG++;
       }
@@ -481,7 +496,7 @@ export class CreaComponent implements OnInit {
 
   minbg(bg: number){
     this.bgOK = false ;
-    for (let item of this.bg ) {
+    for (const item of this.bg ) {
       if ( item.idback === bg) {
         item.livello--;
         this.sommaBG--;
@@ -907,12 +922,12 @@ export class CreaComponent implements OnInit {
 
   changeMaxDisc () {
     //console.log ("changeMaxDisc");
-    let indexGen = 14 - this.generazionePG;
-    let indexStat = this.statusPG!.value;
+    const indexGen = 14 - this.generazionePG;
+    const indexStat = this.statusPG!.value;
 
     this.maxDisc = this.matriceMaxDisc [indexStat][indexGen];
 
-    let xmaxDisc = 3;
+    let xmaxDisc: number;
 
     if ( this.statusPG!.value > 1 ) {
       this.bp=4;
@@ -973,18 +988,18 @@ export class CreaComponent implements OnInit {
         this.listaDisciplineVie.push(disc);
       }
     }
-    for ( let j = 0 ; j < this.necromanzie.length ; j++) {
-      if (this.necromanzie[j].livello > 0  ) {
-        const anecro = this.listaNecro.find ( (d) => d.idnecro == this.necromanzie[j].idnecro);
+    for (const necromanzia of this.necromanzie) {
+      if (necromanzia.livello > 0  ) {
+        const anecro = this.listaNecro.find ( (d) => d.idnecro == necromanzia.idnecro);
         if (anecro) {
           const disc: ListaDisciplineVie = { disc_vie: 'N', id: Number(anecro.idnecro), nome: anecro.nomenecro, focus: 0  };
           this.listaDisciplineVie.push(disc);
         }
       }
     }
-    for ( let j = 0 ; j < this.taumaturgie.length ; j++) {
-      if (this.taumaturgie[j].livello > 0  ) {
-        const adisc = this.listaTaum.find ( (d) => d.idtaum == this.taumaturgie[j].idtaum);
+    for (const taumaturgia of this.taumaturgie) {
+      if (taumaturgia.livello > 0  ) {
+        const adisc = this.listaTaum.find ( (d) => d.idtaum == taumaturgia.idtaum);
         if (adisc) {
           const disc: ListaDisciplineVie = { disc_vie: 'T', id: Number(adisc.idtaum), nome: adisc.nometaum, focus: 0  };
           this.listaDisciplineVie.push(disc);
@@ -1167,10 +1182,10 @@ export class CreaComponent implements OnInit {
 
     if ( this.is14 )  {
       this.generazionePG = 14 ;
-      for (let j = 0; j < this.bg.length; j++ ) {
-        if ( this.bg[j].idback == 5) { /* generazione */
-          this.sommaBG = this.sommaBG - this.bg[j].livello;
-          this.bg[j].livello = 0;
+      for (const background of this.bg) {
+        if ( background.idback == 5) { /* generazione */
+          this.sommaBG = this.sommaBG - background.livello;
+          background.livello = 0;
         }
       }
       this.changeclan() ;
@@ -1184,12 +1199,12 @@ export class CreaComponent implements OnInit {
 
     // SKILL con SUBSKILL
   addsk(sk: number) {
-    for (let j = 0 ; j < this.skill.length ; j++ ) {
-      if ( this.skill[j].idskill === sk) {
-        this.skill[j].livello++;
+      for (const skill of this.skill) {
+        if ( skill.idskill === sk) {
+          skill.livello++;
 
-        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
-          this.skill[j].subskill2[k].max = this.skill[j].livello;
+          for (const subskill of skill.subskill2) {
+            subskill.max = skill.livello;
         }
 
       }
@@ -1198,14 +1213,14 @@ export class CreaComponent implements OnInit {
     this.checkSkill();
   }
   minsk(sk:number) {
-    for (let j = 0 ; j < this.skill.length ; j++ ) {
-      if ( this.skill[j].idskill === sk) {
-        this.skill[j].livello--;
+    for (const skill of this.skill) {
+      if ( skill.idskill === sk) {
+        skill.livello--;
 
-        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
-          this.skill[j].subskill2[k].max = this.skill[j].livello;
-          if (this.skill[j].subskill2[k].livello > this.skill[j].subskill2[k].max) {  
-            this.skill[j].subskill2[k].livello = this.skill[j].subskill2[k].max;
+        for (const subskill of skill.subskill2) {
+          subskill.max = skill.livello;
+          if (subskill.livello > subskill.max) {  
+            subskill.livello = subskill.max;
             this.sommaSkill--;
           }
         }
@@ -1219,18 +1234,18 @@ export class CreaComponent implements OnInit {
   // ATTITUDINI
 
   addsk2(sk: number) {
-    for (let j = 0 ; j < this.attitudini.length ; j++ ) {
-      if ( this.attitudini[j].idskill === sk) {
-        this.attitudini[j].livello++;
+    for (const attitudine of this.attitudini) {
+      if (attitudine.idskill === sk) {
+        attitudine.livello++;
       }
     }
     this.sommaAttitudini++;
     this.checkSkill();
   }
   minsk2(sk: number) {
-    for (let j = 0 ; j < this.attitudini.length ; j++ ) {
-      if ( this.attitudini[j].idskill === sk) {
-        this.attitudini[j].livello--;
+    for (const attitudine of this.attitudini) {
+      if (attitudine.idskill === sk) {
+        attitudine.livello--;
       }
     }
     this.sommaAttitudini--;
@@ -1240,25 +1255,25 @@ export class CreaComponent implements OnInit {
 // SUBSKILL
 
   addsk3(sk: number, ssk: number){
-    for (let j = 0 ; j < this.skill.length ; j++ ) {
-      if ( this.skill[j].idskill === sk) {
-        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
-          if (this.skill[j].subskill2[k].idskill === ssk) {
-            this.skill[j].subskill2[k].livello++;
+    for (const skill of this.skill) {
+      if (skill.idskill === sk) {
+        for (const subskill of skill.subskill2) {
+          if (subskill.idskill === ssk) {
+            subskill.livello++;
 
-              this.sommaSkill++;
-              this.checkSkill();
+            this.sommaSkill++;
+            this.checkSkill();
           }
         }
       }
     }
   }
   minsk3(sk: number, ssk: number){
-    for (let j = 0 ; j < this.skill.length ; j++ ) {
-      if ( this.skill[j].idskill === sk) {
-        for (let k = 0 ; k < this.skill[j].subskill2.length ; k++ ) {
-          if (this.skill[j].subskill2[k].idskill === ssk) {
-            this.skill[j].subskill2[k].livello--;
+    for (const skill of this.skill) {
+      if (skill.idskill === sk) {
+        for (const subskill of skill.subskill2) {
+          if (subskill.idskill === ssk) {
+            subskill.livello--;
 
               this.sommaSkill--;
               this.checkSkill();
@@ -1270,18 +1285,18 @@ export class CreaComponent implements OnInit {
 
 // OTHERSKILL
   addsk4(sk: number){
-    for (let j = 0 ; j < this.skillother.length ; j++ ) {
-      if ( this.skillother[j].idskill === sk) {
-        this.skillother[j].livello++;
+    for (const skill of this.skillother) {
+      if (skill.idskill === sk) {
+        skill.livello++;
       }
     }
     this.sommaSkill++;
     this.checkSkill();
   }
   minsk4(sk: number){
-        for (let j = 0 ; j < this.skillother.length ; j++ ) {
-      if ( this.skillother[j].idskill === sk) {
-        this.skillother[j].livello--;
+    for (const skill of this.skillother) {
+      if (skill.idskill === sk) {
+        skill.livello--;
       }
     }
     this.sommaSkill--;
@@ -1297,8 +1312,8 @@ export class CreaComponent implements OnInit {
 
     if ( this.sommaSkill == this.numSkill+this.bonusskill) this.skillOK = true;
     if ( this.sommaAttitudini == this.numAttitudini) this.attitudiniOK = true;
-    for ( let j = 0 ; j < this.attitudini.length ; j++ ) {
-      if (this.attitudini[j].livello > this.maxAttitudini) this.attitudiniOK = false;
+    for (const attitudine of this.attitudini) {
+      if (attitudine.livello > this.maxAttitudini) this.attitudiniOK = false;
     }
 
     this.SOMMAACC =0;
@@ -1332,8 +1347,8 @@ export class CreaComponent implements OnInit {
 
   changeNumSkill() {
     //console.log ("changeNumSkill");
-    let indexGen = 14 - this.generazionePG;
-    let indexStat = this.statusPG!.value;
+    const indexGen = 14 - this.generazionePG;
+    const indexStat = this.statusPG!.value;
 
     this.numSkill = this.matriceNumSkill [indexStat][indexGen];
 
@@ -1372,7 +1387,7 @@ export class CreaComponent implements OnInit {
   */
 
   salvascheda() {
-    let aPG = new Basicpg();
+    const aPG = new Basicpg();
 
     aPG.nomeplayer = this.nomeplayer!.value ;
     aPG.nomepg = this.nomepersonaggio!.value ;
@@ -1403,14 +1418,14 @@ export class CreaComponent implements OnInit {
     this.schedaservice.putregistra( aPG , this.bg , this.cont , this.alleati, this.discipline , this.taumaturgie , this.necromanzie , 
       this.attitudini, this.skill , this.skillother , this.new_p, this.new_d , this.bp, this.listaDisciplineVie, this.lds)
       .subscribe(
-        data => {
+        () => {
           //  OK!
           sessionStorage.setItem('NotturnaUser1', '1' );
           this.router.navigate(['/main']);
         },
         error => {
           // KO !
-          console.log('ko');
+          console.log('ko', error);
         }
       );
 
@@ -1705,27 +1720,27 @@ export class CreaComponent implements OnInit {
     }
     this.sommaBG = 0 ;
     this.bgOK = false;
-    this.changeGen(this.is14 ? -1 : 0);
+    this.changeGen(this.is14 ? -1 : 0);  // aggiorna la generazione a 14 o 13
   }
 
   resetlivellodiscipline() {
     //console.log("resetlivellodiscipline");
-    for (let j = 0; j < this.discipline.length; j++ ) {
-      this.discipline[j].iniziale = 0;
-      this.discipline[j].livello = 0;
-      this.discipline[j].focus = 0;
+    for (const disciplina of this.discipline) {
+      disciplina.iniziale = 0;
+      disciplina.livello = 0;
+      disciplina.focus = 0;
     }
-    for (let j = 0; j < this.taumaturgie.length; j++ ) {
-      this.taumaturgie[j].livello = 0;
-      this.taumaturgie[j].idtaum = 0;
-      this.taumaturgie[j].focus = 0;
-      this.taumaturgie[j].principale = 0;
+    for (const taumaturgia of this.taumaturgie) {
+      taumaturgia.livello = 0;
+      taumaturgia.idtaum = 0;
+      taumaturgia.focus = 0;
+      taumaturgia.principale = 0;
     }
-    for (let j = 0; j < this.necromanzie.length; j++ ) {
-      this.necromanzie[j].livello = 0;
-      this.necromanzie[j].idnecro = 0;
-      this.necromanzie[j].focus = 0;
-      this.necromanzie[j].principale = 0;
+    for (const necromanzia of this.necromanzie) {
+      necromanzia.livello = 0;
+      necromanzia.idnecro = 0;
+      necromanzia.focus = 0;
+      necromanzia.principale = 0;
     }
     this.sommaDisc = 0 ;
     this.discOK = false;
@@ -1733,9 +1748,9 @@ export class CreaComponent implements OnInit {
 
   resetattr() {
     //console.log("resetattr");
-    for (let j = 0; j < this.attributi.length; j++ ) {
-      this.attributi[j].Iniziale = 1;
-      this.attributi[j].Livello = this.attributi[j].Iniziale;
+    for (const attributo of this.attributi) {
+      attributo.Iniziale = 1;
+      attributo.Livello = attributo.Iniziale;
     }
     this.sommaAttr = 0 ;
     this.attrCorrente = [ 0 , 0 , 0 ];
@@ -1902,19 +1917,19 @@ export class CreaComponent implements OnInit {
 
   reset_skill() {
     //console.log("reset_skill");
-    for (let j = 0; j < this.skill.length; j++ ) {
-      this.skill[j].iniziale = 0;
-      this.skill[j].livello = 0;
-      for (let k = 0; k < this.skill[j].subskill2.length; k++ ) {
-        this.skill[j].subskill2[k].livello = 0;
-        this.skill[j].subskill2[k].max = this.skill[j].livello;
+    for (const skill of this.skill) {
+      skill.iniziale = 0;
+      skill.livello = 0;
+      for (const subskill of skill.subskill2) {
+        subskill.livello = 0;
+        subskill.max = skill.livello;
       }
     }
-    for (let j = 0; j < this.attitudini.length; j++ ) {
-      this.attitudini[j].livello = 0;
+    for (const attitudine of this.attitudini) {
+      attitudine.livello = 0;
     }
-    for (let j = 0; j < this.skillother.length; j++ ) {
-      this.skillother[j].livello = 0;
+    for (const skill of this.skillother) {
+      skill.livello = 0;
     }
     this.sommaSkill = 0 ;
     this.sommaAttitudini = 0 ;

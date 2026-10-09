@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 
@@ -9,7 +9,7 @@ export interface LogPx {
 }
 
 export interface Eventi {
-  eventi: string;
+  eventi: number;
   eventodata: string;
 }
 
@@ -22,25 +22,24 @@ export interface Eventi {
 })
 export class LogpxComponent implements OnInit {
 
-  logpx: Array<LogPx> = [];
+  logpx: LogPx[] = [];
   idutente = 0;
   myeventi = 0;
   eventodata = '';
 
-
-  constructor( private schedaservice: SchedaService) { }
+  private schedaservice = inject(SchedaService);
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
-    this.schedaservice.getlogpx(this.idutente)
+    this.schedaservice.getlogpx<LogPx[]>(this.idutente)
     .subscribe(
-      (data: any) => {
+      (data: LogPx[]) => {
         this.logpx = data;
       }
     );
-    this.schedaservice.geteventi(this.idutente)
+    this.schedaservice.geteventi<Eventi>(this.idutente)
     .subscribe(
-      (data: any) => {
+      (data: Eventi) => {
         this.myeventi = data.eventi;
         this.eventodata = data.eventodata;
         //console.log(this.myeventi);

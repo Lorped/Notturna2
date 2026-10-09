@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { AdminService } from '../_services';
 import { GlobalStatus, Cronaca } from '../global';
 
@@ -27,27 +27,30 @@ export interface FullEV {
 })
 export class EventiComponent implements OnInit {
 
-  listacronache: Array<Cronaca> = [];
+  listacronache: Cronaca[] = [];
 
-  fulleventi: Array<FullEV> = [];
-  displayedEventi: Array<FullEV> = [];
+  fulleventi: FullEV[] = [];
+  displayedEventi: FullEV[] = [];
   currentSortColumn: keyof FullEV | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
   selectedCronache: number[] = [];
 
-  constructor(private adminservice: AdminService, private globalstatus: GlobalStatus) { }
+  private adminservice = inject(AdminService);
+  private globalstatus = inject(GlobalStatus);
+
+
 
   ngOnInit(): void {
 
-    this.adminservice.getlistcronache().subscribe(
-      (data: any) => {
+    this.adminservice.getlistcronache<Cronaca[]>().subscribe(
+      (data: Cronaca[]) => {
         this.listacronache = data;
       }
     );
 
-    this.adminservice.getfulleventi()
+    this.adminservice.getfulleventi<FullEV[]>()
     .subscribe( 
-      (data: any) => {
+      (data: FullEV[]) => {
         this.fulleventi = data;
         this.fulleventi.forEach(element => {
           element.saldo = Number(element.saldo) === 1;
@@ -58,7 +61,7 @@ export class EventiComponent implements OnInit {
         this.applySorting();
         // console.log ( this.fulleventi);
       }
-    )
+    );
 
     //console.log ( this.selectedCronache);
   }
@@ -137,13 +140,13 @@ export class EventiComponent implements OnInit {
 
   checkpay(id: number) {
     console.log ( "on-off ", id);
-    this.adminservice.cambiasaldo(id)
+    this.adminservice.cambiasaldo<string>(id)
     .subscribe(
-      (data:any) => {
+      (data: string) => {
         // console.log(data);
         const evento = this.fulleventi.find(obj => obj.idutente === id);
         if (evento) {
-          evento.saldo = data === '1';
+          evento.saldo = (data === '1');
         }
         //console.log (this.fulleventi.filter(obj => obj.idutente == id)[0] );
       }

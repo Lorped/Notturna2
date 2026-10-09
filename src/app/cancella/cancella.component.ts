@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SchedaService } from '../_services/index';
 
@@ -9,22 +9,23 @@ import { SchedaService } from '../_services/index';
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class CancellaComponent implements OnInit {
+export class CancellaComponent  {
+
+  private schedaservice = inject(SchedaService);
+  private router = inject(Router);
 
   imfine = false ;
-  constructor( private schedaservice: SchedaService, private router: Router) { }
 
-  ngOnInit(): void {
-  }
+
 
   ok() {
-    this.imfine ? this.imfine = false : this.imfine = true ;
+    this.imfine = !this.imfine;
   }
 
   cancella() {
     const idutente = Number( sessionStorage.getItem('NotturnaUser') );
     this.schedaservice.cancellascheda(idutente).subscribe(
-      (data: any) => {
+      () => {
         sessionStorage.setItem('NotturnaUser1', '0' );
         this.router.navigate(['/gate']);
       }

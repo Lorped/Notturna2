@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus} from '../global';
 import { UntypedFormControl, Validators } from '@angular/forms';
-import { GetSentiero } from '../_services/scheda.service';
+import { GetSentiero, PregioDifetto } from '../_services/scheda.service';
 
 interface GetFama {
   fama1: number;
@@ -15,7 +15,6 @@ interface ContattiAlleati {
   contatti: Contatti[];
   alleati: Alleati[];
 }
-
 
 
 interface GetPregioDifetto {
@@ -42,21 +41,8 @@ interface GetSkill {
   skills: Skill[];
 }
 
-interface PregioDifetto {
-  pregi_f: Pregio[];
-  pregi_m: Pregio[];
-  pregi_s: Pregio[];
-  pregi_x: Pregio[];
-  difetti_f: Pregio[];
-  difetti_m: Pregio[];
-  difetti_s: Pregio[];
-  difetti_x: Pregio[];
-}
 
-interface GetPregioDifetto {
-  pregi: Pregio[];
-  difetti: Pregio[];
-}
+
 
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
@@ -26,7 +26,10 @@ export class LoginComponent implements OnInit {
   loginInvalid = false ;
   hide = true ;
 
-  constructor( private authenticationService: AuthenticationService , private router: Router, private globalstatus: GlobalStatus) { }
+  private authenticationService = inject(AuthenticationService);
+  private router = inject(Router);
+  private globalstatus = inject(GlobalStatus);
+
 
   ngOnInit(): void {
     this.authenticationService.logout();
@@ -72,7 +75,7 @@ export class LoginComponent implements OnInit {
 
 
         },
-        error => {
+        () => {
           this.loginInvalid = true;
         });
   }

@@ -1,7 +1,18 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Sentiero, Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg} from '../global';
+import { Sentiero, Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, Pregio } from '../global';
+
+export interface PregioDifetto {
+  pregi_f: Pregio[];
+  pregi_m: Pregio[];
+  pregi_s: Pregio[];
+  pregi_x: Pregio[];
+  difetti_f: Pregio[];
+  difetti_m: Pregio[];
+  difetti_s: Pregio[];
+  difetti_x: Pregio[];
+}
 
 
   interface ListaDisciplineVie  {
@@ -27,8 +38,8 @@ export class SchedaService {
   private http = inject(HttpClient);
 
 
-  getregistra() {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/getregistra.php' );
+  getregistra<T>() {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getregistra.php' );
   }
 
   putregistra( aPG: Basicpg , bg: Background[] , cont: Contatti[] , alleati: Alleati[],

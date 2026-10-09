@@ -120,8 +120,8 @@ export class AdminService {
     return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/getfulleventi.php' );
   }
 
-  cambiasaldo(idutente: number) {
-    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cambiasaldo.php',{
+  cambiasaldo<T>(idutente: number) {
+    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/cambiasaldo.php',{
       idutente: idutente
     });
   }

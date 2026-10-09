@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 
-  include ('db2.inc.php'); //MSQLI//
+  include_once __DIR__ . '/db2.inc.php'; //MSQLI//
 
   $idutente=$_GET['idutente'];
 
