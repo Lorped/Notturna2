@@ -2,21 +2,13 @@ import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/cor
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
-import { Background,  GlobalStatus } from '../global';
-import { GetScheda, GetBG } from '../_services/scheda.service';
+import { Background,  GlobalStatus, listaspese } from '../global';
+import { GetScheda, GetBG, GetRisorse } from '../_services/scheda.service';
 import { Observable, of } from 'rxjs';
 
-interface GetRisorse {
-  saldo: number;
-  lista: listaspese[];
-}
 
-export class listaspese {
-  public data = '' ;
-  public spesa = 0 ;
-  public cadenza = 30 ;
-  public recuperati = 0 ;
-};
+
+
 
 
 @Component({
@@ -153,11 +145,8 @@ export class RisorseComponent implements OnInit {
   }
 
   addcontanti(){
-    
-    
     this.schedaservice.addcontanti(this.idutente).subscribe(
       () => {
-        
         this.contanti++;
       }
     )
@@ -165,8 +154,7 @@ export class RisorseComponent implements OnInit {
   }
   mincontanti(){
     this.schedaservice.mincontanti(this.idutente).subscribe(
-      () => {
-        
+      () => {    
         this.contanti--;
       }
     )

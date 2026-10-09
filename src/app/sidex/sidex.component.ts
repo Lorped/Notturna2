@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 @Component({
@@ -14,8 +14,9 @@ export class SidexComponent implements OnInit {
   mybadge = 0 ;
   mybadge2 = 0 ;
   ingate = true ;
+  private schedaservice = inject(SchedaService);
 
-  constructor(private schedaservice: SchedaService) { }
+
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );

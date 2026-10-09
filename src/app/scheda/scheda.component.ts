@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale,    Alleati} from '../global';
+import { GetScheda, GetRisorse } from '../_services/scheda.service';
 
 export class listaspese {
   public data = '' ;
@@ -25,38 +26,39 @@ export class SchedaComponent implements OnInit {
   rd = 0 ;
   psvuoti = 0 ;
 
-  discipline: Array<FullDisciplina> = [] ;
-  necromanzie: Array<FullNecromanzia> = [] ;
-  taumaturgie: Array<FullTaumaturgia> = [] ;
+  discipline: FullDisciplina[] = [] ;
+  necromanzie: FullNecromanzia[] = [] ;
+  taumaturgie: FullTaumaturgia[] = [] ;
 
-  background: Array<Background> = [] ;
-  contatti: Array<Contatti> = [];
-  alleati: Array<Alleati> = [];
+  background: Background[] = [] ;
+  contatti: Contatti[] = [];
+  alleati: Alleati[] = [];
   maxcontatti = 0;
   maxalleati = 0;
 
-  skills: Array<Skill> = [];
-  otherskill: Array<Skill> = [];
-  attitudini: Array<Skill> = [];
+  skills: Skill[] = [];
+  otherskill: Skill[] = [];
+  attitudini: Skill[] = [];
 
-  pregi: Array<Pregio> = [];
-  rituali: Array<Rituale> = [];
+  pregi: Pregio[] = [];
+  rituali: Rituale[] = [];
 
 
 
-  listaarray: Array <listaspese> = [];
+  listaarray: listaspese[] = [];
 
   risorse_base=0;
   saldo = 0 ;
 
-  constructor(private schedaservice: SchedaService) { }
+  private schedaservice = inject(SchedaService);
+
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
 
-    this.schedaservice.getscheda(this.idutente).
+    this.schedaservice.getscheda<GetScheda>(this.idutente).
     subscribe (
-      (data: any) => {
+      (data: GetScheda) => {
         this.scheda = data.user ;
         this.pf = data.pf ;
         this.rp = data.rp ;
@@ -68,6 +70,7 @@ export class SchedaComponent implements OnInit {
                             + Number(this.scheda['fdv']) )
                             / 5 );
 
+        /*
         this.scheda['forza'] = Number(this.scheda['forza']);
         this.scheda['destrezza'] = Number(this.scheda['destrezza']);
         this.scheda['attutimento'] = Number(this.scheda['attutimento']);
@@ -79,17 +82,21 @@ export class SchedaComponent implements OnInit {
         this.scheda['percezione'] = Number(this.scheda['percezione']);
 
         this.scheda['fdv'] = Number(this.scheda['fdv']);
+        */
 
         //this.scheda['sete'] = Number(this.scheda['sete']);
         //this.scheda['addsete'] = Number(this.scheda['addsete']);
-        this.scheda['PScorrenti'] = Number(this.scheda['PScorrenti']);
-        this.psvuoti = this.scheda['maxps']  - this.scheda['PScorrenti'];
+        //this.scheda['PScorrenti'] = Number(this.scheda['PScorrenti']);
 
+
+        /*
         this.scheda['fama1'] = Number(this.scheda['fama1']);
         this.scheda['fama2'] = Number(this.scheda['fama2']);
         this.scheda['fama3'] = Number(this.scheda['fama3']);
 
         this.scheda['bane'] = Number(this.scheda['bane']);
+        */
+        this.psvuoti = this.scheda['maxps']  - this.scheda['PScorrenti'];
 
         this.discipline = data.discipline ;
         this.taumaturgie = data.taumaturgie ;
@@ -103,28 +110,26 @@ export class SchedaComponent implements OnInit {
         this.alleati = data.alleati;
 
         this.maxcontatti = 0;
-        for ( let item of this.contatti) {
-          this.maxcontatti += Number(item.livello);
+        for ( const item of this.contatti) {
+          this.maxcontatti += item.livello;
         }
         this.maxalleati = 0;
-        for ( let item of this.contatti) {
-          this.maxalleati += Number(item.livello);
+        for ( const item of this.alleati) {
+          this.maxalleati += item.livello;
         }
 
         this.pregi = data.pregidifetti;
         this.rituali = data.rituali;
 
         for ( const item of this.background) {
-          item.livello = Number (item.livello);
-          item.idback = Number (item.idback);
           if (item.idback == 2) {
             this.risorse_base = item.livello;
           }
         }
 
 
-        this.schedaservice.getrisorse(this.idutente).subscribe(
-          (data: any) => {
+        this.schedaservice.getrisorse<GetRisorse>(this.idutente).subscribe(
+          (data: GetRisorse) => {
             this.saldo = Number(data.saldo);
     
             this.listaarray = data.lista;

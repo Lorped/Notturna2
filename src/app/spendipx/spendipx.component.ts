@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
-import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati, Pregio, Rituale } from '../global';
-
+import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati,  Rituale } from '../global';
+import { GetScheda, GetRituali, GetBG, GetContattiAlleati } from '../_services/scheda.service';
 
 
 @Component({
@@ -49,37 +49,37 @@ export class SpendipxComponent implements OnInit {
   scheda: Basicpg = new Basicpg();
 
 
-  discipline: Array<FullDisciplina> = [] ;
+  discipline: FullDisciplina[] = [] ;
 
-  costonewdisc: Array<number> = [];
+  costonewdisc: number[] = [];
 
-  necromanzie: Array<FullNecromanzia> = [] ;
-  taumaturgie: Array<FullTaumaturgia> = [] ;
-  skills: Array<Skill> = [];
-  otherskill: Array<Skill> = [];
-  attitudini: Array<Skill> = [];
+  necromanzie: FullNecromanzia[] = [] ;
+  taumaturgie: FullTaumaturgia[] = [] ;
+  skills: Skill[] = [];
+  otherskill: Skill[] = [];
+  attitudini: Skill[] = [];
 
-  rituali: Array<Rituale> = [];
+  rituali: Rituale[] = [];
   /*rituali_n_x: Array<Rituale> = [];
   rituali_t_t: Array<Rituale> = []; */
-  rituali_n: Array<any> = [];
-  rituali_t: Array<any> = [];
+  rituali_n: Rituale[] = [];
+  rituali_t: Rituale[] = [];
 
   maxrituali = 0 ;
 
-  idnewrituale: Array<string> = ['', '', '', '', ''];
+  idnewrituale: string[] = ['', '', '', '', ''];
 
-  newtaumaturgie: Array<Taumaturgia> = [] ;
-  newnecromanzie: Array<Necromanzia> = [] ;
+  newtaumaturgie: Taumaturgia[] = [] ;
+  newnecromanzie: Necromanzia[] = [] ;
   idnewtaum = '';
   idnewnecro = '';
 
   statusPG = 1;
 
-  livellitaum: Array<number> = [ 0 , 0 , 0 ];
-  livellinecro: Array<number> = [ 0 , 0 , 0 ];
+  livellitaum: number[] = [ 0 , 0 , 0 ];
+  livellinecro: number[] = [ 0 , 0 , 0 ];
 
-  otherdisc: Array<Disciplina> = [];
+  otherdisc: Disciplina[] = [];
   idnewdisc = '';
 
   idnewprimaria = '';
@@ -92,10 +92,10 @@ export class SpendipxComponent implements OnInit {
 
 
 
-  listabg: Array<Background> = [];
-  listaContatti: Array<Contatti> = [];
+  listabg: Background[] = [];
+  listaContatti: Contatti[] = [];
   sommaContatti = 0;
-  listaAlleati: Array<Alleati> = [];
+  listaAlleati: Alleati[] = [];
   sommaAlleati = 0;
 
   myContatto = new UntypedFormControl ( '', [
@@ -107,7 +107,8 @@ export class SpendipxComponent implements OnInit {
     Validators.pattern(/.*[^ ].*/),
   ]);
 
-  constructor( private schedaservice: SchedaService ) { }
+  private schedaservice = inject(SchedaService);
+
 
   /*
   addXPform = new UntypedFormGroup ({
@@ -122,11 +123,12 @@ export class SpendipxComponent implements OnInit {
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
 
-    this.schedaservice.getscheda(this.idutente).
+    this.schedaservice.getscheda<GetScheda>(this.idutente).
     subscribe (
-      (data: any) => {
+      (data: GetScheda) => {
         this.scheda = data.user ;
 
+        /*
         this.scheda['forza'] = Number(this.scheda['forza']);
         this.scheda['destrezza'] = Number(this.scheda['destrezza']);
         this.scheda['attutimento'] = Number(this.scheda['attutimento']);
@@ -150,7 +152,7 @@ export class SpendipxComponent implements OnInit {
         this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);  //conta la bloodpotency
 
         this.statusPG = Number(this.scheda.idstatus);
-
+        */
 
         this.maxdisc = this.matriceMaxDisc2  [14 - this.scheda['generazione']];
 
@@ -170,32 +172,20 @@ export class SpendipxComponent implements OnInit {
 
 
         this.discipline = data.discipline ;
-        for (let j = 0 ; j < this.discipline.length ; j++ ) {
-          this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
-          this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-          /**
-          if ( this.discipline[j].disciplina.DiClan == 'S' ) {
-            this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 2 ;
-          } else {
-            this.costonewdisc[j] = (1 + this.discipline[j].disciplina.livello) * 3 ;
-          }
-          **/
-        }
+
 
         this.taumaturgie = data.taumaturgie ;
         this.necromanzie = data.necromanzie ;
 
         let j = 0;
-        for ( let item of  this.taumaturgie ){
-          item.taumaturgia.livello = Number (item.taumaturgia.livello);
-          this.livellitaum [j] = Number ( item.taumaturgia.livello );
+        for ( const item of  this.taumaturgie ){
+          this.livellitaum [j] =  item.taumaturgia.livello ;
           j ++;
         }
 
         let i = 0;
-        for ( let item of  this.necromanzie ){
-          item.necromanzia.livello = Number (item.necromanzia.livello);
-          this.livellinecro[i] = Number ( item.necromanzia.livello );
+        for ( const item of  this.necromanzie ){
+          this.livellinecro[i] =  item.necromanzia.livello ;
           i ++;
         }
 
@@ -212,26 +202,16 @@ export class SpendipxComponent implements OnInit {
         this.skills = data.skill ;
         this.otherskill = data.otherskill ;
         this.attitudini = data.attitudini ;
-        for (let item of  this.skills ) {
-          item.livello = Number(item.livello);
-        }
-        for (let item of  this.attitudini ) {
-          item.livello = Number(item.livello);
-        }
+  
 
-        this.schedaservice.getbg(this.idutente).subscribe(
-          (data: any) => {
+        this.schedaservice.getbg<GetBG>(this.idutente).subscribe(
+          (data: GetBG) => {
             this.listabg = data.background;
-
-            for ( const item of this.listabg) {
-              item.livello = Number (item.livello);
-            }
-
           }
         );
 
-        this.schedaservice.getcontatti(this.idutente).subscribe(
-          (data: any) => {
+        this.schedaservice.getcontatti<GetContattiAlleati>(this.idutente).subscribe(
+          (data: GetContattiAlleati) => {
             this.listaContatti = data.contatti;
             this.listaAlleati = data.alleati;
 
@@ -239,11 +219,9 @@ export class SpendipxComponent implements OnInit {
             this.sommaAlleati = 0;
 
             for ( const item of this.listaContatti ) {
-              item.livello = Number (item.livello);
               this.sommaContatti += item.livello;
             }
             for ( const item of this.listaAlleati ) {
-              item.livello = Number (item.livello);
               this.sommaAlleati += item.livello;
             }
 
@@ -254,7 +232,7 @@ export class SpendipxComponent implements OnInit {
         this.rituali = data.rituali;
 
         this.maxrituali = 0;
-        for ( let item of  this.rituali) {
+        for ( const item of  this.rituali) {
           if (item.livello> this.maxrituali) {
             this.maxrituali = item.livello;
           }
@@ -276,9 +254,9 @@ export class SpendipxComponent implements OnInit {
             this.otherdisc = data.otherdisc;
           }
         );
-        this.schedaservice.getrituali(this.idutente)
+        this.schedaservice.getrituali<GetRituali>(this.idutente)
         .subscribe(
-          (data: any) => {
+          (data: GetRituali) => {
             this.rituali_t = data.rituali_t;
             this.rituali_n = data.rituali_n;
           }
@@ -352,7 +330,7 @@ export class SpendipxComponent implements OnInit {
     this.lock = true;
     this.schedaservice.addattr(this.idutente, attributo)
     .subscribe(
-      data => {
+      () => {
         this.ricalcolo_xp(); 
       }
     );
@@ -361,12 +339,12 @@ export class SpendipxComponent implements OnInit {
 
   
   adddisc( iddisciplina: number ) { 
-    for ( let j = 0 ; j< this.discipline.length; j++) {
-      if ( this.discipline[j].disciplina.iddisciplina == iddisciplina) {
-        this.discipline[j].disciplina.livello ++  ;
+    for ( const disciplina of  this.discipline) {
+      if ( disciplina.disciplina.iddisciplina == iddisciplina) {
+        disciplina.disciplina.livello ++  ;
         
         /* NON INTERESSA SE DI CLAN O NO
-        diclan = this.discipline[j].disciplina.DiClan;
+        diclan = disciplina.disciplina.DiClan;
         if ( diclan == 'S') {
           spesapx = 1 ;
           this.costonewdisc[j] = 1 ;
@@ -385,7 +363,7 @@ export class SpendipxComponent implements OnInit {
 
     this.schedaservice.adddisciplina(this.idutente, iddisciplina)
     .subscribe(
-      data => {       
+      () => {       
         this.check_discipline_strane();
         //this.reload_full();
         this.ricalcolo_xp(); 
@@ -396,17 +374,17 @@ export class SpendipxComponent implements OnInit {
   
 
   addtaum( idtaum: number ) {
-    for (let j = 0 ; j < this.taumaturgie.length ; j++) {
-      if ( this.taumaturgie[j].taumaturgia.idtaum == idtaum ) {
-        this.taumaturgie[j].taumaturgia.livello ++ ;
-        if (this.taumaturgie[j].taumaturgia.principale == 1 ) {
-          for (let j = 0 ; j < this.discipline.length ; j++) {
-            if ( this.discipline[j].disciplina.iddisciplina == 98 ) {
-              this.discipline[j].disciplina.livello ++ ;
+    for (const tt of this.taumaturgie) {
+      if ( tt.taumaturgia.idtaum == idtaum ) {
+        tt.taumaturgia.livello ++ ;
+        if (tt.taumaturgia.principale == 1 ) {
+          for (const disciplina of this.discipline) {
+            if ( disciplina.disciplina.iddisciplina == 98 ) {
+              disciplina.disciplina.livello ++ ;
             }
           }
         }
-        this.livellitaum [ this.taumaturgie[j].taumaturgia.principale -1 ] = this.taumaturgie[j].taumaturgia.livello;
+        this.livellitaum [ tt.taumaturgia.principale -1 ] = tt.taumaturgia.livello;
       }
     }
     this.scheda.xpspesi ++;
@@ -414,24 +392,24 @@ export class SpendipxComponent implements OnInit {
     this.lock = true;
     this.schedaservice.addtaum(this.idutente, idtaum)
     .subscribe(
-      data => {
+      () => {
         this.reload_full();
       }
     );
   }
 
   addnecro( idnecro: number ) {
-    for (let j = 0 ; j < this.necromanzie.length ; j++) {
-      if ( this.necromanzie[j].necromanzia.idnecro == idnecro ) {
-        this.necromanzie[j].necromanzia.livello ++ ;
-        if (this.necromanzie[j].necromanzia.principale == 1 ) {
-          for (let j = 0 ; j < this.discipline.length ; j++) {
-            if ( this.discipline[j].disciplina.iddisciplina == 99 ) {
-              this.discipline[j].disciplina.livello ++ ;
+    for (const necromanzia of this.necromanzie) {
+      if ( necromanzia.necromanzia.idnecro == idnecro ) {
+        necromanzia.necromanzia.livello ++ ;
+        if (necromanzia.necromanzia.principale == 1 ) {
+          for (const disciplina of this.discipline) {
+            if ( disciplina.disciplina.iddisciplina == 99 ) {
+              disciplina.disciplina.livello ++ ;
             }
           }
         }
-        this.livellinecro [ this.necromanzie[j].necromanzia.principale -1 ] = this.necromanzie[j].necromanzia.livello;
+        this.livellinecro [ necromanzia.necromanzia.principale -1 ] = necromanzia.necromanzia.livello;
       }
     }
     this.scheda.xpspesi ++;
@@ -439,7 +417,7 @@ export class SpendipxComponent implements OnInit {
     this.lock = true;
     this.schedaservice.addnecro(this.idutente, idnecro)
     .subscribe(
-      data => {
+      () => {
         this.reload_full();
       }
     );
@@ -452,7 +430,7 @@ export class SpendipxComponent implements OnInit {
 
     this.schedaservice.newtaum(this.idutente, this.idnewtaum , lvl)
     .subscribe(
-      data => {
+      () => {
         this.reload_full ();
       }   
     );
@@ -467,7 +445,7 @@ export class SpendipxComponent implements OnInit {
     
     this.schedaservice.newnecro(this.idutente, this.idnewnecro , lvl)
     .subscribe(
-      data => {
+      () => {
         this.reload_full ();
       }
     );
@@ -497,7 +475,7 @@ export class SpendipxComponent implements OnInit {
 
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
     .subscribe(
-      (data: any) => {
+      () => {
         this.schedaservice.getscheda(this.idutente).
         subscribe (
           (data: any) => {
@@ -509,9 +487,9 @@ export class SpendipxComponent implements OnInit {
             }
 
             this.maxrituali = 0;
-            for ( let j = 0 ; j< this.rituali.length; j ++) {
-              if (this.rituali[j].livello> this.maxrituali) {
-                this.maxrituali = this.rituali[j].livello;
+            for (const rituale of this.rituali) {
+              if (rituale.livello > this.maxrituali) {
+                this.maxrituali = rituale.livello;
               }
             }
             this.schedaservice.getrituali(this.idutente)
@@ -530,18 +508,18 @@ export class SpendipxComponent implements OnInit {
 
   addsubskill (idskill: number, xid: number){
 
-    for (let j = 0 ; j < this.skills.length ; j++) {
-      if (this.skills[j].idskill == xid ) {      
-        for (let k = 0 ; k < this.skills[j].subskill2.length ; k++) {
-          if (this.skills[j].subskill2[k].idskill == idskill ) {
+    for (const skill of this.skills) {
+      if (skill.idskill == xid ) {      
+        for (const subskill of skill.subskill2) {
+          if (subskill.idskill == idskill ) {
             
-            this.skills[j].subskill2[k].livello++;
+            subskill.livello++;
             this.scheda.xpspesi ++ ;
             this.numavanzamenti -- ;
             this.lock = true;
             
             this.schedaservice.addskill(this.idutente, idskill, 0)
-              .subscribe( (data:any) => {
+              .subscribe( () => {
 
                 if (idskill == 18 ) {  // stregoneria-rituali
                   this.check_discipline_strane();
@@ -558,46 +536,46 @@ export class SpendipxComponent implements OnInit {
 
   addskill (idskill: number, tipologia: number) {
     if (tipologia == 0  ) {
-      for (let j = 0 ; j < this.skills.length ; j++) {
-        if (this.skills[j].idskill == idskill ) {
+      for (const skill of this.skills) {
+        if (skill.idskill == idskill ) {
           
-          this.skills[j].livello ++ ;         
+          skill.livello ++ ;         
           this.scheda.xpspesi ++ ;
           this.numavanzamenti -- ;
           this.lock = true;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
-          .subscribe( (data:any) => {
+          .subscribe( () => {
             this.ricalcolo_xp();
           });
         }
       }
     } else if (tipologia == 2 ) {
-      for (let j = 0 ; j < this.attitudini.length ; j++) {
-        if (this.attitudini[j].idskill == idskill ) {
+      for (const attitudine of this.attitudini) {
+        if (attitudine.idskill == idskill ) {
           
-          this.attitudini[j].livello ++ ;
+          attitudine.livello ++ ;
           this.scheda.xpspesi ++ ;
           this.numavanzamenti -- ;
           this.lock = true;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
-          .subscribe( (data:any) => {
+          .subscribe( () => {
             this.ricalcolo_xp();
           });
         }
       }
     } else if (tipologia == 1) {
-      for (let j = 0 ; j < this.otherskill.length ; j++) {
-        if (this.otherskill[j].idskill == idskill ) {
+      for (const skill of this.otherskill) {
+        if (skill.idskill == idskill ) {
           
-          this.otherskill[j].livello ++ ;
+          skill.livello ++ ;
           this.scheda.xpspesi ++ ;
           this.numavanzamenti -- ;
           this.lock = true;
 
           this.schedaservice.addskill(this.idutente, idskill, tipologia)
-          .subscribe( (data:any) => {
+          .subscribe( () => {
             this.ricalcolo_xp();
           });
         }
@@ -614,7 +592,7 @@ export class SpendipxComponent implements OnInit {
     this.lock = true;
 
     this.schedaservice.addfdv(this.idutente)
-    .subscribe( (data:any) => {
+    .subscribe( () => {
       this.ricalcolo_xp();
     });
 
@@ -627,7 +605,7 @@ export class SpendipxComponent implements OnInit {
         this.numavanzamenti -- ;
 
         this.schedaservice.addbp(this.idutente)
-        .subscribe( (data:any) => {
+        .subscribe( () => {
           this.reload_full();   //bp può portare a nuovi maxstat/maxdisc
 
         });
@@ -636,7 +614,7 @@ export class SpendipxComponent implements OnInit {
   scegliprimaria(){
 
       this.schedaservice.addprimariataum(this.idutente, Number(this.idnewprimaria))
-      .subscribe ( (data:any) => {
+      .subscribe ( () => {
         this.tremeresenzataum = 0 ;
         
         this.scheda.xpspesi ++ ;
@@ -650,7 +628,7 @@ export class SpendipxComponent implements OnInit {
   scegliprimarianecro(){
 
       this.schedaservice.addprimarianecro(this.idutente, Number(this.idnewprimaria))
-      .subscribe ( (data:any) => {
+      .subscribe ( () => {
         this.giovannisenzanecro = 0 ;
         
         this.scheda.xpspesi ++ ;
@@ -723,7 +701,7 @@ export class SpendipxComponent implements OnInit {
 
 
   newcontatto(){
-    let myNew = new Contatti();
+    const myNew = new Contatti();
     myNew.nomecontatto = this.myContatto.value;
     myNew.livello = 1 ;
 
@@ -757,7 +735,7 @@ export class SpendipxComponent implements OnInit {
 
         this.schedaservice.putcontatti(this.idutente, id, item.livello, 'U')
         .subscribe(
-          (data) => {
+          () => {
             this.sommaContatti ++ ;
             //this.reload_full();
             this.ricalcolo_xp();
@@ -767,7 +745,7 @@ export class SpendipxComponent implements OnInit {
     }
   }
   newAlleato(){
-    let myNew = new Alleati();
+    const myNew = new Alleati();
     myNew.nomealleato = this.myAlleato.value;
     myNew.livello = 1 ;
 
@@ -799,7 +777,7 @@ export class SpendipxComponent implements OnInit {
         this.lock = true;
         this.schedaservice.putalleati(this.idutente, id, item.livello, 'U')
         .subscribe(
-          (data) => {
+          () => {
             this.sommaAlleati ++ ;
             //this.reload_full();
             this.ricalcolo_xp();
@@ -810,19 +788,15 @@ export class SpendipxComponent implements OnInit {
   }
 
   addbg(id: number){
-    let newlivello = 0 ;
 
     for ( const item of  this.listabg ){
       if ( item.idback == id) {
-        item.livello ++ ;
-  
+        item.livello ++ ; 
         this.scheda.xpspesi ++ ;
         this.numavanzamenti --;
-        this.lock = true;
-        
-        newlivello = item.livello;
-        this.schedaservice.putbg(this.idutente, id , newlivello , 'U' ).subscribe(
-          (data) => {
+        this.lock = true;    
+        this.schedaservice.putbg(this.idutente, id , item.livello , 'U' ).subscribe(
+          () => {
               this.ricalcolo_xp();
           }
         );        
@@ -869,10 +843,10 @@ export class SpendipxComponent implements OnInit {
 
 
   check_discipline_strane() {
-    let valrituali = 0 ;
-    let valduranki = 0;
-    let valmisticismo = 0 ;
-    let valottenebra = 0 ;
+    let valrituali : number ;
+    let valduranki : number ;
+    let valmisticismo : number ;
+    let valottenebra : number ;
     const duranki = this.discipline.find(xx => xx.disciplina.iddisciplina == 21);
     if (duranki) {
       valduranki = duranki.disciplina.livello;

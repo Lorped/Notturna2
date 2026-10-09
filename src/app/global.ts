@@ -69,6 +69,15 @@ export class Basicpg {
 }
 
 @Injectable()
+export class listaspese {
+  public data = '' ;
+  public spesa = 0 ;
+  public cadenza = 30 ;
+  public recuperati = 0 ;
+};
+
+
+@Injectable()
 export class Lds {
   public idlds = 0 ;
   public idclan = 0;

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus} from '../global';
 import { UntypedFormControl, Validators } from '@angular/forms';
-import { GetSentiero, PregioDifetto, GetPregioDifetto, GetBG } from '../_services/scheda.service';
+import { GetSentiero, PregioDifetto, GetPregioDifetto, GetBG, GetContattiAlleati } from '../_services/scheda.service';
 
 interface GetFama {
   fama1: number;
@@ -11,10 +11,7 @@ interface GetFama {
   fama3: number;
 }
 
-interface ContattiAlleati {
-  contatti: Contatti[];
-  alleati: Alleati[];
-}
+
 
 
 
@@ -168,8 +165,8 @@ export class AdminbgComponent implements OnInit {
       }
     );
 
-    this.schedaservice.getcontatti<ContattiAlleati>(this.idutente).subscribe(
-      (data: ContattiAlleati) => {
+    this.schedaservice.getcontatti<GetContattiAlleati>(this.idutente).subscribe(
+      (data: GetContattiAlleati) => {
         this.listaContatti = data.contatti;
         this.listaAlleati = data.alleati;
 
