@@ -1,5 +1,15 @@
 import { Injectable } from '@angular/core';
 
+export type BasicpgStat =
+  | 'forza'
+  | 'destrezza'
+  | 'attutimento'
+  | 'carisma'
+  | 'persuasione'
+  | 'saggezza'
+  | 'percezione'
+  | 'prontezza'
+  | 'intelligenza';
 
 @Injectable()
 export class Basicpg {
@@ -400,4 +410,3 @@ export class Cronaca {
   idcronaca = 0;
   descrizione = '';
 }
-

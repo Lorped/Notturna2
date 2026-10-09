@@ -1,6 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Pregio } from '../global';
+import { PregioDifetto, GetPregioDifetto } from '../_services/scheda.service';
+
+interface GetPx {
+  pxdisponibili: number;
+}
 
 @Component({
     selector: 'app-pregidifetti',
@@ -17,19 +22,19 @@ export class PregidifettiComponent implements OnInit {
 
   saldo = 0 ;
 
-  pregi_f: Array<Pregio> = [];
-  pregi_m: Array<Pregio> = [];
-  pregi_s: Array<Pregio> = [];
-  pregi_x: Array<Pregio> = [];
-  difetti_f: Array<Pregio> = [];
-  difetti_m: Array<Pregio> = [];
-  difetti_s: Array<Pregio> = [];
-  difetti_x: Array<Pregio> = [];
+  pregi_f: Pregio[] = [];
+  pregi_m: Pregio[] = [];
+  pregi_s: Pregio[] = [];
+  pregi_x: Pregio[] = [];
+  difetti_f: Pregio[] = [];
+  difetti_m: Pregio[] = [];
+  difetti_s: Pregio[] = [];
+  difetti_x: Pregio[] = [];
 
   idutente = 0 ;
 
-  pregi: Array<Pregio> = [];
-  difetti: Array<Pregio> = [];
+  pregi: Pregio[] = [];
+  difetti: Pregio[] = [];
 
   ok_d_f = 0;
   ok_d_m = 0;
@@ -52,7 +57,9 @@ export class PregidifettiComponent implements OnInit {
   new_p_s = '';
   new_p_x = '';
 
-  constructor( private schedaservice: SchedaService ) { }
+  private schedaservice = inject(SchedaService);
+
+
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
@@ -65,9 +72,9 @@ export class PregidifettiComponent implements OnInit {
 
 
   getliste() {
-    this.schedaservice.getpregidifetti(this.idutente)
+    this.schedaservice.getpregidifetti<PregioDifetto>(this.idutente)
     .subscribe(
-      (data: any) => {
+      (data: PregioDifetto) => {
         this.pregi_f = data.pregi_f ;
         this.pregi_m = data.pregi_m ;
         this.pregi_s = data.pregi_s ;
@@ -83,9 +90,9 @@ export class PregidifettiComponent implements OnInit {
   }
 
   getpregi() {
-    this.schedaservice.getpregi(this.idutente)
+    this.schedaservice.getpregi<GetPregioDifetto>(this.idutente)
     .subscribe(
-      (data: any) => {
+      (data: GetPregioDifetto) => {
         this.pregi = data.pregi ;
         this.difetti = data.difetti ;
 
@@ -102,7 +109,7 @@ export class PregidifettiComponent implements OnInit {
 
         this.saldo = 0 ;
 
-        for ( let item of this.difetti) {
+        for ( const item of this.difetti) {
           this.saldo += Number(item.valore);
           switch (item.classe) {
             case 'F':
@@ -120,7 +127,7 @@ export class PregidifettiComponent implements OnInit {
           }
         }
 
-        for ( let item of this.pregi ) {
+        for ( const item of this.pregi ) {
           item.valore = Number(item.valore);
           this.saldo =  this.saldo + item.valore - item.pxspesi / 2 ;
           switch (item.classe) {
@@ -177,7 +184,7 @@ export class PregidifettiComponent implements OnInit {
 
     this.schedaservice.addpregio(this.idutente, idpregio)
     .subscribe(
-      (data: any) => {
+      () => {
 
         this.new_d_f = '';
         this.new_d_m = '';
@@ -197,17 +204,20 @@ export class PregidifettiComponent implements OnInit {
 
   }
 
+    
   abilitaPX() {
     this.okPX = !(this.okPX) ;
   }
-
+  
+  
   getpx() {
-    this.schedaservice.getpx ( this.idutente)
+    this.schedaservice.getpx<GetPx> ( this.idutente)
     .subscribe(
-      (data: any) => {
+      (data: GetPx) => {
         this.pxdisponibili = data.pxdisponibili;
       }
     );
   }
+  
 
 }

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, inject } from '@angular/core';
 import { AdminService, RigaPrestampa } from '../_services/index';
 import { FullOggetto, Cronaca } from '../global';
 
-
+interface GetListOggetti {
+  oggetti: FullOggetto[];
+}
 
 @Component({
-  selector: 'prestampa',
+  selector: 'app-prestampa',
   styleUrl: './prestampa.component.css',
   templateUrl: './prestampa.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -14,26 +16,27 @@ import { FullOggetto, Cronaca } from '../global';
 })
 export class PrestampaComponent implements OnInit {
 
-  listacronache: Array<Cronaca> = [];
+  listacronache: Cronaca[] = [];
   selectedCronache: number[] = [];
 
-  righe: Array<RigaPrestampa> = [];
-  displayedRighe: Array<RigaPrestampa> = [];
+  righe: RigaPrestampa[] = [];
+  displayedRighe: RigaPrestampa[] = [];
 
   tuttiSelezionati = false;
 
-  constructor(private adminservice: AdminService) { }
+  public adminservice = inject(AdminService);
+
 
   ngOnInit(): void {
-    this.adminservice.getlistcronache().subscribe(
-      (data: any) => {
+    this.adminservice.getlistcronache<Cronaca[]>().subscribe(
+      (data: Cronaca[]) => {
         this.listacronache = data;
       }
     );
 
-    this.adminservice.listoggetti().subscribe(
-      (data: any) => {
-        this.righe = (data.oggetti as Array<FullOggetto>).map(oggetto => ({
+    this.adminservice.listoggetti<GetListOggetti>().subscribe(
+      (data: GetListOggetti) => {
+        this.righe = data.oggetti.map(oggetto => ({
           IDoggetto: oggetto.oggetto.idoggetto,
           IDcronaca: oggetto.oggetto.IDcronaca,
           nomeoggetto: oggetto.oggetto.nomeoggetto,
@@ -100,11 +103,11 @@ export class PrestampaComponent implements OnInit {
     const oggettiSelezionati = this.displayedRighe.filter(riga => riga.selezionato);
     console.log('Oggetti selezionati per la stampa:', oggettiSelezionati);
     this.adminservice.prestampa(oggettiSelezionati).subscribe(
-      (response: any) => {
-        console.log('Risposta dal server:', response);
+      () => {
+        //console.log('Risposta dal server:', response);
         window.open( 'https://www.roma-by-night.it/Notturna2/wsPHP/stampaoggetti.php', '_blank');
       },
-      (error: any) => {
+      (error) => {
         console.error('Errore durante la stampa:', error);
       }
     );

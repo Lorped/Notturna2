@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RubricaService } from '../_services/index';
 import { Rubricaitem } from '../global';
 import { UntypedFormControl,  Validators } from '@angular/forms';
@@ -27,17 +27,17 @@ export class RubricaComponent implements OnInit {
 
   ]);
 
-  constructor( private rubricaservice: RubricaService) { }
+  private rubricaservice = inject(RubricaService);
+
 
   ngOnInit(): void {
 
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
 
-    this.rubricaservice.getrubrica(this.idutente).
+    this.rubricaservice.getrubrica<Rubricaitem[]>(this.idutente).
     subscribe (
-      (data: any)  => {
+      (data: Rubricaitem[])  => {
         this.myrubrica = data;
-
         // console.log(this.myrubrica);
       }
     );
@@ -45,35 +45,35 @@ export class RubricaComponent implements OnInit {
   }
 
   togglecell(idrubrica:number) {
-    for (let i = 0 ; i < this.myrubrica.length ; i++) {
-      if ( this.myrubrica[i].idrubrica == idrubrica) {
-        this.myrubrica[i].cell = ( this.myrubrica[i].cell==0 ? 1 : 0 );
+    for (const item of this.myrubrica) {
+      if ( item.idrubrica == idrubrica) {
+        item.cell = ( item.cell==0 ? 1 : 0 );
 
-        this.rubricaservice.changerubrica(this.myrubrica[i].idrubrica, this.myrubrica[i].contatto, this.myrubrica[i].cell,
-            this.myrubrica[i].email, this.myrubrica[i].home, this.myrubrica[i].note).
+        this.rubricaservice.changerubrica(item.idrubrica, item.contatto, item.cell,
+            item.email, item.home, item.note).
             subscribe();
       }
     }
 
   }
   toggleemail(idrubrica:number) {
-    for (let i = 0 ; i < this.myrubrica.length ; i++) {
-      if ( this.myrubrica[i].idrubrica == idrubrica) {
-        this.myrubrica[i].email = ( this.myrubrica[i].email==0 ? 1 : 0 );
+    for (const item of this.myrubrica) {
+      if ( item.idrubrica == idrubrica) {
+        item.email = ( item.email==0 ? 1 : 0 );
 
-        this.rubricaservice.changerubrica(this.myrubrica[i].idrubrica, this.myrubrica[i].contatto, this.myrubrica[i].cell,
-            this.myrubrica[i].email, this.myrubrica[i].home, this.myrubrica[i].note).
+        this.rubricaservice.changerubrica(item.idrubrica, item.contatto, item.cell,
+            item.email, item.home, item.note).
             subscribe();
       }
     }
   }
   togglehome(idrubrica:number) {
-    for (let i = 0 ; i < this.myrubrica.length ; i++) {
-      if ( this.myrubrica[i].idrubrica == idrubrica) {
-        this.myrubrica[i].home = ( this.myrubrica[i].home==0 ? 1 : 0 );
+    for (const item of this.myrubrica) {
+      if ( item.idrubrica == idrubrica) {
+        item.home = ( item.home==0 ? 1 : 0 );
 
-        this.rubricaservice.changerubrica(this.myrubrica[i].idrubrica, this.myrubrica[i].contatto, this.myrubrica[i].cell,
-            this.myrubrica[i].email, this.myrubrica[i].home, this.myrubrica[i].note).
+        this.rubricaservice.changerubrica(item.idrubrica, item.contatto, item.cell,
+            item.email, item.home, item.note).
             subscribe();
       }
     }
@@ -81,7 +81,7 @@ export class RubricaComponent implements OnInit {
   del(idrubrica:number) {
     this.rubricaservice.delrubrica(idrubrica)
     .subscribe(
-      data => {
+      () => {
         for (let i = 0 ; i < this.myrubrica.length ; i++) {
           if ( this.myrubrica[i].idrubrica == idrubrica) {
             this.myrubrica.splice(i, 1);
@@ -104,8 +104,8 @@ export class RubricaComponent implements OnInit {
   */
 
   addcontatto() {
-    let nomecontatto = this.newcontatto.value;
-    let nomecontatto2 = this.newcontatto2.value;
+    const nomecontatto = this.newcontatto.value;
+    const nomecontatto2 = this.newcontatto2.value;
 
     this.rubricaservice.addrubrica<Rubricaitem>(this.idutente , nomecontatto, 0, 0, 0 , nomecontatto2)
     .subscribe (

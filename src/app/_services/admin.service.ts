@@ -38,8 +38,8 @@ export class AdminService {
     });
   }
 
-  listoggetti() {
-    return this.http.get('https://www.roma-by-night.it/Notturna2/wsPHP/listoggetti.php' );
+  listoggetti<T>() {
+    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/listoggetti.php' );
   }
 
   cancellaoggetto(idoggetto: number) {

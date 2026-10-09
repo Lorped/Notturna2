@@ -1,7 +1,25 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Sentiero, Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, Pregio } from '../global';
+import { Sentiero, Background, Contatti, Alleati, Disciplina, Taumaturgia, Necromanzia, Skill, Basicpg, BasicpgStat, Pregio, FullDisciplina, FullTaumaturgia, FullNecromanzia, Rituale } from '../global';
+
+export interface GetScheda {
+    user: Basicpg,
+    pf: number,
+    rp: number,
+    discipline: FullDisciplina[],
+    taumaturgie: FullTaumaturgia[],
+    necromanzie: FullNecromanzia[],
+    background: Background[],
+    contatti: Contatti[],
+    skill: Skill[],
+    otherskill: Skill[],
+    attitudini: Skill[],
+    rituali: Rituale[],
+    pregidifetti: Pregio[],
+    alleati: Alleati[],
+}
+
 
 export interface PregioDifetto {
   pregi_f: Pregio[];
@@ -14,6 +32,15 @@ export interface PregioDifetto {
   difetti_x: Pregio[];
 }
 
+export interface GetPregioDifetto {
+  pregi: Pregio[];
+  difetti: Pregio[];
+}
+
+
+export interface GetBG {
+  background: Background[];
+}
 
   interface ListaDisciplineVie  {
     disc_vie: string; // D o V
@@ -390,7 +417,7 @@ export class SchedaService {
     });
   }
 
-  changeattr_master(idutente: number , attributo: string|null , valore: number|null ) {
+  changeattr_master(idutente: number , attributo: BasicpgStat , valore: number|null ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/changeattr-master.php',{
       idutente: idutente,
       attributo: attributo,

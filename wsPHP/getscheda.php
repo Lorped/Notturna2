@@ -23,7 +23,7 @@ include_once __DIR__ . '/db2.inc.php';  //MYSQLI //
 
 //  ================================  //
 
-function controlla_fdv ( $idutente , $db ) {    //controllo-aggiorno fdv
+function controlla_fdv ( int $idutente , mysqli $db ) {    //controllo-aggiorno fdv
   $Mysql="SELECT fdv,fdvmax,lastfdv FROM personaggio WHERE idutente=$idutente";
   $Result=mysqli_query ($db, $Mysql);
   $res=mysqli_fetch_array($Result);
@@ -55,7 +55,7 @@ function controlla_fdv ( $idutente , $db ) {    //controllo-aggiorno fdv
   } // fine verifica se fdv < fdvmax
 } // fine controllo fdv
 
-function controlla_ps ( $idutente , $db) {  //inizio test su ps
+function controlla_ps ( int $idutente , mysqli $db) {  //inizio test su ps
   $Mysql="SELECT PScorrenti, maxps, lastps FROM personaggio
     LEFT JOIN generazione ON personaggio.generazione = generazione.generazione
     WHERE idutente=$idutente";
@@ -81,7 +81,7 @@ function controlla_ps ( $idutente , $db) {  //inizio test su ps
   }
 }  //fine test su ps
 
-function controlla_legami ($idutente, $db) {
+function controlla_legami (int $idutente, mysqli $db) {
   $Mysql="DELETE FROM legami WHERE target = $idutente and livello = 1 and (DATE_ADD(dataultima, INTERVAL 60 DAY) < NOW())";
   mysqli_query($db, $Mysql);
   $Mysql="UPDATE legami SET livello=1 , dataultima=NOW() WHERE target = $idutente and livello = 2 and (DATE_ADD(dataultima, INTERVAL 150 DAY) < NOW())";

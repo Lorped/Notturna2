@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class RegistraComponent implements OnInit {
+export class RegistraComponent  {
 
 
   accetta = '';
@@ -51,11 +51,10 @@ export class RegistraComponent implements OnInit {
     ])
   });
 
-  constructor( private authenticationservice: AuthenticationService , private router: Router) { }
+  private authenticationservice = inject(AuthenticationService);
+  private router = inject(Router);
 
-  ngOnInit(): void {
 
-  }
 
   get regname() {
     return this.registrationForm.get('regname');
@@ -74,8 +73,8 @@ export class RegistraComponent implements OnInit {
   }
 
   validateEmailNotTaken(control: AbstractControl) {
-  return this.authenticationservice.checkEmail(control.value)
-  .pipe ( map ( (res: any) => {
+  return this.authenticationservice.checkEmail<string>(control.value)
+  .pipe ( map ( (res: string) => {
     // console.log(res);
      return  res == 'OK' ?  { emailTaken: true } : null ;
     // return null ;
@@ -83,8 +82,8 @@ export class RegistraComponent implements OnInit {
   }
 
   validateNomeNotTaken(control: AbstractControl) {
-  return this.authenticationservice.checkNome(control.value)
-  .pipe ( map ( (res: any) => {
+  return this.authenticationservice.checkNome<string>(control.value)
+  .pipe ( map ( (res: string) => {
     // console.log(res);
      return  res == 'OK' ?  { nomeTaken: true } : null ;
     // return null ;
@@ -94,10 +93,10 @@ export class RegistraComponent implements OnInit {
   doRegister() {
     this.errmsg = '';
     this.authenticationservice.sendregistra(this.regname!.value , this.password!.value, this.regemail!.value)
-    .subscribe( res => {
+    .subscribe( () => {
       this.router.navigate(['']);
       },
-        error => {
+        () => {
         this.errmsg = 'Errore di registrazione';
       }
     );

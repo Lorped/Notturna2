@@ -1,11 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { AuthenticationService } from '../_services/index';
+import { FormControl, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
-import { Background, Basicpg, GlobalStatus } from '../global';
+import { Background,  GlobalStatus } from '../global';
+import { GetScheda, GetBG } from '../_services/scheda.service';
 import { Observable, of } from 'rxjs';
 
+interface GetRisorse {
+  saldo: number;
+  lista: listaspese[];
+}
 
 export class listaspese {
   public data = '' ;
@@ -29,13 +33,13 @@ export class RisorseComponent implements OnInit {
   idutente = 0 ;
   nomepg = '';
 
-  listabg: Array<Background> = [];
+  listabg: Background[] = [];
 
   risorse_base = 0;
 
   saldo = 0 ;
 
-  listaarray: Array <listaspese> = [];
+  listaarray: listaspese[] = [];
 
 
   RisorseForm = new FormGroup ({
@@ -55,99 +59,72 @@ export class RisorseComponent implements OnInit {
   
     contanti = 0;
   
+    private adminservice = inject(AdminService);
+    private schedaservice = inject(SchedaService);
+    private globalstatus = inject(GlobalStatus);
+    private route = inject(ActivatedRoute);
 
-
-  constructor( private globalstatus: GlobalStatus, private adminservice: AdminService, private schedaservice: SchedaService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.idutente = Number ( this.route.snapshot.paramMap.get('id') );
     this.globalstatus.lastpg = this.idutente;
     
 
-    this.adminservice.getnome(this.idutente).subscribe(
-      (data: any) => {
+    this.adminservice.getnome<string>(this.idutente).subscribe(
+      (data: string) => {
         this.nomepg = data;
       }
     );
 
-    this.schedaservice.getscheda(this.idutente).subscribe (
-      (data: any) => {
+    this.schedaservice.getscheda<GetScheda>(this.idutente).subscribe (
+      (data: GetScheda) => {
         //console.log(data);
-        this.contanti = Number(data.user.contanti);
+        this.contanti = data.user.contanti;
       }
     );
 
-    this.schedaservice.getbg(this.idutente).subscribe(
-      (data: any) => {
+    this.schedaservice.getbg<GetBG>(this.idutente).subscribe(
+      (data: GetBG) => {
         this.listabg = data.background;
-
         for ( const item of this.listabg) {
-          item.livello = Number (item.livello);
-          item.idback = Number (item.idback);
           if (item.idback == 2) {
             this.risorse_base = item.livello;
           }
-        }
-
-        
+        }       
       }
     );
 
-    this.schedaservice.getrisorse(this.idutente).subscribe(
-      (data: any) => {
-        this.saldo = Number(data.saldo);
-
+    this.schedaservice.getrisorse<GetRisorse>(this.idutente).subscribe(
+      (data: GetRisorse) => {
+        this.saldo = data.saldo;
         this.listaarray = data.lista;
-
         //console.log(this.listaarray);
       }
     );
-
-
-  
-
   }
 
 
 
   minbg(id: number){
-    let newlivello = 0 ;
-
     this.risorse_base --;
-    newlivello = this.risorse_base;
-
-
-    this.schedaservice.putbg(this.idutente, id, newlivello, 'A' ).subscribe();
+    this.schedaservice.putbg(this.idutente, id, this.risorse_base, 'A' ).subscribe();
   }
 
   addbg(id: number){
-    let newlivello = 0 ;
-
     this.risorse_base ++;
-    newlivello = this.risorse_base;
-    this.schedaservice.putbg(this.idutente, id , newlivello, 'A' ).subscribe();
+    this.schedaservice.putbg(this.idutente, id , this.risorse_base, 'A' ).subscribe();
   }
 
   addspesa(){
-    //console.log("here");
-    //console.log ("spesa "+this.spesa!.value);
-    //console.log ("recupero "+this.recupero!.value);
-
-
-
-
 
     this.schedaservice.addspesa(this.idutente, this.spesa!.value, this.recupero!.value).subscribe(
-      data => {
-
+      () => {
         this.RisorseForm.reset();
 
-        this.schedaservice.getrisorse(this.idutente).subscribe(
-          (data: any) => {
-            this.saldo = Number(data.saldo);
-    
+        this.schedaservice.getrisorse<GetRisorse>(this.idutente).subscribe(
+          (data: GetRisorse) => {
+            this.saldo = data.saldo;
             this.listaarray = data.lista;
-    
             //console.log(this.listaarray);
           });
 
@@ -166,12 +143,10 @@ export class RisorseComponent implements OnInit {
   }
 
 
-  validateRisorse (control: AbstractControl) : Observable<any> {
-    
-    const esito = (this.RisorseForm == undefined) || (Number(this.spesa!.value) >  this.risorse_base + this.saldo ) || Number(this.spesa!.value) <1 ?  { notok: true }: null;
-
-    //console.log(esito);
-     
+  validateRisorse (control: AbstractControl) : Observable<ValidationErrors | null> {
+    const spesa = Number(control.value);
+    const esito = (this.RisorseForm == undefined) || (spesa > this.risorse_base + this.saldo) || spesa < 1 ? { notok: true } : null;
+    //console.log(esito); 
     //const esito = null;
     //console.log("here");
     return of(esito);
@@ -181,7 +156,7 @@ export class RisorseComponent implements OnInit {
     
     
     this.schedaservice.addcontanti(this.idutente).subscribe(
-      data => {
+      () => {
         
         this.contanti++;
       }
@@ -190,7 +165,7 @@ export class RisorseComponent implements OnInit {
   }
   mincontanti(){
     this.schedaservice.mincontanti(this.idutente).subscribe(
-      data => {
+      () => {
         
         this.contanti--;
       }

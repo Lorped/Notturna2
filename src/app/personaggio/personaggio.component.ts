@@ -1,8 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
-import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale,  Alleati } from '../global';
+import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, BasicpgStat, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale,  Alleati } from '../global';
+import { GetScheda } from '../_services/scheda.service';
 
+
+
+interface GetOtherdisc {
+    otherdisc: Disciplina[],
+    othernecro: Necromanzia[],
+    othertaum: Taumaturgia[]
+}
 
 @Component({
     selector: 'app-personaggio',
@@ -13,9 +21,9 @@ import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, FullDisciplina, FullTa
 })
 export class PersonaggioComponent implements OnInit {
 
-  otherdisc: Array<Disciplina> = [];
-  othernecro: Array<Necromanzia> = [];
-  othertaum: Array<Taumaturgia> = [];
+  otherdisc: Disciplina[] = [];
+  othernecro: Necromanzia[] = [];
+  othertaum: Taumaturgia[] = [];
   idnewdisc = '';
   idnewnecro = '';
   idnewtaum = '';
@@ -27,36 +35,39 @@ export class PersonaggioComponent implements OnInit {
   rd = 0 ;
   psvuoti = 0 ;
 
-  discipline: Array<FullDisciplina> = [] ;
-  necromanzie: Array<FullNecromanzia> = [] ;
-  taumaturgie: Array<FullTaumaturgia> = [] ;
+  discipline: FullDisciplina[] = [] ;
+  necromanzie: FullNecromanzia[] = [] ;
+  taumaturgie: FullTaumaturgia[] = [] ;
 
-  background: Array<Background> = [] ;
-  contatti: Array<Contatti> = [] ;
-  alleati: Array<Alleati> = [] ;
+  background: Background[] = [] ;
+  contatti: Contatti[] = [] ;
+  alleati: Alleati[] = [] ;
   maxcontatti = 0;
   maxalleati = 0;
 
-  skills: Array<Skill> = [];
-  otherskill: Array<Skill> = [];
-  attitudini: Array<Skill> = [];
+  skills: Skill[] = [];
+  otherskill: Skill[] = [];
+  attitudini: Skill[] = [];
 
-  pregi: Array<Pregio> = [];
-  rituali: Array<Rituale> = [];
+  pregi: Pregio[] = [];
+  rituali: Rituale[] = [];
 
   isTaumaturgo = false;
   isNecromante = false;
 
+  private globalstatus = inject(GlobalStatus);
+  private route = inject(ActivatedRoute);
+  private schedaservice = inject(SchedaService);
 
-  constructor( private globalstatus: GlobalStatus, private route: ActivatedRoute, private schedaservice: SchedaService ) { }
+
 
   ngOnInit(): void {
     const idutente = Number ( this.route.snapshot.paramMap.get('id') );
     this.globalstatus.lastpg = idutente;
 
-    this.schedaservice.getscheda(idutente)
+    this.schedaservice.getscheda<GetScheda>(idutente)
     .subscribe (
-      (data: any) => {
+      (data: GetScheda) => {
         this.scheda = data.user ;
         this.pf = data.pf ;
         this.rp = data.rp ;
@@ -68,6 +79,7 @@ export class PersonaggioComponent implements OnInit {
                             + Number(this.scheda['fdv']) )
                             / 5 );
 
+        /*
         this.scheda['forza'] = Number(this.scheda['forza']);
         this.scheda['destrezza'] = Number(this.scheda['destrezza']);
         this.scheda['attutimento'] = Number(this.scheda['attutimento']);
@@ -79,12 +91,11 @@ export class PersonaggioComponent implements OnInit {
         this.scheda['percezione'] = Number(this.scheda['percezione']);
 
         this.scheda['fdv'] = Number(this.scheda['fdv']);
-
+        */
         //this.scheda['sete'] = Number(this.scheda['sete']);
         //this.scheda['addsete'] = Number(this.scheda['addsete']);
-        this.scheda['PScorrenti'] = Number(this.scheda['PScorrenti']);
-        this.psvuoti = this.scheda['maxps'] - this.scheda['PScorrenti'];
-
+        // this.scheda['PScorrenti'] = Number(this.scheda['PScorrenti']);
+        /*
         this.scheda['fama1'] = Number(this.scheda['fama1']);
         this.scheda['fama2'] = Number(this.scheda['fama2']);
         this.scheda['fama3'] = Number(this.scheda['fama3']);
@@ -92,6 +103,10 @@ export class PersonaggioComponent implements OnInit {
         this.scheda['bane'] = Number(this.scheda['bane']);
 
         this.scheda['contanti'] = Number(this.scheda['contanti']);
+        */
+
+        this.psvuoti = this.scheda['maxps'] - this.scheda['PScorrenti'];
+
 
         this.discipline = data.discipline ;
         this.taumaturgie = data.taumaturgie ;
@@ -105,13 +120,13 @@ export class PersonaggioComponent implements OnInit {
         this.alleati = data.alleati;
        
         this.maxalleati = 0;
-        for ( let item of this.alleati) {
-          this.maxalleati += Number(item.livello);
+        for ( const item of this.alleati) {
+          this.maxalleati += item.livello;
         }
 
         this.maxcontatti = 0;
-        for ( let item of this.contatti) {
-          this.maxcontatti += Number(item.livello);
+        for ( const item of this.contatti) {
+          this.maxcontatti += item.livello;
         }
 
         this.pregi = data.pregidifetti;
@@ -130,9 +145,9 @@ export class PersonaggioComponent implements OnInit {
         //console.log (this.scheda);
 
 
-        this.schedaservice.getotherdisc(idutente)
+        this.schedaservice.getotherdisc<GetOtherdisc>(idutente)
         .subscribe(
-          (data: any) => {
+          (data: GetOtherdisc) => {
             this.otherdisc = data.otherdisc;
             this.othernecro = data.othernecro;
             this.othertaum = data.othertaum;
@@ -149,7 +164,7 @@ export class PersonaggioComponent implements OnInit {
   rdx (id: number) {
 
     this.schedaservice.changedisc_master(this.globalstatus.lastpg, id, -1).subscribe(
-      (data:any) => {
+      () => {
         const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
         if (disciplina) {
           disciplina.disciplina.livello--;
@@ -162,7 +177,7 @@ export class PersonaggioComponent implements OnInit {
   adx (id: number) {
 
     this.schedaservice.changedisc_master(this.globalstatus.lastpg, id, 1).subscribe(
-      (data:any) => {
+      () => {
         const disciplina = this.discipline.find(d => d.disciplina.iddisciplina === id);
         if (disciplina) {
           disciplina.disciplina.livello++;
@@ -181,11 +196,11 @@ export class PersonaggioComponent implements OnInit {
 
   // STAT BASE
 
-  rda (stat: string) {    
+  rda (stat: BasicpgStat) {
     
     this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, -1).subscribe(
-      (data:any) => {
-        (this.scheda as any) [stat] --;
+      () => {
+        this.scheda[stat]--;
         // console.log ( "riduco", stat);
         
       }
@@ -193,11 +208,11 @@ export class PersonaggioComponent implements OnInit {
   }
 
 
-  ada (stat: string) {    
+  ada (stat: BasicpgStat) {
 
     this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, 1).subscribe(
-      (data:any) => {
-        (this.scheda as any) [stat] ++;
+      () => {
+        this.scheda[stat]++;
         // console.log ( "aumento", stat);
       }
     );
@@ -207,7 +222,7 @@ export class PersonaggioComponent implements OnInit {
   
   rdos (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.otherskill.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello--;
@@ -218,7 +233,7 @@ export class PersonaggioComponent implements OnInit {
   }
   ados (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.otherskill.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello++;
@@ -233,7 +248,7 @@ export class PersonaggioComponent implements OnInit {
   
   rds (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.skills.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello--;
@@ -244,7 +259,7 @@ export class PersonaggioComponent implements OnInit {
   }
   ads (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.skills.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello++;
@@ -257,18 +272,18 @@ export class PersonaggioComponent implements OnInit {
    // sub SKILL
 
   rdss (idskill: number, xidskill: number) {
-    for (let j = 0 ; j < this.skills.length ; j++) {
-      if (this.skills[j].idskill==xidskill){
-        for (let k = 0; k < this.skills[j].subskill2.length; k++){
-          if ( this.skills[j].subskill2[k].idskill == idskill){
-            this.skills[j].subskill2[k].livello -- ;
+    for (const skill of this.skills) {
+      if (skill.idskill == xidskill){
+        for (const subskill of skill.subskill2){
+          if (subskill.idskill == idskill){
+            subskill.livello -- ;
           }
         }
       }
     }
 
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.skills.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello--;
@@ -278,19 +293,19 @@ export class PersonaggioComponent implements OnInit {
     );
   }
 
-  adss (idskill: number, xidskill: Number) {
-    for (let j = 0 ; j < this.skills.length ; j++) {
-      if (this.skills[j].idskill==xidskill){
-        for (let k = 0; k < this.skills[j].subskill2.length; k++){
-          if ( this.skills[j].subskill2[k].idskill == idskill){
-            this.skills[j].subskill2[k].livello ++ ;
+  adss (idskill: number, xidskill: number) {
+    for (const skill of this.skills) {
+      if (skill.idskill == xidskill){
+        for (const subskill of skill.subskill2){
+          if (subskill.idskill == idskill){
+            subskill.livello ++ ;
           }
         }
       }
     }
 
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.skills.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello++;
@@ -304,7 +319,7 @@ export class PersonaggioComponent implements OnInit {
 
   rdsx (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, -1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.attitudini.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello--;
@@ -315,7 +330,7 @@ export class PersonaggioComponent implements OnInit {
   }
   adsx (idskill: number) {
     this.schedaservice.changeskill_master(this.globalstatus.lastpg, idskill, 1).subscribe(
-      (data:any) => {
+      () => {
         const skill = this.attitudini.find (s => s.idskill === idskill);
         if (skill) {
           skill.livello++;
@@ -327,15 +342,15 @@ export class PersonaggioComponent implements OnInit {
 
   newdisc() {
     this.schedaservice.adddisciplina_master(this.globalstatus.lastpg, this.idnewdisc).subscribe(
-      (data:any) => {
+      () => {
         // console.log ( "aggiunta", this.idnewdisc);
-        this.schedaservice.getscheda(this.globalstatus.lastpg)
+        this.schedaservice.getscheda<GetScheda>(this.globalstatus.lastpg)
           .subscribe (
-            (data: any) => {
+            (data: GetScheda) => {
               this.discipline = data.discipline ;
 
-              this.schedaservice.getotherdisc(this.globalstatus.lastpg).subscribe(
-                (data: any) => {
+              this.schedaservice.getotherdisc<GetOtherdisc>(this.globalstatus.lastpg).subscribe(
+                (data: GetOtherdisc) => {
                   this.otherdisc = data.otherdisc;
                   // console.log (this.otherdisc);
 
@@ -361,11 +376,11 @@ export class PersonaggioComponent implements OnInit {
 
   disclan(iddisciplina: number){
     this.schedaservice.diclan_master(this.globalstatus.lastpg, iddisciplina).subscribe(
-      (data:any) => {
+      () => {
         // console.log( "diclan", iddisciplina);
-        var disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
+        const disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
         if ( disc) {
-          disc.disciplina.DiClan == "S" ? disc.disciplina.DiClan = "N" : disc.disciplina.DiClan = "S";
+          disc.disciplina.DiClan = disc.disciplina.DiClan === 'S' ? 'N' : 'S';
         }
       }
     );
@@ -374,14 +389,14 @@ export class PersonaggioComponent implements OnInit {
 
   cancdisciplina(iddisciplina: number){
     this.schedaservice.cancdisciplina_master(this.globalstatus.lastpg, iddisciplina).subscribe(
-      (data:any) => {
+      () => {
         // console.log( "cancdisciplina", iddisciplina);
-        var disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
+        const disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
         if ( disc) {
           this.discipline.splice(this.discipline.indexOf(disc), 1);
         }
-        this.schedaservice.getotherdisc(this.globalstatus.lastpg).subscribe(
-          (data: any) => {
+        this.schedaservice.getotherdisc<GetOtherdisc>(this.globalstatus.lastpg).subscribe(
+          (data: GetOtherdisc) => {
             this.otherdisc = data.otherdisc;
 
             this.isTaumaturgo = false;
@@ -398,7 +413,7 @@ export class PersonaggioComponent implements OnInit {
   }
 
   newtaum(idtaum: string) {
-    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "T", Number(idtaum)).subscribe((res)=>{
+    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "T", Number(idtaum)).subscribe(()=>{
       const xx = new FullTaumaturgia();
       xx.taumaturgia.idtaum = Number(idtaum);
       xx.taumaturgia.nometaum = this.othertaum.find(t => t.idtaum == Number(idtaum))?.nometaum || '';
@@ -419,7 +434,7 @@ export class PersonaggioComponent implements OnInit {
     });
   }
   newnecro(idnecro: string) {
-    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "N", Number(idnecro)).subscribe((res)=>{
+    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "N", Number(idnecro)).subscribe(()=>{
       const xx = new FullNecromanzia();
       xx.necromanzia.idnecro = Number(idnecro);
       xx.necromanzia.nomenecro = this.othernecro.find(n => n.idnecro == Number(idnecro))?.nomenecro || '';
@@ -458,7 +473,7 @@ export class PersonaggioComponent implements OnInit {
     console.log("riducivia", idtaum);
     const taum = this.taumaturgie.find(t => t.taumaturgia.idtaum === idtaum);
     if (taum && taum.taumaturgia.livello > 0) {
-      this.schedaservice.changenecrotaum_master(this.globalstatus.lastpg, idtaum, -1,"T").subscribe((data:any) => {
+      this.schedaservice.changenecrotaum_master(this.globalstatus.lastpg, idtaum, -1,"T").subscribe(() => {
         taum.taumaturgia.livello--;
         if (taum.taumaturgia.principale == 1){
           this.discipline.find(d => d.disciplina.iddisciplina == 98)!.disciplina.livello = taum.taumaturgia.livello;
@@ -510,7 +525,7 @@ export class PersonaggioComponent implements OnInit {
     const taum = this.taumaturgie.find(t => t.taumaturgia.idtaum === idtaum);
     if (taum && this.puoAumentareVia(taum)) {
       this.schedaservice.changenecrotaum_master(this.globalstatus.lastpg, idtaum, 1,"T").subscribe(
-        (data:any) => {
+        () => {
           taum.taumaturgia.livello++;
           if (taum.taumaturgia.principale == 1){
             const tt = this.discipline.find(d => d.disciplina.iddisciplina == 98);
