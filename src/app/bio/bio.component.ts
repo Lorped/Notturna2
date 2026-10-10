@@ -1,4 +1,13 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SidexComponent } from '../sidex/sidex.component';
 import { UntypedFormControl } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 
@@ -12,7 +21,7 @@ interface BioData {
     selector: 'app-bio',
     templateUrl: './bio.component.html',
     styleUrls: ['./bio.component.css'],
-    standalone: false
+    imports: [MatToolbarModule, MatIconModule, MatSidenavModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, SidexComponent],
 })
 export class BioComponent implements OnInit {
 

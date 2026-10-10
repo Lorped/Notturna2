@@ -1,4 +1,15 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NonecrotaumPipe } from '../nonecrotaum.pipe';
+import { SideadmComponent } from '../sideadm/sideadm.component';
+import { TimesPipe } from '../times.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
 import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, BasicpgStat, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale,  Alleati } from '../global';
@@ -16,7 +27,7 @@ interface GetOtherdisc {
     selector: 'app-personaggio',
     templateUrl: './personaggio.component.html',
     styleUrls: ['./personaggio.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatSidenavModule, MatToolbarModule, NonecrotaumPipe, SideadmComponent, TimesPipe],
 })
 export class PersonaggioComponent implements OnInit {
 

@@ -34,7 +34,7 @@
                   <div class="column ">
                     <button  class="btn  btn-xs" (click)="minbg(2)" [disabled]="risorse_base<1"><i class="fa fa-minus"></i></button>
                     @for (item of 10|times ; track item; let ix = $index) {
-                      <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base, 'dred': ix < risorse_base}"></i>
+                      <i class="fa fa-circle mymedicon" [class.white]="ix >= risorse_base" [class.dred]="ix < risorse_base"></i>
                     }
                     <button class="btn  btn-xs" (click)="addbg(2)" [disabled]="risorse_base>9"><i class="fa fa-plus"></i></button>
                   </div>
@@ -46,7 +46,7 @@
                   <div class="column ">
 
                     @for (item of 10|times ; track item; let ix = $index) {
-                      <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base+saldo, 'dred': ix < risorse_base+saldo}"></i>
+                      <i class="fa fa-circle mymedicon" [class.white]="ix >= risorse_base+saldo" [class.dred]="ix < risorse_base+saldo"></i>
                     }
 
                   </div>
@@ -117,16 +117,16 @@
                     </div>
                     @for (px of listaarray; track px) {
                       <div class="columns">
-                        <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
+                        <div class="column" [class.green]="px.spesa === px.recuperati">
                           {{px.data}}
                         </div>
-                        <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
+                        <div class="column" [class.green]="px.spesa === px.recuperati">
                           {{px.spesa}}
                         </div>
-                        <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
+                        <div class="column" [class.green]="px.spesa === px.recuperati">
                           1 risorsa ogni {{px.cadenza}} gg.
                         </div>
-                        <div class="column alr" [ngClass]="{'green':px.spesa === px.recuperati }">
+                        <div class="column alr" [class.green]="px.spesa === px.recuperati">
                           {{px.recuperati}}
                         </div>
                       </div>

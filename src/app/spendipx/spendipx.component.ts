@@ -1,4 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SidexComponent } from '../sidex/sidex.component';
+import { TimesPipe } from '../times.pipe';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati,  Rituale } from '../global';
@@ -9,7 +21,7 @@ import { GetScheda, GetRituali, GetBG, GetContattiAlleati, GetNecroTaum, GetOthe
     selector: 'app-spendipx',
     templateUrl: './spendipx.component.html',
     styleUrls: ['./spendipx.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSidenavModule, MatToolbarModule, ReactiveFormsModule, SidexComponent, TimesPipe],
 })
 export class SpendipxComponent implements OnInit {
 

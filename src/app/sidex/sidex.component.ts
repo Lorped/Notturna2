@@ -1,11 +1,14 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
+import { RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
     selector: 'app-sidex',
     templateUrl: './sidex.component.html',
     styleUrls: ['./sidex.component.css'],
-    standalone: false
+    imports: [RouterLink, MatCardModule, MatBadgeModule]
 })
 export class SidexComponent implements OnInit {
 

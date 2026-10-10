@@ -103,7 +103,7 @@
             </div>
             <div class="column is-2">
               @for (item of 5|times ; track item; let ix = $index) {
-                <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama1'], 'dred': ix < scheda['fama1']}"></i>
+                <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['fama1']" [class.dred]="ix < scheda['fama1']"></i>
               }
             </div>
             <div class="column is-2 red">
@@ -131,7 +131,7 @@
             </div>
             <div class="column is-2">
               @for (item of 5|times ; track item; let ix = $index) {
-                <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama2'], 'dred': ix < scheda['fama2']}"></i>
+                <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['fama2']" [class.dred]="ix < scheda['fama2']"></i>
               }
             </div>
             <div class="column is-2 red">
@@ -155,7 +155,7 @@
             </div>
             <div class="column is-2">
               @for (item of 5|times ; track item; let ix = $index) {
-                <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama3'], 'dred': ix < scheda['fama3']}"></i>
+                <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['fama3']" [class.dred]="ix < scheda['fama3']"></i>
               }
             </div>
             <div class="column is-2 red">
@@ -208,7 +208,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['forza']" [class.dred]="ix < scheda['forza']"></i>
                 }
               </div>
               <div class="column">
@@ -216,7 +216,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['carisma']" [class.dred]="ix < scheda['carisma']"></i>
                 }
               </div>
               <div class="column">
@@ -224,7 +224,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['percezione']" [class.dred]="ix < scheda['percezione']"></i>
                 }
               </div>
             </div>
@@ -234,7 +234,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['destrezza']" [class.dred]="ix < scheda['destrezza']"></i>
                 }
               </div>
               <div class="column">
@@ -242,7 +242,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['persuasione']" [class.dred]="ix < scheda['persuasione']"></i>
                 }
               </div>
               <div class="column">
@@ -250,7 +250,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['intelligenza']" [class.dred]="ix < scheda['intelligenza']"></i>
                 }
               </div>
             </div>
@@ -260,7 +260,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['attutimento']" [class.dred]="ix < scheda['attutimento']"></i>
                 }
               </div>
               <div class="column">
@@ -268,7 +268,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['saggezza']" [class.dred]="ix < scheda['saggezza']"></i>
                 }
               </div>
               <div class="column">
@@ -276,7 +276,7 @@
               </div>
               <div class="column">
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['prontezza']" [class.dred]="ix < scheda['prontezza']"></i>
                 }
               </div>
             </div>
@@ -306,7 +306,7 @@
                     </div>
                     <div class="column">
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.disciplina.livello" [class.dred]="ix < dd.disciplina.livello"></i>
                       }
                     </div>
                   </div>
@@ -335,7 +335,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.taumaturgia.livello" [class.dred]="ix < dd.taumaturgia.livello"></i>
                         }
                       </div>
                     </div>
@@ -365,7 +365,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.necromanzia.livello" [class.dred]="ix < dd.necromanzia.livello"></i>
                         }
                       </div>
                     </div>
@@ -464,7 +464,7 @@
                     </div>
                     <div class="column">
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                       }
                     </div>
                   </div>
@@ -497,7 +497,7 @@
                     </div>
                     <div class="column">
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                       }
                     </div>
                   </div>
@@ -533,7 +533,7 @@
                     </div>
                     <div class="column">
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                       }
                     </div>
                   </div>
@@ -545,7 +545,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= ss.livello, 'dred': ix < ss.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= ss.livello" [class.dred]="ix < ss.livello"></i>
                         }
                       </div>
                     </div> 
@@ -578,7 +578,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -590,7 +590,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                         @for (item of dd.livello-5|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon dred" ></i>
@@ -605,7 +605,7 @@
                       </div>
                       <div class="column">
                         @for (item of maxcontatti|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -617,7 +617,7 @@
                       </div>
                       <div class="column">
                         @for (item of maxalleati|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -644,7 +644,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -671,7 +671,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -701,7 +701,7 @@
               </div>
               <div class="column ">
                 @for (item of 10|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base, 'dred': ix < risorse_base}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= risorse_base" [class.dred]="ix < risorse_base"></i>
                 }
               </div>
             </div>
@@ -711,7 +711,7 @@
               </div>
               <div class="column ">
                 @for (item of 10|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= risorse_base+saldo, 'dred': ix < risorse_base+saldo}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= risorse_base+saldo" [class.dred]="ix < risorse_base+saldo"></i>
                 }
               </div>
             </div>
@@ -753,16 +753,16 @@
 
               @for (px of listaarray; track px) {
                 <div class="columns">
-                  <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
+                  <div class="column" [class.green]="px.spesa === px.recuperati">
                     {{px.data}}
                   </div>
-                  <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
+                  <div class="column" [class.green]="px.spesa === px.recuperati">
                     {{px.spesa}}
                   </div>
-                  <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
+                  <div class="column" [class.green]="px.spesa === px.recuperati">
                     1 risorsa ogni {{px.cadenza}} gg.
                   </div>
-                  <div class="column alr" [ngClass]="{'green':px.spesa === px.recuperati }">
+                  <div class="column alr" [class.green]="px.spesa === px.recuperati">
                     {{px.recuperati}}
                   </div>
                 </div>

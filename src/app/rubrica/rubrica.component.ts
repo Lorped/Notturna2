@@ -1,4 +1,13 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SidexComponent } from '../sidex/sidex.component';
 import { RubricaService } from '../_services/index';
 import { Rubricaitem } from '../global';
 import { UntypedFormControl,  Validators } from '@angular/forms';
@@ -7,7 +16,7 @@ import { UntypedFormControl,  Validators } from '@angular/forms';
     selector: 'app-rubrica',
     templateUrl: './rubrica.component.html',
     styleUrls: ['./rubrica.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSidenavModule, MatToolbarModule, ReactiveFormsModule, SidexComponent],
 })
 export class RubricaComponent implements OnInit {
 

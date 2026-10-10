@@ -2,8 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { FullDisciplina } from './global';
 
 @Pipe({
-    name: 'nonecrotaum',
-    standalone: false
+    name: 'nonecrotaum'
 })
 export class NonecrotaumPipe implements PipeTransform {
 

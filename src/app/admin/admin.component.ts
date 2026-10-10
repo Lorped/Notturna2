@@ -1,4 +1,12 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { AdminService } from '../_services/index';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { GlobalStatus, Cronaca } from '../global';
@@ -13,7 +21,7 @@ export interface unPg {
     selector: 'app-admin',
     templateUrl: './admin.component.html',
     styleUrls: ['./admin.component.css'],
-    standalone: false
+    imports: [MatToolbarModule, MatCardModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatButtonModule, ReactiveFormsModule, RouterLink],
 })
 export class AdminComponent implements OnInit {
 

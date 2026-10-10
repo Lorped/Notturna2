@@ -1,4 +1,9 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { SidexComponent } from '../sidex/sidex.component';
 import { SchedaService } from '../_services/index';
 
 
@@ -17,7 +22,7 @@ export interface Eventi {
     selector: 'app-logpx',
     templateUrl: './logpx.component.html',
     styleUrls: ['./logpx.component.css'],
-    standalone: false
+    imports: [MatToolbarModule, MatIconModule, MatSidenavModule, MatCardModule, SidexComponent],
 })
 export class LogpxComponent implements OnInit {
 

@@ -1,4 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SideadmComponent } from '../sideadm/sideadm.component';
 import { inject } from '@angular/core';
 import { AdminService, RigaPrestampa } from '../_services/index';
 import { Cronaca } from '../global';
@@ -10,8 +21,8 @@ import type { GetListOggetti } from '../_services/admin.service';
 @Component({
   selector: 'app-prestampa',
   styleUrl: './prestampa.component.css',
+  imports: [FormsModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSidenavModule, MatToolbarModule, SideadmComponent],
   templateUrl: './prestampa.component.html',
-  standalone: false
 })
 export class PrestampaComponent implements OnInit {
 

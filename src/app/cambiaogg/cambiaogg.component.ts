@@ -1,8 +1,19 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SideadmComponent } from '../sideadm/sideadm.component';
 import { AdminService } from '../_services/index';
 import { Condizione, FullOggetto, Unpaired, Skill, SubSkill} from '../global';
 import { ActivatedRoute } from '@angular/router';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 
 export class Attributi {
   idattr = 0;
@@ -35,7 +46,21 @@ interface GetUnpaired {
     selector: 'app-cambiaogg',
     templateUrl: './cambiaogg.component.html',
     styleUrls: ['./cambiaogg.component.css'],
-    standalone: false
+    imports: [
+        MatButtonModule,
+        MatCardModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SideadmComponent,
+    ],
 })
 export class CambiaoggComponent implements OnInit {
 

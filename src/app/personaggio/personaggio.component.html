@@ -96,7 +96,7 @@
             </div>
             <div class="column is-2">
               @for (item of 5|times ; track item; let ix = $index) {
-                <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama1'], 'dred': ix < scheda['fama1']}"></i>
+                <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['fama1']" [class.dred]="ix < scheda['fama1']"></i>
               }
             </div>
             <div class="column is-2 red">
@@ -124,7 +124,7 @@
             </div>
             <div class="column is-2">
               @for (item of 5|times ; track item; let ix = $index) {
-                <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama2'], 'dred': ix < scheda['fama2']}"></i>
+                <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['fama2']" [class.dred]="ix < scheda['fama2']"></i>
               }
             </div>
             <div class="column is-2 red">
@@ -148,7 +148,7 @@
             </div>
             <div class="column is-2">
               @for (item of 5|times ; track item; let ix = $index) {
-                <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['fama3'], 'dred': ix < scheda['fama3']}"></i>
+                <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['fama3']" [class.dred]="ix < scheda['fama3']"></i>
               }
             </div>
             <div class="column is-2 red">
@@ -200,7 +200,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('forza')" [disabled]="scheda['forza']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['forza'], 'dred': ix < scheda['forza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['forza']" [class.dred]="ix < scheda['forza']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('forza')" [disabled]="scheda['forza']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -210,7 +210,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('carisma')" [disabled]="scheda['carisma']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['carisma'], 'dred': ix < scheda['carisma']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['carisma']" [class.dred]="ix < scheda['carisma']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('carisma')" [disabled]="scheda['carisma']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -220,7 +220,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('percezione')" [disabled]="scheda['percezione']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['percezione'], 'dred': ix < scheda['percezione']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['percezione']" [class.dred]="ix < scheda['percezione']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('percezione')" [disabled]="scheda['percezione']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -232,7 +232,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('destrezza')" [disabled]="scheda['destrezza']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['destrezza'], 'dred': ix < scheda['destrezza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['destrezza']" [class.dred]="ix < scheda['destrezza']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('destrezza')" [disabled]="scheda['destrezza']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -242,7 +242,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('persuasione')" [disabled]="scheda['persuasione']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['persuasione'], 'dred': ix < scheda['persuasione']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['persuasione']" [class.dred]="ix < scheda['persuasione']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('persuasione')" [disabled]="scheda['persuasione']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -252,7 +252,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('intelligenza')" [disabled]="scheda['intelligenza']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['intelligenza'], 'dred': ix < scheda['intelligenza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['intelligenza']" [class.dred]="ix < scheda['intelligenza']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('intelligenza')" [disabled]="scheda['intelligenza']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -264,7 +264,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('attutimento')" [disabled]="scheda['attutimento']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['attutimento'], 'dred': ix < scheda['attutimento']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['attutimento']" [class.dred]="ix < scheda['attutimento']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('attutimento')" [disabled]="scheda['attutimento']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -274,7 +274,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('saggezza')" [disabled]="scheda['saggezza']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['saggezza'], 'dred': ix < scheda['saggezza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['saggezza']" [class.dred]="ix < scheda['saggezza']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('saggezza')" [disabled]="scheda['saggezza']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -284,7 +284,7 @@
               <div class="column">
                 <button  class="btn  btn-xs" (click)="rda('prontezza')" [disabled]="scheda['prontezza']<2"><i class="fa fa-minus"></i></button>
                 @for (item of 5|times ; track item; let ix = $index) {
-                  <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= scheda['prontezza'], 'dred': ix < scheda['prontezza']}"></i>
+                  <i class="fa fa-circle mymedicon" [class.white]="ix >= scheda['prontezza']" [class.dred]="ix < scheda['prontezza']"></i>
                 }
                 <button class="btn  btn-xs" (click)="ada('prontezza')" [disabled]="scheda['prontezza']>=scheda.maxstat"><i class="fa fa-plus"></i></button>
               </div>
@@ -315,7 +315,7 @@
                         <button class="btn  btn-xs" (click)="rdx(dd.disciplina.iddisciplina)" [disabled]="dd.disciplina.livello<1 "><i class="fa fa-minus"></i></button>
                       }
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.disciplina.livello" [class.dred]="ix < dd.disciplina.livello"></i>
                       }
                       @if (dd.disciplina.iddisciplina < 98) {
                         <button class="btn  btn-xs" (click)="adx(dd.disciplina.iddisciplina)" [disabled]="dd.disciplina.livello>=scheda.maxdisc "><i class="fa fa-plus"></i></button>
@@ -391,7 +391,7 @@
                       </div>
                         <div class="column"><button class="btn  btn-xs" (click)="riducivia(dd.taumaturgia.idtaum)" [disabled]="dd.taumaturgia.livello<1 "><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.taumaturgia.livello" [class.dred]="ix < dd.taumaturgia.livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="aumentavia(dd.taumaturgia.idtaum)" [disabled]="!puoAumentareVia(dd)"><i class="fa fa-plus"></i></button>
                       </div>
@@ -423,7 +423,7 @@
                       <div class="column">
                         <button class="btn btn-xs" (click)="riducivianecro(dd.necromanzia.idnecro)" [disabled]="dd.necromanzia.livello < 1"><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.necromanzia.livello" [class.dred]="ix < dd.necromanzia.livello"></i>
                         }
                         <button class="btn btn-xs" (click)="aumentavianecro(dd.necromanzia.idnecro)" [disabled]="!puoAumentareViaNecro(dd)"><i class="fa fa-plus"></i></button>
                       </div>
@@ -525,7 +525,7 @@
                     <div class="column">
                       <button  class="btn  btn-xs" (click)="rdsx(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                       }
                       <button  class="btn  btn-xs" (click)="adsx(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
                     </div>
@@ -559,7 +559,7 @@
                     <div class="column">
                       <button  class="btn  btn-xs" (click)="rdos(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
                       @for (item of 5|times ; track item; let ix = $index) {                        
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                       }
                       <button  class="btn  btn-xs" (click)="ados(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
                     </div>
@@ -597,7 +597,7 @@
                     <div class="column">
                       <button  class="btn  btn-xs" (click)="rds(dd.idskill)" [disabled]="dd.livello < 1"><i class="fa fa-minus"></i></button>
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                       }
                       <button  class="btn  btn-xs" (click)="ads(dd.idskill)" [disabled]="dd.livello > 4"><i class="fa fa-plus"></i></button>
                     </div>
@@ -611,7 +611,7 @@
                       <div class="column">
                         <button  class="btn  btn-xs" (click)="rdss(ss.idskill, dd.idskill)" [disabled]="ss.livello < 1"><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= ss.livello, 'dred': ix < ss.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= ss.livello" [class.dred]="ix < ss.livello"></i>
                         }
                         <button  class="btn  btn-xs" (click)="adss(ss.idskill, dd.idskill)" [disabled]="ss.livello > 4 ||ss.livello>=dd.livello"><i class="fa fa-plus"></i></button>
                       </div>
@@ -646,7 +646,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -658,7 +658,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                         @for (item of dd.livello-5|times ; track item; let ix = $index) {
                           <i class="fa fa-circle mymedicon dred" ></i>
@@ -673,7 +673,7 @@
                       </div>
                       <div class="column">
                         @for (item of maxcontatti|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -700,7 +700,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>
@@ -727,7 +727,7 @@
                       </div>
                       <div class="column">
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.livello, 'dred': ix < dd.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= dd.livello" [class.dred]="ix < dd.livello"></i>
                         }
                       </div>
                     </div>

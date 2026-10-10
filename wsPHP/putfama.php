@@ -30,9 +30,7 @@ $fama2 = $request -> fama2;
 $fama3 = $request -> fama3;
 $au = $request -> au;
 
-//$nome = "lorenzo";
-//$password = "lor11ped";
-//$postdata = 1;
+
 
 
 if ( isset($postdata) && $idutente != "" ) {
@@ -46,6 +44,8 @@ if ( isset($postdata) && $idutente != "" ) {
   $oldfama1 = $res['fama1'];
   $oldfama2 = $res['fama2'];
   $oldfama3 = $res['fama3'];
+
+  $Azione = "";
 
 
   if ( $oldfama1 != $fama1 ) {

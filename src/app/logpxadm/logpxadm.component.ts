@@ -1,4 +1,9 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { SideadmComponent } from '../sideadm/sideadm.component';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
 import { GlobalStatus } from '../global';
@@ -19,7 +24,7 @@ export interface Eventi {
   selector: 'app-logpxadm',
   templateUrl: './logpxadm.component.html',
   styleUrl: './logpxadm.component.css',
-  standalone: false
+    imports: [MatToolbarModule, MatIconModule, MatSidenavModule, MatCardModule, SideadmComponent],
 })
 export class LogpxadmComponent implements OnInit {
   idutente = 0;

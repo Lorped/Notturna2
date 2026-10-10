@@ -1,4 +1,13 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NonecrotaumPipe } from '../nonecrotaum.pipe';
+import { SidexComponent } from '../sidex/sidex.component';
+import { TimesPipe } from '../times.pipe';
 import { SchedaService } from '../_services/index';
 import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale,    Alleati} from '../global';
 import { GetScheda, GetRisorse } from '../_services/scheda.service';
@@ -14,7 +23,7 @@ export class listaspese {
     selector: 'app-scheda',
     templateUrl: './scheda.component.html',
     styleUrls: ['./scheda.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatSidenavModule, MatToolbarModule, SidexComponent, TimesPipe, NonecrotaumPipe],
 })
 export class SchedaComponent implements OnInit {
 

@@ -1,16 +1,20 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SideadmComponent } from '../sideadm/sideadm.component';
+import { TimesPipe } from '../times.pipe';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus} from '../global';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { GetSentiero, PregioDifetto, GetPregioDifetto, GetBG, GetContattiAlleati } from '../_services/scheda.service';
-
-interface GetFama {
-  fama1: number;
-  fama2: number;
-  fama3: number;
-}
-
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { GetSentiero, PregioDifetto, GetPregioDifetto, GetBG, GetContattiAlleati, GetFama } from '../_services/scheda.service';
 
 
 
@@ -27,10 +31,6 @@ interface Passaggio {
   val_old: val;
   val_new: val;
 }
-interface GetSkill {
-  skills: Skill[];
-}
-
 
 
 
@@ -40,7 +40,21 @@ interface GetSkill {
     selector: 'app-adminbg',
     templateUrl: './adminbg.component.html',
     styleUrls: ['./adminbg.component.css'],
-    standalone: false
+    imports: [
+        MatButtonModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        RouterLink,
+        SideadmComponent,
+        TimesPipe,
+    ],
 })
 export class AdminbgComponent implements OnInit {
 
@@ -158,7 +172,14 @@ export class AdminbgComponent implements OnInit {
       }
     });
 
-    this.schedaservice.getfama<GetFama>(this.idutente).subscribe();
+    this.schedaservice.getfama<GetFama>(this.idutente).subscribe(
+      (data: GetFama) => {
+        this.fama1 = data.fama1;
+        this.fama2 = data.fama2;
+        this.fama3 = data.fama3;
+        this.cdr.markForCheck();
+      }
+    );
 
     this.schedaservice.getbg<GetBG>(this.idutente).subscribe(
       (data: GetBG) => {
@@ -423,6 +444,7 @@ export class AdminbgComponent implements OnInit {
       }
     );
 
+    /*
     this.schedaservice.getskill<GetSkill>(this.idutente).subscribe(
       (data: GetSkill) => {
         this.listaskill = data.skills; 
@@ -435,6 +457,7 @@ export class AdminbgComponent implements OnInit {
         this.cdr.markForCheck();
       }
     );
+    */
   }
 
   minfdv(){

@@ -37,7 +37,7 @@
                   <div class="column ">
                     <button  class="btn  btn-xs" (click)="minfama(1)" [disabled]="fama1<1"><i class="fa fa-minus"></i></button>
                     @for (item of 5|times ; track item; let ix = $index) {
-                      <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama1, 'dred': ix < fama1}"></i>
+                      <i class="fa fa-circle mymedicon" [class.white]="ix >= fama1" [class.dred]="ix < fama1"></i>
                     }
                     <button class="btn  btn-xs" (click)="addfama(1)" [disabled]="fama1>4"><i class="fa fa-plus"></i></button>
                   </div>
@@ -49,7 +49,7 @@
                   <div class="column ">
                     <button  class="btn  btn-xs" (click)="minfama(2)" [disabled]="fama2<1"><i class="fa fa-minus"></i></button>
                     @for (item of 5|times ; track item; let ix = $index) {
-                      <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama2, 'dred': ix < fama2}"></i>
+                      <i class="fa fa-circle mymedicon" [class.white]="ix >= fama2" [class.dred]="ix < fama2"></i>
                     }
                     <button class="btn  btn-xs" (click)="addfama(2)" [disabled]="fama2>4"><i class="fa fa-plus"></i></button>
                   </div>
@@ -61,7 +61,7 @@
                   <div class="column ">
                     <button  class="btn  btn-xs" (click)="minfama(3)" [disabled]="fama3<1"><i class="fa fa-minus"></i></button>
                     @for (item of 5|times ; track item; let ix = $index) {
-                      <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= fama3, 'dred': ix < fama3}"></i>
+                      <i class="fa fa-circle mymedicon" [class.white]="ix >= fama3" [class.dred]="ix < fama3"></i>
                     }
                     <button class="btn  btn-xs" (click)="addfama(3)" [disabled]="fama3>4"><i class="fa fa-plus"></i></button>
                   </div>
@@ -85,7 +85,7 @@
                       <div class="column ">
                         <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= tt.livello" [class.dred]="ix < tt.livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
                       </div>
@@ -94,7 +94,7 @@
                       <div class="column ">
                         <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                         @for (item of 10|times ; track item; let ix = $index) {
-                          <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                          <i class="fa fa-circle mymedicon" [class.white]="ix >= tt.livello" [class.dred]="ix < tt.livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
                         &nbsp;
@@ -130,7 +130,7 @@
                     <div class="column ">
                       <button  class="btn  btn-xs" (click)="mincon(tt.idcontatto)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= tt.livello" [class.dred]="ix < tt.livello"></i>
                       }
                       <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommacontatti===20"><i class="fa fa-plus"></i></button>
                     </div>
@@ -178,7 +178,7 @@
                     <div class="column ">
                       <button  class="btn  btn-xs" (click)="minall(tt.idalleato)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                       @for (item of 5|times ; track item; let ix = $index) {
-                        <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
+                        <i class="fa fa-circle mymedicon" [class.white]="ix >= tt.livello" [class.dred]="ix < tt.livello"></i>
                       }
                       <button class="btn  btn-xs" (click)="addall(tt.idalleato)" [disabled]="tt.livello>4 ||sommaalleati===20"><i class="fa fa-plus"></i></button>
                     </div>
@@ -269,7 +269,7 @@
                     <div class="column is-4 ">
                       <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero===0"><i class="fa fa-minus"></i></button>
                       @for (i of 10 | times ; track i; let ix = $index) {
-                        <i class="fa fa-circle" [ngClass]="{'white': ix+1 > valsentiero , 'dred': ix < valsentiero}"></i>
+                        <i class="fa fa-circle" [class.white]="ix+1 > valsentiero " [class.dred]="ix < valsentiero"></i>
                       }
                       <button class="btn  btn-xs" (click)="addsentiero()" [disabled]="valsentiero>9"><i class="fa fa-plus"></i></button>
                     </div>
@@ -279,7 +279,7 @@
                     <div class="column is-4 ">
                       <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="fdv===0"><i class="fa fa-minus"></i></button>
                       @for (i of 10 | times ; track i; let ix = $index) {
-                        <i class="fa fa-circle" [ngClass]="{'white': ix+1 > fdv , 'dred': ix < fdv }"></i>
+                        <i class="fa fa-circle" [class.white]="ix+1 > fdv " [class.dred]="ix < fdv "></i>
                       }
                       <button class="btn  btn-xs" (click)="addfdv()" [disabled]="fdv>9"><i class="fa fa-plus"></i></button>
                     </div>

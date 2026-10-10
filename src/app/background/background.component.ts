@@ -1,14 +1,38 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SidexComponent } from '../sidex/sidex.component';
+import { TimesPipe } from '../times.pipe';
 import { SchedaService } from '../_services/index';
 import { Background, Contatti, Alleati, Skill, Sentiero } from '../global';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { GetSentiero } from '../_services/scheda.service';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { GetSentiero, GetFama } from '../_services/scheda.service';
 
 @Component({
     selector: 'app-background',
     templateUrl: './background.component.html',
     styleUrls: ['./background.component.css'],
-    standalone: false
+    imports: [
+        MatButtonModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        SidexComponent,
+        TimesPipe,
+    ],
 })
 export class BackgroundComponent implements OnInit {
 
@@ -87,7 +111,14 @@ export class BackgroundComponent implements OnInit {
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
 
-    this.schedaservice.getfama(this.idutente).subscribe();
+    this.schedaservice.getfama<GetFama>(this.idutente).subscribe(
+      (data: GetFama) => {
+        this.fama1 = data.fama1;
+        this.fama2 = data.fama2;
+        this.fama3 = data.fama3;
+        this.cdr.markForCheck();
+      }
+    );
 
   
 

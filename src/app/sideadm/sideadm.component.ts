@@ -1,11 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {GlobalStatus} from '../global';
+import { RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'app-sideadm',
     templateUrl: './sideadm.component.html',
     styleUrls: ['./sideadm.component.css'],
-    standalone: false
+    imports: [RouterLink, MatCardModule]
 })
 export class SideadmComponent implements OnInit {
 

@@ -1,4 +1,14 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SideadmComponent } from '../sideadm/sideadm.component';
 import { UntypedFormControl } from '@angular/forms';
 
 import { Chatrow, MyChat , ChatService , AdminService } from '../_services/index';
@@ -21,7 +31,7 @@ interface GetPersonaggio {
     selector: 'app-chat',
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSidenavModule, MatToolbarModule, ReactiveFormsModule, SideadmComponent],
 })
 export class ChatComponent implements OnInit, OnDestroy {
 

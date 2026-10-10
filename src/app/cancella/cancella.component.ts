@@ -1,4 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { SidexComponent } from '../sidex/sidex.component';
 import { Router } from '@angular/router';
 import { SchedaService } from '../_services/index';
 
@@ -6,7 +13,7 @@ import { SchedaService } from '../_services/index';
     selector: 'app-cancella',
     templateUrl: './cancella.component.html',
     styleUrls: ['./cancella.component.css'],
-    standalone: false
+    imports: [MatToolbarModule, MatIconModule, MatSidenavModule, MatCardModule, MatCheckboxModule, MatButtonModule, SidexComponent],
 })
 export class CancellaComponent  {
 

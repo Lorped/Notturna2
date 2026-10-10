@@ -1,4 +1,13 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SidexComponent } from '../sidex/sidex.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
@@ -7,7 +16,7 @@ import { AuthenticationService } from '../_services/index';
     selector: 'app-utente',
     templateUrl: './utente.component.html',
     styleUrls: ['./utente.component.css'],
-    standalone: false
+    imports: [MatToolbarModule, MatIconModule, MatSidenavModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, SidexComponent],
 })
 export class UtenteComponent implements OnInit {
 

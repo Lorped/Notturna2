@@ -1,4 +1,13 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SidexComponent } from '../sidex/sidex.component';
 import { SchedaService } from '../_services/index';
 import { Pregio } from '../global';
 import { PregioDifetto, GetPregioDifetto } from '../_services/scheda.service';
@@ -11,7 +20,7 @@ interface GetPx {
     selector: 'app-pregidifetti',
     templateUrl: './pregidifetti.component.html',
     styleUrls: ['./pregidifetti.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatSidenavModule, MatToolbarModule, SidexComponent],
 })
 export class PregidifettiComponent implements OnInit {
 

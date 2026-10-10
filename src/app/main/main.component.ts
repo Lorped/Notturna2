@@ -1,11 +1,15 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
+import { RouterLink } from '@angular/router';
 import { SchedaService } from '../_services/index';
 
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
     styleUrls: ['./main.component.css'],
-    standalone: false
+    imports: [MatToolbarModule, MatCardModule, MatBadgeModule, RouterLink],
 })
 export class MainComponent implements OnInit {
 

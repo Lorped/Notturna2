@@ -150,7 +150,7 @@
                     {{b.nomeback}}
                     <button  class="btn  btn-xs" (click)="minbg(b.idback)" [disabled]="b.livello<(b.MinIniziale+1)"><i class="fa fa-minus"></i></button>
                     @for (i of b.MaxIniziale | times ; track i; let ix = $index) {
-                      <i class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
+                      <i class="fa fa-circle" [class.white]="ix+1 > b.livello" [class.dred]="ix < b.livello"></i>
                     }
                     <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG+bonusbg||(is14 && b.idback===5)"><i class="fa fa-plus"></i></button>
                   <!--  </div> -->
@@ -181,7 +181,7 @@
                       <div class = "column">
                         <button  class="btn  btn-xs" (click)="mincont(0)" [disabled]="cont[0].livello<1"><i class="fa fa-minus"></i></button>
                         @for (i of 5 | times ; track i; let ix = $index) {
-                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > cont[0].livello , 'dred': ix < cont[0].livello }"></i>
+                          <i class="fa fa-circle" [class.white]="ix+1 > cont[0].livello" [class.dred]="ix < cont[0].livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addcont(0)" [disabled]="cont[0].livello>4||sommaCont>=maxCont"><i class="fa fa-plus"></i></button>
                       </div>
@@ -200,7 +200,7 @@
                       <div class = "column">
                         <button  class="btn  btn-xs" (click)="mincont(1)" [disabled]="cont[1].livello<1"><i class="fa fa-minus"></i></button>
                         @for (i of 5 | times ; track i; let ix = $index) {
-                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > cont[1].livello , 'dred': ix < cont[1].livello }"></i>
+                          <i class="fa fa-circle" [class.white]="ix+1 > cont[1].livello" [class.dred]="ix < cont[1].livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addcont(1)" [disabled]="cont[1].livello>4||sommaCont>=maxCont"><i class="fa fa-plus"></i></button>
                       </div>
@@ -219,7 +219,7 @@
                       <div class="column">
                         <button  class="btn  btn-xs" (click)="mincont(2)" [disabled]="cont[2].livello<1"><i class="fa fa-minus"></i></button>
                         @for (i of 5 | times ; track i; let ix = $index) {
-                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > cont[2].livello , 'dred': ix < cont[2].livello }"></i>
+                          <i class="fa fa-circle" [class.white]="ix+1 > cont[2].livello" [class.dred]="ix < cont[2].livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addcont(2)" [disabled]="cont[2].livello>4||sommaCont>=maxCont"><i class="fa fa-plus"></i></button>
                       </div>
@@ -259,7 +259,7 @@
                       <div class = "column">
                         <button  class="btn  btn-xs" (click)="minalleato(0)" [disabled]="alleati[0].livello<1"><i class="fa fa-minus"></i></button>
                         @for (i of 5 | times ; track i; let ix = $index) {
-                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > alleati[0].livello , 'dred': ix < alleati[0].livello }"></i>
+                          <i class="fa fa-circle" [class.white]="ix+1 > alleati[0].livello" [class.dred]="ix < alleati[0].livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addalleato(0)" [disabled]="alleati[0].livello>4||sommaAlleati>=maxAlleati"><i class="fa fa-plus"></i></button>
                       </div>
@@ -278,7 +278,7 @@
                       <div class = "column">
                         <button  class="btn  btn-xs" (click)="minalleato(1)" [disabled]="alleati[1].livello<1"><i class="fa fa-minus"></i></button>
                         @for (i of 5 | times ; track i; let ix = $index) {
-                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > alleati[1].livello , 'dred': ix < alleati[1].livello }"></i>
+                          <i class="fa fa-circle" [class.white]="ix+1 > alleati[1].livello" [class.dred]="ix < alleati[1].livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addalleato(1)" [disabled]="alleati[1].livello>4||sommaAlleati>=maxAlleati"><i class="fa fa-plus"></i></button>
                       </div>
@@ -297,7 +297,7 @@
                       <div class="column">
                         <button  class="btn  btn-xs" (click)="minalleato(2)" [disabled]="alleati[2].livello<1"><i class="fa fa-minus"></i></button>
                         @for (i of 5 | times ; track i; let ix = $index) {
-                          <i class="fa fa-circle" [ngClass]="{'white': ix+1 > alleati[2].livello , 'dred': ix < alleati[2].livello }"></i>
+                          <i class="fa fa-circle" [class.white]="ix+1 > alleati[2].livello" [class.dred]="ix < alleati[2].livello"></i>
                         }
                         <button class="btn  btn-xs" (click)="addalleato(2)" [disabled]="alleati[2].livello>4||sommaAlleati>=maxAlleati"><i class="fa fa-plus"></i></button>
                       </div>
@@ -355,7 +355,7 @@
                 <div class="half mr ">
                   <button  class="btn  btn-xs" (click)="minattr(attr.IDattributo)" [disabled]="attr.Livello<=attr.Iniziale"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > attr.Livello , 'dred': ix < attr.Livello , 'xred': ix < attr.Iniziale}"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > attr.Livello" [class.dred]="ix < attr.Livello" [class.xred]="ix < attr.Iniziale"></i>
                   }
                   <button class="btn  btn-xs" (click)="addattr(attr.IDattributo)" [disabled]="attr.Livello>4||sommaAttr>=maxAttr"><i class="fa fa-plus"></i></button>
                 </div>
@@ -399,7 +399,7 @@
                       <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<=dd.iniziale"><i class="fa fa-minus"></i></button>
                     }
                     @for (i of 5 | times ; track i; let ix = $index) {
-                      <i class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello, 'xred': ix<dd.iniziale}"></i>
+                      <i class="fa fa-circle" [class.white]="ix+1 > dd.livello" [class.dred]="ix < dd.livello" [class.xred]="ix<dd.iniziale"></i>
                     }
                     @if (dd.iddisciplina!==99 && dd.iddisciplina!==98 && dd.iddisciplina !== 21 &&dd.iddisciplina !==23) {
                       <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc"><i class="fa fa-plus"></i></button>
@@ -428,7 +428,7 @@
                 <div class="half mr">
                   <button  class="btn  btn-xs" (click)="mintaum(0)" [disabled]="taumaturgie[0].livello<1||(taumaturgie[0].livello-1===taumaturgie[1].livello && taumaturgie[1].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[0].livello , 'dred': ix < taumaturgie[0].livello }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > taumaturgie[0].livello" [class.dred]="ix < taumaturgie[0].livello"></i>
                   }
                   <button class="btn  btn-xs" (click)="addtaum(0)" [disabled]="taumaturgie[0].livello>4||taumaturgie[0].idtaum === 0||sommaDisc===numDisc||taumaturgie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
                 </div>
@@ -447,7 +447,7 @@
                 <div class="half mr">
                   <button  class="btn  btn-xs" (click)="mintaum(1)" [disabled]="taumaturgie[1].livello<1||(taumaturgie[1].livello-1===taumaturgie[2].livello && taumaturgie[2].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[1].livello , 'dred': ix < taumaturgie[1].livello }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > taumaturgie[1].livello" [class.dred]="ix < taumaturgie[1].livello"></i>
                   }
                   <button class="btn  btn-xs" (click)="addtaum(1)" [disabled]="taumaturgie[1].livello>4||(taumaturgie[1].livello+1>=taumaturgie[0].livello && taumaturgie[0].livello<5)||taumaturgie[1].idtaum === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
@@ -466,7 +466,7 @@
                 <div class="half mr">
                   <button  class="btn  btn-xs" (click)="mintaum(2)" [disabled]="taumaturgie[2].livello<1"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[2].livello , 'dred': ix < taumaturgie[2].livello }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > taumaturgie[2].livello" [class.dred]="ix < taumaturgie[2].livello"></i>
                   }
                   <button class="btn  btn-xs" (click)="addtaum(2)" [disabled]="taumaturgie[2].livello>4||(taumaturgie[2].livello+1>=taumaturgie[1].livello && taumaturgie[1].livello<5)||taumaturgie[2].idtaum === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
@@ -499,7 +499,7 @@
                 <div class="half mr">
                   <button  class="btn  btn-xs" (click)="minnecro(0)" [disabled]="necromanzie[0].livello<1||(necromanzie[0].livello-1===necromanzie[1].livello && necromanzie[1].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[0].livello , 'dred': ix < necromanzie[0].livello }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > necromanzie[0].livello" [class.dred]="ix < necromanzie[0].livello"></i>
                   }
                   <button class="btn  btn-xs" (click)="addnecro(0)" [disabled]="necromanzie[0].livello>4||necromanzie[0].idnecro === 0||sommaDisc===numDisc||necromanzie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
                 </div>
@@ -518,7 +518,7 @@
                 <div class="half mr">
                   <button  class="btn  btn-xs" (click)="minnecro(1)" [disabled]="necromanzie[1].livello<1||(necromanzie[1].livello-1===necromanzie[2].livello && necromanzie[2].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[1].livello , 'dred': ix < necromanzie[1].livello }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > necromanzie[1].livello" [class.dred]="ix < necromanzie[1].livello"></i>
                   }
                   <button class="btn  btn-xs" (click)="addnecro(1)" [disabled]="necromanzie[1].livello>4||(necromanzie[1].livello+1>=necromanzie[0].livello && necromanzie[0].livello<5)||necromanzie[1].idnecro === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
@@ -537,7 +537,7 @@
                 <div class="half mr">
                   <button  class="btn  btn-xs" (click)="minnecro(2)" [disabled]="necromanzie[2].livello<1"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[2].livello , 'dred': ix < necromanzie[2].livello }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > necromanzie[2].livello" [class.dred]="ix < necromanzie[2].livello"></i>
                   }
                   <button class="btn  btn-xs" (click)="addnecro(2)" [disabled]="necromanzie[2].livello>4||(necromanzie[2].livello+1>=necromanzie[1].livello && necromanzie[1].livello<5)||necromanzie[2].idnecro === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
@@ -577,7 +577,7 @@
                   <div class="half mr">
                     <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<1" ><i class="fa fa-minus"></i></button>
                     @for (i of 5 | times ; track i; let ix = $index) {
-                      <i class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello }"></i>
+                      <i class="fa fa-circle" [class.white]="ix+1 > dd.livello" [class.dred]="ix < dd.livello"></i>
                     }
                     <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc||discipline[ixx].iddisciplina===0" ><i class="fa fa-plus"></i></button>
                   </div>
@@ -627,7 +627,7 @@
                   <div class="half mr">
                     <button  class="btn  btn-xs" (click)="minsk2(sk.idskill)" [disabled]="sk.livello<1"><i class="fa fa-minus"></i></button>
                     @for (i of 5 | times ; track i; let ix = $index) {
-                      <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello }"></i>
+                      <i class="fa fa-circle" [class.white]="ix+1 > sk.livello" [class.dred]="ix < sk.livello"></i>
                     }
                     <button class="btn  btn-xs" (click)="addsk2(sk.idskill)" [disabled]="sk.livello>=maxAttitudini||sommaAttitudini>=numAttitudini"><i class="fa fa-plus"></i></button>
                   </div>
@@ -650,7 +650,7 @@
                   <div class="half mr">
                     <button  class="btn  btn-xs" (click)="minsk4(sk.idskill)" [disabled]="sk.livello<1"><i class="fa fa-minus"></i></button>
                     @for (i of 5 | times ; track i; let ix = $index) {
-                      <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello }"></i>
+                      <i class="fa fa-circle" [class.white]="ix+1 > sk.livello" [class.dred]="ix < sk.livello"></i>
                     }
                     <button class="btn  btn-xs" (click)="addsk4(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill+bonusskill"><i class="fa fa-plus"></i></button>
                   </div>
@@ -674,7 +674,7 @@
                         <div class="half mr ">
                         <button  class="btn  btn-xs" (click)="minsk(sk.idskill)" [disabled]="sk.livello<=sk.iniziale"><i class="fa fa-minus"></i></button>
                           @for (i of 5 | times ; track i; let ix = $index) {
-                            <i class="fa fa-circle" [ngClass]="{'white': ix+1 > sk.livello , 'dred': ix < sk.livello,'xred': ix<sk.iniziale }"></i>
+                            <i class="fa fa-circle" [class.white]="ix+1 > sk.livello" [class.dred]="ix < sk.livello" [class.xred]="ix<sk.iniziale"></i>
                           }
                           <button class="btn  btn-xs" (click)="addsk(sk.idskill)" [disabled]="sk.livello>4||sommaSkill>=numSkill+bonusskill"><i class="fa fa-plus"></i></button>
                         </div>
@@ -686,7 +686,7 @@
                         <div class="half mr ">
                           <button  class="btn  btn-xs" (click)="minsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello<1"><i class="fa fa-minus"></i></button>
                             @for (i of 5 | times ; track i; let ix = $index) {
-                              <i class="fa fa-circle" [ngClass]="{'white': ix+1 > ssk.livello , 'dred': ix < ssk.livello }"></i>
+                              <i class="fa fa-circle" [class.white]="ix+1 > ssk.livello" [class.dred]="ix < ssk.livello"></i>
                             }
                           <button class="btn  btn-xs" (click)="addsk3(sk.idskill, ssk.idskill)" [disabled]="ssk.livello>=sk.livello||sommaSkill>=numSkill+bonusskill"><i class="fa fa-plus"></i></button>
                         </div>
@@ -778,7 +778,7 @@
                   <!-- <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="FDVadd===0"><i class="fa fa-minus"></i></button> -->
 
                   @for (i of 10 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseFDVmax , 'dred': ix < baseFDVmax }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > baseFDVmax" [class.dred]="ix < baseFDVmax"></i>
                   }
                   <!--  <button class="btn  btn-xs" (click)="addfdv()" [disabled]="baseFDVmax+FDVadd>9||freepoint===0"><i class="fa fa-plus"></i></button> -->
                 </div>
@@ -788,7 +788,7 @@
                 <div class="half mr ">
                   <!-- <button  class="btn  btn-xs" (click)="minuma()" [disabled]="umanitaadd===0"><i class="fa fa-minus"></i></button> -->
                   @for (i of 10 | times ; track i; let ix = $index) {
-                    <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseumanita , 'dred': ix < baseumanita }"></i>
+                    <i class="fa fa-circle" [class.white]="ix+1 > baseumanita" [class.dred]="ix < baseumanita"></i>
                   }
                   <!-- <button class="btn  btn-xs" (click)="adduma()" [disabled]="baseumanita+umanitaadd>9||freepoint===0"><i class="fa fa-plus"></i></button> -->
                 </div>

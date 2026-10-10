@@ -154,7 +154,7 @@
                 @for (cond of item.condizioni2; track cond) {
                   <div class="columns">
                     <div class="column is-1">
-                      <span [ngClass]="{'red': cond.risp==='N' , 'green': cond.risp==='S'}"> {{cond.risp}} </span>
+                      <span [class.red]="cond.risp==='N'" [class.green]="cond.risp==='S'"> {{cond.risp}} </span>
                     </div>
                     <div class="column is-2">
                       {{cond.tipocond}}

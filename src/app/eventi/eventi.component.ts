@@ -1,4 +1,12 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SideadmComponent } from '../sideadm/sideadm.component';
 import { AdminService } from '../_services';
 import { GlobalStatus, Cronaca } from '../global';
 
@@ -22,7 +30,7 @@ export interface FullEV {
     selector: 'app-eventi',
     templateUrl: './eventi.component.html',
     styleUrls: ['./eventi.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatIconModule, MatSidenavModule, MatToolbarModule, SideadmComponent],
 })
 export class EventiComponent implements OnInit {
 

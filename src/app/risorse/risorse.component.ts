@@ -1,4 +1,14 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SideadmComponent } from '../sideadm/sideadm.component';
+import { TimesPipe } from '../times.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
@@ -15,7 +25,7 @@ import { Observable, of } from 'rxjs';
     selector: 'app-risorse',
     templateUrl: './risorse.component.html',
     styleUrls: ['./risorse.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSidenavModule, MatToolbarModule, ReactiveFormsModule, SideadmComponent, TimesPipe],
 })
 
 

@@ -1,4 +1,16 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SideadmComponent } from '../sideadm/sideadm.component';
 import { AdminService } from '../_services/index';
 import { FullOggetto, GlobalStatus, Cronaca} from '../global';
 import { Router, NavigationExtras } from '@angular/router';
@@ -10,7 +22,7 @@ import type { GetListOggetti } from '../_services/admin.service';
     selector: 'app-oggetti',
     templateUrl: './oggetti.component.html',
     styleUrls: ['./oggetti.component.css'],
-    standalone: false
+    imports: [FormsModule, MatButtonModule, MatCardModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatRadioModule, MatSidenavModule, MatToolbarModule, SideadmComponent],
 })
 export class OggettiComponent implements OnInit {
 

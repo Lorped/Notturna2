@@ -80,6 +80,12 @@ export interface GetBG {
     otherdisc: Disciplina[];
   }
 
+  export interface GetFama {
+  fama1: number;
+  fama2: number;
+  fama3: number;
+}
+
 
 @Injectable({
   providedIn: 'root'

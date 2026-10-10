@@ -1,4 +1,11 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { SidexComponent } from '../sidex/sidex.component';
 import { SchedaService } from '../_services/index';
 
 interface BGClan {
@@ -9,7 +16,7 @@ interface BGClan {
     selector: 'app-docs',
     templateUrl: './docs.component.html',
     styleUrls: ['./docs.component.css'],
-    standalone: false
+    imports: [MatToolbarModule, MatIconModule, MatSidenavModule, MatCardModule, MatListModule, MatDividerModule, SidexComponent],
 })
 export class DocsComponent implements OnInit {
 

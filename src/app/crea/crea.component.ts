@@ -1,4 +1,18 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SidexComponent } from '../sidex/sidex.component';
+import { TimesPipe } from '../times.pipe';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
 import { Lds, Cronaca, Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Pregio} from '../global';
@@ -37,10 +51,10 @@ import { PregioDifetto } from '../_services/scheda.service';
     selector: 'app-crea',
     templateUrl: './crea.component.html',
     styleUrls: ['./crea.component.css'],
+    imports: [ReactiveFormsModule, FormsModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatSelectModule, MatSidenavModule, MatStepperModule, MatToolbarModule, SidexComponent, TimesPipe],
     providers: [{
             provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
         }],
-    standalone: false
 })
 
 
