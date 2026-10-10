@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { FullOggetto, GlobalStatus, Cronaca} from '../global';
 import { Router, NavigationExtras } from '@angular/router';
-/* import { FormControl, FormGroup, Validators } from '@angular/forms'; */
+import type { GetListOggetti } from '../_services/admin.service';
 
 
 
@@ -19,11 +19,11 @@ export class OggettiComponent implements OnInit {
   nomeoggetto = '';
   descrizione = '';
 
-  listacronache: Array<Cronaca> = [];
+  listacronache: Cronaca[] = [];
   selectedCronache: number[] = [];
 
-  listaoggetti: Array<FullOggetto> = [];
-  displayedOggetti: Array<FullOggetto> = [];
+  listaoggetti: FullOggetto[] = [];
+  displayedOggetti: FullOggetto[] = [];
   listafissomobile: { id: string, nome: string }[] = [
     {id: 'F', nome: 'Fisso'} ,
     {id: 'M', nome: 'Mobile'} ,
@@ -33,18 +33,21 @@ export class OggettiComponent implements OnInit {
   ];
   fissomobile = 'F';
 
-  constructor( private adminservice: AdminService, private router: Router, public globalstatus: GlobalStatus) { }
+  private adminservice = inject(AdminService);
+  private router = inject(Router);
+  public globalstatus = inject(GlobalStatus);
+
 
   ngOnInit(): void {
 
-    this.adminservice.getlistcronache().subscribe(
-      (data: any) => {
+    this.adminservice.getlistcronache<Cronaca[]>().subscribe(
+      (data: Cronaca[]) => {
         this.listacronache = data;
       }
     );
 
-    this.adminservice.listoggetti().subscribe(
-      (data: any) => {
+    this.adminservice.listoggetti<GetListOggetti>().subscribe(
+      (data: GetListOggetti) => {
         this.listaoggetti = data.oggetti;
 
 
@@ -94,7 +97,7 @@ export class OggettiComponent implements OnInit {
 
   cancellaoggetto(idoggetto: number){
     this.adminservice.cancellaoggetto(idoggetto).subscribe(
-      (data) => {
+      () => {
         for (let j = 0 ; j < this.listaoggetti.length ; j++) {
           if (this.listaoggetti[j].oggetto.idoggetto == idoggetto) {
             this.listaoggetti.splice(j,1);
@@ -107,9 +110,9 @@ export class OggettiComponent implements OnInit {
 
   aggiungioggetto(){
     this.adminservice.addoggetto( this.nomeoggetto , this.descrizione, this.fissomobile).subscribe(
-      (data) => {
-        this.adminservice.listoggetti().subscribe(
-          (data: any) => {
+      () => {
+        this.adminservice.listoggetti<GetListOggetti>().subscribe(
+          (data: GetListOggetti) => {
             this.listaoggetti = data.oggetti;
             this.sortListaOggetti();
             this.applyFiltro();

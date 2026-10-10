@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GlobalStatus } from '../global';
+import { GlobalStatus, FullOggetto } from '../global';
 
 export interface RigaPrestampa {
   IDoggetto: number;
@@ -8,6 +8,10 @@ export interface RigaPrestampa {
   nomeoggetto: string;
   selezionato: boolean;
   quantita: number;
+}
+
+export interface GetListOggetti {
+  oggetti: FullOggetto[];
 }
 
 @Injectable({
@@ -38,8 +42,8 @@ export class AdminService {
     });
   }
 
-  listoggetti<T>() {
-    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/listoggetti.php' );
+  listoggetti<GetListOggetti>() {
+    return this.http.get<GetListOggetti>('https://www.roma-by-night.it/Notturna2/wsPHP/listoggetti.php' );
   }
 
   cancellaoggetto(idoggetto: number) {

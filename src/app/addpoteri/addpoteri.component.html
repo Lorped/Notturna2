@@ -57,7 +57,7 @@
                           <mat-label>Poteri</mat-label>
                           <mat-select [(value)]="newpotere[ix]">
                             @for (pp1 of dd.newpoteri; track pp1) {
-                              <mat-option [value]="pp1.potere.idpotere"  [disabled]="pp1.disabled==1" >{{pp1.potere.livellopot}} - {{pp1.potere.nomepotere}} </mat-option>
+                              <mat-option [value]="pp1.potere.idpotere"  [disabled]="pp1.disabled===1" >{{pp1.potere.livellopot}} - {{pp1.potere.nomepotere}} </mat-option>
                             }
                           </mat-select>
                         </mat-form-field>
@@ -67,7 +67,7 @@
                   @if (dd.newpoteri.length > 0) {
                     <div class="columns" >
                       <div class="column">
-                        <button mat-raised-button class="large" color="primary" [disabled]="newpotere[ix] == '0'" (click)="addpotere(ix)" style="width : 100%;" >
+                        <button mat-raised-button class="large" color="primary" [disabled]="newpotere[ix] === 0" (click)="addpotere(ix)" style="width : 100%;" >
                           Scegli
                         </button>
                       </div>

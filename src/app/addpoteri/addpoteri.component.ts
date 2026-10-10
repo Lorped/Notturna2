@@ -17,7 +17,7 @@ export class AddpoteriComponent implements OnInit {
 
   idutente = 0;
   discipline: FullDisciplina[] = [];
-  newpotere: string[] = [] ;
+  newpotere: number[] = [] ;
 
   public schedaservice = inject(SchedaService);
 
@@ -31,7 +31,7 @@ export class AddpoteriComponent implements OnInit {
         this.discipline = data;
 
         for ( let j = 0 ; j < this.discipline.length ; j++ ){
-          this.newpotere[j] = '0' ;
+          this.newpotere[j] = 0 ;
         }
 
       }
@@ -45,7 +45,7 @@ export class AddpoteriComponent implements OnInit {
         .subscribe (
           (data2: FullDisciplina[] ) => {
             this.discipline = data2;
-            this.newpotere[ix] = '0';
+            this.newpotere[ix] = 0;
           }
         );
       }

@@ -47,15 +47,15 @@ export class PregidifettiComponent implements OnInit {
   ok_p_x = 0;
 
 
-  new_d_f = '';
-  new_d_m = '';
-  new_d_s = '';
-  new_d_x = '';
+  new_d_f = 0;
+  new_d_m = 0;
+  new_d_s = 0;
+  new_d_x = 0;
 
-  new_p_f = '';
-  new_p_m = '';
-  new_p_s = '';
-  new_p_x = '';
+  new_p_f = 0;
+  new_p_m = 0;
+  new_p_s = 0;
+  new_p_x = 0;
 
   private schedaservice = inject(SchedaService);
 
@@ -152,7 +152,7 @@ export class PregidifettiComponent implements OnInit {
   }
 
   newpregio(tipo: string) {
-    let idpregio = '';
+    let idpregio = 0;
 
     switch (tipo) {
       case 'df':
@@ -186,15 +186,15 @@ export class PregidifettiComponent implements OnInit {
     .subscribe(
       () => {
 
-        this.new_d_f = '';
-        this.new_d_m = '';
-        this.new_d_s = '';
-        this.new_d_x = '';
+        this.new_d_f = 0;
+        this.new_d_m = 0;
+        this.new_d_s = 0;
+        this.new_d_x = 0;
 
-        this.new_p_f = '';
-        this.new_p_m = '';
-        this.new_p_s = '';
-        this.new_p_x = '';
+        this.new_p_f = 0;
+        this.new_p_m = 0;
+        this.new_p_s = 0;
+        this.new_p_x = 0;
         this.getpregi();
         this.getliste();
         this.getpx();

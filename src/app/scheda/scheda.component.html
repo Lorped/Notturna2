@@ -299,7 +299,7 @@
                 <div class="column is-4 nopadding">
                   <div class="columns">
                     <div class="column">
-                      @if(dd.disciplina.focus == 1 ){
+                      @if(dd.disciplina.focus === 1 ){
                         <i class="fa fa-star mymedicon white"></i>
                       }
                       {{dd.disciplina.nomedisc}}
@@ -328,7 +328,7 @@
                   <div class="column is-4 nopadding">
                     <div class="columns">
                       <div class="column">
-                        @if(dd.taumaturgia.focus == 1 ){
+                        @if(dd.taumaturgia.focus === 1 ){
                         <i class="fa fa-star mymedicon white"></i>
                         }
                         {{dd.taumaturgia.nometaum}}
@@ -358,7 +358,7 @@
                   <div class="column is-4 nopadding">
                     <div class="columns" >
                       <div class="column">
-                        @if(dd.necromanzia.focus == 1 ){
+                        @if(dd.necromanzia.focus === 1 ){
                         <i class="fa fa-star mymedicon white"></i>
                         }
                         {{dd.necromanzia.nomenecro}}
@@ -571,7 +571,7 @@
             <div class="columns is-multiline" style="margin-left: 0px;" >
               @for (dd of background; track dd) {
                 <div class="column is-4 nopadding">
-                  @if (dd.idback != 77 && dd.idback!= 88 && dd.idback != 2) {
+                  @if (dd.idback !== 77 && dd.idback!== 88 && dd.idback !== 2) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}
@@ -583,7 +583,7 @@
                       </div>
                     </div>
                   }
-                  @if (dd.idback == 2) {
+                  @if (dd.idback === 2) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}
@@ -598,7 +598,7 @@
                       </div>
                     </div>
                   }
-                  @if (dd.idback == 77) {
+                  @if (dd.idback === 77) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}
@@ -610,7 +610,7 @@
                       </div>
                     </div>
                   }
-                  @if (dd.idback == 88) {
+                  @if (dd.idback === 88) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}
@@ -753,16 +753,16 @@
 
               @for (px of listaarray; track px) {
                 <div class="columns">
-                  <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+                  <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
                     {{px.data}}
                   </div>
-                  <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+                  <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
                     {{px.spesa}}
                   </div>
-                  <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+                  <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
                     1 risorsa ogni {{px.cadenza}} gg.
                   </div>
-                  <div class="column alr" [ngClass]="{'green':px.spesa == px.recuperati }">
+                  <div class="column alr" [ngClass]="{'green':px.spesa === px.recuperati }">
                     {{px.recuperati}}
                   </div>
                 </div>

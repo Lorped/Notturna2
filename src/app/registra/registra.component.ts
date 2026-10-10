@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-registra',
@@ -73,21 +72,11 @@ export class RegistraComponent  {
   }
 
   validateEmailNotTaken(control: AbstractControl) {
-  return this.authenticationservice.checkEmail<string>(control.value)
-  .pipe ( map ( (res: string) => {
-    // console.log(res);
-     return  res == 'OK' ?  { emailTaken: true } : null ;
-    // return null ;
-  }));
+    return this.authenticationservice.checkEmail(control.value);
   }
 
   validateNomeNotTaken(control: AbstractControl) {
-  return this.authenticationservice.checkNome<string>(control.value)
-  .pipe ( map ( (res: string) => {
-    // console.log(res);
-     return  res == 'OK' ?  { nomeTaken: true } : null ;
-    // return null ;
-  }));
+    return this.authenticationservice.checkNome(control.value);
   }
 
   doRegister() {

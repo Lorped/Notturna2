@@ -66,7 +66,7 @@
               </mat-radio-group>
             </div>
             <div class="column is-2">
-              <button  mat-raised-button [disabled]="nomeoggetto==''" class="large" color="primary" (click)="aggiungioggetto()" style="width: 100%;">Aggiungi</button>
+              <button  mat-raised-button [disabled]="nomeoggetto===''" class="large" color="primary" (click)="aggiungioggetto()" style="width: 100%;">Aggiungi</button>
             </div>
           </div>
 
@@ -137,7 +137,7 @@
                     </div>
                   </div>
                 }
-                @if (item.oggetto.ifdomanda==1) {
+                @if (item.oggetto.ifdomanda===1) {
                   <div class="columns">
                     <div class="column is-1">
                       &nbsp;
@@ -154,7 +154,7 @@
                 @for (cond of item.condizioni2; track cond) {
                   <div class="columns">
                     <div class="column is-1">
-                      <span [ngClass]="{'red': cond.risp=='N' , 'green': cond.risp=='S'}"> {{cond.risp}} </span>
+                      <span [ngClass]="{'red': cond.risp==='N' , 'green': cond.risp==='S'}"> {{cond.risp}} </span>
                     </div>
                     <div class="column is-2">
                       {{cond.tipocond}}
@@ -167,7 +167,7 @@
                     </div>
                   </div>
                 }
-                @if (item.paired.idpaired!=0) {
+                @if (item.paired.idpaired!==0) {
                   <div class="columns">
                     <div class="column is-1">
                       &nbsp;

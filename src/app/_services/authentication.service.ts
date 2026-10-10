@@ -43,12 +43,14 @@ export class AuthenticationService {
   }
 
 
-  checkEmail<T> (email: string) {
-    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/checkemail.php?email=' + email);
+  checkEmail(email: string) {
+    return this.http.get<string>('https://www.roma-by-night.it/Notturna2/wsPHP/checkemail.php?email=' + email)
+      .pipe(map((res) => (res === 'OK' ? { emailTaken: true } : null)));
   }
 
-  checkNome<T> (nome: string) {
-    return this.http.get<T>('https://www.roma-by-night.it/Notturna2/wsPHP/checknome.php?nome=' + nome);
+  checkNome(nome: string) {
+    return this.http.get<string>('https://www.roma-by-night.it/Notturna2/wsPHP/checknome.php?nome=' + nome)
+      .pipe(map((res) => (res === 'OK' ? { nomeTaken: true } : null)));
   }
 
 

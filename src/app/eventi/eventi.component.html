@@ -47,51 +47,67 @@
               <div class="column bigger">
                 <button type="button" class="sort-btn" (click)="sortBy('nomeplayer')">
                   <span class="sort-label">Giocatore</span>
-                  <span class="sort-icon" *ngIf="currentSortColumn === 'nomeplayer'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'nomeplayer') {
+                    <span class="sort-icon">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
               <div class="column bigger">
                 <button type="button" class="sort-btn" (click)="sortBy('nomepg')">
                   <span class="sort-label">PG Principale</span>
-                  <span class="sort-icon" *ngIf="currentSortColumn === 'nomepg'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'nomepg') {
+                    <span class="sort-icon">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
               <div class="column bigger">
                 <button type="button" class="sort-btn" (click)="sortBy('Cronaca')">
                   <span class="sort-label">Cronaca Principale</span>
-                  <span class="sort-icon" *ngIf="currentSortColumn === 'Cronaca'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'Cronaca') {
+                    <span class="sort-icon">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
               <!---
               <div class="column bigger">
                 <button type="button" class="sort-btn" (click)="sortBy('email')">
                   Email
-                  <span *ngIf="currentSortColumn === 'email'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'email') {
+                    <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
               -->
               <div class="column bigger is-1">
                 <button type="button" class="sort-btn" (click)="sortBy('eventi')">
                   <span class="sort-label">Eventi</span>
-                  <span class="sort-icon" *ngIf="currentSortColumn === 'eventi'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'eventi') {
+                    <span class="sort-icon">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
               <div class="column bigger is-1">
                 <button type="button" class="sort-btn" (click)="sortBy('xp')">
                   <span class="sort-label">Ev.PX</span>
-                  <span class="sort-icon" *ngIf="currentSortColumn === 'xp'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'xp') {
+                    <span class="sort-icon">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
               <div class="column bigger">
                 <button type="button" class="sort-btn" (click)="sortBy('eventodata')">
                   <span class="sort-label">Ultimo Evento</span>
-                  <span class="sort-icon" *ngIf="currentSortColumn === 'eventodata'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'eventodata') {
+                    <span class="sort-icon">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
               <div class="column bigger is-1">
                 <button type="button" class="sort-btn" (click)="sortBy('saldo')">
                   <span class="sort-label">Saldo</span>
-                  <span class="sort-icon" *ngIf="currentSortColumn === 'saldo'">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  @if (currentSortColumn === 'saldo') {
+                    <span class="sort-icon">{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                  }
                 </button>
               </div>
             </div>

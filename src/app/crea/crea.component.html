@@ -93,7 +93,7 @@
         </mat-step>
 
 
-<mat-step  errorMessage="Scelta obbigatoria" [completed]= "ldsOK || clanPG?.value == 20 "  >
+<mat-step  errorMessage="Scelta obbigatoria" [completed]= "ldsOK || clanPG?.value === 20 "  >
   <ng-template matStepLabel>Linea di Sangue</ng-template>
             <mat-card>
             <mat-card-content>
@@ -104,14 +104,14 @@
           <mat-card style="width: 75%;">
               <mat-form-field>
                 <mat-label>Linea di Sangue</mat-label>
-                <mat-select [value]="lds" (selectionChange)="setLDSItem($event.value)" [disabled]="clanPG?.value == 20">
+                <mat-select [value]="lds" (selectionChange)="setLDSItem($event.value)" [disabled]="clanPG?.value === 20">
                   @for (item of myLDS; track item; let idx = $index) {
                     <mat-option [value]="item.idlds">{{item.nomelds}}</mat-option>
                   }
                 </mat-select>
               </mat-form-field>
               
-              @if ( lds !=0 ) {
+              @if ( lds !==0 ) {
                 <b>Fondatore:</b> {{ listalds[lds-1].fondatorelds}} <br>
                 <b>Mentore:</b> {{ listalds[lds-1].mentorelds}} <br>
                 <b>Pregio :</b> {{ listalds[lds-1].pregiolds}} <br>
@@ -123,7 +123,7 @@
 
           <mat-card>
             <div>
-              <button mat-raised-button matStepperNext color="primary" [disabled]="!ldsOK && clanPG?.value!=20" >Prosegui</button>
+              <button mat-raised-button matStepperNext color="primary" [disabled]="!ldsOK && clanPG?.value!==20" >Prosegui</button>
             </div>
         </mat-card>
 </mat-step>
@@ -131,7 +131,7 @@
 
 
 
-        <mat-step errorMessage="Distribuzione non corretta" [completed]= "bgOK " [hasError]="(!bgOK && sommaBG!=0) " >
+        <mat-step errorMessage="Distribuzione non corretta" [completed]= "bgOK " [hasError]="(!bgOK && sommaBG!==0) " >
           <ng-template matStepLabel>Background</ng-template>
 
           <mat-card>
@@ -152,7 +152,7 @@
                     @for (i of b.MaxIniziale | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > b.livello , 'dred': ix < b.livello }"></i>
                     }
-                    <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG+bonusbg||(is14 && b.idback==5)"><i class="fa fa-plus"></i></button>
+                    <button class="btn  btn-xs" (click)="addbg(b.idback)" [disabled]="b.livello>(b.MaxIniziale-1)||sommaBG>=maxBG+bonusbg||(is14 && b.idback===5)"><i class="fa fa-plus"></i></button>
                   <!--  </div> -->
                 </div>
               </mat-card-content>
@@ -173,9 +173,9 @@
                   <mat-card>
                     <mat-card-content>
                       <mat-form-field>
-                        <input matInput placeholder="Contatto 1" [(ngModel)]="cont[0].nomecontatto" (change)="checkbg()" name="c0" [disabled]="cont[0].livello==0">
+                        <input matInput placeholder="Contatto 1" [(ngModel)]="cont[0].nomecontatto" (change)="checkbg()" name="c0" [disabled]="cont[0].livello===0">
                       </mat-form-field>
-                      @if (cont[0].nomecontatto==''&& cont[0].livello>0) {
+                      @if (cont[0].nomecontatto===''&& cont[0].livello>0) {
                         <mat-error>Inserire la descrizione</mat-error>
                       }
                       <div class = "column">
@@ -192,9 +192,9 @@
                   <mat-card>
                     <mat-card-content>
                       <mat-form-field>
-                        <input matInput placeholder="Contatto2" [(ngModel)]="cont[1].nomecontatto" (change)="checkbg()" name="c1" [disabled]="cont[1].livello==0">
+                        <input matInput placeholder="Contatto2" [(ngModel)]="cont[1].nomecontatto" (change)="checkbg()" name="c1" [disabled]="cont[1].livello===0">
                       </mat-form-field>
-                      @if (cont[1].nomecontatto==''&& cont[1].livello>0) {
+                      @if (cont[1].nomecontatto===''&& cont[1].livello>0) {
                         <mat-error>Inserire la descrizione</mat-error>
                       }
                       <div class = "column">
@@ -211,9 +211,9 @@
                   <mat-card>
                     <mat-card-content>
                       <mat-form-field>
-                        <input matInput placeholder="Contatto3" [(ngModel)]="cont[2].nomecontatto" (change)="checkbg()" name="c2" [disabled]="cont[2].livello==0">
+                        <input matInput placeholder="Contatto3" [(ngModel)]="cont[2].nomecontatto" (change)="checkbg()" name="c2" [disabled]="cont[2].livello===0">
                       </mat-form-field>
-                      @if (cont[2].nomecontatto==''&& cont[2].livello>0) {
+                      @if (cont[2].nomecontatto===''&& cont[2].livello>0) {
                         <mat-error>Inserire la descrizione!</mat-error>
                       }
                       <div class="column">
@@ -229,7 +229,7 @@
               </tr>
               <tr>
                 <td colspan="3">
-                  @if (this.sommaCont != this.maxCont) {
+                  @if (this.sommaCont !== this.maxCont) {
                     <mat-error>La somma dei singoli Contatti deve essere pari al valore del Background</mat-error>
                   }
                 </td>
@@ -251,9 +251,9 @@
                   <mat-card>
                     <mat-card-content>
                       <mat-form-field>
-                        <input matInput placeholder="Alleato 1" [(ngModel)]="alleati[0].nomealleato" (change)="checkbg()" name="a0" [disabled]="alleati[0].livello==0">
+                        <input matInput placeholder="Alleato 1" [(ngModel)]="alleati[0].nomealleato" (change)="checkbg()" name="a0" [disabled]="alleati[0].livello===0">
                       </mat-form-field>
-                      @if (alleati[0].nomealleato==''&& alleati[0].livello>0) {
+                      @if (alleati[0].nomealleato===''&& alleati[0].livello>0) {
                         <mat-error>Inserire la descrizione</mat-error>
                       }
                       <div class = "column">
@@ -270,9 +270,9 @@
                   <mat-card>
                     <mat-card-content>
                       <mat-form-field>
-                        <input matInput placeholder="Alleato 2" [(ngModel)]="alleati[1].nomealleato" (change)="checkbg()" name="a1" [disabled]="alleati[1].livello==0">
+                        <input matInput placeholder="Alleato 2" [(ngModel)]="alleati[1].nomealleato" (change)="checkbg()" name="a1" [disabled]="alleati[1].livello===0">
                       </mat-form-field>
-                      @if (alleati[1].nomealleato==''&& alleati[1].livello>0) {
+                      @if (alleati[1].nomealleato===''&& alleati[1].livello>0) {
                         <mat-error>Inserire la descrizione</mat-error>
                       }
                       <div class = "column">
@@ -289,9 +289,9 @@
                   <mat-card>
                     <mat-card-content>
                       <mat-form-field>
-                        <input matInput placeholder="Alleato 3" [(ngModel)]="alleati[2].nomealleato" (change)="checkbg()" name="a2" [disabled]="alleati[2].livello==0">
+                        <input matInput placeholder="Alleato 3" [(ngModel)]="alleati[2].nomealleato" (change)="checkbg()" name="a2" [disabled]="alleati[2].livello===0">
                       </mat-form-field>
-                      @if (alleati[2].nomealleato==''&& alleati[2].livello>0) {
+                      @if (alleati[2].nomealleato===''&& alleati[2].livello>0) {
                         <mat-error>Inserire la descrizione!</mat-error>
                       }
                       <div class="column">
@@ -307,7 +307,7 @@
               </tr>
               <tr>
                 <td colspan="3">
-                  @if (this.sommaAlleati != this.maxAlleati) {
+                  @if (this.sommaAlleati !== this.maxAlleati) {
                     <mat-error>La somma dei singoli Alleati deve essere pari al valore del Background</mat-error>
                   }
                 </td>
@@ -323,7 +323,7 @@
 
       <mat-card>
         <div>
-          <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK ||((lds==23||lds==7)&&(sommaAlleati+sommaCont<2))" >Prosegui</button>
+          <button mat-raised-button matStepperNext color="primary" [disabled]="!bgOK ||((lds===23||lds===7)&&(sommaAlleati+sommaCont<2))" >Prosegui</button>
         </div>
       </mat-card>
       <mat-card >
@@ -333,7 +333,7 @@
       </mat-card>
     </mat-step>
 
-    <mat-step errorMessage="Distribuzione non corretta" [completed]=attrOK [hasError]="!attrOK && sommaAttr!=0">
+    <mat-step errorMessage="Distribuzione non corretta" [completed]=attrOK [hasError]="!attrOK && sommaAttr!==0">
       <ng-template matStepLabel>Attributi</ng-template>
 
       <mat-card>
@@ -378,7 +378,7 @@
         </mat-card>
       </mat-step >
 
-      <mat-step errorMessage="Distribuzione non corretta" [completed]=discOK [hasError]="!discOK && sommaDisc!=0">
+      <mat-step errorMessage="Distribuzione non corretta" [completed]=discOK [hasError]="!discOK && sommaDisc!==0">
         <ng-template matStepLabel>Discipline</ng-template>
 
         <mat-card>
@@ -387,7 +387,7 @@
           </mat-card-content>
         </mat-card>
 
-        @if (clanPG!.value!=20) {
+        @if (clanPG!.value!==20) {
           <mat-card>
             <mat-grid-list cols="3" rowHeight="6:1">
               @for (dd of discipline; track dd) {
@@ -395,13 +395,13 @@
                   <div class="half all ml">
                     {{dd.nomedisc}}</div>
                   <div class="half mr">
-                    @if (dd.iddisciplina!=99 && dd.iddisciplina!=98 && dd.iddisciplina != 21 &&dd.iddisciplina !=23) {
+                    @if (dd.iddisciplina!==99 && dd.iddisciplina!==98 && dd.iddisciplina !== 21 &&dd.iddisciplina !==23) {
                       <button  class="btn  btn-xs" (click)="mindisc(dd.iddisciplina)" [disabled]="dd.livello<=dd.iniziale"><i class="fa fa-minus"></i></button>
                     }
                     @for (i of 5 | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello, 'xred': ix<dd.iniziale}"></i>
                     }
-                    @if (dd.iddisciplina!=99 && dd.iddisciplina!=98 && dd.iddisciplina != 21 &&dd.iddisciplina !=23) {
+                    @if (dd.iddisciplina!==99 && dd.iddisciplina!==98 && dd.iddisciplina !== 21 &&dd.iddisciplina !==23) {
                       <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc"><i class="fa fa-plus"></i></button>
                     }
                   </div>
@@ -411,7 +411,7 @@
           </mat-card>
         }
 
-        @if (clanPG!.value==7) {
+        @if (clanPG!.value===7) {
           <mat-card>          <!-- TREMERE -->
             <mat-grid-list cols="3" rowHeight="6:1">
               <mat-grid-tile>     <!--- via primaria -->
@@ -420,45 +420,45 @@
                     <mat-label>Via Primaria</mat-label>
                     <mat-select [(value)]="taumaturgie[0].idtaum">
                       @for (tt of listaTaum; track tt) {
-                        <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG!.value<'2')">{{tt.nometaum}}</mat-option>
+                        <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum===6||tt.idtaum===7) && (statusPG!.value<'2')">{{tt.nometaum}}</mat-option>
                       }
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="half mr">
-                  <button  class="btn  btn-xs" (click)="mintaum(0)" [disabled]="taumaturgie[0].livello<1||(taumaturgie[0].livello-1==taumaturgie[1].livello && taumaturgie[1].livello>0)"><i class="fa fa-minus"></i></button>
+                  <button  class="btn  btn-xs" (click)="mintaum(0)" [disabled]="taumaturgie[0].livello<1||(taumaturgie[0].livello-1===taumaturgie[1].livello && taumaturgie[1].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[0].livello , 'dred': ix < taumaturgie[0].livello }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="addtaum(0)" [disabled]="taumaturgie[0].livello>4||taumaturgie[0].idtaum == 0||sommaDisc==numDisc||taumaturgie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
+                  <button class="btn  btn-xs" (click)="addtaum(0)" [disabled]="taumaturgie[0].livello>4||taumaturgie[0].idtaum === 0||sommaDisc===numDisc||taumaturgie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile>     <!--- via secondarie -->
                 <div class="half all ml">
                   <mat-form-field>
                     <mat-label>Via Secondaria</mat-label>
-                    <mat-select  [(value)]="taumaturgie[1].idtaum" [disabled]="taumaturgie[0].idtaum == 0">
+                    <mat-select  [(value)]="taumaturgie[1].idtaum" [disabled]="taumaturgie[0].idtaum === 0">
                       @for (tt of listaTaum; track tt) {
-                        <mat-option [value]="tt.idtaum" [disabled]="( (tt.idtaum==6||tt.idtaum==7) && (statusPG!.value<'2'))||(tt.idtaum==taumaturgie[0].idtaum)||(tt.idtaum==taumaturgie[2].idtaum)">{{tt.nometaum}}</mat-option>
+                        <mat-option [value]="tt.idtaum" [disabled]="( (tt.idtaum===6||tt.idtaum===7) && (statusPG!.value<'2'))||(tt.idtaum===taumaturgie[0].idtaum)||(tt.idtaum===taumaturgie[2].idtaum)">{{tt.nometaum}}</mat-option>
                       }
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="half mr">
-                  <button  class="btn  btn-xs" (click)="mintaum(1)" [disabled]="taumaturgie[1].livello<1||(taumaturgie[1].livello-1==taumaturgie[2].livello && taumaturgie[2].livello>0)"><i class="fa fa-minus"></i></button>
+                  <button  class="btn  btn-xs" (click)="mintaum(1)" [disabled]="taumaturgie[1].livello<1||(taumaturgie[1].livello-1===taumaturgie[2].livello && taumaturgie[2].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[1].livello , 'dred': ix < taumaturgie[1].livello }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="addtaum(1)" [disabled]="taumaturgie[1].livello>4||(taumaturgie[1].livello+1>=taumaturgie[0].livello && taumaturgie[0].livello<5)||taumaturgie[1].idtaum == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+                  <button class="btn  btn-xs" (click)="addtaum(1)" [disabled]="taumaturgie[1].livello>4||(taumaturgie[1].livello+1>=taumaturgie[0].livello && taumaturgie[0].livello<5)||taumaturgie[1].idtaum === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile>     <!--- via terz -->
                 <div class="half all ml">
                   <mat-form-field>
                     <mat-label>Via Terziaria</mat-label>
-                    <mat-select [(value)]="taumaturgie[2].idtaum" [disabled]="taumaturgie[1].idtaum == 0">
+                    <mat-select [(value)]="taumaturgie[2].idtaum" [disabled]="taumaturgie[1].idtaum === 0">
                       @for (tt of listaTaum; track tt) {
-                        <mat-option [value]="tt.idtaum" [disabled]="( (tt.idtaum==6||tt.idtaum==7) && (statusPG!.value<'2'))||(tt.idtaum==taumaturgie[0].idtaum)||(tt.idtaum==taumaturgie[1].idtaum)">{{tt.nometaum}}</mat-option>
+                        <mat-option [value]="tt.idtaum" [disabled]="( (tt.idtaum===6||tt.idtaum===7) && (statusPG!.value<'2'))||(tt.idtaum===taumaturgie[0].idtaum)||(tt.idtaum===taumaturgie[1].idtaum)">{{tt.nometaum}}</mat-option>
                       }
                     </mat-select>
                   </mat-form-field>
@@ -468,21 +468,21 @@
                   @for (i of 5 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > taumaturgie[2].livello , 'dred': ix < taumaturgie[2].livello }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="addtaum(2)" [disabled]="taumaturgie[2].livello>4||(taumaturgie[2].livello+1>=taumaturgie[1].livello && taumaturgie[1].livello<5)||taumaturgie[2].idtaum == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+                  <button class="btn  btn-xs" (click)="addtaum(2)" [disabled]="taumaturgie[2].livello>4||(taumaturgie[2].livello+1>=taumaturgie[1].livello && taumaturgie[1].livello<5)||taumaturgie[2].idtaum === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
               </mat-grid-tile>
             </mat-grid-list>
             @if ((
-              (taumaturgie[0].idtaum==taumaturgie[1].idtaum) && taumaturgie[0].idtaum!=0 ||
-              (taumaturgie[1].idtaum==taumaturgie[2].idtaum) && taumaturgie[1].idtaum!=0 ||
-              (taumaturgie[2].idtaum==taumaturgie[0].idtaum) && taumaturgie[2].idtaum!=0
+              (taumaturgie[0].idtaum===taumaturgie[1].idtaum) && taumaturgie[0].idtaum!==0 ||
+              (taumaturgie[1].idtaum===taumaturgie[2].idtaum) && taumaturgie[1].idtaum!==0 ||
+              (taumaturgie[2].idtaum===taumaturgie[0].idtaum) && taumaturgie[2].idtaum!==0
               )) {
               <mat-error>Vie Duplicate</mat-error>
             }
           </mat-card>
         }
 
-        @if (clanPG!.value==11||clanPG!.value==14) {
+        @if (clanPG!.value===11||clanPG!.value===14) {
           <mat-card>          <!-- Giovanni / Cappadoci -->
             <mat-grid-list cols="3" rowHeight="6:1">
               <mat-grid-tile>     <!--- via primaria -->
@@ -497,39 +497,39 @@
                   </mat-form-field>
                 </div>
                 <div class="half mr">
-                  <button  class="btn  btn-xs" (click)="minnecro(0)" [disabled]="necromanzie[0].livello<1||(necromanzie[0].livello-1==necromanzie[1].livello && necromanzie[1].livello>0)"><i class="fa fa-minus"></i></button>
+                  <button  class="btn  btn-xs" (click)="minnecro(0)" [disabled]="necromanzie[0].livello<1||(necromanzie[0].livello-1===necromanzie[1].livello && necromanzie[1].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[0].livello , 'dred': ix < necromanzie[0].livello }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="addnecro(0)" [disabled]="necromanzie[0].livello>4||necromanzie[0].idnecro == 0||sommaDisc==numDisc||necromanzie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
+                  <button class="btn  btn-xs" (click)="addnecro(0)" [disabled]="necromanzie[0].livello>4||necromanzie[0].idnecro === 0||sommaDisc===numDisc||necromanzie[0].livello>=maxDisc"><i class="fa fa-plus"></i></button>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile>     <!--- via secondarie -->
                 <div class="half all ml">
                   <mat-form-field>
                     <mat-label>Via Secondaria</mat-label>
-                    <mat-select  [(value)]="necromanzie[1].idnecro" [disabled]="necromanzie[0].idnecro == 0">
+                    <mat-select  [(value)]="necromanzie[1].idnecro" [disabled]="necromanzie[0].idnecro === 0">
                       @for (tt of listaNecro; track tt) {
-                        <mat-option [value]="tt.idnecro" [disabled]="( (tt.idnecro==4) && (statusPG!.value<'2'))||(tt.idnecro==necromanzie[0].idnecro)||(tt.idnecro==necromanzie[2].idnecro)">{{tt.nomenecro}}</mat-option>
+                        <mat-option [value]="tt.idnecro" [disabled]="( (tt.idnecro===4) && (statusPG!.value<'2'))||(tt.idnecro===necromanzie[0].idnecro)||(tt.idnecro===necromanzie[2].idnecro)">{{tt.nomenecro}}</mat-option>
                       }
                     </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="half mr">
-                  <button  class="btn  btn-xs" (click)="minnecro(1)" [disabled]="necromanzie[1].livello<1||(necromanzie[1].livello-1==necromanzie[2].livello && necromanzie[2].livello>0)"><i class="fa fa-minus"></i></button>
+                  <button  class="btn  btn-xs" (click)="minnecro(1)" [disabled]="necromanzie[1].livello<1||(necromanzie[1].livello-1===necromanzie[2].livello && necromanzie[2].livello>0)"><i class="fa fa-minus"></i></button>
                   @for (i of 5 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[1].livello , 'dred': ix < necromanzie[1].livello }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="addnecro(1)" [disabled]="necromanzie[1].livello>4||(necromanzie[1].livello+1>=necromanzie[0].livello && necromanzie[0].livello<5)||necromanzie[1].idnecro == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+                  <button class="btn  btn-xs" (click)="addnecro(1)" [disabled]="necromanzie[1].livello>4||(necromanzie[1].livello+1>=necromanzie[0].livello && necromanzie[0].livello<5)||necromanzie[1].idnecro === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile>     <!--- via terz -->
                 <div class="half all ml">
                   <mat-form-field>
                     <mat-label>Via Terziaria</mat-label>
-                    <mat-select [(value)]="necromanzie[2].idnecro" [disabled]="necromanzie[1].idnecro == 0">
+                    <mat-select [(value)]="necromanzie[2].idnecro" [disabled]="necromanzie[1].idnecro === 0">
                       @for (tt of listaNecro; track tt) {
-                        <mat-option [value]="tt.idnecro" [disabled]="( (tt.idnecro==4) && (statusPG!.value<'2'))||(tt.idnecro==necromanzie[0].idnecro)||(tt.idnecro==necromanzie[1].idnecro)">{{tt.nomenecro}}</mat-option>
+                        <mat-option [value]="tt.idnecro" [disabled]="( (tt.idnecro===4) && (statusPG!.value<'2'))||(tt.idnecro===necromanzie[0].idnecro)||(tt.idnecro===necromanzie[1].idnecro)">{{tt.nomenecro}}</mat-option>
                       }
                     </mat-select>
                   </mat-form-field>
@@ -539,14 +539,14 @@
                   @for (i of 5 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > necromanzie[2].livello , 'dred': ix < necromanzie[2].livello }"></i>
                   }
-                  <button class="btn  btn-xs" (click)="addnecro(2)" [disabled]="necromanzie[2].livello>4||(necromanzie[2].livello+1>=necromanzie[1].livello && necromanzie[1].livello<5)||necromanzie[2].idnecro == 0||sommaDisc==numDisc"><i class="fa fa-plus"></i></button>
+                  <button class="btn  btn-xs" (click)="addnecro(2)" [disabled]="necromanzie[2].livello>4||(necromanzie[2].livello+1>=necromanzie[1].livello && necromanzie[1].livello<5)||necromanzie[2].idnecro === 0||sommaDisc===numDisc"><i class="fa fa-plus"></i></button>
                 </div>
               </mat-grid-tile>
             </mat-grid-list>
             @if ((
-              (necromanzie[0].idnecro==necromanzie[1].idnecro) && necromanzie[0].idnecro!=0 ||
-              (necromanzie[1].idnecro==necromanzie[2].idnecro) && necromanzie[1].idnecro!=0 ||
-              (necromanzie[2].idnecro==necromanzie[0].idnecro) && necromanzie[2].idnecro!=0
+              (necromanzie[0].idnecro===necromanzie[1].idnecro) && necromanzie[0].idnecro!==0 ||
+              (necromanzie[1].idnecro===necromanzie[2].idnecro) && necromanzie[1].idnecro!==0 ||
+              (necromanzie[2].idnecro===necromanzie[0].idnecro) && necromanzie[2].idnecro!==0
               )) {
               <mat-error>Vie Duplicate</mat-error>
             }
@@ -554,7 +554,7 @@
         }
 
 
-        @if (clanPG!.value==20) {
+        @if (clanPG!.value===20) {
           <mat-card>   <!---          VILI -->
             <mat-grid-list cols="3" rowHeight="6:1">
               @for (dd of discipline; track dd; let ixx = $index) {
@@ -565,10 +565,10 @@
                       <mat-select [(value)]="discipline[ixx].iddisciplina">
                         @for (tt of disciplinevili; track tt) {
 <mat-option [value]="tt.iddisciplina" [disabled]="(
-              ( ixx==0 && ( (tt.iddisciplina==discipline[1].iddisciplina) || (tt.iddisciplina==discipline[2].iddisciplina) ) ) ||
-              ( ixx==1 && ( (tt.iddisciplina==discipline[2].iddisciplina) || (tt.iddisciplina==discipline[0].iddisciplina) ) ) ||
-              ( ixx==2 && ( (tt.iddisciplina==discipline[0].iddisciplina) || (tt.iddisciplina==discipline[1].iddisciplina) ) ) ||
-              (tt.iddisciplina == 18 && !is14)
+              ( ixx===0 && ( (tt.iddisciplina===discipline[1].iddisciplina) || (tt.iddisciplina===discipline[2].iddisciplina) ) ) ||
+              ( ixx===1 && ( (tt.iddisciplina===discipline[2].iddisciplina) || (tt.iddisciplina===discipline[0].iddisciplina) ) ) ||
+              ( ixx===2 && ( (tt.iddisciplina===discipline[0].iddisciplina) || (tt.iddisciplina===discipline[1].iddisciplina) ) ) ||
+              (tt.iddisciplina === 18 && !is14)
               )">{{tt.nomedisc}}</mat-option>
                         }
                       </mat-select>
@@ -579,15 +579,15 @@
                     @for (i of 5 | times ; track i; let ix = $index) {
                       <i class="fa fa-circle" [ngClass]="{'white': ix+1 > dd.livello , 'dred': ix < dd.livello }"></i>
                     }
-                    <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc||discipline[ixx].iddisciplina==0" ><i class="fa fa-plus"></i></button>
+                    <button class="btn  btn-xs" (click)="adddisc(dd.iddisciplina)" [disabled]="dd.livello>4||sommaDisc>=numDisc||dd.livello>=maxDisc||discipline[ixx].iddisciplina===0" ><i class="fa fa-plus"></i></button>
                   </div>
                 </mat-grid-tile>
               }
             </mat-grid-list>
             @if ((
-              (discipline[0].iddisciplina==discipline[1].iddisciplina) && discipline[0].iddisciplina!=0 ||
-              (discipline[1].iddisciplina==discipline[2].iddisciplina) && discipline[1].iddisciplina!=0 ||
-              (discipline[2].iddisciplina==discipline[0].iddisciplina) && discipline[2].iddisciplina!=0
+              (discipline[0].iddisciplina===discipline[1].iddisciplina) && discipline[0].iddisciplina!==0 ||
+              (discipline[1].iddisciplina===discipline[2].iddisciplina) && discipline[1].iddisciplina!==0 ||
+              (discipline[2].iddisciplina===discipline[0].iddisciplina) && discipline[2].iddisciplina!==0
               )) {
               <mat-error>Discipline Duplicate</mat-error>
             }
@@ -611,7 +611,7 @@
           </mat-card>
         </mat-step >
 
-        <mat-step errorMessage="Distribuzione non corretta" [completed]=skillOK&&attitudiniOK [hasError]="(!skillOK && sommaSkill!=0)||(!attitudiniOK && sommaAttitudini!=0)">
+        <mat-step errorMessage="Distribuzione non corretta" [completed]=skillOK&&attitudiniOK [hasError]="(!skillOK && sommaSkill!==0)||(!attitudiniOK && sommaAttitudini!==0)">
           <ng-template matStepLabel>Skill</ng-template>
 
           <mat-card>
@@ -701,7 +701,7 @@
           <mat-card>
             <mat-card-content>
               <div>
-                <button mat-raised-button matStepperNext color="primary" [disabled]="!skillOK||!attitudiniOK||(lds==1&&(SOMMAOCC+SOMMAACC+SOMMASCI<2))||(lds==2&&(SOMMAETI+SOMMACRI<2))||(lds==14&&((SOMMAACC+SOMMAOCC+SOMMASCI)<numSkill/3))" >Prosegui</button>
+                <button mat-raised-button matStepperNext color="primary" [disabled]="!skillOK||!attitudiniOK||(lds===1&&(SOMMAOCC+SOMMAACC+SOMMASCI<2))||(lds===2&&(SOMMAETI+SOMMACRI<2))||(lds===14&&((SOMMAACC+SOMMAOCC+SOMMASCI)<numSkill/3))" >Prosegui</button>
               </div>
             </mat-card-content>
           </mat-card>
@@ -775,22 +775,22 @@
               <mat-grid-tile>
                 <div class="half all ml ">Forza di Volontà</div>
                 <div class="half mr ">
-                  <!-- <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="FDVadd==0"><i class="fa fa-minus"></i></button> -->
+                  <!-- <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="FDVadd===0"><i class="fa fa-minus"></i></button> -->
 
                   @for (i of 10 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseFDVmax , 'dred': ix < baseFDVmax }"></i>
                   }
-                  <!--  <button class="btn  btn-xs" (click)="addfdv()" [disabled]="baseFDVmax+FDVadd>9||freepoint==0"><i class="fa fa-plus"></i></button> -->
+                  <!--  <button class="btn  btn-xs" (click)="addfdv()" [disabled]="baseFDVmax+FDVadd>9||freepoint===0"><i class="fa fa-plus"></i></button> -->
                 </div>
               </mat-grid-tile>
               <mat-grid-tile>
                 <div class="half all ml ">Umanità / Sentiero</div>
                 <div class="half mr ">
-                  <!-- <button  class="btn  btn-xs" (click)="minuma()" [disabled]="umanitaadd==0"><i class="fa fa-minus"></i></button> -->
+                  <!-- <button  class="btn  btn-xs" (click)="minuma()" [disabled]="umanitaadd===0"><i class="fa fa-minus"></i></button> -->
                   @for (i of 10 | times ; track i; let ix = $index) {
                     <i class="fa fa-circle" [ngClass]="{'white': ix+1 > baseumanita , 'dred': ix < baseumanita }"></i>
                   }
-                  <!-- <button class="btn  btn-xs" (click)="adduma()" [disabled]="baseumanita+umanitaadd>9||freepoint==0"><i class="fa fa-plus"></i></button> -->
+                  <!-- <button class="btn  btn-xs" (click)="adduma()" [disabled]="baseumanita+umanitaadd>9||freepoint===0"><i class="fa fa-plus"></i></button> -->
                 </div>
               </mat-grid-tile>
             </mat-grid-list>

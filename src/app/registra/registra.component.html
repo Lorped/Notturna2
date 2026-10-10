@@ -46,7 +46,7 @@
           <mat-icon class="white">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
-      @if ( password2?.value != password?.value && (password2?.dirty || password2?.touched)) {
+      @if ( password2?.value !== password?.value && (password2?.dirty || password2?.touched)) {
         <mat-error>Le due password non coincidono</mat-error>
       }
 
@@ -60,7 +60,7 @@
     </div>
 
     <button  mat-raised-button class="large" color="primary" [disabled]="!registrationForm.valid" (click)="doRegister()">Registra</button>
-    @if (errmsg != '') {
+    @if (errmsg !== '') {
       <mat-error> {{errmsg}}</mat-error>
     }
     <div style="text-align:center">

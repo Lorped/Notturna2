@@ -81,7 +81,7 @@
                     <div class="column is-6">
                       {{ tt.nomeback}}
                     </div>
-                    @if (tt.idback != 2) {
+                    @if (tt.idback !== 2) {
                       <div class="column ">
                         <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                         @for (item of 5|times ; track item; let ix = $index) {
@@ -90,7 +90,7 @@
                         <button class="btn  btn-xs" (click)="addbg(tt.idback)" [disabled]="tt.livello>4"><i class="fa fa-plus"></i></button>
                       </div>
                     }
-                    @if (tt.idback == 2) {
+                    @if (tt.idback === 2) {
                       <div class="column ">
                         <button  class="btn  btn-xs" (click)="minbg(tt.idback)" [disabled]="tt.livello<1"><i class="fa fa-minus"></i></button>
                         @for (item of 10|times ; track item; let ix = $index) {
@@ -132,7 +132,7 @@
                       @for (item of 5|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
                       }
-                      <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommacontatti==20"><i class="fa fa-plus"></i></button>
+                      <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommacontatti===20"><i class="fa fa-plus"></i></button>
                     </div>
                   </div>
                 }
@@ -180,7 +180,7 @@
                       @for (item of 5|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
                       }
-                      <button class="btn  btn-xs" (click)="addall(tt.idalleato)" [disabled]="tt.livello>4 ||sommaalleati==20"><i class="fa fa-plus"></i></button>
+                      <button class="btn  btn-xs" (click)="addall(tt.idalleato)" [disabled]="tt.livello>4 ||sommaalleati===20"><i class="fa fa-plus"></i></button>
                     </div>
                   </div>
                 }
@@ -211,7 +211,7 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                @if (status_new != '' ) {
+                @if (status_new !== '' ) {
                   <div >
                     <div class="columns">
                       <div class="column is-2">Da: {{status_old}} [+{{this.attivazione_old}}]</div>
@@ -259,7 +259,7 @@
                       </mat-form-field>
                     </div>
                     <div class = "column">
-                      <button  mat-raised-button class="large" (click)="changesentiero()" color="primary" [disabled]="sentieroPG==oldsentieroPG" style="width: 100%;">Modifica Sentiero</button>
+                      <button  mat-raised-button class="large" (click)="changesentiero()" color="primary" [disabled]="sentieroPG===oldsentieroPG" style="width: 100%;">Modifica Sentiero</button>
                     </div>
                   </div>
                   <div class="columns">
@@ -267,7 +267,7 @@
                       Valore Sentiero
                     </div>
                     <div class="column is-4 ">
-                      <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero==0"><i class="fa fa-minus"></i></button>
+                      <button  class="btn  btn-xs" (click)="minsentiero()" [disabled]="valsentiero===0"><i class="fa fa-minus"></i></button>
                       @for (i of 10 | times ; track i; let ix = $index) {
                         <i class="fa fa-circle" [ngClass]="{'white': ix+1 > valsentiero , 'dred': ix < valsentiero}"></i>
                       }
@@ -277,7 +277,7 @@
                       Forza di Volontà
                     </div>
                     <div class="column is-4 ">
-                      <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="fdv==0"><i class="fa fa-minus"></i></button>
+                      <button  class="btn  btn-xs" (click)="minfdv()" [disabled]="fdv===0"><i class="fa fa-minus"></i></button>
                       @for (i of 10 | times ; track i; let ix = $index) {
                         <i class="fa fa-circle" [ngClass]="{'white': ix+1 > fdv , 'dred': ix < fdv }"></i>
                       }
@@ -289,7 +289,7 @@
                       Generazione attuale: {{generazione}}
                     </div>
                     <div class = "column">
-                      <button  mat-raised-button class="large" (click)="riducigen()" color="primary"  [disabled]="generazione==4" style="width: 100%;">Diminuisci Generazione</button>
+                      <button  mat-raised-button class="large" (click)="riducigen()" color="primary"  [disabled]="generazione===4" style="width: 100%;">Diminuisci Generazione</button>
                     </div>
                   </div>
 

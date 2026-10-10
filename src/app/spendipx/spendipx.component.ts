@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/cor
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati,  Rituale } from '../global';
-import { GetScheda, GetRituali, GetBG, GetContattiAlleati } from '../_services/scheda.service';
+import { GetScheda, GetRituali, GetBG, GetContattiAlleati, GetNecroTaum, GetOtherDisc } from '../_services/scheda.service';
 
 
 @Component({
@@ -62,17 +62,17 @@ export class SpendipxComponent implements OnInit {
   rituali: Rituale[] = [];
   /*rituali_n_x: Array<Rituale> = [];
   rituali_t_t: Array<Rituale> = []; */
-  rituali_n: Rituale[] = [];
-  rituali_t: Rituale[] = [];
+  rituali_n: Rituale[][] = [];
+  rituali_t: Rituale[][] = [];
 
   maxrituali = 0 ;
 
-  idnewrituale: string[] = ['', '', '', '', ''];
+  idnewrituale: number[] = [0, 0, 0, 0, 0];
 
   newtaumaturgie: Taumaturgia[] = [] ;
   newnecromanzie: Necromanzia[] = [] ;
-  idnewtaum = '';
-  idnewnecro = '';
+  idnewtaum = 0;
+  idnewnecro = 0;
 
   statusPG = 1;
 
@@ -80,9 +80,9 @@ export class SpendipxComponent implements OnInit {
   livellinecro: number[] = [ 0 , 0 , 0 ];
 
   otherdisc: Disciplina[] = [];
-  idnewdisc = '';
+  idnewdisc = 0;
 
-  idnewprimaria = '';
+  idnewprimaria = 0;
   tremeresenzataum = 0 ;
   giovannisenzanecro = 0 ;
 
@@ -241,16 +241,16 @@ export class SpendipxComponent implements OnInit {
 
         // *********************
 
-        this.schedaservice.getnecrotaum(this.idutente)
+        this.schedaservice.getnecrotaum<GetNecroTaum>(this.idutente)
         .subscribe(
-          (data: any) => {
+          (data: GetNecroTaum) => {
             this.newtaumaturgie = data.taumaturgie;
             this.newnecromanzie = data.necromanzie;
           }
         );
-        this.schedaservice.getotherdisc(this.idutente)
+        this.schedaservice.getotherdisc<GetOtherDisc>(this.idutente)
         .subscribe(
-          (data: any) => {
+          (data: GetOtherDisc) => {
             this.otherdisc = data.otherdisc;
           }
         );
@@ -476,14 +476,14 @@ export class SpendipxComponent implements OnInit {
     this.schedaservice.newrituale ( this.idutente , this.idnewrituale[lvl], necrotaum )
     .subscribe(
       () => {
-        this.schedaservice.getscheda(this.idutente).
+        this.schedaservice.getscheda<GetScheda>(this.idutente).
         subscribe (
-          (data: any) => {
+          (data: GetScheda) => {
 
             this.rituali = data.rituali;
 
             for (let j = 0 ; j< 5 ; j++ ) {
-              this.idnewrituale[j] = '' ;
+              this.idnewrituale[j] = 0 ;
             }
 
             this.maxrituali = 0;
@@ -492,9 +492,9 @@ export class SpendipxComponent implements OnInit {
                 this.maxrituali = rituale.livello;
               }
             }
-            this.schedaservice.getrituali(this.idutente)
+            this.schedaservice.getrituali<GetRituali>(this.idutente)
             .subscribe(
-              (data: any) => {
+              (data: GetRituali) => {
                 this.rituali_t = data.rituali_t;
                 this.rituali_n = data.rituali_n;
                 this.reload_full();
@@ -613,7 +613,7 @@ export class SpendipxComponent implements OnInit {
 
   scegliprimaria(){
 
-      this.schedaservice.addprimariataum(this.idutente, Number(this.idnewprimaria))
+      this.schedaservice.addprimariataum(this.idutente, this.idnewprimaria)
       .subscribe ( () => {
         this.tremeresenzataum = 0 ;
         
@@ -627,7 +627,7 @@ export class SpendipxComponent implements OnInit {
 
   scegliprimarianecro(){
 
-      this.schedaservice.addprimarianecro(this.idutente, Number(this.idnewprimaria))
+      this.schedaservice.addprimarianecro(this.idutente, this.idnewprimaria)
       .subscribe ( () => {
         this.giovannisenzanecro = 0 ;
         
@@ -642,18 +642,13 @@ export class SpendipxComponent implements OnInit {
 
 
   reload_full () {
-    this.schedaservice.getscheda(this.idutente)
+    this.schedaservice.getscheda<GetScheda>(this.idutente)
     .subscribe (
-      (data: any) => {
+      (data: GetScheda) => {
 
         this.scheda = data.user;
-        this.scheda.xp = Number ( this.scheda.xp);
-        this.scheda.xpspesi = Number ( this.scheda.xpspesi);
 
-        //console.log ("reaload - xpsesi ", this.scheda.xpspesi);
-
-        this.scheda['maxstat'] = Number(this.scheda['maxstat']);
-        this.scheda['maxdisc'] = Number(this.scheda['maxdisc']);
+        //console.log ("reaload - xpsesi ", this.scheda.xpspesi);        
 
         /****
         this.maxdisc = this.matriceMaxDisc  [this.statusPG][14 - this.scheda['generazione']];
@@ -672,10 +667,6 @@ export class SpendipxComponent implements OnInit {
         this.maxattributi = this.scheda['maxstat'];
 
         this.discipline = data.discipline ;
-        for (let j=0 ; j < this.discipline.length ; j++ ) {
-          this.discipline[j].disciplina.livello = Number (this.discipline[j].disciplina.livello);
-          this.discipline[j].disciplina.iddisciplina = Number (this.discipline[j].disciplina.iddisciplina);
-        }
 
         this.taumaturgie = data.taumaturgie ;
         this.necromanzie = data.necromanzie ;
@@ -712,7 +703,7 @@ export class SpendipxComponent implements OnInit {
 
     this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto, 'U')
     .subscribe(
-      (data: any) => {
+      (data: number) => {
 
         myNew.idcontatto = data ;
         this.listaContatti.push(myNew) ;
@@ -755,7 +746,7 @@ export class SpendipxComponent implements OnInit {
 
     this.schedaservice.newalleato(this.idutente, myNew.nomealleato, 'U')
     .subscribe(
-      (data: any) => {
+      (data: number) => {
 
         myNew.idalleato = data ;
         this.listaAlleati.push(myNew) ;
@@ -850,15 +841,17 @@ export class SpendipxComponent implements OnInit {
     const duranki = this.discipline.find(xx => xx.disciplina.iddisciplina == 21);
     if (duranki) {
       valduranki = duranki.disciplina.livello;
-      const occ = this.skills.find( yy => yy.idskill == 13);
+      const occ = this.skills.find( yy => yy.idskill == 13); //occulto
       if (occ) {
-        const rituali = occ.subskill2.find( zz => zz.idskill == 18 )
+        const rituali = occ.subskill2.find( zz => zz.idskill == 18 ) //rituali
         valrituali = rituali!.livello;
 
-        if (valduranki < this.maxdisc){
+      if (valrituali > valduranki && valduranki < this.maxdisc){   //se valrituali è sufficientemente alta
+          // ... e se valduranki non ha raggiunto il massimo livello
           duranki.disciplina.livello ++;
           this.schedaservice.changedisc_master(this.idutente, 21, 1).subscribe();
-        }
+        
+      }
 
       }
     }

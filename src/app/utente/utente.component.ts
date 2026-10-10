@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
-import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-utente',
@@ -37,9 +36,8 @@ export class UtenteComponent implements OnInit {
     */
   });
 
+  private authenticationservice = inject(AuthenticationService);
 
-
-  constructor(private authenticationservice: AuthenticationService) { }
 
   ngOnInit(): void {
     this.emailForm.patchValue({ newemail: '' });
@@ -49,7 +47,7 @@ export class UtenteComponent implements OnInit {
   changepwd(){
     const idutente = Number( sessionStorage.getItem('NotturnaUser') );
     this.authenticationservice.changepwd(idutente , this.password!.value , '').subscribe(
-      (data) => {
+      () => {
         this.pwdForm.reset();
       }
     );
@@ -57,7 +55,7 @@ export class UtenteComponent implements OnInit {
   changeemail(){
     const idutente = Number( sessionStorage.getItem('NotturnaUser') );
     this.authenticationservice.changepwd(idutente , '', this.newemail!.value ).subscribe(
-      (data) => {
+      () => {
         this.emailForm.reset();
       }
     );
@@ -71,12 +69,7 @@ export class UtenteComponent implements OnInit {
   }
 
   validateEmailNotTaken(control: AbstractControl) {
-  return this.authenticationservice.checkEmail(control.value)
-  .pipe (  map ( (res: any) => {
-    // console.log(res);
-     return  res == 'OK' ?  { emailTaken: true } : null ;
-    // return null ;
-  }));
+    return this.authenticationservice.checkEmail(control.value);
   }
 
 }

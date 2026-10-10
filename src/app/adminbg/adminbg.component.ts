@@ -334,7 +334,7 @@ export class AdminbgComponent implements OnInit {
     myNew.nomecontatto = this.myContatto.value;
     myNew.livello = 1 ;
 
-    this.schedaservice.newcontatto<number>(this.idutente, myNew.nomecontatto, 'A')
+    this.schedaservice.newcontatto(this.idutente, myNew.nomecontatto, 'A')
     .subscribe(
       (data: number) => {
 
@@ -350,7 +350,7 @@ export class AdminbgComponent implements OnInit {
     myNew.nomealleato = this.myAlleato.value;
     myNew.livello = 1 ;
 
-    this.schedaservice.newalleato<number>(this.idutente, myNew.nomealleato, 'A')
+    this.schedaservice.newalleato(this.idutente, myNew.nomealleato, 'A')
     .subscribe(
       (data: number) => {
 

@@ -117,16 +117,16 @@
                     </div>
                     @for (px of listaarray; track px) {
                       <div class="columns">
-                        <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+                        <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
                           {{px.data}}
                         </div>
-                        <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+                        <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
                           {{px.spesa}}
                         </div>
-                        <div class="column" [ngClass]="{'green':px.spesa == px.recuperati }">
+                        <div class="column" [ngClass]="{'green':px.spesa === px.recuperati }">
                           1 risorsa ogni {{px.cadenza}} gg.
                         </div>
-                        <div class="column alr" [ngClass]="{'green':px.spesa == px.recuperati }">
+                        <div class="column alr" [ngClass]="{'green':px.spesa === px.recuperati }">
                           {{px.recuperati}}
                         </div>
                       </div>

@@ -31,8 +31,8 @@ export interface GetRisorse {
 }
 
 export interface GetRituali {
-  rituali_t: Rituale[];
-  rituali_n: Rituale[];
+  rituali_t: Rituale[][];
+  rituali_n: Rituale[][];
 }
 
 
@@ -69,6 +69,15 @@ export interface GetBG {
     idsentiero: number;
     valsentiero: number;
     fdvmax: number;
+  }
+
+  export interface GetNecroTaum {
+    necromanzie: Necromanzia[];
+    taumaturgie: Taumaturgia[];
+  }
+
+  export interface GetOtherDisc {
+    otherdisc: Disciplina[];
   }
 
 
@@ -128,7 +137,7 @@ export class SchedaService {
     return this.http.get<GetPoteri>('https://www.roma-by-night.it/Notturna2/wsPHP/poteri.php'+'?idutente='+idutente );
   }
 
-  addpotere(idutente: number , idpotere: string ) {
+  addpotere(idutente: number , idpotere: number ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/addpotere.php',{
       idutente: idutente,
       idpotere: idpotere
@@ -175,7 +184,7 @@ export class SchedaService {
     });
   }
 
-  newtaum(idutente: number , idtaum: string , principale: number) {
+  newtaum(idutente: number , idtaum: number , principale: number) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/newtaum.php',{
       idutente: idutente,
       idtaum: idtaum,
@@ -190,7 +199,7 @@ export class SchedaService {
     });
   }
 
-  newnecro(idutente: number , idnecro: string , principale: number) {
+  newnecro(idutente: number , idnecro: number , principale: number) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/newnecro.php',{
       idutente: idutente,
       idnecro: idnecro,
@@ -202,7 +211,7 @@ export class SchedaService {
     return this.http.get<GetOtherDisc>('https://www.roma-by-night.it/Notturna2/wsPHP/getotherdisc.php'+'?idutente='+idutente );
   }
 
-  newdisc(idutente: number , iddisciplina: string ) {
+  newdisc(idutente: number , iddisciplina: number ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/newdisc.php',{
       idutente: idutente,
       iddisciplina: iddisciplina
@@ -213,7 +222,7 @@ export class SchedaService {
     return this.http.get<GetRituali>('https://www.roma-by-night.it/Notturna2/wsPHP/getrituali.php'+'?idutente='+idutente );
   }
 
-  newrituale(idutente: number , idrituale: string, necrotaum: string ) {
+  newrituale(idutente: number , idrituale: number, necrotaum: string ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/newrituale.php',{
       idutente: idutente,
       idrituale: idrituale,
@@ -249,7 +258,7 @@ export class SchedaService {
     return this.http.get<GetPregi>('https://www.roma-by-night.it/Notturna2/wsPHP/getpregi.php'+'?idutente='+idutente );
   }
 
-  addpregio(idutente: number , idpregio: string ) {
+  addpregio(idutente: number , idpregio: number ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/addpregio.php',{
       idutente: idutente,
       idpregio: idpregio
@@ -323,16 +332,16 @@ export class SchedaService {
     });
   }
 
-  newalleato<T = number>(idutente: number , nomealleato: string, au: string ) {
-    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/newalleato.php',{
+  newalleato(idutente: number , nomealleato: string, au: string ) {
+    return this.http.post<number>('https://www.roma-by-night.it/Notturna2/wsPHP/newalleato.php',{
       idutente: idutente,
       nomealleato: nomealleato,
       au: au
     });
   }
 
-  newcontatto<T = number>(idutente: number , nomecontatto: string, au: string ) {
-    return this.http.post<T>('https://www.roma-by-night.it/Notturna2/wsPHP/newcontatto.php',{
+  newcontatto(idutente: number , nomecontatto: string, au: string ) {
+    return this.http.post<number>('https://www.roma-by-night.it/Notturna2/wsPHP/newcontatto.php',{
       idutente: idutente,
       nomecontatto: nomecontatto,
       au: au
@@ -456,7 +465,7 @@ export class SchedaService {
     });
   }
 
-  adddisciplina_master(idutente: number , disc: string|null  ) {
+  adddisciplina_master(idutente: number , disc: number ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/adddisciplina-master.php',{
       idutente: idutente,
       iddisciplina: disc

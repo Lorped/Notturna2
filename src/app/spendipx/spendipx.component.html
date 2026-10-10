@@ -186,7 +186,7 @@
                           @for (item of maxpallini|times ; track item; let ix = $index) {
                             <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.disciplina.livello, 'dred': ix < dd.disciplina.livello}"></i>
                           }
-                          @if (dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina != 98 && dd.disciplina.iddisciplina != 99 &&  dd.disciplina.iddisciplina != 21 &&  dd.disciplina.iddisciplina != 23) {
+                          @if (dd.disciplina.livello<maxdisc && dd.disciplina.iddisciplina !== 98 && dd.disciplina.iddisciplina !== 99 &&  dd.disciplina.iddisciplina !== 21 &&  dd.disciplina.iddisciplina !== 23) {
                             <button class="btn  btn-xs" (click)="adddisc(dd.disciplina.iddisciplina)" [disabled]="numavanzamenti<1||lock||avanzamento_limitato||dd.disciplina.livello>=maxdisc"><i class="fa fa-plus"></i></button>
                           }
                         </div>
@@ -206,25 +206,25 @@
                         }
                       </mat-select>
                     </mat-form-field>
-                    <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
+                    <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
                   </div>
                   ---->
 
-                  @if (tremeresenzataum == 1) {
+                  @if (tremeresenzataum === 1) {
                     <div class="column is-4 nopadding">
                       Acquisisci Via Primaria <br>
                       <mat-form-field>
                         <mat-label>Via Primaria</mat-label>
                         <mat-select [(value)]="idnewprimaria">
                           @for (tt of newtaumaturgie; track tt) {
-                            <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
+                            <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum===6||tt.idtaum===7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
                           }
                         </mat-select>
                       </mat-form-field>
-                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="scegliprimaria()">Aggiungi</button>
+                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="scegliprimaria()">Aggiungi</button>
                     </div>
                   }
-                  @if (giovannisenzanecro == 1) {
+                  @if (giovannisenzanecro === 1) {
                     <div class="column is-4 nopadding">
                       Acquisisci Via Primaria <br>
                       <mat-form-field>
@@ -235,7 +235,7 @@
                           }
                         </mat-select>
                       </mat-form-field>
-                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="scegliprimarianecro()">Aggiungi</button>
+                      <button  mat-raised-button class="large" color="primary" [disabled]="idnewprimaria===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="scegliprimarianecro()">Aggiungi</button>
                     </div>
                   }
 
@@ -265,39 +265,39 @@
                             @for (item of 5|times ; track item; let ix = $index) {
                               <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.taumaturgia.livello, 'dred': ix < dd.taumaturgia.livello}"></i>
                             }
-                            @if (dd.taumaturgia.livello<5 && dd.taumaturgia.livello < maxdisc && ( ii== 0 || (ii != 0 && livellitaum[ii-1]>livellitaum[ii]+1) || (ii!=0 && livellitaum[ii-1]==5))) {
+                            @if (dd.taumaturgia.livello<5 && dd.taumaturgia.livello < maxdisc && ( ii=== 0 || (ii !== 0 && livellitaum[ii-1]>livellitaum[ii]+1) || (ii!==0 && livellitaum[ii-1]===5))) {
                               <button class="btn  btn-xs" (click)="addtaum(dd.taumaturgia.idtaum)" [disabled]="numavanzamenti<1||lock||avanzamento_limitato"><i class="fa fa-plus"></i></button>
                             }
                           </div>
                         </div>
                       </div>
                     }
-                    @if (livellitaum[1]==0 && livellitaum[0]>1) {
+                    @if (livellitaum[1]===0 && livellitaum[0]>1) {
                       <div class="column is-4 nopadding">
                         Scegli Via Secondaria 
                         <mat-form-field>
                           <mat-label>Via Secondaria</mat-label>
                           <mat-select [(value)]="idnewtaum">
                             @for (tt of newtaumaturgie; track tt) {
-                              <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
+                              <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum===6||tt.idtaum===7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newtaum(2)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newtaum(2)">Aggiungi</button>
                       </div>
                     }
-                    @if (livellitaum[2]==0 && livellitaum[1]>1) {
+                    @if (livellitaum[2]===0 && livellitaum[1]>1) {
                       <div class="column is-4 nopadding">
                         Scegli Via Terziaria 
                         <mat-form-field>
                           <mat-label>Via Terziaria</mat-label>
                           <mat-select [(value)]="idnewtaum">
                             @for (tt of newtaumaturgie; track tt) {
-                              <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum==6||tt.idtaum==7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
+                              <mat-option [value]="tt.idtaum" [disabled]="(tt.idtaum===6||tt.idtaum===7) && (statusPG<2)">{{tt.nometaum}}</mat-option>
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newtaum(3)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newtaum(3)">Aggiungi</button>
                       </div>
                     }
                   </div>
@@ -317,45 +317,45 @@
                       <div class="column is-4 nopadding">
                         <div class="columns">
                           <div class="column">
-                            {{dd.necromanzia.nomenecro}} {{ (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii == 0 || (ii!=0 &&livellinecro[ii-1]>livellinecro[ii]+1) || (ii!=0 && livellinecro[ii-1]==5) )  ? '' :'' ) }}
+                            {{dd.necromanzia.nomenecro}} {{ (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii === 0 || (ii!==0 &&livellinecro[ii-1]>livellinecro[ii]+1) || (ii!==0 && livellinecro[ii-1]===5) )  ? '' :'' ) }}
                           </div>
                           <div class="column">
                             @for (item of 5|times ; track item; let ix = $index) {
                               <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= dd.necromanzia.livello, 'dred': ix < dd.necromanzia.livello}"></i>
                             }
-                            @if (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii== 0 || (ii != 0 && livellinecro[ii-1]>livellinecro[ii]+1) || (ii!=0 && livellinecro[ii-1]==5))) {
+                            @if (dd.necromanzia.livello<5 && dd.necromanzia.livello < maxdisc && ( ii=== 0 || (ii !== 0 && livellinecro[ii-1]>livellinecro[ii]+1) || (ii!==0 && livellinecro[ii-1]===5))) {
                               <button class="btn  btn-xs" (click)="addnecro(dd.necromanzia.idnecro)" [disabled]="numavanzamenti<1||lock||avanzamento_limitato"><i class="fa fa-plus"></i></button>
                             }
                           </div>
                         </div>
                       </div>
                     }
-                    @if (livellinecro[1]==0 && livellinecro[0]>1) {
+                    @if (livellinecro[1]===0 && livellinecro[0]>1) {
                       <div class="column is-4 nopadding">
                         Scegli Via Secondaria
                         <mat-form-field>
                           <mat-label>Via Secondaria</mat-label>
                           <mat-select [(value)]="idnewnecro">
                             @for (tt of newnecromanzie; track tt) {
-                              <mat-option [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
+                              <mat-option [value]="tt.idnecro" [disabled]="(tt.idnecro===4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newnecro(2)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newnecro(2)">Aggiungi</button>
                       </div>
                     }
-                    @if (livellinecro[2]==0 && livellinecro[1]>1) {
+                    @if (livellinecro[2]===0 && livellinecro[1]>1) {
                       <div class="column is-4 nopadding">
                         Scegli Via Terziaria
                         <mat-form-field>
                           <mat-label>Via Terziaria</mat-label>
                           <mat-select [(value)]="idnewnecro">
                             @for (tt of newnecromanzie; track tt) {
-                              <mat-option [value]="tt.idnecro" [disabled]="(tt.idnecro==4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
+                              <mat-option [value]="tt.idnecro" [disabled]="(tt.idnecro===4) && (statusPG<2)">{{tt.nomenecro}}</mat-option>
                             }
                           </mat-select>
                         </mat-form-field>
-                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newnecro(3)">Aggiungi</button>
+                        <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="newnecro(3)">Aggiungi</button>
                       </div>
                     }
                   </div>
@@ -394,7 +394,7 @@
                               }
                             </mat-select>
                           </mat-form-field>
-                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="addrituale(ix,'t')">Aggiungi</button>
+                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]===0||numavanzamenti<1||lock||avanzamento_limitato" style="width: 66%;" (click)="addrituale(ix,'t')">Aggiungi</button>
                         </div>
                       }
                     </div>
@@ -417,7 +417,7 @@
                               }
                             </mat-select>
                           </mat-form-field>
-                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]==''||numavanzamenti<(rituali.length==0?0:1)||(rituali.length>0&&avanzamento_limitato)" style="width: 66%;" (click)="addrituale(ix,'n')">Aggiungi</button>
+                          <button  mat-raised-button class="large" color="primary" [disabled]="idnewrituale[ix]===0||numavanzamenti<(rituali.length===0?0:1)||(rituali.length>0&&avanzamento_limitato)" style="width: 66%;" (click)="addrituale(ix,'n')">Aggiungi</button>
                         </div>
                       }
                     </div>
@@ -582,7 +582,7 @@
                       @for (item of 5|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
                       }
-                      <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommaContatti==20||numavanzamenti<1||lock"><i class="fa fa-plus"></i></button>
+                      <button class="btn  btn-xs" (click)="addcon(tt.idcontatto)" [disabled]="tt.livello>4 ||sommaContatti===20||numavanzamenti<1||lock"><i class="fa fa-plus"></i></button>
                     </div>
                   </div>
                 }
@@ -612,7 +612,7 @@
                       @for (item of 5|times ; track item; let ix = $index) {
                         <i class="fa fa-circle mymedicon" [ngClass]="{'white': ix >= tt.livello, 'dred': ix < tt.livello}"></i>
                       }
-                      <button class="btn  btn-xs" (click)="addall(tt.idalleato)" [disabled]="tt.livello>4 ||sommaAlleati==20||numavanzamenti<1||lock"><i class="fa fa-plus"></i></button>
+                      <button class="btn  btn-xs" (click)="addall(tt.idalleato)" [disabled]="tt.livello>4 ||sommaAlleati===20||numavanzamenti<1||lock"><i class="fa fa-plus"></i></button>
                     </div>
                   </div>
                 }

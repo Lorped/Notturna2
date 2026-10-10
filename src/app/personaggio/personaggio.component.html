@@ -337,7 +337,7 @@
                   }
                 </mat-select>
               </mat-form-field>
-              <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc=='' " style="width: 66%;" (click)="newdisc()">Aggiungi</button>
+              <button  mat-raised-button class="large" color="primary" [disabled]="idnewdisc === 0" style="width: 66%;" (click)="newdisc()">Aggiungi</button>
             </div>
             @if (isNecromante) {
             <div class="column is-4 nopadding" >
@@ -350,7 +350,7 @@
                   }
                 </mat-select>
               </mat-form-field>
-              <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro=='' || necromanzie.length>=3" style="width: 66%;" (click)="newnecro(idnewnecro)">Aggiungi</button>
+              <button  mat-raised-button class="large" color="primary" [disabled]="idnewnecro === 0 || necromanzie.length>=3" style="width: 66%;" (click)="newnecro(idnewnecro)">Aggiungi</button>
             </div>
             }
             @if (isTaumaturgo) {
@@ -364,7 +364,7 @@
                   }
                 </mat-select>
               </mat-form-field>
-              <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum=='' || taumaturgie.length>=3" style="width: 66%;" (click)="newtaum(idnewtaum)">Aggiungi</button>
+              <button  mat-raised-button class="large" color="primary" [disabled]="idnewtaum === 0 || taumaturgie.length>=3" style="width: 66%;" (click)="newtaum(idnewtaum)">Aggiungi</button>
             </div>
             }
             </div>
@@ -385,7 +385,7 @@
                     <div class="columns">
                       <div class="column">
                         {{dd.taumaturgia.nometaum}}
-                        @if (dd.taumaturgia.principale == taumaturgie.length) {
+                        @if (dd.taumaturgia.principale === taumaturgie.length) {
                           <button class="btn btn-xs" (click)="cancellavia(dd.taumaturgia.idtaum, 'T')">X</button>
                         }
                       </div>
@@ -416,7 +416,7 @@
                     <div class="columns" >
                       <div class="column">
                         {{dd.necromanzia.nomenecro}}
-                        @if (dd.necromanzia.principale == necromanzie.length) {
+                        @if (dd.necromanzia.principale === necromanzie.length) {
                           <button class="btn btn-xs" (click)="cancellavia(dd.necromanzia.idnecro, 'N')">X</button>
                         }
                       </div>
@@ -639,7 +639,7 @@
             <div class="columns is-multiline" style="margin-left: 0px;" >
               @for (dd of background; track dd) {
                 <div class="column is-4 nopadding">
-                  @if (dd.idback != 77 && dd.idback != 2 ) {
+                  @if (dd.idback !== 77 && dd.idback !== 2 ) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}
@@ -651,7 +651,7 @@
                       </div>
                     </div>
                   }
-                  @if (dd.idback == 2) {
+                  @if (dd.idback === 2) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}
@@ -666,7 +666,7 @@
                       </div>
                     </div>
                   }
-                  @if (dd.idback == 77) {
+                  @if (dd.idback === 77) {
                     <div class="columns">
                       <div class="column">
                         {{dd.nomeback}}

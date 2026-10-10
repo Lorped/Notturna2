@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy, inject } from '@angular/core';
 import { AdminService, RigaPrestampa } from '../_services/index';
-import { FullOggetto, Cronaca } from '../global';
+import { Cronaca } from '../global';
+import type { GetListOggetti } from '../_services/admin.service';
 
-interface GetListOggetti {
-  oggetti: FullOggetto[];
-}
+
+
 
 @Component({
   selector: 'app-prestampa',

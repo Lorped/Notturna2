@@ -24,9 +24,9 @@ export class PersonaggioComponent implements OnInit {
   otherdisc: Disciplina[] = [];
   othernecro: Necromanzia[] = [];
   othertaum: Taumaturgia[] = [];
-  idnewdisc = '';
-  idnewnecro = '';
-  idnewtaum = '';
+  idnewdisc = 0;
+  idnewnecro = 0;
+  idnewtaum = 0;
 
 
   scheda: Basicpg = new Basicpg();
@@ -354,7 +354,7 @@ export class PersonaggioComponent implements OnInit {
                   this.otherdisc = data.otherdisc;
                   // console.log (this.otherdisc);
 
-                  this.idnewdisc = '';
+                  this.idnewdisc = 0;
 
                   this.isTaumaturgo = false;
                   this.isNecromante = false;
@@ -412,11 +412,11 @@ export class PersonaggioComponent implements OnInit {
     );
   }
 
-  newtaum(idtaum: string) {
-    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "T", Number(idtaum)).subscribe(()=>{
+  newtaum(idtaum: number) {
+    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "T", idtaum).subscribe(()=>{
       const xx = new FullTaumaturgia();
-      xx.taumaturgia.idtaum = Number(idtaum);
-      xx.taumaturgia.nometaum = this.othertaum.find(t => t.idtaum == Number(idtaum))?.nometaum || '';
+      xx.taumaturgia.idtaum = idtaum;
+      xx.taumaturgia.nometaum = this.othertaum.find(t => t.idtaum == idtaum)?.nometaum || '';
       const prim = this.taumaturgie.find(t => t.taumaturgia.principale == 1);
       if (prim) {
         const sec = this.taumaturgie.find(t => t.taumaturgia.principale == 2);
@@ -428,16 +428,16 @@ export class PersonaggioComponent implements OnInit {
       } else {
         xx.taumaturgia.principale = 1;
       }
-      this.othertaum = this.othertaum.filter(t => Number(t.idtaum) !== Number(idtaum));
+      this.othertaum = this.othertaum.filter(t => t.idtaum !== idtaum);
       this.taumaturgie.push(xx);
-      this.idnewtaum = '';
+      this.idnewtaum = 0;
     });
   }
-  newnecro(idnecro: string) {
-    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "N", Number(idnecro)).subscribe(()=>{
+  newnecro(idnecro: number) {
+    this.schedaservice.addnecrotaum_master(this.globalstatus.lastpg, "N", idnecro).subscribe(()=>{
       const xx = new FullNecromanzia();
-      xx.necromanzia.idnecro = Number(idnecro);
-      xx.necromanzia.nomenecro = this.othernecro.find(n => n.idnecro == Number(idnecro))?.nomenecro || '';
+      xx.necromanzia.idnecro = idnecro;
+      xx.necromanzia.nomenecro = this.othernecro.find(n => n.idnecro == idnecro)?.nomenecro || '';
       const prim = this.necromanzie.find(n => n.necromanzia.principale == 1);
       if (prim) {
         const sec = this.necromanzie.find(n => n.necromanzia.principale == 2);
@@ -445,9 +445,9 @@ export class PersonaggioComponent implements OnInit {
       } else {
         xx.necromanzia.principale = 1;
       }
-      this.othernecro = this.othernecro.filter(n => Number(n.idnecro) !== Number(idnecro));
+      this.othernecro = this.othernecro.filter(n => n.idnecro !== idnecro);
       this.necromanzie.push(xx);
-      this.idnewnecro = '';
+      this.idnewnecro = 0;
     });  
   }
 

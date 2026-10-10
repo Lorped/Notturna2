@@ -172,8 +172,8 @@ export class Disciplina {
 @Injectable()
 export class FullDisciplina {
   public disciplina = new Disciplina() ;
-  public poteri: Array<Potere> = [];
-  public newpoteri: Array<Newpotere> = [];
+  public poteri: Potere[] = [];
+  public newpoteri: Newpotere[] = [];
 }
 
 @Injectable()
@@ -194,7 +194,7 @@ export class Skill {
   public livello = 0;
   public tipologia = 0;
   public iniziale = 0 ;
-  public subskill2: Array<SubSkill> = [];
+  public subskill2: SubSkill[] = [];
 }
 
 @Injectable()
@@ -252,13 +252,13 @@ export class Taumaturgia {
 @Injectable()
 export class FullNecromanzia {
   public necromanzia = new Necromanzia() ;
-  public necros: Array<Necros> = [];
+  public necros: Necros[] = [];
 }
 
 @Injectable()
 export class FullTaumaturgia {
   public taumaturgia = new Taumaturgia() ;
-  public taums: Array<Taums> = [];
+  public taums: Taums[] = [];
 }
 
 
@@ -321,7 +321,7 @@ export class Attributo {
     this.NomeAttributo = n;
     this.Tipologia = t;
     this.Livello = l;
-    this.Iniziale = 1;
+    this.Iniziale = i;
   }
 
 }
