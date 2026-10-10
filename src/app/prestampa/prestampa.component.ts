@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { inject } from '@angular/core';
 import { AdminService, RigaPrestampa } from '../_services/index';
 import { Cronaca } from '../global';
 import type { GetListOggetti } from '../_services/admin.service';
@@ -11,7 +11,6 @@ import type { GetListOggetti } from '../_services/admin.service';
   selector: 'app-prestampa',
   styleUrl: './prestampa.component.css',
   templateUrl: './prestampa.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class PrestampaComponent implements OnInit {
@@ -25,12 +24,14 @@ export class PrestampaComponent implements OnInit {
   tuttiSelezionati = false;
 
   public adminservice = inject(AdminService);
+  private cdr = inject(ChangeDetectorRef);
 
 
   ngOnInit(): void {
     this.adminservice.getlistcronache<Cronaca[]>().subscribe(
       (data: Cronaca[]) => {
         this.listacronache = data;
+        this.cdr.markForCheck();
       }
     );
 
@@ -44,6 +45,7 @@ export class PrestampaComponent implements OnInit {
           quantita: 1
         }));
         this.applyFiltro();
+        this.cdr.markForCheck();
       }
     );
   }

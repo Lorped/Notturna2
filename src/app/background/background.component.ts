@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Background, Contatti, Alleati, Skill, Sentiero } from '../global';
 import { UntypedFormControl, Validators } from '@angular/forms';
@@ -8,7 +8,6 @@ import { GetSentiero } from '../_services/scheda.service';
     selector: 'app-background',
     templateUrl: './background.component.html',
     styleUrls: ['./background.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class BackgroundComponent implements OnInit {
@@ -83,6 +82,7 @@ export class BackgroundComponent implements OnInit {
   puntidisponibili = 0;
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
@@ -102,6 +102,7 @@ export class BackgroundComponent implements OnInit {
         this.valsentiero = data.valsentiero;
         this.sentieroPG = data.idsentiero;
         this.oldsentieroPG = data.idsentiero;
+        this.cdr.markForCheck();
       }
     );
 

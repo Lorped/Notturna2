@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
@@ -9,7 +9,6 @@ import { GlobalStatus } from '../global';
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LoginComponent implements OnInit {
@@ -29,6 +28,7 @@ export class LoginComponent implements OnInit {
   private authenticationService = inject(AuthenticationService);
   private router = inject(Router);
   private globalstatus = inject(GlobalStatus);
+  private cdr = inject(ChangeDetectorRef);
 
 
   ngOnInit(): void {
@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit {
         },
         () => {
           this.loginInvalid = true;
+          this.cdr.markForCheck();
         });
   }
 

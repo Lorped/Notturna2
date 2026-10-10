@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Pregio } from '../global';
 import { PregioDifetto, GetPregioDifetto } from '../_services/scheda.service';
@@ -11,7 +11,6 @@ interface GetPx {
     selector: 'app-pregidifetti',
     templateUrl: './pregidifetti.component.html',
     styleUrls: ['./pregidifetti.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PregidifettiComponent implements OnInit {
@@ -58,6 +57,7 @@ export class PregidifettiComponent implements OnInit {
   new_p_x = 0;
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -84,6 +84,7 @@ export class PregidifettiComponent implements OnInit {
         this.difetti_m = data.difetti_m ;
         this.difetti_s = data.difetti_s ;
         this.difetti_x = data.difetti_x ;
+        this.cdr.markForCheck();
 
       }
     );
@@ -146,7 +147,7 @@ export class PregidifettiComponent implements OnInit {
           }
         }
 
-
+        this.cdr.markForCheck();
       }
     );
   }
@@ -198,6 +199,7 @@ export class PregidifettiComponent implements OnInit {
         this.getpregi();
         this.getliste();
         this.getpx();
+        this.cdr.markForCheck();
 
       }
     );
@@ -215,6 +217,7 @@ export class PregidifettiComponent implements OnInit {
     .subscribe(
       (data: GetPx) => {
         this.pxdisponibili = data.pxdisponibili;
+        this.cdr.markForCheck();
       }
     );
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { Basicpg, FullDisciplina, FullTaumaturgia, FullNecromanzia, Skill, Background, Contatti, Pregio, Rituale,    Alleati} from '../global';
 import { GetScheda, GetRisorse } from '../_services/scheda.service';
@@ -14,7 +14,6 @@ export class listaspese {
     selector: 'app-scheda',
     templateUrl: './scheda.component.html',
     styleUrls: ['./scheda.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SchedaComponent implements OnInit {
@@ -51,6 +50,7 @@ export class SchedaComponent implements OnInit {
   saldo = 0 ;
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
   ngOnInit(): void {
@@ -126,6 +126,7 @@ export class SchedaComponent implements OnInit {
             this.risorse_base = item.livello;
           }
         }
+        this.cdr.markForCheck();
 
 
         this.schedaservice.getrisorse<GetRisorse>(this.idutente).subscribe(
@@ -133,6 +134,7 @@ export class SchedaComponent implements OnInit {
             this.saldo = Number(data.saldo);
     
             this.listaarray = data.lista;
+            this.cdr.markForCheck();
     
             //console.log(this.listaarray);
           }

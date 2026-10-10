@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { GlobalStatus, Cronaca } from '../global';
@@ -13,7 +13,6 @@ export interface unPg {
     selector: 'app-admin',
     templateUrl: './admin.component.html',
     styleUrls: ['./admin.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AdminComponent implements OnInit {
@@ -36,6 +35,7 @@ export class AdminComponent implements OnInit {
 
   private adminservice = inject(AdminService);
   private globalstatus = inject(GlobalStatus);
+  private cdr = inject(ChangeDetectorRef);
 
   
 
@@ -55,6 +55,7 @@ export class AdminComponent implements OnInit {
     this.adminservice.getlistcronache<Cronaca[]>().subscribe(
       (data: Cronaca[]) => {
         this.listacronache = data;
+        this.cdr.markForCheck();
       }
     );
 
@@ -63,6 +64,7 @@ export class AdminComponent implements OnInit {
     this.adminservice.getchance<string>().subscribe({
       next: (data: string) => {
         this.actual = data;
+        this.cdr.markForCheck();
         /* this.chanceMform.patchValue({chance:  this.actual });  */
       }
     });
@@ -77,6 +79,7 @@ export class AdminComponent implements OnInit {
     this.adminservice.getpersonaggio<{ pg: unPg[] }>(Number(this.cronacaprincipale || 0)).subscribe({
       next: (data) => {
         this.listapg = data.pg;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -92,6 +95,7 @@ export class AdminComponent implements OnInit {
         this.actual = String(this.chanceMform.get('chance')!.value ?? '0');
         /*this.chanceMform.patchValue({chance:  this.actual }); */
         this.chanceMform.reset();
+        this.cdr.markForCheck();
       }
     });
   }

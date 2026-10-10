@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
@@ -15,7 +15,6 @@ import { Observable, of } from 'rxjs';
     selector: 'app-risorse',
     templateUrl: './risorse.component.html',
     styleUrls: ['./risorse.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
@@ -55,6 +54,7 @@ export class RisorseComponent implements OnInit {
     private schedaservice = inject(SchedaService);
     private globalstatus = inject(GlobalStatus);
     private route = inject(ActivatedRoute);
+    private cdr = inject(ChangeDetectorRef);
 
 
   ngOnInit(): void {
@@ -65,6 +65,7 @@ export class RisorseComponent implements OnInit {
     this.adminservice.getnome<string>(this.idutente).subscribe(
       (data: string) => {
         this.nomepg = data;
+        this.cdr.markForCheck();
       }
     );
 
@@ -72,6 +73,7 @@ export class RisorseComponent implements OnInit {
       (data: GetScheda) => {
         //console.log(data);
         this.contanti = data.user.contanti;
+        this.cdr.markForCheck();
       }
     );
 
@@ -83,6 +85,7 @@ export class RisorseComponent implements OnInit {
             this.risorse_base = item.livello;
           }
         }       
+        this.cdr.markForCheck();
       }
     );
 
@@ -90,6 +93,7 @@ export class RisorseComponent implements OnInit {
       (data: GetRisorse) => {
         this.saldo = data.saldo;
         this.listaarray = data.lista;
+        this.cdr.markForCheck();
         //console.log(this.listaarray);
       }
     );
@@ -112,11 +116,13 @@ export class RisorseComponent implements OnInit {
     this.schedaservice.addspesa(this.idutente, this.spesa!.value, this.recupero!.value).subscribe(
       () => {
         this.RisorseForm.reset();
+        this.cdr.markForCheck();
 
         this.schedaservice.getrisorse<GetRisorse>(this.idutente).subscribe(
           (data: GetRisorse) => {
             this.saldo = data.saldo;
             this.listaarray = data.lista;
+            this.cdr.markForCheck();
             //console.log(this.listaarray);
           });
 
@@ -148,6 +154,7 @@ export class RisorseComponent implements OnInit {
     this.schedaservice.addcontanti(this.idutente).subscribe(
       () => {
         this.contanti++;
+        this.cdr.markForCheck();
       }
     )
     
@@ -156,6 +163,7 @@ export class RisorseComponent implements OnInit {
     this.schedaservice.mincontanti(this.idutente).subscribe(
       () => {    
         this.contanti--;
+        this.cdr.markForCheck();
       }
     )
     

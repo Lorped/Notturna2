@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 
 import { Chatrow, MyChat , ChatService , AdminService } from '../_services/index';
@@ -21,7 +21,6 @@ interface GetPersonaggio {
     selector: 'app-chat',
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ChatComponent implements OnInit, OnDestroy {
@@ -42,6 +41,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   private adminservice = inject(AdminService);
   private globalstatus = inject(GlobalStatus);
   private chatservice = inject(ChatService);
+  private cdr = inject(ChangeDetectorRef);
 
 
   
@@ -51,6 +51,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.adminservice.getpersonaggio<GetPersonaggio>(this.globalstatus.cronacaprincipale).subscribe(
       (data: GetPersonaggio) => {
         this.listapg = data.pg;
+        this.cdr.markForCheck();
       }
     );
 
@@ -99,6 +100,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       // console.log(this.chat);
 
     }
+    this.cdr.markForCheck();
   }
 
   sendmsg() {
@@ -107,6 +109,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.msg.setValue( '' );
         this.msg!.markAsPristine();
         this.msg!.markAsUntouched();
+        this.cdr.markForCheck();
 
         this.chatservice.getchat<MyChat>().subscribe(
           (data: MyChat) => {

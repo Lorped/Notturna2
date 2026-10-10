@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 import { Basicpg, Skill, Disciplina , FullDisciplina, Taumaturgia, Necromanzia, FullTaumaturgia, FullNecromanzia,  Background, Contatti, Alleati,  Rituale } from '../global';
@@ -9,7 +9,6 @@ import { GetScheda, GetRituali, GetBG, GetContattiAlleati, GetNecroTaum, GetOthe
     selector: 'app-spendipx',
     templateUrl: './spendipx.component.html',
     styleUrls: ['./spendipx.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SpendipxComponent implements OnInit {
@@ -108,6 +107,7 @@ export class SpendipxComponent implements OnInit {
   ]);
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
   /*
@@ -207,6 +207,7 @@ export class SpendipxComponent implements OnInit {
         this.schedaservice.getbg<GetBG>(this.idutente).subscribe(
           (data: GetBG) => {
             this.listabg = data.background;
+            this.cdr.markForCheck();
           }
         );
 
@@ -224,6 +225,7 @@ export class SpendipxComponent implements OnInit {
             for ( const item of this.listaAlleati ) {
               this.sommaAlleati += item.livello;
             }
+            this.cdr.markForCheck();
 
           }
         );
@@ -246,12 +248,14 @@ export class SpendipxComponent implements OnInit {
           (data: GetNecroTaum) => {
             this.newtaumaturgie = data.taumaturgie;
             this.newnecromanzie = data.necromanzie;
+            this.cdr.markForCheck();
           }
         );
         this.schedaservice.getotherdisc<GetOtherDisc>(this.idutente)
         .subscribe(
           (data: GetOtherDisc) => {
             this.otherdisc = data.otherdisc;
+            this.cdr.markForCheck();
           }
         );
         this.schedaservice.getrituali<GetRituali>(this.idutente)
@@ -259,6 +263,7 @@ export class SpendipxComponent implements OnInit {
           (data: GetRituali) => {
             this.rituali_t = data.rituali_t;
             this.rituali_n = data.rituali_n;
+            this.cdr.markForCheck();
           }
         );
 
@@ -269,7 +274,7 @@ export class SpendipxComponent implements OnInit {
 
         // NUOVO CALCOLO XP //
         this.ricalcolo_xp();  
-
+        this.cdr.markForCheck();
       }
     );
   }
@@ -683,9 +688,7 @@ export class SpendipxComponent implements OnInit {
 
         this.check_discipline_strane();
         this.ricalcolo_xp();
-
-
-
+        this.cdr.markForCheck();
       }
     );
   }
@@ -829,6 +832,7 @@ export class SpendipxComponent implements OnInit {
     } else {
       this.lock = false ;
     }
+    this.cdr.markForCheck();
 
   }
 

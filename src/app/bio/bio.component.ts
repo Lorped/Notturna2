@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { SchedaService } from '../_services/index';
 
@@ -12,7 +12,6 @@ interface BioData {
     selector: 'app-bio',
     templateUrl: './bio.component.html',
     styleUrls: ['./bio.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class BioComponent implements OnInit {
@@ -25,6 +24,7 @@ export class BioComponent implements OnInit {
   idutente = 0;
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
   ngOnInit(): void {
@@ -35,6 +35,7 @@ export class BioComponent implements OnInit {
       (data: BioData) => {
         this.bio.setValue( data.bio );
         this.annotazioni.setValue( data.note );
+        this.cdr.markForCheck();
       }
     );
 
@@ -49,6 +50,7 @@ export class BioComponent implements OnInit {
         this.annotazioni!.markAsPristine();
         this.bio!.markAsUntouched();
         this.annotazioni!.markAsUntouched();
+        this.cdr.markForCheck();
       }
     );
 

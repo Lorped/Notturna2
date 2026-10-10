@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus} from '../global';
@@ -40,7 +40,6 @@ interface GetSkill {
     selector: 'app-adminbg',
     templateUrl: './adminbg.component.html',
     styleUrls: ['./adminbg.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AdminbgComponent implements OnInit {
@@ -144,6 +143,7 @@ export class AdminbgComponent implements OnInit {
   private adminservice = inject(AdminService);
   private schedaservice = inject(SchedaService);
   private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -154,6 +154,7 @@ export class AdminbgComponent implements OnInit {
     this.adminservice.getnome<string>(this.idutente).subscribe({
       next: (data: string) => {
         this.nomepg = data;
+        this.cdr.markForCheck();
       }
     });
 
@@ -162,6 +163,7 @@ export class AdminbgComponent implements OnInit {
     this.schedaservice.getbg<GetBG>(this.idutente).subscribe(
       (data: GetBG) => {
         this.listabg = data.background;
+        this.cdr.markForCheck();
       }
     );
 
@@ -178,6 +180,7 @@ export class AdminbgComponent implements OnInit {
         for ( const item of this.listaAlleati ) {
           this.sommaalleati += item.livello;
         }
+        this.cdr.markForCheck();
 
       }
     );
@@ -191,6 +194,7 @@ export class AdminbgComponent implements OnInit {
         this.valsentiero = data.valsentiero;
         this.sentieroPG = data.idsentiero;
         this.oldsentieroPG = data.idsentiero;
+        this.cdr.markForCheck();
       }
     );
 
@@ -201,6 +205,7 @@ export class AdminbgComponent implements OnInit {
       (data: GetPregioDifetto) => {
         this.pregi = data.pregi ;
         this.difetti = data.difetti ;
+        this.cdr.markForCheck();
       }
     );
 
@@ -277,6 +282,7 @@ export class AdminbgComponent implements OnInit {
               }
             }
             this.sommacontatti -- ;
+            this.cdr.markForCheck();
           }
         );
       }
@@ -290,6 +296,7 @@ export class AdminbgComponent implements OnInit {
         .subscribe(
           () => {
             this.sommacontatti ++ ;
+            this.cdr.markForCheck();
           }
         );
       }
@@ -310,6 +317,7 @@ export class AdminbgComponent implements OnInit {
               }
             }
             this.sommaalleati -- ;
+            this.cdr.markForCheck();
           }
         );
       }
@@ -323,6 +331,7 @@ export class AdminbgComponent implements OnInit {
         .subscribe(
           () => {
             this.sommaalleati ++ ;
+            this.cdr.markForCheck();
           }
         );
       }
@@ -342,6 +351,7 @@ export class AdminbgComponent implements OnInit {
         this.listaContatti.push(myNew) ;
         this.myContatto.reset();
         this.sommacontatti ++ ;
+        this.cdr.markForCheck();
       }
     );
   }
@@ -358,6 +368,7 @@ export class AdminbgComponent implements OnInit {
         this.listaAlleati.push(myNew) ;
         this.myAlleato.reset();
         this.sommaalleati ++ ;
+        this.cdr.markForCheck();
       }
     );
   }
@@ -407,6 +418,7 @@ export class AdminbgComponent implements OnInit {
 
 
         }
+        this.cdr.markForCheck();
 
       }
     );
@@ -420,6 +432,7 @@ export class AdminbgComponent implements OnInit {
         for (const item of  this.listanew) {
           item.livello = 0;
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -487,6 +500,7 @@ export class AdminbgComponent implements OnInit {
         this.difetti_m = data.difetti_m ;
         this.difetti_s = data.difetti_s ;
         this.difetti_x = data.difetti_x ;
+        this.cdr.markForCheck();
 
       }
     );
@@ -506,6 +520,7 @@ export class AdminbgComponent implements OnInit {
           }
         }
         this.getliste();
+        this.cdr.markForCheck();
       }
     );
   }
@@ -556,6 +571,7 @@ export class AdminbgComponent implements OnInit {
         this.new_p_x = '';
         this.getpregi();
         this.getliste();
+        this.cdr.markForCheck();
       }
     );
   }
@@ -567,6 +583,7 @@ export class AdminbgComponent implements OnInit {
       (data: GetPregioDifetto) => {
         this.pregi = data.pregi ;
         this.difetti = data.difetti ;
+        this.cdr.markForCheck();
       }
     );
   }

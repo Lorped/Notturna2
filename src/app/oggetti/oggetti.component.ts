@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { FullOggetto, GlobalStatus, Cronaca} from '../global';
 import { Router, NavigationExtras } from '@angular/router';
@@ -10,7 +10,6 @@ import type { GetListOggetti } from '../_services/admin.service';
     selector: 'app-oggetti',
     templateUrl: './oggetti.component.html',
     styleUrls: ['./oggetti.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class OggettiComponent implements OnInit {
@@ -36,6 +35,7 @@ export class OggettiComponent implements OnInit {
   private adminservice = inject(AdminService);
   private router = inject(Router);
   public globalstatus = inject(GlobalStatus);
+  private cdr = inject(ChangeDetectorRef);
 
 
   ngOnInit(): void {
@@ -43,6 +43,7 @@ export class OggettiComponent implements OnInit {
     this.adminservice.getlistcronache<Cronaca[]>().subscribe(
       (data: Cronaca[]) => {
         this.listacronache = data;
+        this.cdr.markForCheck();
       }
     );
 
@@ -54,6 +55,7 @@ export class OggettiComponent implements OnInit {
 
         this.sortListaOggetti();
         this.applyFiltro();
+        this.cdr.markForCheck();
         // console.log(this.listaoggetti);
       }
     );
@@ -104,6 +106,7 @@ export class OggettiComponent implements OnInit {
           }
         }
         this.applyFiltro();
+        this.cdr.markForCheck();
       }
     );
   }
@@ -119,6 +122,7 @@ export class OggettiComponent implements OnInit {
             this.nomeoggetto = '';
             this.descrizione = '';
             this.fissomobile = 'F';
+            this.cdr.markForCheck();
           }
         );
       }

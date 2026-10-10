@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SchedaService, AdminService } from '../_services/index';
 import { Lds, Cronaca, Clan, Status, Background, Contatti, Alleati, Attributo, Disciplina, Taumaturgia, Necromanzia, Skill, Sentiero, Basicpg, Pregio} from '../global';
@@ -40,7 +40,6 @@ import { PregioDifetto } from '../_services/scheda.service';
     providers: [{
             provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
         }],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
@@ -215,6 +214,7 @@ export class CreaComponent implements OnInit {
   private schedaservice = inject(SchedaService);
   private router = inject(Router);
   private adminservice = inject(AdminService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -264,6 +264,7 @@ export class CreaComponent implements OnInit {
         for (const background of this.bg) {    // Rifugio minimo a 1
           background.livello = background.MinIniziale;
         }
+        this.cdr.markForCheck();
       }
     );
 
@@ -304,12 +305,14 @@ export class CreaComponent implements OnInit {
         this.listapregi = data.pregi_f.concat(data.pregi_m).concat(data.pregi_s).concat(data.pregi_x);
         this.listadifetti = data.difetti_f.concat(data.difetti_m).concat(data.difetti_s).concat(data.difetti_x);
         this.updateValoreSelections();
+        this.cdr.markForCheck();
       }
     );
 
     this.adminservice.getlistcronache<Cronaca[]>().subscribe(
       (data: Cronaca[]) => {
         this.listacronache = data;
+        this.cdr.markForCheck();
       }
     );
 
@@ -1426,6 +1429,7 @@ export class CreaComponent implements OnInit {
         error => {
           // KO !
           console.log('ko', error);
+          this.cdr.markForCheck();
         }
       );
 

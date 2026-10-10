@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {GlobalStatus} from '../global';
 
 @Component({
     selector: 'app-sideadm',
     templateUrl: './sideadm.component.html',
     styleUrls: ['./sideadm.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SideadmComponent implements OnInit {

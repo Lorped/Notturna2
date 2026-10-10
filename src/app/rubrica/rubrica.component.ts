@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { RubricaService } from '../_services/index';
 import { Rubricaitem } from '../global';
 import { UntypedFormControl,  Validators } from '@angular/forms';
@@ -7,7 +7,6 @@ import { UntypedFormControl,  Validators } from '@angular/forms';
     selector: 'app-rubrica',
     templateUrl: './rubrica.component.html',
     styleUrls: ['./rubrica.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class RubricaComponent implements OnInit {
@@ -28,6 +27,7 @@ export class RubricaComponent implements OnInit {
   ]);
 
   private rubricaservice = inject(RubricaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
   ngOnInit(): void {
@@ -38,6 +38,7 @@ export class RubricaComponent implements OnInit {
     subscribe (
       (data: Rubricaitem[])  => {
         this.myrubrica = data;
+        this.cdr.markForCheck();
         // console.log(this.myrubrica);
       }
     );
@@ -87,6 +88,7 @@ export class RubricaComponent implements OnInit {
             this.myrubrica.splice(i, 1);
           }
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -113,6 +115,7 @@ export class RubricaComponent implements OnInit {
         this.myrubrica.push(data);
         this.newcontatto.reset();
         this.newcontatto2.reset();
+        this.cdr.markForCheck();
       }
     );
   }

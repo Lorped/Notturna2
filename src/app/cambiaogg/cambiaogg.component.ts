@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../_services/index';
 import { Condizione, FullOggetto, Unpaired, Skill, SubSkill} from '../global';
 import { ActivatedRoute } from '@angular/router';
@@ -35,7 +35,6 @@ interface GetUnpaired {
     selector: 'app-cambiaogg',
     templateUrl: './cambiaogg.component.html',
     styleUrls: ['./cambiaogg.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CambiaoggComponent implements OnInit {
@@ -117,6 +116,7 @@ export class CambiaoggComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
   private adminservice = inject(AdminService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -134,13 +134,14 @@ export class CambiaoggComponent implements OnInit {
         this.poteri = data.poteri;
         this.attributi = data.attributi;
         this.discipline = data.discipline;
-
+        this.cdr.markForCheck();
       }
     );
 
     this.adminservice.getunpaired<GetUnpaired>(this.idoggetto).subscribe(
       (data: GetUnpaired) => {
         this.unpaired = data.unpaired;
+        this.cdr.markForCheck();
       }
     );
 
@@ -160,6 +161,7 @@ export class CambiaoggComponent implements OnInit {
             this.item.condizioni2.splice(j,1);
           }
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -270,6 +272,7 @@ export class CambiaoggComponent implements OnInit {
         } else {
           this.item.condizioni2.push( mycond );
         }
+        this.cdr.markForCheck();
 
       }
     );
@@ -308,6 +311,7 @@ export class CambiaoggComponent implements OnInit {
         this.domanda = '';
         this.rispSi = '';
         this.rispNo = '';
+        this.cdr.markForCheck();
       }
     );
   }
@@ -320,6 +324,7 @@ export class CambiaoggComponent implements OnInit {
         this.item.oggetto.r2 = '';
         this.item.oggetto.ifdomanda = 0;
         this.item.condizioni2.length = 0;
+        this.cdr.markForCheck();
       }
     );
   }
@@ -335,6 +340,7 @@ export class CambiaoggComponent implements OnInit {
         this.adminservice.getunpaired<GetUnpaired>(this.idoggetto).subscribe(
           (data: GetUnpaired) => {
             this.unpaired = data.unpaired;
+            this.cdr.markForCheck();
           }
         );
 
@@ -365,6 +371,7 @@ export class CambiaoggComponent implements OnInit {
 
           this.tabpaired = '';
           this.descrizionePaired = '';
+          this.cdr.markForCheck();
         } 
       );
     
@@ -376,6 +383,7 @@ export class CambiaoggComponent implements OnInit {
          this.nomeoggettoIniziale = this.item.oggetto.nomeoggetto;
          this.descrizioneIniziale = this.item.oggetto.descrizione;
          console.log("aggiornato oggetto");
+         this.cdr.markForCheck();
       }
     );
     

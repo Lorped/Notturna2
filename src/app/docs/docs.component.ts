@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 interface BGClan {
@@ -9,7 +9,6 @@ interface BGClan {
     selector: 'app-docs',
     templateUrl: './docs.component.html',
     styleUrls: ['./docs.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DocsComponent implements OnInit {
@@ -27,6 +26,7 @@ export class DocsComponent implements OnInit {
   giova = false;
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -35,6 +35,7 @@ export class DocsComponent implements OnInit {
     this.schedaservice.getBGClan<BGClan>(idutente).subscribe(
       (data: BGClan) => {
         this.link = data.linkurl;
+        this.cdr.markForCheck();
       }
     );
     this.schedaservice.getclan<number>(idutente).subscribe(
@@ -42,6 +43,7 @@ export class DocsComponent implements OnInit {
         this.idclan = data;
         this.trem = (this.idclan === 7);
         this.giova = (this.idclan === 11);
+        this.cdr.markForCheck();
       }
     );
 

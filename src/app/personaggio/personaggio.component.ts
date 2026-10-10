@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
 import { Necromanzia, Taumaturgia, GlobalStatus, Basicpg, BasicpgStat, FullDisciplina, FullTaumaturgia, FullNecromanzia, Disciplina, Skill, Background, Contatti, Pregio, Rituale,  Alleati } from '../global';
@@ -16,7 +16,6 @@ interface GetOtherdisc {
     selector: 'app-personaggio',
     templateUrl: './personaggio.component.html',
     styleUrls: ['./personaggio.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PersonaggioComponent implements OnInit {
@@ -58,6 +57,7 @@ export class PersonaggioComponent implements OnInit {
   private globalstatus = inject(GlobalStatus);
   private route = inject(ActivatedRoute);
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -152,8 +152,10 @@ export class PersonaggioComponent implements OnInit {
             this.othernecro = data.othernecro;
             this.othertaum = data.othertaum;
             // console.log (this.otherdisc);
+            this.cdr.markForCheck();
           }
         );
+        this.cdr.markForCheck();
       }
     );
   }
@@ -170,6 +172,7 @@ export class PersonaggioComponent implements OnInit {
           disciplina.disciplina.livello--;
           // console.log ( "riduco", disciplina.disciplina.nomedisc);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -183,6 +186,7 @@ export class PersonaggioComponent implements OnInit {
           disciplina.disciplina.livello++;
           // console.log ( "aumento", disciplina.disciplina.nomedisc);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -201,6 +205,7 @@ export class PersonaggioComponent implements OnInit {
     this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, -1).subscribe(
       () => {
         this.scheda[stat]--;
+        this.cdr.markForCheck();
         // console.log ( "riduco", stat);
         
       }
@@ -213,6 +218,7 @@ export class PersonaggioComponent implements OnInit {
     this.schedaservice.changeattr_master(this.globalstatus.lastpg, stat, 1).subscribe(
       () => {
         this.scheda[stat]++;
+        this.cdr.markForCheck();
         // console.log ( "aumento", stat);
       }
     );
@@ -228,6 +234,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello--;
           // console.log ( "riduco", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -239,6 +246,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello++;
           // console.log ( "aumento", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -254,6 +262,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello--;
           // console.log ( "riduco", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -265,6 +274,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello++;
           // console.log ( "aumento", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -289,6 +299,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello--;
           // console.log ( "riduco", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -311,6 +322,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello++;
           // console.log ( "aumento", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -325,6 +337,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello--;
           // console.log ( "riduco", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -336,6 +349,7 @@ export class PersonaggioComponent implements OnInit {
           skill.livello++;
           // console.log ( "aumento", skill.nomeskill);
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -362,8 +376,7 @@ export class PersonaggioComponent implements OnInit {
                   if (taum) { this.isTaumaturgo = true; }
                   const necro = this.discipline.find(n => n.disciplina.iddisciplina == 99);
                   if (necro) { this.isNecromante = true; }
-
-
+                  this.cdr.markForCheck();
                 }
               );
               
@@ -382,6 +395,7 @@ export class PersonaggioComponent implements OnInit {
         if ( disc) {
           disc.disciplina.DiClan = disc.disciplina.DiClan === 'S' ? 'N' : 'S';
         }
+        this.cdr.markForCheck();
       }
     );
   }
@@ -394,7 +408,9 @@ export class PersonaggioComponent implements OnInit {
         const disc = this.discipline.find(d => d.disciplina.iddisciplina === iddisciplina);
         if ( disc) {
           this.discipline.splice(this.discipline.indexOf(disc), 1);
+          this.discipline = [...this.discipline];
         }
+        this.cdr.markForCheck();
         this.schedaservice.getotherdisc<GetOtherdisc>(this.globalstatus.lastpg).subscribe(
           (data: GetOtherdisc) => {
             this.otherdisc = data.otherdisc;
@@ -405,7 +421,7 @@ export class PersonaggioComponent implements OnInit {
             if (taum) { this.isTaumaturgo = true; }
             const necro = this.discipline.find(n => n.disciplina.iddisciplina == 99);
             if (necro) { this.isNecromante = true; }
-            // console.log (this.otherdisc);
+            this.cdr.markForCheck();
           }
         );
       }
@@ -429,8 +445,9 @@ export class PersonaggioComponent implements OnInit {
         xx.taumaturgia.principale = 1;
       }
       this.othertaum = this.othertaum.filter(t => t.idtaum !== idtaum);
-      this.taumaturgie.push(xx);
+      this.taumaturgie = [...this.taumaturgie, xx];
       this.idnewtaum = 0;
+      this.cdr.markForCheck();
     });
   }
   newnecro(idnecro: number) {
@@ -446,8 +463,9 @@ export class PersonaggioComponent implements OnInit {
         xx.necromanzia.principale = 1;
       }
       this.othernecro = this.othernecro.filter(n => n.idnecro !== idnecro);
-      this.necromanzie.push(xx);
+      this.necromanzie = [...this.necromanzie, xx];
       this.idnewnecro = 0;
+      this.cdr.markForCheck();
     });  
   }
 
@@ -458,14 +476,17 @@ export class PersonaggioComponent implements OnInit {
         if (taum) {
           this.taumaturgie = this.taumaturgie.filter(t => t !== taum);
           this.othertaum.push(taum.taumaturgia);
+          this.othertaum = [...this.othertaum];
         }
       } else {
         const necro = this.necromanzie.find(n => n.necromanzia.idnecro === iddisciplina);
         if (necro) {
           this.necromanzie = this.necromanzie.filter(n => n !== necro);
           this.othernecro.push(necro.necromanzia);
+          this.othernecro = [...this.othernecro];
         }
       }
+      this.cdr.markForCheck();
     });
   }
 
@@ -498,6 +519,7 @@ export class PersonaggioComponent implements OnInit {
           }
         // console.log("riducivia", idtaum);
         }
+        this.cdr.markForCheck();
       });
     }
   }
@@ -533,7 +555,7 @@ export class PersonaggioComponent implements OnInit {
               tt.disciplina.livello ++; 
             }
           }
-          // console.log("aumentavia", idtaum);
+          this.cdr.markForCheck();
         }
       );
     }
@@ -563,6 +585,7 @@ export class PersonaggioComponent implements OnInit {
             terziaria.necromanzia.livello = necro.necromanzia.livello - 1;
           }
         }
+        this.cdr.markForCheck();
       });
     }
   }
@@ -596,6 +619,7 @@ export class PersonaggioComponent implements OnInit {
             disciplina.disciplina.livello++;
           }
         }
+        this.cdr.markForCheck();
       });
     }
   }

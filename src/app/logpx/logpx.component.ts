@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 
@@ -17,7 +17,6 @@ export interface Eventi {
     selector: 'app-logpx',
     templateUrl: './logpx.component.html',
     styleUrls: ['./logpx.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LogpxComponent implements OnInit {
@@ -28,6 +27,7 @@ export class LogpxComponent implements OnInit {
   eventodata = '';
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.idutente = Number( sessionStorage.getItem('NotturnaUser') );
@@ -35,6 +35,7 @@ export class LogpxComponent implements OnInit {
     .subscribe(
       (data: LogPx[]) => {
         this.logpx = data;
+        this.cdr.markForCheck();
       }
     );
     this.schedaservice.geteventi<Eventi>(this.idutente)
@@ -42,6 +43,7 @@ export class LogpxComponent implements OnInit {
       (data: Eventi) => {
         this.myeventi = data.eventi;
         this.eventodata = data.eventodata;
+        this.cdr.markForCheck();
         //console.log(this.myeventi);
         //console.log(this.eventodata);
       }

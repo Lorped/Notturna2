@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 @Component({
     selector: 'app-sidex',
     templateUrl: './sidex.component.html',
     styleUrls: ['./sidex.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SidexComponent implements OnInit {
@@ -15,6 +14,7 @@ export class SidexComponent implements OnInit {
   mybadge2 = 0 ;
   ingate = true ;
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -29,12 +29,14 @@ export class SidexComponent implements OnInit {
     subscribe (
       data => {
         this.mybadge = data;
+        this.cdr.markForCheck();
       }
     );
     this.schedaservice.checkavanzamenti(this.idutente).
     subscribe (
       data => {
         this.mybadge2 = data;
+        this.cdr.markForCheck();
       }
     );
   }

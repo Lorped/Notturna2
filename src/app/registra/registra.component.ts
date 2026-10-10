@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl, UntypedFormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
@@ -7,7 +8,6 @@ import { Router } from '@angular/router';
     selector: 'app-registra',
     templateUrl: './registra.component.html',
     styleUrls: ['./registra.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class RegistraComponent  {
@@ -52,6 +52,11 @@ export class RegistraComponent  {
 
   private authenticationservice = inject(AuthenticationService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
+
+  constructor() {
+    this.registrationForm.statusChanges.pipe(takeUntilDestroyed()).subscribe(() => this.cdr.markForCheck());
+  }
 
 
 
@@ -87,6 +92,7 @@ export class RegistraComponent  {
       },
         () => {
         this.errmsg = 'Errore di registrazione';
+        this.cdr.markForCheck();
       }
     );
   }

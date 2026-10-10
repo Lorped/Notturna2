@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 import { inject } from '@angular/core';
 import { FullDisciplina } from '../global';
@@ -10,7 +10,6 @@ import { FullDisciplina } from '../global';
     selector: 'app-addpoteri',
     templateUrl: './addpoteri.component.html',
     styleUrls: ['./addpoteri.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AddpoteriComponent implements OnInit {
@@ -20,6 +19,7 @@ export class AddpoteriComponent implements OnInit {
   newpotere: number[] = [] ;
 
   public schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -33,6 +33,7 @@ export class AddpoteriComponent implements OnInit {
         for ( let j = 0 ; j < this.discipline.length ; j++ ){
           this.newpotere[j] = 0 ;
         }
+        this.cdr.markForCheck();
 
       }
     );
@@ -46,6 +47,7 @@ export class AddpoteriComponent implements OnInit {
           (data2: FullDisciplina[] ) => {
             this.discipline = data2;
             this.newpotere[ix] = 0;
+            this.cdr.markForCheck();
           }
         );
       }

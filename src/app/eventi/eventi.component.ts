@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../_services';
 import { GlobalStatus, Cronaca } from '../global';
 
@@ -22,7 +22,6 @@ export interface FullEV {
     selector: 'app-eventi',
     templateUrl: './eventi.component.html',
     styleUrls: ['./eventi.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class EventiComponent implements OnInit {
@@ -37,6 +36,7 @@ export class EventiComponent implements OnInit {
 
   private adminservice = inject(AdminService);
   private globalstatus = inject(GlobalStatus);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -45,6 +45,7 @@ export class EventiComponent implements OnInit {
     this.adminservice.getlistcronache<Cronaca[]>().subscribe(
       (data: Cronaca[]) => {
         this.listacronache = data;
+        this.cdr.markForCheck();
       }
     );
 
@@ -59,6 +60,7 @@ export class EventiComponent implements OnInit {
         });
         this.displayedEventi = [...this.fulleventi];
         this.applySorting();
+        this.cdr.markForCheck();
         // console.log ( this.fulleventi);
       }
     );
@@ -148,6 +150,7 @@ export class EventiComponent implements OnInit {
         if (evento) {
           evento.saldo = (data === '1');
         }
+        this.cdr.markForCheck();
         //console.log (this.fulleventi.filter(obj => obj.idutente == id)[0] );
       }
     )

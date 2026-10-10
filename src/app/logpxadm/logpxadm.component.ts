@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedaService } from '../_services/index';
 import { GlobalStatus } from '../global';
@@ -19,7 +19,6 @@ export interface Eventi {
   selector: 'app-logpxadm',
   templateUrl: './logpxadm.component.html',
   styleUrl: './logpxadm.component.css',
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class LogpxadmComponent implements OnInit {
@@ -29,6 +28,7 @@ export class LogpxadmComponent implements OnInit {
   logpx: LogPx[] = [];
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
   private globalstatus = inject(GlobalStatus);
   private route = inject(ActivatedRoute);
 
@@ -41,6 +41,7 @@ export class LogpxadmComponent implements OnInit {
     .subscribe(
       (data: LogPx[]) => {
         this.logpx = data;
+        this.cdr.markForCheck();
       }
     );
     this.schedaservice.geteventi<Eventi>(this.idutente)
@@ -48,6 +49,7 @@ export class LogpxadmComponent implements OnInit {
       (data: Eventi) => {
         this.myeventi = data.eventi;
         this.eventodata = data.eventodata;
+        this.cdr.markForCheck();
         //console.log(this.myeventi);
         //console.log(this.eventodata);
       }

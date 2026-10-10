@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { SchedaService } from '../_services/index';
 
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
     styleUrls: ['./main.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class MainComponent implements OnInit {
@@ -15,6 +14,7 @@ export class MainComponent implements OnInit {
   mybadge2 = 0 ;
 
   private schedaservice = inject(SchedaService);
+  private cdr = inject(ChangeDetectorRef);
 
 
 
@@ -24,11 +24,13 @@ export class MainComponent implements OnInit {
     this.schedaservice.checkpoteri(this.idutente).
     subscribe ( (data) => {
         this.mybadge = Number(data);
+        this.cdr.markForCheck();
       }
     );
     this.schedaservice.checkavanzamenti(this.idutente).
     subscribe ( (data) => {
         this.mybadge2 = Number(data);
+        this.cdr.markForCheck();
       }
     );
 
