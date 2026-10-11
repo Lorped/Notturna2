@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 89.46.68.60:3306
--- Creato il: Set 20, 2026 alle 01:31
+-- Creato il: Ott 11, 2026 alle 16:17
 -- Versione del server: 5.0.96-community-log
 -- Versione PHP: 8.0.7
 
@@ -152,7 +152,8 @@ CREATE TABLE `dadi` (
   `Ora` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `Testo` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Destinatario` int(11) NOT NULL DEFAULT '-1',
-  `clan` int(11) NOT NULL DEFAULT '-1'
+  `clan` int(11) NOT NULL DEFAULT '-1',
+  `cronaca` int(11) NOT NULL DEFAULT '-1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 
 -- --------------------------------------------------------
@@ -208,7 +209,8 @@ CREATE TABLE `generazione` (
   `rigen` int(11) NOT NULL,
   `frenesia` int(11) NOT NULL,
   `cacciaobbligata` int(11) NOT NULL,
-  `tempocaccia` int(11) NOT NULL
+  `tempocaccia` int(11) NOT NULL,
+  `bol` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
