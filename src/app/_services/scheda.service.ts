@@ -171,10 +171,11 @@ export class SchedaService {
     return this.http.get<GetNecroTaum>('https://www.roma-by-night.it/Notturna2/wsPHP/getnecrotaum.php'+'?idutente='+idutente );
   }
 
-  addattr(idutente: number , attributo: string ) {
+  addattr(idutente: number , attributo: string, au: string ) {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/addattr.php',{
       idutente: idutente,
-      attributo: attributo
+      attributo: attributo,
+      au: au
     });
   }
 

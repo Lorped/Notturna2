@@ -62,14 +62,16 @@ if ( isset($postdata) && $idutente != "" && $idcontatto != "" && isset($livello)
     $Azione = "Contatto ".$nomecontatto.' a '.$livello;
   }
 
-  $MySql = "UPDATE personaggio SET xpspesi = xpspesi + 1
-    WHERE idutente = $idutente";
-  $Result = mysqli_query($db, $MySql);
+
 
   $costo = 1;
   if ( $au == 'A') {
     $Azione = 'ADMIN '.$Azione;
     $costo=0;
+  } else {
+    $MySql = "UPDATE personaggio SET xpspesi = xpspesi + 1
+    WHERE idutente = $idutente";
+    $Result = mysqli_query($db, $MySql);
   }
 
   $Azione = mysqli_real_escape_string($db, $Azione);

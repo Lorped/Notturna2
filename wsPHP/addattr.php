@@ -26,6 +26,8 @@ $request = json_decode($postdata);
 
 $idutente = $request -> idutente;
 $attributo = $request -> attributo;
+$au = $request -> au;
+
 
 //$nome = "lorenzo";
 //$password = "lor11ped";
@@ -49,11 +51,21 @@ if ( isset($postdata) && $idutente != "" && $attributo != "" ) {
     WHERE idutente = $idutente";
   $Result = mysqli_query($db, $MySql);
 
-  $MySql = "UPDATE personaggio SET xpspesi = xpspesi + 1
-    WHERE idutente = $idutente";
-  $Result = mysqli_query($db, $MySql);
 
   $Azione = ucfirst($attributo) . ' a ' . $newlivello ;
+
+  if ( $au == 'A') {
+    $Azione = 'ADMIN '.$Azione;
+    $costo=0;
+  } else {
+    $MySql = "UPDATE personaggio SET xpspesi = xpspesi + 1
+    WHERE idutente = $idutente";
+    $Result = mysqli_query($db, $MySql);
+  }
+
+
+
+
 
   $MySql = "INSERT INTO logpx (idutente, px, Azione )
     VALUES ( $idutente, 1 , '$Azione' ) ";

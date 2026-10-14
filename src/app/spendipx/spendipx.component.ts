@@ -345,7 +345,7 @@ export class SpendipxComponent implements OnInit {
     this.scheda.xpspesi ++;
     this.numavanzamenti --;
     this.lock = true;
-    this.schedaservice.addattr(this.idutente, attributo)
+    this.schedaservice.addattr(this.idutente, attributo, 'U')
     .subscribe(
       () => {
         this.ricalcolo_xp(); 
