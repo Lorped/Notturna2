@@ -14,7 +14,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SchedaService, AdminService } from '../_services/index';
 import { Background, Contatti, Alleati, Skill, Sentiero, Pregio , GlobalStatus} from '../global';
 import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { GetSentiero, PregioDifetto, GetPregioDifetto, GetBG, GetContattiAlleati, GetFama } from '../_services/scheda.service';
+import { GetSentiero, PregioDifetto, GetPregioDifetto, GetBG, GetContattiAlleati, GetFama, BioData } from '../_services/scheda.service';
 
 
 
@@ -71,6 +71,8 @@ export class AdminbgComponent implements OnInit {
   sommacontatti = 0;
   sommaalleati = 0;
 
+  rifugio = new UntypedFormControl('', [] ) ;
+  zona = new UntypedFormControl('', [] ) ;
 
 
   myContatto = new UntypedFormControl ( '', [
@@ -164,6 +166,16 @@ export class AdminbgComponent implements OnInit {
   ngOnInit(): void {
     this.idutente = Number ( this.route.snapshot.paramMap.get('id') );
     this.globalstatus.lastpg = this.idutente;
+
+    this.schedaservice.getbio<BioData>(this.idutente).subscribe(
+      (data: BioData) => {
+        //this.bio.setValue( data.bio );
+        //this.annotazioni.setValue( data.note );
+        this.rifugio.setValue( data.rifugio );
+        this.zona.setValue( data.zona );
+        this.cdr.markForCheck();
+      }
+    );
 
     this.adminservice.getnome<string>(this.idutente).subscribe({
       next: (data: string) => {
@@ -606,6 +618,19 @@ export class AdminbgComponent implements OnInit {
       (data: GetPregioDifetto) => {
         this.pregi = data.pregi ;
         this.difetti = data.difetti ;
+        this.cdr.markForCheck();
+      }
+    );
+  }
+
+  aggiungiRifugio() {
+    this.schedaservice.putrifugio ( this.idutente , this.rifugio.value , this.zona.value, 'A' )
+    .subscribe(
+      () => {
+        this.rifugio!.markAsPristine();
+        this.zona!.markAsPristine();
+        this.rifugio!.markAsUntouched();
+        this.zona!.markAsUntouched();
         this.cdr.markForCheck();
       }
     );

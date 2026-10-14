@@ -22,7 +22,7 @@ $idutente = $_GET['idutente'];
 
 
 
-	$MySql = "SELECT bio, note,  notemaster FROM personaggio
+	$MySql = "SELECT bio, note,  notemaster, rifugio, zona FROM personaggio
 			WHERE  idutente = $idutente ";
 	$Result = mysqli_query($db, $MySql);
 
@@ -31,12 +31,16 @@ $idutente = $_GET['idutente'];
 	$bio = $res['bio'];
 	$note = $res['note'];
 	$notemaster = $res['notemaster'];
+	$rifugio = $res['rifugio'];
+	$zona = $res['zona'];
 
 
 	$out = [
 		'bio' => $bio,
 		'note' => $note,
-		'notemaster' => $notemaster
+		'notemaster' => $notemaster,
+		'rifugio' => $rifugio,
+		'zona' => $zona
 	];
 
 

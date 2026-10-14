@@ -17,6 +17,35 @@
 
 <div class="container" style="width: 85%; margin-top: 1em; min-height: 85vh;">
   <p>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Rifugio
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <hr>
+        <div class="columns">
+          <div class="column">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Rifugio</mat-label>
+              <input matInput [formControl]="rifugio">
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field appearance="fill" class="full">
+              <mat-label>Zona</mat-label>
+              <input matInput [formControl]="zona">
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <button mat-raised-button color="primary" class="full" [disabled]="!(zona.dirty || zona.touched || rifugio.dirty || rifugio.touched)" (click)="aggiungiRifugio()">Aggiungi</button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </p>
+  <p>
   <mat-card>
     <mat-card-header>
     <mat-card-title>
@@ -26,7 +55,7 @@
 
   <mat-card-content>
 
-<hr>
+    <hr>
 
     <div class="columns bio">
       <div class="column bio">

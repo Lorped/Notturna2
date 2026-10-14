@@ -86,6 +86,15 @@ export interface GetBG {
   fama3: number;
 }
 
+export interface BioData {
+  bio: string;
+  note: string;
+  notemaster: string;
+  rifugio: string;
+  zona: string;
+}
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -284,6 +293,15 @@ export class SchedaService {
       idutente: idutente,
       bio: bio,
       note: note,
+    });
+  }
+
+  putrifugio(idutente: number , rifugio: string, zona: string , au: string ) {
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/putrifugio.php',{
+      idutente: idutente,
+      rifugio: rifugio,
+      zona: zona,
+      au: au
     });
   }
 

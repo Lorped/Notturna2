@@ -9,13 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidexComponent } from '../sidex/sidex.component';
 import { UntypedFormControl } from '@angular/forms';
-import { SchedaService } from '../_services/index';
+import { SchedaService, BioData } from '../_services/index';
 
-interface BioData {
-  bio: string;
-  note: string;
-  notemaster: string;
-}
 
 @Component({
     selector: 'app-bio',
@@ -29,6 +24,22 @@ export class BioComponent implements OnInit {
   bio =  new UntypedFormControl('', [] ) ;
   annotazioni = new UntypedFormControl('', [] ) ;
   // urlDT = new UntypedFormControl('', [] ) ;
+
+  rifugio = new UntypedFormControl('', [] ) ;
+  zona = new UntypedFormControl('', [] ) ;
+
+  aggiungiRifugio() {
+        this.schedaservice.putrifugio ( this.idutente , this.rifugio.value , this.zona.value, 'U' )
+    .subscribe(
+      () => {
+        this.rifugio!.markAsPristine();
+        this.zona!.markAsPristine();
+        this.rifugio!.markAsUntouched();
+        this.zona!.markAsUntouched();
+        this.cdr.markForCheck();
+      }
+    );
+  }
 
   idutente = 0;
 
@@ -44,6 +55,8 @@ export class BioComponent implements OnInit {
       (data: BioData) => {
         this.bio.setValue( data.bio );
         this.annotazioni.setValue( data.note );
+        this.rifugio.setValue( data.rifugio );
+        this.zona.setValue( data.zona );
         this.cdr.markForCheck();
       }
     );
