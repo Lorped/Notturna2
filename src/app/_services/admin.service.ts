@@ -158,4 +158,17 @@ export class AdminService {
     return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/prestampa.php', prestampa);
   }
 
+  cancellaenigma(idoggetto: number) {
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/cancellaenigma.php',{
+      idoggetto: idoggetto
+    });
+  }
+  addenigma(idoggetto: number, enigma: string, soluzione: string, premio: string) {
+    return this.http.post('https://www.roma-by-night.it/Notturna2/wsPHP/addenigma.php',{
+      idoggetto: idoggetto,
+      enigma: enigma,
+      soluzione: soluzione,
+      premio: premio
+    });
+  }
 }

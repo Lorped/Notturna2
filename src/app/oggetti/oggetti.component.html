@@ -183,6 +183,22 @@
                     </div>
                   </div>
                 }
+                @if (item.oggetto.enigma && item.oggetto.enigma!== '') {
+                  <div class="columns">
+                    <div class="column is-1">
+                      &nbsp;
+                    </div>
+                    <div class="column is-2">
+                      [ {{item.oggetto.enigma}} ]
+                    </div>
+                    <div class="column is-2">
+                      <span class="blue">  {{item.oggetto.soluzione}} </span>
+                    </div>
+                    <div class="column is-6">
+                      {{item.oggetto.premio}}
+                    </div>
+                  </div>
+                }
               </div>
               <mat-divider></mat-divider>
             </div>

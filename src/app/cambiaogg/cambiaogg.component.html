@@ -152,6 +152,25 @@
               </div>
             </div>
           }
+          @if (item.oggetto.enigma && item.oggetto.enigma!== '') {
+            <div class="columns">
+              <div class="column is-1">
+                &nbsp;
+              </div>
+              <div class="column is-2">
+                {{item.oggetto.enigma}}
+              </div>
+              <div class="column is-2">
+                {{item.oggetto.soluzione}}
+              </div>
+              <div class="column is-5">
+                {{item.oggetto.premio}}
+              </div>
+              <div class="column is-1">
+                <button  mat-raised-button color="warn" (click)="cancellaenigma()">Cancella</button>
+              </div>
+            </div>
+          }
 
 
           <mat-divider></mat-divider>
@@ -475,6 +494,32 @@
               </div>
               <div class="column is-2">
                 <button  mat-raised-button color="primary" (click)="adddomanda()" [disabled]=" domanda==='' || rispNo==='' || rispSi==='' ">Aggiungi</button>
+              </div>
+            </div>
+          }
+
+          @if (!item.oggetto.enigma || item.oggetto.enigma==='') {
+            <div class="columns">
+              <div class="column">
+                <mat-form-field appearance="fill" class="full">
+                  <mat-label>Enigma</mat-label>
+                  <textarea matInput [(ngModel)]="enigma"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill" class="full">
+                  <mat-label>Soluzione:</mat-label>
+                  <textarea matInput [(ngModel)]="soluzione"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="column">
+                <mat-form-field appearance="fill" class="full">
+                  <mat-label>Esito:</mat-label>
+                  <textarea matInput [(ngModel)]="premio"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="column is-2">
+                <button  mat-raised-button color="primary" (click)="addenigma()" [disabled]=" enigma==='' || soluzione==='' || premio==='' ">Aggiungi</button>
               </div>
             </div>
           }

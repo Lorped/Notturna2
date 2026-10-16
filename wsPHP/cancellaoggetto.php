@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   exit(0);
 }
 
-include ('db2.inc.php'); //MYSQL//
+require_once __DIR__ . '/db2.inc.php'; //MYSQL//
 
 
 $postdata = file_get_contents("php://input");
@@ -42,6 +42,15 @@ if ( isset($postdata) && $idoggetto != ""  ) {
   $Result = mysqli_query($db, $MySql);
 
   $MySql = "DELETE FROM paired WHERE IDoggetto1 = $idoggetto OR IDoggetto2 = $idoggetto";
+  $Result = mysqli_query($db, $MySql);
+
+  $MySql = "DELETE FROM logscan WHERE IDoggetto = $idoggetto";
+  $Result = mysqli_query($db, $MySql);
+
+  $MySql = "DELETE FROM logscanfull WHERE idoggetto = $idoggetto";
+  $Result = mysqli_query($db, $MySql);
+
+  $MySql = "DELETE FROM logscanogg WHERE IDoggetto = $idoggetto";
   $Result = mysqli_query($db, $MySql);
 
 

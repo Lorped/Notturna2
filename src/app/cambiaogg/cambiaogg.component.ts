@@ -143,7 +143,9 @@ export class CambiaoggComponent implements OnInit {
   private adminservice = inject(AdminService);
   private cdr = inject(ChangeDetectorRef);
 
-
+  enigma = '';
+  soluzione = '';
+  premio = '';
 
   ngOnInit(): void {
 
@@ -426,6 +428,33 @@ export class CambiaoggComponent implements OnInit {
     //console.log("selectedSkill: ", selectedSkill);
     this.subskill = selectedSkill ? selectedSkill.subskill2 : [];  
     //console.log("subskill: ", this.subskill);
+  }
+
+  cancellaenigma(){
+    this.adminservice.cancellaenigma(this.idoggetto).subscribe(
+      () => {
+        this.item.oggetto.enigma = '';
+        this.item.oggetto.soluzione = '';
+        this.item.oggetto.premio = '';
+        console.log("cancello enigma");
+        this.cdr.markForCheck();
+      }
+    );
+  }
+
+  addenigma(){
+    this.adminservice.addenigma(this.idoggetto, this.enigma, this.soluzione, this.premio).subscribe(
+      () => {
+        this.item.oggetto.enigma = this.enigma;
+        this.item.oggetto.soluzione = this.soluzione;
+        this.item.oggetto.premio = this.premio;
+        console.log("add enigma");
+        this.enigma = '';
+        this.soluzione = '';
+        this.premio = '';
+        this.cdr.markForCheck();
+      }
+    );
   }
 
 }

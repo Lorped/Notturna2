@@ -344,6 +344,9 @@ export class Oggetto {
   r1: string;
   r2: string;
   IDcronaca: number;
+  enigma: string;
+  soluzione: string;
+  premio: string;
   constructor(  ) {
     this.idoggetto = 0 ;
     this.barcode = 0;
@@ -355,6 +358,9 @@ export class Oggetto {
     this.r1 = '';
     this.r2 = '';
     this.IDcronaca = 0;
+    this.enigma = '';
+    this.soluzione = '';
+    this.premio = '';
   }
 }
 
