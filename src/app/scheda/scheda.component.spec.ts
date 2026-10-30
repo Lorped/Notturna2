@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SchedaComponent } from './scheda.component';
 import { TimesPipe } from '../times.pipe';
@@ -9,13 +9,13 @@ describe('SchedaComponent', () => {
   let component: SchedaComponent;
   let fixture: ComponentFixture<SchedaComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SchedaComponent, TimesPipe, NonecrotaumPipe ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ SchedaComponent, TimesPipe, NonecrotaumPipe ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SchedaComponent);

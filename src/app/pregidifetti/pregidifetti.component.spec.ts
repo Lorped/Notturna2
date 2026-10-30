@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PregidifettiComponent } from './pregidifetti.component';
 
@@ -7,13 +7,13 @@ describe('PregidifettiComponent', () => {
   let component: PregidifettiComponent;
   let fixture: ComponentFixture<PregidifettiComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PregidifettiComponent ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ PregidifettiComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PregidifettiComponent);

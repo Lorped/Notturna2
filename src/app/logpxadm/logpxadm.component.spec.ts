@@ -10,7 +10,7 @@ describe('LogpxadmComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LogpxadmComponent],
+      imports: [LogpxadmComponent],
       providers: [provideRouter([])],
       schemas: [NO_ERRORS_SCHEMA]
     })

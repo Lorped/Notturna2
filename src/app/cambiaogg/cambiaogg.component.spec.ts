@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -11,9 +11,9 @@ describe('CambiaoggComponent', () => {
   let fixture: ComponentFixture<CambiaoggComponent>;
   const previousHistoryState = window.history.state;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CambiaoggComponent ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ CambiaoggComponent ],
       providers: [
         provideRouter([]),
         {
@@ -27,7 +27,7 @@ describe('CambiaoggComponent', () => {
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     window.history.replaceState({

@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { AdminbgComponent } from './adminbg.component';
@@ -9,14 +9,14 @@ describe('AdminbgComponent', () => {
   let component: AdminbgComponent;
   let fixture: ComponentFixture<AdminbgComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AdminbgComponent, TimesPipe ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ AdminbgComponent, TimesPipe ],
       providers: [provideRouter([])],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminbgComponent);

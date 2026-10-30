@@ -8,7 +8,7 @@ describe('PrestampaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PrestampaComponent],
+      imports: [PrestampaComponent],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();

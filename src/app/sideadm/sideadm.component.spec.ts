@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SideadmComponent } from './sideadm.component';
 
@@ -7,13 +7,13 @@ describe('SideadmComponent', () => {
   let component: SideadmComponent;
   let fixture: ComponentFixture<SideadmComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SideadmComponent ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ SideadmComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SideadmComponent);

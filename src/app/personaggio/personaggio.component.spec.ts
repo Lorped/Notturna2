@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { PersonaggioComponent } from './personaggio.component';
@@ -10,14 +10,14 @@ describe('PersonaggioComponent', () => {
   let component: PersonaggioComponent;
   let fixture: ComponentFixture<PersonaggioComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PersonaggioComponent, TimesPipe, NonecrotaumPipe ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ PersonaggioComponent, TimesPipe, NonecrotaumPipe ],
       providers: [provideRouter([])],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonaggioComponent);

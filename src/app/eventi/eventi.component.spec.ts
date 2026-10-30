@@ -9,7 +9,7 @@ describe('EventiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventiComponent ],
+      imports: [ EventiComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();

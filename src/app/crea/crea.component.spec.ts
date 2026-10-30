@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,14 +12,13 @@ describe('CreaComponent', () => {
   let component: CreaComponent;
   let fixture: ComponentFixture<CreaComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CreaComponent, TimesPipe ],
-      imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, CreaComponent, TimesPipe],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreaComponent);
@@ -58,37 +57,37 @@ describe('CreaComponent', () => {
     component.cronacaOK = true;
     component.valorePregioDifetto = -1;
 
-    expect(component.isFinalCheckValid()).toBeTrue();
+    expect(component.isFinalCheckValid()).toBe(true);
 
     component.valorePregioDifetto = 1;
-    expect(component.isFinalCheckValid()).toBeFalse();
+    expect(component.isFinalCheckValid()).toBe(false);
 
     component.valorePregioDifetto = -1;
     component.cronacaOK = false;
-    expect(component.isFinalCheckValid()).toBeFalse();
+    expect(component.isFinalCheckValid()).toBe(false);
 
     component.cronacaOK = true;
     component.setFocusItem(-1);
-    expect(component.isFinalCheckValid()).toBeFalse();
+    expect(component.isFinalCheckValid()).toBe(false);
   });
 
   it('starts without a chronicle and accepts only one from the available list', () => {
     expect(component.cronacaPG).toBe(0);
-    expect(component.cronacaOK).toBeFalse();
+    expect(component.cronacaOK).toBe(false);
 
     component.listacronache = [{ idcronaca: 7, descrizione: 'Test' }];
     component.onCronacaChange(0);
-    expect(component.cronacaOK).toBeFalse();
+    expect(component.cronacaOK).toBe(false);
 
     component.onCronacaChange(8);
-    expect(component.cronacaOK).toBeFalse();
+    expect(component.cronacaOK).toBe(false);
 
     component.onCronacaChange(7);
-    expect(component.cronacaOK).toBeTrue();
+    expect(component.cronacaOK).toBe(true);
     expect(component.cronacaPG).toBe(7);
 
     component.resetFinalChoices();
     expect(component.cronacaPG).toBe(0);
-    expect(component.cronacaOK).toBeFalse();
+    expect(component.cronacaOK).toBe(false);
   });
 });
